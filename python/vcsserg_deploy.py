@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 
-import argparse
 import datetime
-import json
 import os
 from pathlib import Path
-import re
 import subprocess
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
