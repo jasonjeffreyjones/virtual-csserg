@@ -1,0 +1,6 @@
+.env
+.codex
+log.txt
+logs/
+python/__pycache__/
+*.pyc
