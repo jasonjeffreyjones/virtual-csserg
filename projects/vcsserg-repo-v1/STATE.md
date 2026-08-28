@@ -2,36 +2,59 @@
 
 ## Status
 
-Active. The first public-site foundation is implemented: visitors can move among a substantive home page, the VCSSERG v1 project page, and B. Boring Vanilla's scholar page through a shared static HTML/CSS interface.
+Active. The public-site foundation is implemented and Version 1.0 now has a
+traceable documentation-to-evidence audit. Four of six automated verification
+groups pass; the remaining failures are the runner's deployment-script path and
+two unpublished initial Scholar profiles.
 
 ## What is complete
 
-- `website/index.html` is now a useful front door with the lab purpose, project catalog, and scholar catalog.
-- `website/projects/vcsserg-repo-v1/index.html` publicly explains the project's Version 1.0 charter and current foundation.
-- `website/scholars/b-boring-vanilla/index.html` is a full scholar profile connected to the active project.
-- `website/assets/styles.css` provides the shared responsive visual system, visible focus states, a skip link, semantic content structure, and reduced-motion behavior without production dependencies.
-- All three pages have unique titles and descriptions. Automated checks confirm required document landmarks, balanced CSS, and valid local page, fragment, and asset references.
+- `website/index.html`, the VCSSERG v1 Executive Summary, and B. Boring
+  Vanilla's profile form a linked static HTML/CSS site with a shared responsive
+  visual system.
+- `projects/vcsserg-repo-v1/V1-AUDIT.md` maps documented promises to verified,
+  failing, partial, or unverified evidence instead of treating Version 1.0 as a
+  subjective milestone.
+- `projects/vcsserg-repo-v1/verify_v1.py` non-destructively checks repository
+  guidance, project memory, every HTML page and local reference, CSS safeguards,
+  project and Scholar catalog coverage, runner wiring, and deployment behavior.
+- `python/vcsserg_deploy.py` now invokes `rsync` without `shell=True`, validates
+  the SSH port, avoids printing configured host/path values, and returns a
+  nonzero status when `rsync` is missing or fails.
+- The Executive Summary now reports the audit result and identifies both
+  automated failures plus the remaining manual gates.
 
 ## Current problems and unknowns
 
-- Visual browser QA has not yet been performed. The execution environment has no headless browser installed and prohibits opening a local HTTP socket.
-- The broad Version 1.0 requirement (“everything promised in the documentation works as documented”) still needs a traceable documentation-to-implementation audit beyond this website slice.
-- `PI.md` contains no further priorities or definition-of-done decisions.
-- Commit, push, and deployment remain pending because this execution environment mounts `.git` read-only; Git could not create `.git/index.lock`. Deployment was intentionally not run against an uncommitted, unpushed tree.
+- `run-scholar.sh` ends with `python3 vcsserg_deploy.py`, but the script is at
+  `python/vcsserg_deploy.py`. The automated iteration can commit and push, then
+  fail before deployment. The orientation says Scholars may not edit the runner,
+  so Dr. Jones must correct this path.
+- The charter names Aleph Initial Alpha, Bee Boring Vanilla, and Ceetown as the
+  initial Scholars. Only Bee currently has a public profile and home-page entry.
+- Production parity with `website/` is unverified. The execution environment
+  could not resolve the production host, and deployment was not run.
+- Visual browser QA is unverified because no browser is installed in this
+  environment. File-level accessibility and responsive-structure checks pass.
+- `PI.md` contains no additional priorities or Version 1.0 acceptance decisions.
 
 ## Important files
 
+- `projects/vcsserg-repo-v1/V1-AUDIT.md` — promise-to-evidence matrix
+- `projects/vcsserg-repo-v1/verify_v1.py` — automated Version 1.0 verifier
+- `python/vcsserg_deploy.py` — deployment implementation
+- `run-scholar.sh` — PI-owned automation runner with an open path defect
 - `website/index.html` — public front door
 - `website/assets/styles.css` — shared visual system
-- `website/projects/vcsserg-repo-v1/index.html` — public project page
-- `website/scholars/b-boring-vanilla/index.html` — scholar page
-- `projects/vcsserg-repo-v1/PROJECT.md` — stable charter
-- `projects/vcsserg-repo-v1/PI.md` — PI direction
+- `website/projects/vcsserg-repo-v1/index.html` — public Executive Summary
+- `website/scholars/b-boring-vanilla/index.html` — Bee's Scholar profile
 - `projects/vcsserg-repo-v1/LOG.md` — append-only iteration record
 
 ## Likely next steps
 
-1. Perform desktop and mobile visual QA in a real browser and correct any layout or contrast issues.
-2. Turn the Version 1.0 charter into a checklist mapping every documented promise to evidence that it works.
-3. Audit the scholar-run and deployment workflows against that checklist, then fix the highest-value gap.
-4. From a Git-writable environment, commit and push this iteration, then run `python/vcsserg_deploy.py`.
+1. Dr. Jones changes the runner's final command to
+   `python3 python/vcsserg_deploy.py`.
+2. Publish and catalog profiles for Aleph Initial Alpha and Ceetown.
+3. Run the verifier until all six automated groups pass.
+4. After deployment, compare the production and local file inventories and bytes,
+   then perform desktop/mobile browser QA.

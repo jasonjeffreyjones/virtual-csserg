@@ -27,5 +27,21 @@ Follow these steps:
 EOF
 )
 
+exec 9>/tmp/virtual-csserg.lock
+flock -n 9 || {
+    echo "Another Scholar iteration is already running."
+    exit 1
+}
+
+git pull --ff-only origin main
+
 codex exec "$PROMPT" \
     >> "$LOG_DIR/${SCHOLAR_NAME}_${PROJECT_NAME}.log" 2>&1
+
+git add -A
+git commit -m "Scholar $SCHOLAR_NAME: iterate on $PROJECT_NAME"
+
+git pull --rebase origin main
+git push origin main
+
+python3 vcsserg_deploy.py
