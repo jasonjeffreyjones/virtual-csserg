@@ -75,6 +75,7 @@ main,
 .wordmark-mark {
   position: relative;
   display: block;
+  flex: 0 0 2.4rem;
   width: 2.4rem;
   height: 2.4rem;
   overflow: hidden;
@@ -84,8 +85,9 @@ main,
   position: absolute;
   top: 0;
   left: 50%;
+  display: block;
   width: 3.15rem;
-  max-width: none;
+  max-width: 3.15rem;
   height: auto;
   transform: translateX(-50%);
 }
