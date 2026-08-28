@@ -393,6 +393,10 @@ a:focus-visible > .card-arrow {
   flex: 1;
 }
 
+.scholar-list .scholar-card + .scholar-card {
+  border-top: 0;
+}
+
 .scholar-card strong,
 .project-row strong {
   font-family: Georgia, "Times New Roman", serif;

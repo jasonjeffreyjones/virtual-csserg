@@ -229,6 +229,18 @@ def check_public_catalogs():
     if not scholar_names:
         problems.append("PROJECT.md has no parseable Initial Scholars roster")
 
+    scholar_index_path = WEBSITE_ROOT / "scholars" / "index.html"
+    if not scholar_index_path.is_file():
+        problems.append("website/scholars/index.html does not exist")
+        scholar_index_targets = set()
+    else:
+        scholar_index = parse_page(scholar_index_path)
+        scholar_index_targets = set()
+        for reference in scholar_index.references:
+            target, _ = resolve_local_reference(scholar_index_path, reference)
+            if target is not None:
+                scholar_index_targets.add(target)
+
     for name in scholar_names:
         slug = SCHOLAR_SLUG_OVERRIDES.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
         page = WEBSITE_ROOT / "scholars" / slug / "index.html"
@@ -236,6 +248,8 @@ def check_public_catalogs():
             problems.append(f"initial Scholar {name} has no public profile")
         elif page.resolve() not in linked_targets:
             problems.append(f"initial Scholar {name} is not linked from website/index.html")
+        elif page.resolve() not in scholar_index_targets:
+            problems.append(f"initial Scholar {name} is not linked from the Scholar index")
 
     return Result(
         "Public project and Scholar catalogs",
@@ -269,6 +283,11 @@ def check_runner():
                 f"deployment command resolves to missing {deployment_path.relative_to(PROJECT_ROOT)}"
             )
 
+    log_file_reference = re.search(r"\$(?:LOG_FILE\b|\{LOG_FILE(?:[^}]*)\})", source)
+    log_file_assignment = re.search(r"^\s*LOG_FILE=", source, flags=re.MULTILINE)
+    if log_file_reference and not log_file_assignment:
+        problems.append("LOG_FILE is referenced but never assigned under set -u")
+
     return Result(
         "Automated Scholar runner",
         not problems,
@@ -291,7 +310,7 @@ def check_deployment_component():
         "VCSSERG_DEPLOY_SSH_PORT": "22",
         "VCSSERG_DEPLOY_SSH_USER": "check-user",
         "VCSSERG_DEPLOY_SSH_HOST": "check-host",
-        "VCSSERG_DEPLOY_REMOTE_PATH": "/check/path/",
+        "VCSSERG_DEPLOY_REMOTE_PATH": "/check/virtual-csserg/",
     }
     problems = []
 
@@ -305,6 +324,8 @@ def check_deployment_component():
                 problems.append("rsync is not invoked as a shell-free argument list")
             if options.get("check") is not True:
                 problems.append("rsync subprocess failures are not checked")
+            if not any(part.startswith("--delete") for part in command):
+                problems.append("rsync does not delete stale remote website files")
 
         failure = subprocess.CalledProcessError(23, ["rsync"])
         with patch.object(deployment.subprocess, "run", side_effect=failure):
@@ -343,10 +364,24 @@ def check_deployment_component():
                 if mocked_run.called:
                     problems.append("rsync ran with an invalid SSH port")
 
+        with patch.dict(
+            os.environ, {"VCSSERG_DEPLOY_REMOTE_PATH": "/"}, clear=False
+        ):
+            with patch.object(deployment.subprocess, "run") as mocked_run:
+                try:
+                    with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                        deployment.deploy()
+                except ValueError:
+                    pass
+                else:
+                    problems.append("an unsafe remote deployment path was accepted")
+                if mocked_run.called:
+                    problems.append("rsync ran with an unsafe remote deployment path")
+
     return Result(
         "Deployment component",
         not problems,
-        "shell-free rsync, port validation, and nonzero failure propagation passed"
+        "guarded exact-mirror rsync and nonzero failure propagation passed"
         if not problems else "; ".join(problems),
     )
 

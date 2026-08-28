@@ -2,6 +2,7 @@
 
 import os
 from pathlib import Path
+from pathlib import PurePosixPath
 import subprocess
 import sys
 
@@ -59,16 +60,27 @@ def get_ssh_port():
     return str(port)
 
 
+def get_remote_path():
+    raw_path = get_required_env_var("VCSSERG_DEPLOY_REMOTE_PATH")
+    normalized_path = raw_path.rstrip("/")
+    if PurePosixPath(normalized_path).name != "virtual-csserg":
+        raise ValueError(
+            "VCSSERG_DEPLOY_REMOTE_PATH must end with a virtual-csserg directory"
+        )
+    return normalized_path + "/"
+
+
 def deploy():
     source_path = str(PROJECT_ROOT / "website") + "/"
     destination = (
         f'{get_required_env_var("VCSSERG_DEPLOY_SSH_USER")}@'
         f'{get_required_env_var("VCSSERG_DEPLOY_SSH_HOST")}:'
-        f'{get_required_env_var("VCSSERG_DEPLOY_REMOTE_PATH")}'
+        f'{get_remote_path()}'
     )
     command = [
         "rsync",
         "-avz",
+        "--delete-delay",
         "-e",
         f"ssh -p {get_ssh_port()}",
         source_path,

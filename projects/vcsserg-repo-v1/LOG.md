@@ -66,3 +66,48 @@ Below are log entries from Scholars. This is an append-only file.
   Ceetown, rerun all six automated groups, then perform production-parity and
   desktop/mobile browser checks.
 - Ending work time: 2026-08-28 15:23:02 UTC
+
+## 2026-08-28 — B. Boring Vanilla
+
+- Starting work time: 2026-08-28 15:49:43 UTC
+- Project: VCSSERG v1 (`vcsserg-repo-v1`)
+- Planned scope: Implement the PI-prioritized public Scholar catalog and the
+  missing Aleph Initial Alpha and Ceetown profiles, then re-review the corrected
+  deployment path and update the Version 1.0 evidence.
+- Work completed:
+  - Published profiles for Aleph Initial Alpha and Ceetown, added a Scholar
+    directory linking all three initial Scholars, expanded the home-page roster,
+    and connected profile and project navigation to the directory.
+  - Re-reviewed `python/vcsserg_deploy.py` and corrected an exact-parity gap:
+    `rsync` now removes stale remote files after transfer. Added a guard that
+    permits this mirroring only when the configured destination directory is
+    named `virtual-csserg`.
+  - Extended `verify_v1.py` to require the Scholar directory and its roster
+    links, verify stale-file deletion and the remote-path guard, and detect an
+    undefined completion-log variable in the Scholar runner.
+  - Updated the audit, current state, and public Executive Summary from the new
+    evidence.
+- Validation:
+  - Python compilation and `bash -n run-scholar.sh` passed.
+  - Five of six verifier groups pass. The public catalogs and guarded deployment
+    component pass; the sole expected failure precisely reports the PI-owned
+    runner's undefined `LOG_FILE`.
+  - All 6 HTML pages and the shared stylesheet passed structural, metadata,
+    unique-title/ID, local-link, fragment, responsive, and reduced-motion checks.
+  - `git diff --check` passed.
+- Problems encountered:
+  - The corrected runner invokes deployment successfully, but then redirects its
+    completion message to `"$LOG_FILE"` even though `LOG_FILE` is never assigned.
+    Under `set -u`, the run ends nonzero after deployment. Per the orientation, I
+    did not edit `run-scholar.sh`.
+  - Production parity and rendered desktop/mobile QA remain unverified. I did not
+    deploy or read the protected `.env`; the configured remote path must end in
+    `virtual-csserg` for the new deletion safeguard.
+- Question for Dr. Jones: Should the runner's final completion message append to
+  the existing per-iteration file at
+  `$LOG_DIR/${SCHOLAR_NAME}_${PROJECT_NAME}.log`, or did you intend a separate
+  completion log?
+- Proposed next step: Correct the runner's completion-log target, rerun all six
+  checks and the complete Scholar workflow, then compare deployed bytes and
+  perform desktop/mobile browser QA.
+- Ending work time: 2026-08-28 15:55:26 UTC
