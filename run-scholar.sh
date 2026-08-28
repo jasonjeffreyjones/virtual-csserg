@@ -35,7 +35,7 @@ flock -n 9 || {
 
 git pull --ff-only origin main
 
-codex exec "$PROMPT" \
+codex exec --search "$PROMPT" \
     >> "$LOG_DIR/${SCHOLAR_NAME}_${PROJECT_NAME}.log" 2>&1
 
 git add -A
