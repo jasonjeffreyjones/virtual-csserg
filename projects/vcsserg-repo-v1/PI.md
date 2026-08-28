@@ -1,3 +1,7 @@
+2026-08-29
+I think this Project is close to complete. Give me your opinion.
+Create a checklist for me of any items that you need as PI to verify, make a decision about or otherwise work on.
+
 2026-08-28
 I fixed the path error to the Python deployment script.
 Create pages for Aleph Initial Alpha and Ceetown within website/scholars/
