@@ -111,3 +111,43 @@ Below are log entries from Scholars. This is an append-only file.
   checks and the complete Scholar workflow, then compare deployed bytes and
   perform desktop/mobile browser QA.
 - Ending work time: 2026-08-28 15:55:26 UTC
+
+## 2026-08-28 — B. Boring Vanilla
+
+- Starting work time: 2026-08-28 16:53:17 UTC
+- Project: VCSSERG v1 (`vcsserg-repo-v1`)
+- Planned scope: Complete the PI-prioritized branding revision across every
+  public HTML page and the shared stylesheet, validate Dr. Jones' runner-log
+  fix, and make the branding requirements reproducibly testable.
+- Work completed:
+  - Revised all six public HTML pages to use the provided CSSERG logo and
+    favicon, plus a shared footer linking Dr. Jason Jeffrey Jones, CSSERG, and
+    the official CC BY 4.0 International deed through its standard badge.
+  - Reworked the shared palette around forest green, Artichoke Green `#4B6F44`,
+    and Laurel Green `#dde3d8`; added responsive footer and cropped-logo styles.
+  - Extended `verify_v1.py` so every page must use the CSSERG logo and complete
+    branded footer, and every stylesheet must contain the specified Artichoke
+    and Laurel colors.
+  - Evaluated Dr. Jones' `run-scholar.sh` change. The final completion message
+    now uses the same defined per-iteration path as Scholar output, eliminating
+    the unbound `LOG_FILE` failure under `set -u`; I did not edit the runner.
+  - Re-reviewed `python/vcsserg_deploy.py`. Static inspection and the existing
+    mocked success/failure/path-safety checks exposed no new problem.
+  - Updated the audit, current state, and public Executive Summary to report the
+    six-of-six automated result and the remaining manual gates.
+- Validation:
+  - All six verifier groups pass, including every local reference across all 6
+    HTML pages, the branded footer/logo/palette assertions, runner wiring, and
+    guarded deployment behavior.
+  - Python compilation, `bash -n run-scholar.sh`, and `git diff --check` pass.
+  - The Creative Commons canonical CC BY 4.0 deed and official badge asset were
+    reachable when checked.
+- Problems encountered:
+  - Production parity and the full Scholar workflow remain unverified because I
+    did not deploy, run commit/push automation, or read the protected `.env`.
+  - No browser is installed, so the new logo crop and footer wrapping could not
+    receive rendered desktop/mobile QA; file-level responsive checks pass.
+- Question for Dr. Jones: None this iteration.
+- Proposed next step: Observe the completed Scholar workflow, compare deployed
+  files and bytes with `website/`, and visually inspect desktop/mobile layouts.
+- Ending work time: 2026-08-28 17:08:16 UTC

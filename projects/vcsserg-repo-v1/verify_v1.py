@@ -32,6 +32,8 @@ class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.description = ""
+        self.footer_depth = 0
+        self.footer_references = []
         self.h1_count = 0
         self.html_lang = ""
         self.ids = []
@@ -46,6 +48,8 @@ class PageParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        if tag == "footer":
+            self.footer_depth += 1
         element_id = attributes.get("id")
         if element_id:
             self.ids.append(element_id)
@@ -64,10 +68,14 @@ class PageParser(HTMLParser):
             reference = attributes.get(attribute)
             if reference:
                 self.references.append(reference)
+                if self.footer_depth:
+                    self.footer_references.append(reference)
 
     def handle_endtag(self, tag):
         if tag == "title":
             self.in_title = False
+        elif tag == "footer":
+            self.footer_depth = max(0, self.footer_depth - 1)
 
     def handle_data(self, data):
         if self.in_title:
@@ -133,6 +141,13 @@ def check_html_and_css():
     parsed_pages = {page: parse_page(page) for page in html_pages}
     problems = []
     titles = {}
+    logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
+    required_footer_references = {
+        "https://jasonjones.ninja/",
+        "https://jasonjones.ninja/csserg/",
+        "https://creativecommons.org/licenses/by/4.0/",
+        "https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png",
+    }
 
     for page, parsed in parsed_pages.items():
         relative = page.relative_to(PROJECT_ROOT)
@@ -152,10 +167,21 @@ def check_html_and_css():
         if duplicate_ids:
             problems.append(f"{relative}: duplicate ids {', '.join(duplicate_ids)}")
 
+        missing_footer_references = sorted(
+            required_footer_references - set(parsed.footer_references)
+        )
+        if missing_footer_references:
+            problems.append(
+                f"{relative}: footer missing brand/license references "
+                f"{', '.join(missing_footer_references)}"
+            )
+
+        local_targets = set()
         for reference in parsed.references:
             target, fragment = resolve_local_reference(page, reference)
             if target is None:
                 continue
+            local_targets.add(target)
             try:
                 target.relative_to(WEBSITE_ROOT.resolve())
             except ValueError:
@@ -168,6 +194,9 @@ def check_html_and_css():
                 target_parser = parsed_pages.get(target) or parse_page(target)
                 if fragment not in target_parser.ids:
                     problems.append(f"{relative}: missing fragment target {reference}")
+
+        if logo_path not in local_targets:
+            problems.append(f"{relative}: missing CSSERG logo")
 
     for title, pages in titles.items():
         if len(pages) > 1:
@@ -184,6 +213,9 @@ def check_html_and_css():
             problems.append(f"{relative}: no responsive media query")
         if "prefers-reduced-motion" not in css:
             problems.append(f"{relative}: no reduced-motion treatment")
+        for color, name in (("#4b6f44", "Artichoke Green"), ("#dde3d8", "Laurel Green")):
+            if color not in css.lower():
+                problems.append(f"{relative}: missing {name} brand color {color}")
 
     return Result(
         "Static HTML/CSS site",
