@@ -71,3 +71,17 @@ The index.html page within a `website/projects/PROJECT-NAME/` is an Executive Su
 The index.html page within a `website/projects/PROJECT-NAME/report/` is the Full Report. A human can read it. There is no length restriction. It should be organized as appropriate. There is a table of contents with links into subsections. Scholars may write and edit Full Reports for Projects.
 
 A Full Report is generated through R and Quarto. Source Quarto files live in the appropriate `projects/` subdirectory. Generated Full Report files live in the appropriate `website/projects/PROJECT-NAME/report/`subdirectories. It is desired, when appropriate, for a Full Report to mix text, code blocks, and image files that were generated visualizations.
+
+#### Branding
+
+Published results should be recognizable as CSSERG documents.
+
+Use the CSSERG logo (website/images/csserg-transparent-logo.png) where and when appropriate.
+
+Dr. Jones' favorite color is a dark forest green. He also suggests Artichoke Green #4B6F44 as a pleasing dark green. Laurel Green is a pleasing light green #dde3d8.
+
+A shared footer across every page of the website should include links:
+
+- [Dr. Jason Jeffrey Jones](https://jasonjones.ninja/)
+- [CSSERG](https://jasonjones.ninja/csserg/)
+- A standard badge for the CC-BY 4.0 International license.
