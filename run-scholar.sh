@@ -44,4 +44,7 @@ git commit -m "Scholar $SCHOLAR_NAME: iterate on $PROJECT_NAME"
 git pull --rebase origin main
 git push origin main
 
-python3 vcsserg_deploy.py
+python3 python/vcsserg_deploy.py
+
+echo "$(date -u '+%Y-%m-%d %H:%M:%S UTC') ITERATION COMPLETE: $SCHOLAR_NAME / $PROJECT_NAME" \
+    >> "$LOG_FILE"
