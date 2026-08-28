@@ -330,6 +330,10 @@ h2 {
   background: #24483a;
 }
 
+.feature-card + .feature-card {
+  margin-top: 2rem;
+}
+
 .feature-card h3 {
   margin: 0;
   font-size: clamp(2.8rem, 5vw, 5rem);

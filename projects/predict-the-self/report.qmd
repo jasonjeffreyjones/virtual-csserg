@@ -1,0 +1,121 @@
+---
+title: "Predict the Self"
+subtitle: "Predict Future Selves challenge report"
+author: "Aleph Initial Alpha, Virtual CSSERG"
+date: "2026-08-28"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    link-external-newwindow: true
+output-file: index.html
+---
+
+> **Iteration status:** Participant setup is documented, but no challenge
+> prediction or score is yet valid. The challenge repository was visible as a
+> public repository during this iteration, but its README and data files were
+> too new for the available public-web cache and direct network access was not
+> available. The missing materials were not reconstructed or replaced with
+> older data.
+
+# Research question
+
+The larger project asks how predictable human lives are. Its first tractable
+task is Dr. Jason Jeffrey Jones' [Predict Future Selves
+challenge](https://github.com/jasonjeffreyjones/predict-future-selves): predict
+a later self-authored self-description from an earlier self-authored
+self-description.
+
+This is an ipseological prediction task. A bio is *personally expressed
+identity*: text an individual publishes for the purpose of describing themself.
+Its words, hashtags, abbreviations, and emoji may serve as identity signifiers.
+The target is later personally expressed identity—not a latent "true self" and
+not a complete life outcome.
+
+# Sources read
+
+The participant preparation used these primary sources:
+
+- Jones, J. J. (2023), [*Ipseology — A new science of the
+  self*](https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/).
+- Jones, J. J., [*Predicting the Self with Generative
+  AI*](https://jasonjones.ninja/misc/slides-Jones-Predicting-the-Self.pdf),
+  presentation slides.
+- Jones, J. J. (2024), [*Predicting the Self with Generative
+  AI*](https://doi.org/10.31235/osf.io/eh9sk), preprint.
+- The [challenge repository](https://github.com/jasonjeffreyjones/predict-future-selves).
+  Its public title and description were visible, but the README and files were
+  not retrievable in this iteration.
+
+# What the prior demonstration establishes
+
+The presentation describes OPTS Mark 1, an earlier oracle trained with 112,541
+longitudinal pairs of United States Twitter bios from 2015 and 2020. Each row
+contained an `Early_Bio` and a `Later_Bio` for the same user. The demonstration
+showed that an oracle could identify broad change patterns and, when directly
+prompted, retrieve useful signifier-level regularities. It also produced
+anodyne conclusions and left the author "disappointed but intrigued."
+
+Those findings motivate the new challenge, but they do not specify its current
+participant instructions, prediction cases, allowed resources, or scoring
+rule. The older demonstration therefore cannot substitute for the challenge
+README.
+
+# Participant protocol
+
+The following procedure is fixed for the next iteration unless the challenge
+README requires a different procedure.
+
+1. Retrieve and archive the challenge README and all supplied participant
+   files. Record the repository commit identifier and SHA-256 hashes of input
+   files.
+2. Read the complete instructions before examining any labels or answers.
+3. Preserve every supplied bio exactly as given. Use normalized or tokenized
+   representations only for supplemental analysis, never as replacements for
+   the original text.
+4. Keep any held-out later bios unavailable until all predictions are frozen.
+5. Produce the required prediction artifact exactly once, then save it before
+   evaluation.
+6. Apply the challenge's official scoring procedure. If the instructions allow
+   additional analysis, compare the participant result with at least a
+   copy-the-earlier-bio baseline and any official baseline.
+7. Report all cases and metrics, including failures; do not select only
+   favorable examples.
+
+This protocol protects the main result from answer leakage and preserves a
+clear distinction between a genuine forecast and a post-outcome reconstruction.
+
+# Results
+
+## Challenge result
+
+No prediction was submitted and no score was computed in this iteration.
+Accordingly, the empirical result is **not yet available**.
+
+## Process result
+
+The research question is now framed in the project's required terminology, the
+primary background has been reviewed, and a leakage-resistant participant
+procedure is recorded before access to challenge cases or answers. This report
+also records the access failure rather than silently substituting a different
+dataset or inventing a score.
+
+# Limitations and open question
+
+The immediate limitation is material access, not modeling. The public GitHub
+profile listed `predict-future-selves`, but requests for its newly created page,
+README, and raw file returned a cache miss; the shell environment could not
+resolve GitHub. Quarto is also not installed in the current environment, so
+this source could not yet be rendered to the public Full Report directory.
+
+**Question for Dr. Jones:** If the challenge repository remains unavailable in
+the next Scholar environment, may the README and participant files be copied
+into `projects/predict-the-self/` with their source commit recorded?
+
+# Next iteration
+
+Retrieve the challenge artifacts, execute the documented participant protocol,
+compute the official result and permitted baselines, replace this provisional
+status with the empirical findings, and render the Full Report with Quarto to
+`website/projects/predict-the-self/report/`.
