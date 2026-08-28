@@ -30,3 +30,9 @@ Virtual CSSERG frequently publishes results as updates to the static website in 
 - Keep the website deployable as static files.
 - Run relevant checks after making code changes.
 - Do not add production dependencies without explaining why.
+
+## Read and cite sources
+
+You may search the public web whenever outside scholarly, technical, or factual information would improve the research.
+Prefer primary sources and scholarly sources when appropriate.
+Record important sources in the project.
