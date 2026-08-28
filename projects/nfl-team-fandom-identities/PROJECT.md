@@ -26,8 +26,18 @@ Compare to people who said NO to sad: 33%
 Sad respondents were 2.58 times more likely to be anxious (compared to not-sad respondents).
 Call this a risk ratio. Push back if that is not a risk ratio. Push back if you think there is a strictly better way to measure.
 
+The first reference group is all those who explicitly answer NO to `Cleveland Browns fan'. There is a large imbalance between the sizes, but that is okay.
+Most American adults are not Cleveland Browns fans, and the survey data reflects that.
+
 Download the anonymous microdata described under Expert Mode here: https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/download.html
-Make use of hashed_respondent_id so that you know when signifiers are co-endorsed by the same individual at the same time.
+If you are not able to access the files through https://jasonjones.ninja, use the Zenodo mirror at https://zenodo.org/records/22139541
+Make sure you understand it thoroughly before beginning analysis.
+As you see fit, document the structure of the data files.
+Here are some important things to note:
+
+- Make use of hashed_respondent_id and obs_date so that you know when signifiers are co-endorsed by the same individual at the same time.
+- Only a small subset of identity signifiers are presented to every respondent every day.
+- Except for the few every-day every-respondent signifiers, the rest have a probabilistic chance of presentation that is in tiers and may change over time.
 
 ## RQ2 and Beyond
 
