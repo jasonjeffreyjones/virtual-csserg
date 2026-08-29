@@ -2,16 +2,16 @@
 
 We will address a growing list of research questions about NFL Team Fandom with data from Ipseity Daily.
 
-RQ1: How `happy` are `Cleveland Browns fans` as compared to other reference groups?
-RQ2: How does every NFL team fandom rank on `happy` `sad` `healthy` and `voter`? (The larger intent is to rank on every possible co-occurring signfier.)
-RQ3: During the 2025 NFL season, how did the happiness of each NFL team vary week to week?
+- RQ1: How `happy` are `Cleveland Browns fans` as compared to other reference groups?
+- RQ2: How does every NFL team fandom rank on `happy` `sad` `healthy` and `voter`? (The larger intent is to rank on every possible co-occurring signfier.)
+- RQ3: During the 2025 NFL season, how did the happiness of each NFL team vary week to week?
 
 ## Background
 
 Use data from [Ipseity Daily](https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/).
 Approach this project with ipseological methods. Read [Ipseology - A new science of the self](https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/)
 Use Dr. Jones' terms (e.g. identity signifier) consistently and precisely. Ask Dr. Jones questions as necessary; he invented and developed ipseology.
-Of course, you may additionally use any all other methods and techniques that will improve the results.
+Of course, you may additionally use any and all other methods and techniques that will improve the results.
 
 ## RQ1 as First Step
 
