@@ -1,0 +1,169 @@
+{
+  "analysis": "NFL Team Fandom Identities RQ1 age-by-sex weighting sensitivity",
+  "audit": {
+    "complete_age_sex_respondent_days": 8213,
+    "excluded_missing_or_nonbinary_age_sex": 40,
+    "primary_eligible_respondent_days": 8253
+  },
+  "cell_diagnostics": [
+    {
+      "acs_adult_count": 27315663,
+      "acs_adult_proportion": 0.10223628807361558,
+      "age_group": "18-29",
+      "eligible_complete_records": 572,
+      "fandom_no_records": 544,
+      "fandom_yes_records": 28,
+      "pooled_poststratification_weight": 1.467948660749309,
+      "sex": "Male"
+    },
+    {
+      "acs_adult_count": 35213414,
+      "acs_adult_proportion": 0.13179576632496484,
+      "age_group": "30-44",
+      "eligible_complete_records": 1818,
+      "fandom_no_records": 1728,
+      "fandom_yes_records": 90,
+      "pooled_poststratification_weight": 0.5954007859334083,
+      "sex": "Male"
+    },
+    {
+      "acs_adult_count": 40726327,
+      "acs_adult_proportion": 0.15242934060770438,
+      "age_group": "45-64",
+      "eligible_complete_records": 1226,
+      "fandom_no_records": 1157,
+      "fandom_yes_records": 69,
+      "pooled_poststratification_weight": 1.021127385327142,
+      "sex": "Male"
+    },
+    {
+      "acs_adult_count": 27683311,
+      "acs_adult_proportion": 0.10361231057168524,
+      "age_group": "65+",
+      "eligible_complete_records": 259,
+      "fandom_no_records": 249,
+      "fandom_yes_records": 10,
+      "pooled_poststratification_weight": 3.285590373456567,
+      "sex": "Male"
+    },
+    {
+      "acs_adult_count": 26279247,
+      "acs_adult_proportion": 0.09835721968929322,
+      "age_group": "18-29",
+      "eligible_complete_records": 668,
+      "fandom_no_records": 648,
+      "fandom_yes_records": 20,
+      "pooled_poststratification_weight": 1.2092931815990497,
+      "sex": "Female"
+    },
+    {
+      "acs_adult_count": 34617925,
+      "acs_adult_proportion": 0.12956698699975977,
+      "age_group": "30-44",
+      "eligible_complete_records": 1574,
+      "fandom_no_records": 1540,
+      "fandom_yes_records": 34,
+      "pooled_poststratification_weight": 0.6760696723183145,
+      "sex": "Female"
+    },
+    {
+      "acs_adult_count": 41783819,
+      "acs_adult_proportion": 0.15638729164654772,
+      "age_group": "45-64",
+      "eligible_complete_records": 1554,
+      "fandom_no_records": 1503,
+      "fandom_yes_records": 51,
+      "pooled_poststratification_weight": 0.8265179062375139,
+      "sex": "Female"
+    },
+    {
+      "acs_adult_count": 33561972,
+      "acs_adult_proportion": 0.12561479608642925,
+      "age_group": "65+",
+      "eligible_complete_records": 542,
+      "fandom_no_records": 529,
+      "fandom_yes_records": 13,
+      "pooled_poststratification_weight": 1.9034581554572758,
+      "sex": "Female"
+    }
+  ],
+  "direct_standardization_to_common_us_age_sex_distribution": {
+    "available": true,
+    "happy_prevalence_fandom_no": 0.7816969899550367,
+    "happy_prevalence_fandom_yes": 0.8430647624199045,
+    "prevalence_difference": 0.0613677724648678,
+    "prevalence_ratio": 1.0785058318676624
+  },
+  "interpretation_warning": "The true age-sex distribution of Cleveland Browns fans is unknown. Pooled calibration assumes selection differences are captured by these eight cells; direct standardization describes a hypothetical common age-sex distribution, not the observed fandom populations.",
+  "pooled_sample_poststratification": {
+    "happy_prevalence_fandom_no": 0.7819773665538019,
+    "happy_prevalence_fandom_yes": 0.8463917304579994,
+    "prevalence_difference": 0.06441436390419752,
+    "prevalence_ratio": 1.0823736934843442,
+    "weighted_denominator_fandom_no": 7900.928071713105,
+    "weighted_denominator_fandom_yes": 312.0719282869866
+  },
+  "status": "appendix sensitivity; unweighted descriptive estimate is primary",
+  "target": {
+    "adult_population_count": 267181678,
+    "source": "U.S. Census Bureau, 2024 ACS 1-year table B01001",
+    "source_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/1YRData/acsdt1y2024-b01001.dat",
+    "universe": "U.S. resident population age 18 and older",
+    "variable_groups": {
+      "Female 18-29": [
+        "B01001_031E",
+        "B01001_032E",
+        "B01001_033E",
+        "B01001_034E",
+        "B01001_035E"
+      ],
+      "Female 30-44": [
+        "B01001_036E",
+        "B01001_037E",
+        "B01001_038E"
+      ],
+      "Female 45-64": [
+        "B01001_039E",
+        "B01001_040E",
+        "B01001_041E",
+        "B01001_042E",
+        "B01001_043E"
+      ],
+      "Female 65+": [
+        "B01001_044E",
+        "B01001_045E",
+        "B01001_046E",
+        "B01001_047E",
+        "B01001_048E",
+        "B01001_049E"
+      ],
+      "Male 18-29": [
+        "B01001_007E",
+        "B01001_008E",
+        "B01001_009E",
+        "B01001_010E",
+        "B01001_011E"
+      ],
+      "Male 30-44": [
+        "B01001_012E",
+        "B01001_013E",
+        "B01001_014E"
+      ],
+      "Male 45-64": [
+        "B01001_015E",
+        "B01001_016E",
+        "B01001_017E",
+        "B01001_018E",
+        "B01001_019E"
+      ],
+      "Male 65+": [
+        "B01001_020E",
+        "B01001_021E",
+        "B01001_022E",
+        "B01001_023E",
+        "B01001_024E",
+        "B01001_025E"
+      ]
+    }
+  }
+}

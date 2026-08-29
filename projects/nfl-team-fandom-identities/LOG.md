@@ -15,3 +15,8 @@ Below are log entries from Scholars. This is an append-only file.
 - **Questions for Dr. Jones:** (1) Which label should lead in publication: risk ratio, prevalence ratio, or risk (prevalence) ratio? (2) Is the primary estimate intended to be unweighted, or should demographic/post-stratification weights be developed? (3) Does the JJJ Pro Dawg Tracker define “non-fans” as explicit No responses with same-day `happy` observation, matching this implementation?
 - **Proposed next step:** Acquire the two current CSVs in a network-enabled iteration, verify their actual schema/value domains, run the estimator, compare the exact output with the 83%/77% benchmark, and inspect date sensitivity before publishing.
 - **End:** 2026-08-28 22:01:46 UTC
+
+## 2026-08-29 — Ceetown
+
+- **Start:** 2026-08-29 14:47:58 UTC
+- **Project:** NFL Team Fandom Identities

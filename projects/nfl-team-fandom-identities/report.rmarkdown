@@ -1,0 +1,203 @@
+---
+title: "NFL Team Fandom Identities"
+subtitle: "RQ1 — Happiness among Cleveland Browns fans and explicit non-fans"
+author: "Ceetown, Virtual CSSERG"
+date: "2026-08-29"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    link-external-newwindow: true
+    css: report.css
+output-file: index.html
+execute:
+  echo: true
+  warning: false
+---
+
+<a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo" width="86"><span>Virtual CSSERG</span></a>
+
+```{r}
+#| label: load-results
+#| include: false
+primary <- jsonlite::fromJSON("results/rq1.json")
+weighted <- jsonlite::fromJSON("results/rq1_weighted_sensitivity.json")
+estimate <- primary$estimates
+cluster <- estimate$cluster_bootstrap
+```
+
+# Finding
+
+In the available Ipseity Daily data, `happy` is more prevalent among
+respondent-days explicitly endorsing `Cleveland Browns fan` than among those
+explicitly rejecting it: **83.28% versus 76.54%**. The unweighted prevalence
+ratio is **1.088** (respondent-cluster bootstrap 95% CI **1.010–1.161**), and
+the prevalence difference is **+6.74 percentage points** (cluster-bootstrap
+95% CI **+0.75–+12.20 points**).
+
+In plain language, observed happiness prevalence is about 8.8% higher among
+Browns fans. This is a descriptive association, not evidence that fandom
+causes happiness.
+
+<figure>
+  <img src="../images/happy-prevalence.png" alt="Bar chart showing happy prevalence of 83.28 percent among 317 Browns-fan respondent-days and 76.54 percent among 7,936 explicit non-fan respondent-days.">
+  <figcaption>Figure 1. Exact unweighted RQ1 estimates from the cumulative microdata through 2026-08-28.</figcaption>
+</figure>
+
+# Research question and estimand
+
+RQ1 asks: How `happy` are `Cleveland Browns fans` compared with people who
+explicitly answer No to that identity signifier?
+
+The estimand is
+
+\[
+\frac{P(\texttt{happy}=\mathrm{Yes}\mid\texttt{Cleveland Browns fan}=\mathrm{Yes})}
+{P(\texttt{happy}=\mathrm{Yes}\mid\texttt{Cleveland Browns fan}=\mathrm{No})}.
+\]
+
+This report calls the quantity a **prevalence ratio**: the prevalence of a
+binary state in one contemporaneously measured group divided by its prevalence
+in a reference group. A risk ratio uses the same probability-ratio calculation,
+but “prevalence ratio” better matches this repeated cross-sectional design; no
+incident outcome is observed after an exposure.
+
+# Data and eligibility
+
+[Ipseity Daily](https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/)
+asks American adults whether identity signifiers describe them today. The
+[Expert Mode instructions](https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/download.html)
+provide response and demographics microdata and specify an inner join on
+`hashed_respondent_id` and `obs_date`. An archival mirror is maintained on
+[Zenodo](https://zenodo.org/records/22139541). The broader data design is
+described in [*Building the Ipseome: Large, Free, Open, Human Identity
+Data*](https://arxiv.org/abs/2607.02488).
+
+The analysis snapshot contains 677,121 response rows through 2026-08-28. A
+respondent-day is eligible only when it has a valid demographics join and
+explicit binary answers to both `Cleveland Browns fan` and `happy`. An item not
+presented is missing, never No. Rows containing the explicit
+`CONSENT_REVOKED` sentinel are excluded before the join. Identical target
+duplicates are collapsed; a respondent-day with conflicting target answers is
+excluded. One such conflict occurred.
+
+The final risk set contains 8,253 respondent-days from 4,695 unique respondents
+between 2025-07-08 and 2026-08-28. Because 1,395 respondents contribute more
+than one eligible day, uncertainty is bootstrapped by respondent rather than by
+respondent-day.
+
+# Exact results
+
+```{r}
+#| label: exact-two-by-two
+cells <- estimate$two_by_two
+two_by_two <- data.frame(
+  Group = c("Cleveland Browns fan: Yes", "Cleveland Browns fan: No"),
+  `happy Yes` = c(cells$fandom_yes_happy_yes, cells$fandom_no_happy_yes),
+  `happy No` = c(cells$fandom_yes_happy_no, cells$fandom_no_happy_no),
+  check.names = FALSE
+)
+two_by_two$Total <- rowSums(two_by_two[, 2:3])
+two_by_two$`happy prevalence` <- sprintf(
+  "%.2f%%",
+  100 * two_by_two$`happy Yes` / two_by_two$Total
+)
+knitr::kable(two_by_two, caption = "Exact eligible respondent-day counts")
+```
+
+```{r}
+#| label: prevalence-calculation
+fan_prevalence <- cells$fandom_yes_happy_yes /
+  (cells$fandom_yes_happy_yes + cells$fandom_yes_happy_no)
+nonfan_prevalence <- cells$fandom_no_happy_yes /
+  (cells$fandom_no_happy_yes + cells$fandom_no_happy_no)
+c(
+  prevalence_ratio = fan_prevalence / nonfan_prevalence,
+  prevalence_difference = fan_prevalence - nonfan_prevalence
+)
+```
+
+The respondent-cluster bootstrap requested 2,000 deterministic replicates and
+all 2,000 produced finite estimates. Its 95% interval for the prevalence ratio
+is 1.010–1.161. The conventional Katz interval, which treats respondent-days as
+independent, is narrower at 1.034–1.145 and is retained as a secondary check.
+
+The independent [JJJ Pro Dawg
+Tracker](https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/rqs/rq-jjj-pro-dawg-tracker.html)
+reports rounded rates of 83% and 77%. The exact analysis reproduces both after
+rounding.
+
+# Time sensitivity
+
+Monthly prevalence ratios range from 0.963 to 1.209. Twelve of fourteen are
+above 1, but each month contains only 15 to 29 Browns-fan respondent-days.
+Monthly fluctuation is therefore a useful warning about precision and pooling,
+not evidence for month-specific effects.
+
+<figure>
+  <img src="../images/monthly-prevalence-ratio.png" alt="Line chart of fourteen monthly happy prevalence ratios from July 2025 through August 2026, ranging from 0.963 to 1.209 around a pooled estimate of 1.088.">
+  <figcaption>Figure 2. Descriptive monthly prevalence ratios; point size reflects the monthly Browns-fan denominator.</figcaption>
+</figure>
+
+# Interpretation and limitations
+
+The result supports a narrow descriptive claim: within co-observed
+respondent-days in this snapshot, `happy` and `Cleveland Browns fan` go together
+slightly more often than `happy` and an explicit No to Browns fandom. It does
+not show that becoming a Browns fan would make someone happier.
+
+Important limitations are:
+
+- Fandom and happiness are contemporaneous self-descriptions, so temporal order
+  and causality are unavailable.
+- The fan group is much smaller than the explicit non-fan group. The ratio is
+  valid under this imbalance, but the fan-side precision is limited.
+- Signifier presentation is probabilistic and its tiers may change. Eligibility
+  requires co-presentation, and month-level denominators remain small.
+- Respondents can recur. Cluster resampling addresses within-respondent
+  dependence for uncertainty but does not transform the sample into a known
+  probability sample.
+- The cumulative data update daily. These estimates belong to the recorded
+  date range and SHA-256 hashes, not to every future version of Ipseity Daily.
+
+# Appendix: demographic weighting attempt
+
+The primary estimate is intentionally unweighted. As a sensitivity check, the
+analysis post-stratified 8,213 respondent-days with complete binary sex and
+numeric adult age to eight age-by-sex cells from the U.S. Census Bureau's
+[2024 ACS 1-year table
+B01001](https://data.census.gov/table/ACSDT1Y2024.B01001). Forty eligible
+respondent-days were excluded from this appendix for missing or nonbinary
+age/sex values.
+
+Pooled-sample calibration yields `happy` prevalence of 84.64% versus 78.20%, a
+prevalence ratio of **1.082** and a difference of **+6.44 points**. Directly
+standardizing each fandom group to the same hypothetical U.S. adult age-sex
+distribution yields 84.31% versus 78.17%, a ratio of **1.079** and a difference
+of **+6.14 points**. Both are close to the primary unweighted result.
+
+These are sensitivity analyses, not upgrades to population estimates. The true
+age-sex distribution of Cleveland Browns fans is unknown. Pooled calibration
+assumes the eight cells capture relevant sample-selection differences, while
+direct standardization intentionally asks about a hypothetical common
+age-sex distribution rather than the observed fandom populations. Neither
+approach adjusts for unmeasured selection or supplies design weights.
+
+# Reproducibility
+
+The analysis scripts, tests, Quarto source, and machine-readable result files
+are maintained with the project. The response-file SHA-256 is
+`5d6a90f1ac074f15b305ef8a14afff7b8481a6198ddc2829cca08a594de2f5a0`; the
+demographics-file SHA-256 is
+`c4f79d0958105a4f174e8e236de412528478206417d7fa957396e366ddd7de05`.
+Seven synthetic-data tests cover co-presentation, explicit No coding, binary
+domains, inner joins, duplicates, consent-revocation exclusion, repeated
+respondents, and direct standardization.
+
+<footer class="report-footer">
+  <p>Virtual CSSERG — discover and document truth efficiently and at scale.</p>
+  <p><a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a> · <a href="https://jasonjones.ninja/csserg/">CSSERG</a> · <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0 International</a></p>
+</footer>
+
