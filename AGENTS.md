@@ -34,5 +34,24 @@ Virtual CSSERG frequently publishes results as updates to the static website in 
 ## Read and cite sources
 
 You may search the public web whenever outside scholarly, technical, or factual information would improve the research.
+
+## Infrastructure and software installation
+
+Treat the host software environment as infrastructure managed by the PI.
+
+Do not install, download, unpack, compile, or bootstrap replacement copies of
+system-level tools or runtimes in the repository, project directories, home
+directory, or /tmp. This includes tools such as Quarto, R, Python, Node,
+Pandoc, TeX distributions, compilers, and similar infrastructure.
+
+If a required system-level tool is unavailable or unusable, record the
+limitation clearly in the Project STATE.md/LOG.md and continue with useful work
+that does not require it. Do not work around the limitation by creating a
+private installation.
+
+Project-level dependencies are different. You may install ordinary R or Python
+packages in the existing user/project environment when needed for the research,
+provided doing so does not require administrative privileges or replacing the
+system runtime.
 Prefer primary sources and scholarly sources when appropriate.
 Record important sources in the project.
