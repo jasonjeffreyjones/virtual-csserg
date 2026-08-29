@@ -35,7 +35,10 @@ flock -n 9 || {
 
 git pull --ff-only origin main
 
-codex exec -c 'web_search="live"' "$PROMPT" \
+codex exec \
+    -c 'web_search="live"' \
+    -c 'sandbox_workspace_write.network_access=true' \
+    "$PROMPT" \
     >> "$LOG_DIR/${SCHOLAR_NAME}_${PROJECT_NAME}.log" 2>&1
 
 git add -A
