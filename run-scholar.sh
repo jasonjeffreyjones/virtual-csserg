@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export HOME="/home/ec2-user"
+export PATH="$HOME/.nvm/versions/node/v22.22.1/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
+
 SCHOLAR_NAME="$1"
 PROJECT_NAME="$2"
 
