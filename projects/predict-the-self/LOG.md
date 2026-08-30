@@ -45,3 +45,70 @@ Below are log entries from Scholars. This is an append-only file.
   follow their instructions, freeze predictions before evaluation, compute the
   official score and permitted baselines, then render and link the Full Report.
 - **Ended:** 2026-08-28 21:01:10 UTC
+
+## 2026-08-30 — Aleph Initial Alpha
+
+- **Started:** 2026-08-30 17:24:56 UTC
+- **Project:** Predict the Self
+- **Planned scope:** To be fixed after reading the complete project corpus and
+  the PI's current instructions.
+- **Scoped work:** Use the PI-restored live web access to retrieve and pin the
+  current challenge; develop and evaluate one reproducible participant method;
+  freeze a validator-clean test artifact without accessing private answers;
+  and publish the complete evidence and reproducibility materials.
+- **Work completed:**
+  - Retrieved the full public Predict Future Selves repository and detached it
+    at commit `9b6a766712583fec8d3182957260b1123fbfa146`; read the README,
+    participation guide, data statement, evaluation definition, baselines,
+    source code, tests, and public training/development data.
+  - Added `BENCHMARK_PROVENANCE.md` with SHA-256 hashes for all four prediction
+    inputs and the governing documentation, evaluator, and validator.
+  - Implemented a deterministic standard-library stable-signifier projection.
+    It learns smoothed document-level token retention, ranks extractive response
+    units, and uses training-only OLS length prediction. Demographics, external
+    models, and external data are not used.
+  - Generated 50 development predictions and the complete official scorecard.
+    Compared with repeat-2024, the method improves normalized edit similarity,
+    token Jaccard, ROUGE-L, word-count MAE, and source-similarity MAE; it worsens
+    token-overlap F1, character n-gram F1, and line-count MAE. No composite or
+    overall-winner claim was made.
+  - Froze all 81 test predictions at SHA-256
+    `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
+    and wrote a submission-ready method card with the full development
+    scorecard, model-selection disclosure, reproduction steps, and licensing.
+  - Replaced the obsolete access-blocked state, expanded `report.qmd`, updated
+    the Executive Summary, and published a direct-HTML Full Report plus all six
+    downloadable reproducibility artifacts.
+- **Substantive result:** The method's development source-similarity MAE falls
+  from `0.774317` to `0.678215`, but mean prediction-to-source ROUGE-L remains
+  `0.903898` while observed follow-ups average `0.225683`. Even an extraction
+  rule explicitly favoring enduring signifiers predicts far too much textual
+  continuity.
+- **Validation:**
+  - All 17 tests in the pinned challenge and all 3 new project tests passed.
+  - The official evaluator reproduced all 15 recorded development measures;
+    the official validator returned `VALID: 81 predictions`.
+  - A clean regeneration produced byte-identical development and test CSVs and
+    metric-identical JSON. Published artifact hashes match research artifacts.
+  - The new Executive Summary and Full Report passed standard-library HTML
+    structure, unique-ID, local-link, and fragment checks. Report tables were
+    checked against the machine-readable scorecard.
+  - The Version 1 verifier passed 5 of 6 groups. Its sole failure is outside
+    this project: `nfl-team-fandom-identities` has no public project index.
+  - `git diff --check` passed.
+- **Problems encountered:**
+  - The GitHub CLI is not installed and no authenticated GitHub write channel
+    is available, so the prepared CSV and method card could not be opened as a
+    pull request in the challenge repository.
+  - Test answers are private by design; only the organizer can calculate the
+    official test scorecard. No test-performance claim was made.
+  - Quarto remains unavailable. Per repository guidance, the Full Report was
+    published directly as static HTML while retaining `report.qmd` as source.
+- **Question for Dr. Jones:** Should a future Scholar run receive an
+  authenticated GitHub submission path, or would you prefer to open the
+  challenge pull request using the two frozen files in `submissions/`?
+- **Proposed next step:** Submit exactly the frozen CSV and method card, then
+  add the organizer's complete private scorecard unchanged. Before another
+  model comparison, preregister how development data will be used.
+- **Ended:** 2026-08-30 17:40:44 UTC
+- **Duration:** 15 minutes 48 seconds

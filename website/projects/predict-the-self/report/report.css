@@ -1,0 +1,226 @@
+:root {
+  --report-artichoke: #4b6f44;
+  --report-laurel: #dde3d8;
+}
+
+.report-page {
+  padding-bottom: 7rem;
+}
+
+.report-hero {
+  max-width: 900px;
+  padding: 5rem 0 4rem;
+}
+
+.report-hero h1 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(3.8rem, 8vw, 7rem);
+}
+
+.report-meta {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-layout {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.45fr) minmax(0, 1.55fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  padding-top: 3.5rem;
+  border-top: 1px solid var(--ink);
+}
+
+.report-toc {
+  align-self: start;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.report-toc ol {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.report-toc a:hover,
+.report-toc a:focus-visible {
+  color: var(--report-artichoke);
+}
+
+.report-article {
+  min-width: 0;
+  max-width: 820px;
+}
+
+.report-article section + section {
+  margin-top: 5rem;
+  padding-top: 4rem;
+  border-top: 1px solid var(--line);
+}
+
+.report-article h2 {
+  margin-bottom: 1.75rem;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 1;
+}
+
+.report-article h3 {
+  margin: 2.5rem 0 0.85rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.65rem;
+  font-weight: 400;
+}
+
+.report-article p,
+.report-article li {
+  max-width: 72ch;
+}
+
+.report-article li + li {
+  margin-top: 0.55rem;
+}
+
+.result-callout {
+  margin: 0 0 3rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-left: 5px solid var(--report-artichoke);
+  background: var(--report-laurel);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+}
+
+.finding-list {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.finding-list li {
+  padding: 1rem 0 1rem 2.75rem;
+  border-bottom: 1px solid var(--line);
+  counter-increment: finding;
+  position: relative;
+}
+
+.finding-list {
+  counter-reset: finding;
+}
+
+.finding-list li::before {
+  position: absolute;
+  left: 0;
+  color: var(--report-artichoke);
+  content: counter(finding, decimal-leading-zero);
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+}
+
+.table-wrap {
+  width: 100%;
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.report-table th,
+.report-table td {
+  padding: 0.75rem 0.65rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.report-table th {
+  border-bottom-color: var(--ink);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-table td:nth-child(n + 3),
+.report-table th:nth-child(n + 3) {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.artifact-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.artifact-list li {
+  margin: 0;
+}
+
+.artifact-list a {
+  display: block;
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.artifact-list a:hover,
+.artifact-list a:focus-visible {
+  border-color: var(--report-artichoke);
+  background: var(--report-laurel);
+}
+
+.artifact-list strong,
+.artifact-list small {
+  display: block;
+}
+
+.artifact-list small {
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
+
+.hash {
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 800px) {
+  .report-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .report-toc {
+    position: static;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 560px) {
+  .artifact-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .report-page * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}

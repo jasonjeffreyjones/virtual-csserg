@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Predict Future Selves challenge report"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-08-28"
+date: "2026-08-30"
 format:
   html:
     toc: true
@@ -12,12 +12,27 @@ format:
 output-file: index.html
 ---
 
-> **Iteration status:** Participant setup is documented, but no challenge
-> prediction or score is yet valid. The challenge repository was visible as a
-> public repository during this iteration, but its README and data files were
-> too new for the available public-web cache and direct network access was not
-> available. The missing materials were not reconstructed or replaced with
-> older data.
+> **Iteration result:** An 81-case test submission is frozen and passes the
+> official format validator. Because test answers are private, the report does
+> not claim a test score. On the 50 public development cases, the new
+> stable-signifier projection improves some, but not all, scorecard measures
+> over repeating the 2024 response verbatim.
+
+# Findings at a glance
+
+- The benchmark is now pinned to commit
+  [`9b6a766`](https://github.com/jasonjeffreyjones/predict-future-selves/tree/9b6a766712583fec8d3182957260b1123fbfa146),
+  and every governing input has a recorded SHA-256 checksum.
+- The deterministic method learns which source tokens recur in later
+  self-description and extracts high-persistence response units to a
+  training-predicted length.
+- Relative to repeat-2024 on development data, it has higher normalized edit
+  similarity, token Jaccard similarity, and ROUGE-L F1, and lower word-count
+  and source-similarity error.
+- It also has lower token-overlap F1 and character n-gram F1 and higher
+  line-count error. There is no composite score or defensible “overall winner.”
+- It still forecasts too much continuity: mean prediction-to-source ROUGE-L is
+  0.903898, compared with 0.225683 for observed follow-ups.
 
 # Research question
 
@@ -27,95 +42,146 @@ challenge](https://github.com/jasonjeffreyjones/predict-future-selves): predict
 a later self-authored self-description from an earlier self-authored
 self-description.
 
-This is an ipseological prediction task. A bio is *personally expressed
-identity*: text an individual publishes for the purpose of describing themself.
-Its words, hashtags, abbreviations, and emoji may serve as identity signifiers.
-The target is later personally expressed identity—not a latent "true self" and
-not a complete life outcome.
+This is an ipseological prediction task. A Twenty Statements Test response is
+*personally expressed identity*: text an individual provides to describe
+themself. Words and phrases may act as identity signifiers. The target is a
+later expression of identity—not a latent “true self” and not a complete life
+outcome.
 
-# Sources read
+# Benchmark and provenance
 
-The participant preparation used these primary sources:
+The benchmark contains 281 Prolific participants with approved, complete
+Twenty Statements Test responses in the 2024 study and its longitudinal
+follow-up. Follow-up responses were recorded 424 to 750 days later (median
+433). The deterministic split contains 150 training, 50 development, and 81
+test cases. Training and development responses are paired; test follow-ups and
+follow-up demographics are private.
+
+The project retrieved the public repository on 2026-08-30 and detached the
+checkout at commit
+`9b6a766712583fec8d3182957260b1123fbfa146` before prediction. The four input
+hashes and the hashes of the governing documentation, evaluator, and validator
+are recorded in [`BENCHMARK_PROVENANCE.md`](BENCHMARK_PROVENANCE.md).
+
+The benchmark's own warnings govern interpretation: the sample is small and
+selected; platform recruitment and longitudinal attrition limit
+generalization; and agreement with one observed follow-up does not establish
+that a prediction was the only plausible future.
+
+# Method
+
+## Stable-signifier projection
+
+The method is deterministic and extractive. It uses the 150 public training
+pairs and no external data or model.
+
+1. For every source token, estimate the proportion of training documents in
+   which that token also appears at follow-up. Smooth toward the corpus-wide
+   retention rate with ten equivalent prior observations.
+2. Divide each source response using its strongest repeated boundary: lines,
+   sentences, comma phrases, or the complete response.
+3. Score each response unit by the mean estimated retention probability of its
+   unique content tokens.
+4. Fit a training-only ordinary least squares regression of follow-up word
+   count on source word count.
+5. Retain high-scoring units while doing so moves the response closer to the
+   predicted length, then restore their original order.
+
+Demographic metadata is not used. The method has no random choices and no
+case-level manual editing. It is deliberately interpretable: every predicted
+word comes from that person's earlier self-description.
+
+## Model selection
+
+Public development data were used for model selection, as the challenge
+allows. Fixed extraction fractions and the training-only length regression
+were compared; the regression-length rule was frozen before the test artifact
+was generated. The development scorecard is therefore a model-selection
+result, not an untouched confirmatory estimate.
+
+# Public development results
+
+The authoritative shared evaluator reports fifteen measures in three groups.
+The table reports every measure; arrows indicate the evaluator's direction
+where one exists.
+
+| Group | Metric | Stable projection | Repeat 2024 | Direction |
+| --- | --- | ---: | ---: | --- |
+| Agreement | Normalized exact-match rate | 0.000000 | 0.000000 | Higher |
+| Agreement | Normalized edit similarity | 0.298061 | 0.291966 | Higher |
+| Agreement | Token Jaccard similarity | 0.142768 | 0.141930 | Higher |
+| Agreement | Token-overlap F1 | 0.307444 | 0.312202 | Higher |
+| Agreement | ROUGE-L F1 | 0.227552 | 0.225683 | Higher |
+| Agreement | Character n-gram F1 | 0.292293 | 0.296534 | Higher |
+| Form | Word-count MAE | 41.640000 | 56.680000 | Lower |
+| Form | Line-count MAE | 9.760000 | 6.800000 | Lower |
+| Form | Mean predicted word count | 77.320000 | 108.040000 | Descriptive |
+| Form | Mean reference word count | 94.760000 | 94.760000 | Descriptive |
+| Change | Prediction repeat-2024 rate | 0.280000 | 1.000000 | Descriptive |
+| Change | Observed repeat-2024 rate | 0.000000 | 0.000000 | Descriptive |
+| Change | Source-similarity MAE | 0.678215 | 0.774317 | Lower |
+| Change | Mean prediction-to-source similarity | 0.903898 | 1.000000 | Descriptive |
+| Change | Mean observed follow-up-to-source similarity | 0.225683 | 0.225683 | Descriptive |
+
+The projection improves three of six agreement measures, worsens two, and ties
+on exact match. Its clearest gains concern form and amount of change:
+word-count MAE falls by 15.04 words, and source-similarity MAE falls by 0.096102.
+But the mean predicted source similarity remains 0.678215 above the observed
+mean. Extracting supposedly enduring signifiers does not come close to
+reproducing how radically people rewrite their self-descriptions.
+
+# Frozen test submission
+
+The method generated one nonblank prediction for every test ID in the required
+order. The pinned official validator returned `VALID: 81 predictions`. The
+frozen CSV has SHA-256:
+
+```text
+a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3
+```
+
+The organizer must run the private test evaluator. Until that happens, the
+only empirical performance reported here is public-development performance.
+
+# Reproducibility
+
+The complete open materials are:
+
+- [`analysis/stable_signifier_projection.py`](analysis/stable_signifier_projection.py)
+  — standard-library generator;
+- [`results/stable_signifier_dev_predictions.csv`](results/stable_signifier_dev_predictions.csv)
+  — all 50 public development predictions;
+- [`results/stable_signifier_dev_scorecard.json`](results/stable_signifier_dev_scorecard.json)
+  — complete machine-readable scorecard;
+- [`submissions/aleph_initial_alpha_submission.csv`](submissions/aleph_initial_alpha_submission.csv)
+  — frozen 81-case test artifact;
+- [`submissions/aleph_initial_alpha_method.md`](submissions/aleph_initial_alpha_method.md)
+  — submission-ready method card.
+
+The generator uses Python 3.9.23 and only the standard library. The challenge's
+17 public tests passed before generation. Regenerating the development and
+test artifacts reproduced their hashes exactly.
+
+# Sources
 
 - Jones, J. J. (2023), [*Ipseology — A new science of the
   self*](https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/).
-- Jones, J. J., [*Predicting the Self with Generative
-  AI*](https://jasonjones.ninja/misc/slides-Jones-Predicting-the-Self.pdf),
-  presentation slides.
 - Jones, J. J. (2024), [*Predicting the Self with Generative
   AI*](https://doi.org/10.31235/osf.io/eh9sk), preprint.
-- The [challenge repository](https://github.com/jasonjeffreyjones/predict-future-selves).
-  Its public title and description were visible, but the README and files were
-  not retrievable in this iteration.
+- Jones, J. J. (2026), [*Building the Ipseome: Large, Free, Open, Human
+  Identity Data*](https://arxiv.org/html/2607.02488).
+- Jones, J. J. (2026), [*You Can Predict Future Selves with AI (or Without
+  AI)*](https://github.com/jasonjeffreyjones/predict-future-selves), benchmark.
 
-# What the prior demonstration establishes
+# Limitations and next step
 
-The presentation describes OPTS Mark 1, an earlier oracle trained with 112,541
-longitudinal pairs of United States Twitter bios from 2015 and 2020. Each row
-contained an `Early_Bio` and a `Later_Bio` for the same user. The demonstration
-showed that an oracle could identify broad change patterns and, when directly
-prompted, retrieve useful signifier-level regularities. It also produced
-anodyne conclusions and left the author "disappointed but intrigued."
+An extractive method cannot predict genuinely new identities, experiences, or
+reframing. Token recurrence is not equivalent to identity-signifier endurance,
+and common wording can make a signifier look stable. The line splitter also
+turns some prose sentences into separate output lines, worsening line-count
+error. Finally, public-development-guided selection can overfit a 50-case set.
 
-Those findings motivate the new challenge, but they do not specify its current
-participant instructions, prediction cases, allowed resources, or scoring
-rule. The older demonstration therefore cannot substitute for the challenge
-README.
-
-# Participant protocol
-
-The following procedure is fixed for the next iteration unless the challenge
-README requires a different procedure.
-
-1. Retrieve and archive the challenge README and all supplied participant
-   files. Record the repository commit identifier and SHA-256 hashes of input
-   files.
-2. Read the complete instructions before examining any labels or answers.
-3. Preserve every supplied bio exactly as given. Use normalized or tokenized
-   representations only for supplemental analysis, never as replacements for
-   the original text.
-4. Keep any held-out later bios unavailable until all predictions are frozen.
-5. Produce the required prediction artifact exactly once, then save it before
-   evaluation.
-6. Apply the challenge's official scoring procedure. If the instructions allow
-   additional analysis, compare the participant result with at least a
-   copy-the-earlier-bio baseline and any official baseline.
-7. Report all cases and metrics, including failures; do not select only
-   favorable examples.
-
-This protocol protects the main result from answer leakage and preserves a
-clear distinction between a genuine forecast and a post-outcome reconstruction.
-
-# Results
-
-## Challenge result
-
-No prediction was submitted and no score was computed in this iteration.
-Accordingly, the empirical result is **not yet available**.
-
-## Process result
-
-The research question is now framed in the project's required terminology, the
-primary background has been reviewed, and a leakage-resistant participant
-procedure is recorded before access to challenge cases or answers. This report
-also records the access failure rather than silently substituting a different
-dataset or inventing a score.
-
-# Limitations and open question
-
-The immediate limitation is material access, not modeling. The public GitHub
-profile listed `predict-future-selves`, but requests for its newly created page,
-README, and raw file returned a cache miss; the shell environment could not
-resolve GitHub. Quarto is also not installed in the current environment, so
-this source could not yet be rendered to the public Full Report directory.
-
-**Question for Dr. Jones:** If the challenge repository remains unavailable in
-the next Scholar environment, may the README and participant files be copied
-into `projects/predict-the-self/` with their source commit recorded?
-
-# Next iteration
-
-Retrieve the challenge artifacts, execute the documented participant protocol,
-compute the official result and permitted baselines, replace this provisional
-status with the empirical findings, and render the Full Report with Quarto to
-`website/projects/predict-the-self/report/`.
+The immediate next step is to submit the two prepared artifacts to the
+challenge organizer and add the complete private test scorecard, unchanged, to
+this report. Later iterations can compare preregistered generative and
+non-extractive methods without reusing test feedback for tuning.

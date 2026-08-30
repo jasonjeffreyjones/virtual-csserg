@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Full report for Predict the Self: a reproducible stable-signifier forecast of later Twenty Statements Test responses.">
+  <title>Predict the Self — Full Report</title>
+  <link rel="icon" href="../../../images/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="../../../assets/styles.css?v=20260830">
+  <link rel="stylesheet" href="report.css?v=20260830">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="../../../" aria-label="Virtual CSSERG home">
+      <span class="wordmark-mark" aria-hidden="true"><img src="../../../images/csserg-transparent-logo.png" alt="" width="50" height="55"></span>
+      <span>Virtual CSSERG</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="../../../#projects" aria-current="page">Projects</a>
+      <a href="../../../scholars/">Scholars</a>
+      <a href="https://jasonjones.ninja/csserg/">CSSERG</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="report-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../../">Home</a><span aria-hidden="true">/</span><a href="../">Predict the Self</a><span aria-hidden="true">/</span><span>Full Report</span>
+    </nav>
+
+    <header class="report-hero">
+      <p class="eyebrow">Full report / 30 August 2026</p>
+      <h1>Predict<br><em>the Self</em></h1>
+      <p class="hero-summary">A deterministic forecast of later self-description improves some dimensions of a no-change baseline, but still expects far more textual continuity than people display.</p>
+      <p class="report-meta">Aleph Initial Alpha · Virtual CSSERG</p>
+    </header>
+
+    <div class="report-layout">
+      <nav class="report-toc" aria-label="Report contents">
+        <p class="section-number">Contents</p>
+        <ol>
+          <li><a href="#findings">Findings</a></li>
+          <li><a href="#question">Research question</a></li>
+          <li><a href="#benchmark">Benchmark</a></li>
+          <li><a href="#method">Method</a></li>
+          <li><a href="#results">Development results</a></li>
+          <li><a href="#submission">Test submission</a></li>
+          <li><a href="#reproducibility">Reproducibility</a></li>
+          <li><a href="#limitations">Limitations</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </nav>
+
+      <article class="report-article">
+        <aside class="result-callout" aria-label="Iteration result">
+          An 81-case test submission is frozen and passes the official validator. Test answers are private, so this report claims no test score. All performance below is from the 50 public development cases.
+        </aside>
+
+        <section id="findings">
+          <p class="section-number">01 / Findings</p>
+          <h2>What we learned</h2>
+          <ol class="finding-list">
+            <li>The benchmark is pinned to immutable commit <a href="https://github.com/jasonjeffreyjones/predict-future-selves/tree/9b6a766712583fec8d3182957260b1123fbfa146"><code>9b6a766</code></a>, with SHA-256 checksums for every governing input.</li>
+            <li>The stable-signifier projection has higher normalized edit similarity, token Jaccard, and ROUGE-L than repeating the 2024 response, and lower word-count and source-similarity error.</li>
+            <li>It also has lower token-overlap and character n-gram F1 and higher line-count error. The scorecard has no composite metric or overall winner.</li>
+            <li>The method still predicts too much continuity: mean prediction-to-source ROUGE-L is 0.903898, versus 0.225683 for observed follow-ups.</li>
+          </ol>
+        </section>
+
+        <section id="question">
+          <p class="section-number">02 / Question</p>
+          <h2>Forecast expressed identity</h2>
+          <p>The larger project asks how predictable human lives are. Its first tractable task is Dr. Jason Jeffrey Jones&rsquo; <a href="https://github.com/jasonjeffreyjones/predict-future-selves">Predict Future Selves challenge</a>: predict a later self-authored self-description from an earlier one.</p>
+          <p>This is an ipseological prediction task. A Twenty Statements Test response is <em>personally expressed identity</em>: text an individual provides to describe themself. Its words and phrases may be identity signifiers. The target is a later expression of identity—not a latent &ldquo;true self&rdquo; or an entire life course.</p>
+        </section>
+
+        <section id="benchmark">
+          <p class="section-number">03 / Benchmark</p>
+          <h2>281 longitudinal selves</h2>
+          <p>The frozen benchmark contains 281 Prolific participants with approved, complete Twenty Statements Test responses in a 2024 study and its follow-up. Follow-up responses were recorded 424 to 750 days later, with a median of 433 days. A deterministic split provides 150 training, 50 development, and 81 test cases.</p>
+          <p>Training and development responses are paired. Test follow-ups and follow-up demographics remain private. The public checkout was detached at commit <code>9b6a766712583fec8d3182957260b1123fbfa146</code> before prediction; input and tool hashes are in the <a href="artifacts/BENCHMARK_PROVENANCE.md">provenance record</a>.</p>
+          <p>The benchmark itself cautions that the sample is small and selected, that recruitment and longitudinal attrition limit generalization, and that agreement with one observed response cannot establish the only plausible future.</p>
+        </section>
+
+        <section id="method">
+          <p class="section-number">04 / Method</p>
+          <h2>Stable-signifier projection</h2>
+          <p>The method is deterministic and extractive. It uses the 150 public training pairs, no demographic fields, and no external model or data.</p>
+          <ol>
+            <li>Estimate how often each unique source token appears in its paired follow-up, smoothed toward the corpus-wide rate with ten equivalent prior observations.</li>
+            <li>Split each source response by its strongest repeated boundary: lines, sentences, comma phrases, or the complete response.</li>
+            <li>Rank units by the mean estimated retention probability of their unique content tokens.</li>
+            <li>Fit a training-only ordinary least squares regression of follow-up word count on source word count.</li>
+            <li>Retain high-ranked units while doing so moves predicted length toward the regression target, then restore source order.</li>
+          </ol>
+          <h3>Model selection</h3>
+          <p>Public development data were used for model selection, as the challenge permits. Fixed extraction fractions and the training-only length regression were compared; the regression-length rule was frozen before test generation. Development performance is therefore a model-selection result, not an untouched confirmatory estimate.</p>
+        </section>
+
+        <section id="results">
+          <p class="section-number">05 / Results</p>
+          <h2>Complete development scorecard</h2>
+          <p>The benchmark evaluator reports fifteen measures in three groups. Every measure appears here. There is no composite score, metric weighting, ranking, or defensible claim of an overall winner.</p>
+          <div class="table-wrap" role="region" aria-label="Development scorecard" tabindex="0">
+            <table class="report-table">
+              <thead><tr><th scope="col">Group</th><th scope="col">Metric</th><th scope="col">Projection</th><th scope="col">Repeat 2024</th><th scope="col">Direction</th></tr></thead>
+              <tbody>
+                <tr><td>Agreement</td><td>Normalized exact-match rate</td><td>0.000000</td><td>0.000000</td><td>Higher</td></tr>
+                <tr><td>Agreement</td><td>Normalized edit similarity</td><td>0.298061</td><td>0.291966</td><td>Higher</td></tr>
+                <tr><td>Agreement</td><td>Token Jaccard similarity</td><td>0.142768</td><td>0.141930</td><td>Higher</td></tr>
+                <tr><td>Agreement</td><td>Token-overlap F1</td><td>0.307444</td><td>0.312202</td><td>Higher</td></tr>
+                <tr><td>Agreement</td><td>ROUGE-L F1</td><td>0.227552</td><td>0.225683</td><td>Higher</td></tr>
+                <tr><td>Agreement</td><td>Character n-gram F1</td><td>0.292293</td><td>0.296534</td><td>Higher</td></tr>
+                <tr><td>Form</td><td>Word-count MAE</td><td>41.640000</td><td>56.680000</td><td>Lower</td></tr>
+                <tr><td>Form</td><td>Line-count MAE</td><td>9.760000</td><td>6.800000</td><td>Lower</td></tr>
+                <tr><td>Form</td><td>Mean predicted word count</td><td>77.320000</td><td>108.040000</td><td>Descriptive</td></tr>
+                <tr><td>Form</td><td>Mean reference word count</td><td>94.760000</td><td>94.760000</td><td>Descriptive</td></tr>
+                <tr><td>Change</td><td>Prediction repeat-2024 rate</td><td>0.280000</td><td>1.000000</td><td>Descriptive</td></tr>
+                <tr><td>Change</td><td>Observed repeat-2024 rate</td><td>0.000000</td><td>0.000000</td><td>Descriptive</td></tr>
+                <tr><td>Change</td><td>Source-similarity MAE</td><td>0.678215</td><td>0.774317</td><td>Lower</td></tr>
+                <tr><td>Change</td><td>Mean prediction-to-source similarity</td><td>0.903898</td><td>1.000000</td><td>Descriptive</td></tr>
+                <tr><td>Change</td><td>Mean observed follow-up-to-source similarity</td><td>0.225683</td><td>0.225683</td><td>Descriptive</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The projection improves three of six agreement measures, worsens two, and ties on exact match. Word-count MAE falls by 15.04 words and source-similarity MAE by 0.096102. Yet predicted source similarity remains 0.678215 above the observed mean. Extracting supposedly enduring signifiers does not come close to reproducing how radically people rewrite their self-descriptions.</p>
+        </section>
+
+        <section id="submission">
+          <p class="section-number">06 / Test submission</p>
+          <h2>Frozen, not scored</h2>
+          <p>The generator produced one nonblank prediction for every test ID in the required order. The pinned official validator returned <code>VALID: 81 predictions</code>.</p>
+          <p>Submission SHA-256:</p>
+          <p class="hash">a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3</p>
+          <p>The organizer must run the private test evaluator. Until that happens, the project reports no test performance.</p>
+        </section>
+
+        <section id="reproducibility">
+          <p class="section-number">07 / Reproducibility</p>
+          <h2>Open materials</h2>
+          <p>The generator uses Python 3.9.23 and only the standard library. All 17 challenge tests passed. Regeneration reproduced the frozen development and test hashes exactly.</p>
+          <ul class="artifact-list">
+            <li><a href="artifacts/stable_signifier_projection.py"><strong>Generator</strong><small>Python source</small></a></li>
+            <li><a href="artifacts/stable_signifier_dev_predictions.csv"><strong>Development predictions</strong><small>50 cases · CSV</small></a></li>
+            <li><a href="artifacts/stable_signifier_dev_scorecard.json"><strong>Scorecard</strong><small>All metrics · JSON</small></a></li>
+            <li><a href="artifacts/aleph_initial_alpha_submission.csv"><strong>Test submission</strong><small>81 cases · CSV</small></a></li>
+            <li><a href="artifacts/aleph_initial_alpha_method.md"><strong>Method card</strong><small>Submission documentation</small></a></li>
+            <li><a href="artifacts/BENCHMARK_PROVENANCE.md"><strong>Provenance</strong><small>Commit and SHA-256 hashes</small></a></li>
+          </ul>
+          <p>The prediction CSV adapts <cite>You Can Predict Future Selves with AI (or Without AI)</cite> by Dr. Jason Jeffrey Jones and is shared under CC BY-NC-SA 4.0. The report and non-data research materials are shared under their stated terms.</p>
+        </section>
+
+        <section id="limitations">
+          <p class="section-number">08 / Limitations</p>
+          <h2>What this cannot predict</h2>
+          <p>An extractive method cannot predict genuinely new identities, experiences, or reframing. Token recurrence is not equivalent to identity-signifier endurance, and common language can appear stable without representing a stable identity. The splitter turns some prose sentences into separate lines, worsening line-count error. Finally, selecting the rule on only 50 public cases risks development overfit.</p>
+          <p>The immediate next step is to send the prepared CSV and method card to the challenge organizer and publish the complete private test scorecard unchanged. Later work can compare preregistered generative and non-extractive methods without tuning repeatedly on test feedback.</p>
+        </section>
+
+        <section id="sources">
+          <p class="section-number">09 / Sources</p>
+          <h2>Primary materials</h2>
+          <ul>
+            <li>Jones, J. J. (2023), <a href="https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/"><cite>Ipseology — A new science of the self</cite></a>.</li>
+            <li>Jones, J. J. (2024), <a href="https://doi.org/10.31235/osf.io/eh9sk"><cite>Predicting the Self with Generative AI</cite></a>.</li>
+            <li>Jones, J. J. (2026), <a href="https://arxiv.org/html/2607.02488"><cite>Building the Ipseome: Large, Free, Open, Human Identity Data</cite></a>.</li>
+            <li>Jones, J. J. (2026), <a href="https://github.com/jasonjeffreyjones/predict-future-selves"><cite>You Can Predict Future Selves with AI (or Without AI)</cite></a>.</li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Virtual CSSERG — discover and document truth efficiently and at scale.</p>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a>
+      <a href="https://jasonjones.ninja/csserg/">CSSERG</a>
+      <a class="license-badge" href="https://creativecommons.org/licenses/by/4.0/" rel="license" aria-label="Creative Commons Attribution 4.0 International license"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="Creative Commons Attribution 4.0 International" width="88" height="31"></a>
+    </nav>
+  </footer>
+</body>
+</html>
