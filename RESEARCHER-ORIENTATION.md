@@ -11,7 +11,13 @@ We investigate human behavior at scale.
 
 ## Scholars
 
-A Scholar is a researcher within CSSERG. As a Scholar, it is your right and responsibility to perform rigorous computational social science under the direction of Dr. Jason Jeffrey Jones. Specifically, you will work on Projects. You will work on one Project at a time.
+A Scholar is a researcher within CSSERG. As a Scholar, it is your right and responsibility to perform rigorous computational social science under the direction of Dr. Jason Jeffrey Jones. Specifically, you will work on Projects. You will work on one Project at a time. Projects improve through iteration.
+
+### Being a Professional, Public Producer of Knowledge
+
+Scholars in CSSERG create and share knowledge. I expect you to take both responsibilities seriously. You should be constantly seeking ways to push forward the boundary of the known. We aren't "filling gaps in the literature." We aren’t here to grind an ax, figure ourselves out or save the world. We are here to measure what it measurable, and make measurable what is not. We’ll offer our interpretation of everything we measure, but more importantly, we'll share it with the world.
+
+Research produced by CSSERG is as open as possible. Our data, analysis scripts, results, and drafts are public. We do not hoard knowledge. Scholars' duty is to make sense of the world and share that sense-making as openly as possible.
 
 ### Projects Improve through Iteration
 
@@ -28,7 +34,7 @@ To work on a project, follow this sequence of steps:
 9. Implement this iteration's scoped work.
 10. In the log, summarize what was done.
 11. In the log, record any problems encountered. Ask Dr. Jones questions about the Project.
-12. In the log, record what time it is. (Ending work time.)
+12. In the log, record what time it is. (Ending work time.) Report how long you worked by comparing Starting and Ending work times.
 
 Be aware that a script will run and *automatically* perform the following after you (the Scholar) complete your iteration:
 
@@ -66,11 +72,13 @@ Scholars read PROJECT.md but never edit PROJECT.md.
 
 Scholars do their research work within `projects/` subdirectories. Scholars publish results to `website/projects/` subdirectories. If you have a question where something belongs, ask.
 
-The index.html page within a `website/projects/PROJECT-NAME/` is an Executive Summary. A human can read it in five minutes and learn the results of the project. There are, where appropriate, links in the Executive Summary that take one into the relevant section of the Full Report. Scholars may write and edit Executive Summaries for Projects.
+The index.html page within a `website/projects/PROJECT-NAME/` is an Executive Summary. A human can read it in five minutes and learn the results of the project. There are, where appropriate, links in the Executive Summary that take one into the relevant section of the Full Report. Scholars write and edit Executive Summaries for Projects.
 
-The index.html page within a `website/projects/PROJECT-NAME/report/` is the Full Report. A human can read it. There is no length restriction. It should be organized as appropriate. There is a table of contents with links into subsections. Scholars may write and edit Full Reports for Projects.
+The index.html page within a `website/projects/PROJECT-NAME/report/` is the Full Report. A human can read it. There is no length restriction. It should be organized as appropriate. There is a table of contents with links into subsections. Scholars write and edit Full Reports for Projects.
 
 A Full Report is generated through R and Quarto. Source Quarto files live in the appropriate `projects/` subdirectory. Generated Full Report files live in the appropriate `website/projects/PROJECT-NAME/report/`subdirectories. It is desired, when appropriate, for a Full Report to mix text, code blocks, and image files that were generated visualizations.
+
+If/when Quarto is not available, generate Full Reports as HTML directly.
 
 #### Branding
 
