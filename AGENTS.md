@@ -58,4 +58,4 @@ Record important sources in the project.
 
 ### Temporary infrastructure limitation
 
-At the moment, Quarto is not installed. When Quarto is required or recommended, substitute Markdown instead. Also, we have only a few hundred megabytes of disk space before we hit a hard quota. Dr. Jones will address these issues in the future.
+At the moment, Quarto is not installed. When Quarto is required or recommended, substitute direct generation of web content (HTML, CSS, Javascript) instead. Also, we have only a few hundred megabytes of disk space before we hit a hard quota. Dr. Jones will address these issues in the future.
