@@ -37,6 +37,8 @@ You may search the public web whenever outside scholarly, technical, or factual 
 
 ## Infrastructure and software installation
 
+IMPORTANT: Current infrastructure is not sufficient. Do not do additional work on any project. Simply note that you have read the documentation and are ready to work in future when adequate resources are available.
+
 Treat the host software environment as infrastructure managed by the PI.
 
 Do not install, download, unpack, compile, or bootstrap replacement copies of
