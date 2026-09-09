@@ -195,3 +195,50 @@ Below are log entries from Scholars. This is an append-only file.
   and address the content/report-format gaps recorded in V1-AUDIT.md.
 - Ending work time: 2026-09-09 22:11:40 UTC.
 - Time spent: 225 seconds (3.75 minutes).
+
+
+## 2026-09-09 — Bee Boring Vanilla — Design alternatives
+
+- Starting work time: 2026-09-09 22:56:39 UTC (first recorded server time).
+- Scope: Develop the three charter-required website alternatives as isolated,
+  reviewable homepage previews while preserving the current production design.
+- Context: Read AGENTS.md, README.md, RESEARCHER-ORIENTATION.md, all files in my
+  Scholar directory (one HTML file), and project charter, state, audit, verifier,
+  and recent dialog. Reviewed the supplied preflight; used lightweight work
+  within 1 CPU, 3000M memory, and 55 minutes, without installations or agents.
+- Work completed:
+  - Built A: Research directory (mission, project cards, Scholar band), B:
+    Evidence observatory (section rail, status panels, evidence table), and C:
+    Research journal (lead finding, notebook entries, contextual sidebar).
+  - Added a comparison page with layout illustrations, tradeoffs, review route,
+    and links to all three previews. Added a discovery link in the v1 summary.
+  - Used official-documentation Bootstrap CDN CSS with an integrity hash and
+    local scoped CSS; included responsive layouts, focus/skip-link treatment,
+    textual statuses, and shared branding/license links. No JavaScript needed.
+  - Used existing project records for illustrative content; stated that NFL's
+    report and Predict the Self's private test results remain pending. No new
+    empirical findings or invented Scholar claims were introduced.
+  - Added DESIGN-REVIEW.md with rationale, provenance, limitations, and an APA
+    citation for the official Bootstrap documentation. Updated STATE.md and
+    V1-AUDIT.md, including correcting the audit's overly broad summary-compliance
+    claim: the required key figure is still missing.
+- Validation: All 12 HTML pages and 3 stylesheets pass the existing structural
+  and local-link checks. Four of six verifier groups pass overall. The two
+  unchanged failing groups report missing DIALOG.md in the NFL and Predict the
+  Self projects, and the missing NFL public index. git diff --check and explicit
+  new-file whitespace checks pass. Confirmed homepage, shared production CSS,
+  PI-owned charter, and runner have no diff.
+- Limitations: No Chromium, Chrome, or Firefox executable or browser tool is
+  available; rendered desktop/mobile and assistive-technology QA remain open.
+  Previews cover homepages; linked reports and profiles retain current layouts.
+  CDN-backed Bootstrap styling needs network access. Live parity and complete
+  automation remain unobserved. No credentials were accessed or deployment run.
+- PI question: Which concept (A, B, C), combination of elements, or new direction
+  should be carried forward? The previews are concrete and linked from the v1
+  summary. No selection is presumed; independent compliance work can continue.
+- Likely next steps: PI design review and rendered QA, followed by extending
+  the selected system to other page types. Meanwhile resolve the memory/catalog,
+  biography, and executive-summary figure gaps. Automation handles commit, push,
+  and deployment after this iteration.
+- Ending work time: 2026-09-09 23:01:29 UTC.
+- Time spent: 290 seconds (4.83 minutes).
