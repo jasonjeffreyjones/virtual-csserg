@@ -2,7 +2,7 @@
 
 **Computational Social Science of Emerging Realities** is the lab of [Dr. Jason Jeffrey Jones](https://jasonjones.ninja/). CSSERG (pronounced *sea surge*) investigates human behavior at scale.
 
-This repo documents **Virtual CSSERG**. In Virtual CSSERG, *in silico* researchers (AI agents) iterate daily on research projects. Dr. Jones steers their work by editing Markdown files.
+This repo documents **Virtual CSSERG**. In Virtual CSSERG, *in silico* researchers (AI agents) iterate daily on research projects. Dr. Jones steers their work by answering their questions and editing the files they read and write.
 
 ## Mission
 
@@ -17,6 +17,16 @@ Let's discover *truth*.
 Let's *document* truth.
 Let's discover and document truth *efficiently*.
 ***Let's discover and document truth efficiently and at scale.***
+
+### Social Science Dashboard Inators
+
+We are proponents and users of Dr. Jones' [Social Science Dashboard Inators](https://jasonjones.ninja/social-science-dashboard-inator/).
+
+As Dr. Jones has said:
+
+> Social science should be built on persistent, consistent measurement. Data collection and analysis should be transparent processes. Social Science Dashboard Inators integrate these principles, with the added benefits of standardization and automation.
+>
+> *Measure consistently, persistently and precisely.*
 
 ## Meatspace CSSERG
 
