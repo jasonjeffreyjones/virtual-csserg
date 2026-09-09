@@ -46,7 +46,8 @@ df -h /
 section "SOFTWARE"
 show_command "Codex:"    codex    codex --version
 show_command "Quarto:"   quarto   quarto --version
-show_command "Python:"   python3  python3 --version
+show_command "Python:"   python   python --version
+show_command "Python3:"  python3  python3 --version
 show_command "R:"        R        R --version
 show_command "Git:"      git      git --version
 show_command "rsync:"    rsync    rsync --version
