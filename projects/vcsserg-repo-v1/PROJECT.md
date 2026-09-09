@@ -6,13 +6,17 @@ By Version 1.0, I mean that everything promised in the documentation works as do
 
 Additionally, the website pages should use HTML and CSS. At the start of this project, the existing .html files just held placeholder content.
 
+Develop three substantially different alternatives for the visual design, information architecture, and page layout of the Virtual CSSERG website. Preserve the current production design while developing these alternatives. Dr. Jones will choose among them, combine elements, or give further direction before a replacement becomes production.
+
 Make sure the _template project follows current documentation.
 
-Although most projects require a Quarto Full Report. This project does not. An Executive Summary is required.
+Although most projects require a Quarto Full Report, this project does not. An Executive Summary is required.
 
 Also, this Project is a test for me (Dr. Jones) and the Scholars. As we work on this project, we can evaluate our workflow.
 
 ## Initial Scholars
+
+Each should have their own page on the website. The full bio as below should be included.
 
 ### Aleph Initial Alpha
 
