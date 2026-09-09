@@ -121,7 +121,7 @@ def check_project_memory():
     problems = []
     project_directories = sorted(
         path for path in (PROJECT_ROOT / "projects").iterdir()
-        if path.is_dir() and path.name != "_template"
+        if path.is_dir()
     )
     for project in project_directories:
         missing = sorted(name for name in MEMORY_FILES if not (project / name).is_file())
@@ -130,7 +130,7 @@ def check_project_memory():
     return Result(
         "Project memory layout",
         not problems,
-        f"{len(project_directories)} project(s) have all four memory files"
+        f"{len(project_directories)} project directories (including _template) have all three memory files"
         if not problems else "; ".join(problems),
     )
 

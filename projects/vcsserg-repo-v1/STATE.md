@@ -2,72 +2,66 @@
 
 ## Status
 
-Active. All six automated verification groups pass. The public site catalogs
-all three initial Scholars, carries the required CSSERG branding on every page,
-and has a guarded deployment component designed to mirror the local website.
-Live production parity, an end-to-end Scholar run, and rendered browser QA are
-not yet verified.
+Active. On September 9, 2026, four of six automated verification groups pass.
+The former six-of-six result is stale. The current iteration repaired the
+project template and refreshed the audit without replacing the production design.
 
-## What is complete
+## Completed work and current evidence
 
-- `website/index.html`, the VCSSERG v1 Executive Summary, the Scholar directory,
-  and all three initial Scholar profiles form a linked static HTML/CSS site with
-  a shared responsive visual system.
-- Every public page uses the CSSERG logo, favicon, forest/Artichoke/Laurel green
-  palette, and a common footer linking Dr. Jason Jeffrey Jones, CSSERG, and the
-  CC BY 4.0 International license badge.
-- Aleph Initial Alpha, B. Boring Vanilla, and Ceetown each have a public profile,
-  a home-page catalog entry, and a Scholar-directory entry.
-- `projects/vcsserg-repo-v1/V1-AUDIT.md` maps documented promises to verified,
-  failing, partial, or unverified evidence instead of treating Version 1.0 as a
-  subjective milestone.
-- `projects/vcsserg-repo-v1/verify_v1.py` non-destructively checks repository
-  guidance, project memory, every HTML page and local reference, CSS safeguards,
-  CSSERG branding and footer requirements, both public catalogs, runner wiring,
-  and deployment behavior.
-- `python/vcsserg_deploy.py` invokes `rsync` without `shell=True`, validates the
-  SSH port, restricts mirroring to a remote directory named `virtual-csserg`,
-  removes stale remote files only after transfer, avoids printing configured
-  host/path values, and returns nonzero when `rsync` is missing or fails.
-- Dr. Jones' `run-scholar.sh` fix replaces the undefined `LOG_FILE` reference
-  with the defined per-iteration path used for Scholar output; shell syntax and
-  the verifier's runner-wiring check pass.
-- The Executive Summary reports the current six-of-six automated result and
-  identifies the remaining manual gates.
-- The charter explicitly exempts this bootstrap project from a Quarto Full
-  Report; the required Executive Summary is present.
+- The static site has shared branding, linked Scholar profiles, and the v1
+  Executive Summary. All 8 HTML pages and 2 stylesheets pass the verifier's
+  structural and local-link checks; this is not full publication compliance.
+- `_template` now has the three required memory files and a README covering
+  charter ownership, iteration timing, report formats, branding, and publication.
+  Empty legacy PI/LOG placeholders were removed; `PROJECT.md` was not edited.
+- `verify_v1.py` includes `_template` in memory checks and correctly reports
+  three required files. Temporary-fixture checks confirm that a complete template
+  passes and removal of its DIALOG file fails.
+- Repository guidance, static HTML/CSS, runner wiring, and mocked deployment
+  behavior pass. Deployment uses guarded, shell-free rsync mirroring and
+  propagates failures. No live deployment was performed by this Scholar.
+- `V1-AUDIT.md` and the public summary now disclose current failures and the
+  new charter's outstanding design work.
 
-## Current problems and unknowns
+## Current problems and decisions
 
-- The corrected `run-scholar.sh` completion path is verified statically but the
-  full pull/Scholar/commit/rebase/push/deploy/completion sequence has not yet
-  been observed end to end.
-- Production parity with `website/` remains unverified. Deployment was not run,
-  and the protected `.env` was not read. The existing configured remote path
-  must end in `virtual-csserg` to satisfy the new deletion safeguard.
-- Visual browser QA is unverified because no browser is installed in this
-  environment. File-level accessibility and responsive-structure checks pass.
+- `nfl-team-fandom-identities` and `predict-the-self` lack `DIALOG.md`; existing
+  legacy research records need careful migration without changing PI text.
+- The NFL project lacks `website/projects/nfl-team-fandom-identities/index.html`.
+- Three substantially different design alternatives remain to be developed.
+  Preserve the current production design until the PI chooses or directs a
+  replacement. Include visual design, information architecture, and page layout.
+- Initial Scholar biographies need comparison with the charter: Bee's profile
+  omits the supplied biography. The verifier checks profile existence, not text.
+- The v1 Executive Summary lacks its required dense key figure. Current v1 pages
+  use custom CSS rather than the orientation's official-CDN Bootstrap approach.
+- Live production parity, an observed complete Scholar workflow, and rendered
+  desktop/mobile QA remain unverified. Browser availability was not rechecked
+  this iteration; do not assume the prior host's limitation still applies.
+- The v1 charter exempts this project from a Quarto Full Report.
+
+## Resources
+
+This iteration's preflight reports Python 3.12.3, R 4.3.3, Quarto 1.10.18,
+and a hard ceiling of 1 CPU, 3000M memory, 55 minutes, with no Scholar swap.
+The work used lightweight local file processing and installed no software.
 
 ## Important files
 
-- `projects/vcsserg-repo-v1/V1-AUDIT.md` — promise-to-evidence matrix
-- `projects/vcsserg-repo-v1/verify_v1.py` — automated Version 1.0 verifier
-- `python/vcsserg_deploy.py` — guarded exact-mirror deployment implementation
-- `run-scholar.sh` — PI-owned runner with corrected per-iteration completion logging
-- `website/index.html` — public front door and complete initial-Scholar catalog
-- `website/assets/styles.css` — shared visual system
-- `website/images/csserg-transparent-logo.png` — shared header brand mark
-- `website/projects/vcsserg-repo-v1/index.html` — public Executive Summary
-- `website/scholars/index.html` — public Scholar directory
-- `website/scholars/aleph-initial-alpha/index.html` — Aleph's profile
-- `website/scholars/b-boring-vanilla/index.html` — Bee's profile
-- `website/scholars/ceetown/index.html` — Ceetown's profile
-- `projects/vcsserg-repo-v1/LOG.md` — append-only iteration record
+- `projects/_template/`: project scaffold and reporting checklist.
+- `projects/vcsserg-repo-v1/verify_v1.py`: non-destructive automated checks.
+- `projects/vcsserg-repo-v1/V1-AUDIT.md`: promise-to-evidence matrix and open gates.
+- `projects/vcsserg-repo-v1/DIALOG.md`: append-only iteration record.
+- `website/projects/vcsserg-repo-v1/index.html`: public Executive Summary.
+- `website/assets/styles.css`: current production visual system.
+- `python/vcsserg_deploy.py`: deployment component.
+- `run-scholar.sh`: PI-owned automation; Scholars must not edit it.
 
-## Likely next steps
+## Unresolved PI questions and next steps
 
-1. Observe a complete Scholar runner execution and confirm its completion line
-   is appended after a successful deploy.
-2. After deployment, compare the production and local file inventories and bytes.
-3. Perform desktop/mobile browser QA, including the cropped header logo and
-   wrapping footer at narrow widths.
+No blocking question. Design selection will require PI review after alternatives
+are concrete. Prioritize three isolated design previews and a comparison page;
+then address memory migration, missing public project output, biography fidelity,
+and summary requirements. Rerun verification and arrange browser/production
+checks before claiming Version 1.0 is complete. Automation handles commit, push,
+and deployment after this iteration.

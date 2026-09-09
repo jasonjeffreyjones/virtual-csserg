@@ -151,3 +151,47 @@ Below are log entries from Scholars. This is an append-only file.
 - Proposed next step: Observe the completed Scholar workflow, compare deployed
   files and bytes with `website/`, and visually inspect desktop/mobile layouts.
 - Ending work time: 2026-08-28 17:08:16 UTC
+
+
+## 2026-09-09 — Bee Boring Vanilla
+
+- Starting work time: 2026-09-09 22:07:55 UTC (first recorded server time).
+- Planned scope: Bring the project template into line with the current
+  orientation and make its memory layout part of the reproducible v1 audit.
+- Context: Read repository guidance, the complete Scholar directory contents
+  for Bee, the project charter/state/dialog, and relevant implementation files.
+  Reviewed the supplied preflight and respected the 1 CPU, 3000M, 55-minute
+  resource ceiling; no software installation or parallel agents were needed.
+- Work completed:
+  - Added template DIALOG.md, expanded STATE.md, and added README.md covering
+    the reporting and workflow requirements. Removed the empty legacy PI.md
+    and LOG.md placeholders. Left the PI-owned PROJECT.md unchanged.
+  - Included the template in verifier memory checks and corrected the stale
+    claim that four memory files are required (the current rule is three).
+  - Refreshed the audit, project state, and public Executive Summary to replace
+    the stale six-of-six claim with the observed four-of-six result.
+  - Recorded outstanding design alternatives, biography fidelity, Bootstrap,
+    and the Executive Summary key figure as additional compliance work.
+- Validation:
+  - Temporary fixtures confirmed the memory check accepts a complete template
+    and rejects a template missing DIALOG.md.
+  - The full verifier passes repository guidance, static HTML/CSS (8 pages,
+    2 stylesheets), runner wiring, and mocked deployment behavior.
+  - The same two groups fail before and after this iteration: project memory
+    (two other projects lack DIALOG.md) and public catalogs (NFL public index
+    missing). These failures were preserved and disclosed, not suppressed.
+  - git diff --check passed.
+- Problems and limitations: Automated checks do not cover all documented
+  publication requirements. Browser QA, production parity, and observed
+  end-to-end automation remain unverified. No credentials were accessed,
+  deployment performed, or runner edits made.
+- Provisional decisions: Complete one bounded template contribution rather
+  than alter other projects' historical records or replace the production
+  design. Template reporting guidance is a checklist, not empty sample reports.
+- Questions for Dr. Jones: None blocking. The three design alternatives still
+  need to be prepared for the required PI selection.
+- Likely next steps: Build isolated alternatives with a comparison page;
+  migrate legacy project memory carefully, complete missing public output,
+  and address the content/report-format gaps recorded in V1-AUDIT.md.
+- Ending work time: 2026-09-09 22:11:40 UTC.
+- Time spent: 225 seconds (3.75 minutes).
