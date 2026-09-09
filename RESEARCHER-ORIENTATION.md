@@ -21,28 +21,31 @@ Research produced by CSSERG is as open as possible. Our data, analysis scripts, 
 
 ### Projects Improve through Iteration
 
-To work on a project, follow this sequence of steps:
+Projects advance through repeated Scholar iterations. Each iteration should make a useful, coherent contribution rather than attempt to complete the entire Project at once.
 
-1. Read AGENTS.md
-2. Read README.md
-3. Begin a log for this iteration. (Dr. Jones and others will read these logs.)
-4. In the log, record what time it is. (Starting work time.)
-5. In the log, record which Project you will work on.
-6. Read all existing documents within the corresponding `projects/` subdirectory.
-7. Read all existing documents within the corresponding `website/projects/` subdirectory.
-8. Scope one iteration of work. (What is one iteration's worth? This is necessarily a judgment call you must make.)
-9. Implement this iteration's scoped work.
-10. In the log, summarize what was done.
-11. In the log, record any problems encountered. Ask Dr. Jones questions about the Project.
-12. In the log, record what time it is. (Ending work time.) Report how long you worked by comparing Starting and Ending work times.
+At the start of an iteration:
 
-Be aware that a script will run and *automatically* perform the following after you (the Scholar) complete your iteration:
+1. Read `AGENTS.md` and `README.md`.
+2. Read the Project's `PROJECT.md` and `STATE.md`, along with the recent and relevant portions of `DIALOG.md`.
+3. Inspect relevant files in the Project's `projects/` and `website/projects/` directories.
+4. Decide what useful amount of work can reasonably be accomplished in this iteration.
 
-1. The changes you made will become a local commit.
-2. The commit will be pushed to GitHub.
-3. A deployment script will rsync `website/` to https://jasonjones.ninja/virtual-csserg/
+Then do the work. Use judgment about what constitutes a productive iteration. This may include analysis, coding, validation, writing, visualization, debugging, documentation, or investigating a problem that blocks later work.
 
-Scholars may inspect `run-scholar.sh` for details. Scholars may not edit `run-scholar.sh`, but they can suggest a change.
+At the end of the iteration:
+
+1. Update `STATE.md` so it accurately represents the Project now.
+2. Append an entry to `DIALOG.md` describing the work performed, important findings, problems encountered, unresolved questions, and likely next steps.
+
+Do not stop merely because a question for Dr. Jones arises. When reasonable, record the question, make a provisional judgment, and continue useful work. Stop only when further progress genuinely depends on PI guidance or unavailable resources.
+
+After the Scholar finishes, automation will:
+
+1. Commit the changes locally.
+2. Push the commit to GitHub.
+3. Deploy `website/` to `https://jasonjones.ninja/virtual-csserg/` via `rsync`.
+
+Scholars may inspect `run-scholar.sh` to understand this process. They must not edit it, but may recommend changes in `DIALOG.md`.
 
 ### Scholar Personalities
 
@@ -74,6 +77,18 @@ When instructions conflict, use this priority:
 
 Scholars read but never edit `PROJECT.md`.
 Scholars may append to `DIALOG.md` and update `STATE.md`.
+
+### Prior Work and Context
+
+`PROJECT.md` may point to prior works that are relevant to the Project.
+
+Scholars should read and use this work as intellectual context. It may provide useful concepts, methods, terminology, hypotheses, interpretations, or starting points.
+
+Prior work is **influential but not binding**. Scholars should not assume that its claims, methods, framing, or conclusions must be preserved. They may replicate, extend, challenge, revise, or depart from it when the evidence or goals of the current Project warrant doing so.
+
+Treat prior work by Dr. Jones as you would relevant work by another researcher: understand it carefully, give it appropriate weight, and exercise independent scholarly judgment.
+
+Explicit instructions in `PROJECT.md` or PI guidance in `DIALOG.md` are different: those govern the current Project.
 
 ### Publishing results
 
