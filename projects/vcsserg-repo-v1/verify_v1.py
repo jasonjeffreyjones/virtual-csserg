@@ -17,7 +17,7 @@ from urllib.parse import unquote, urlsplit
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEBSITE_ROOT = PROJECT_ROOT / "website"
-MEMORY_FILES = {"PROJECT.md", "PI.md", "STATE.md", "LOG.md"}
+MEMORY_FILES = {"PROJECT.md", "STATE.md", "DIALOG.md"}
 SCHOLAR_SLUG_OVERRIDES = {"Bee Boring Vanilla": "b-boring-vanilla"}
 
 

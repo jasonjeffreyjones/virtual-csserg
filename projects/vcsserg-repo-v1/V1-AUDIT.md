@@ -18,7 +18,6 @@ deploy. It returns a nonzero status while any automated check fails.
 | Documented promise | Evidence or test | Status on 2026-08-28 |
 |---|---|---|
 | Scholars receive repository, orientation, identity, and assigned-project context for an iteration. | `run-scholar.sh` constructs the documented prompt; manual inspection. | Verified statically |
-| Iterations use the four-file project memory model and an append-only log. | `projects/vcsserg-repo-v1/` contains `PROJECT.md`, `PI.md`, `STATE.md`, and `LOG.md`; verifier checks every active project directory. | Verified |
 | Scholar automation prevents concurrent runs, updates from GitHub, commits iteration changes, rebases, pushes, deploys, and records completion. | `bash -n run-scholar.sh` plus verifier checks for lock/pull/commit/push/deploy wiring and the completion-log variable. | Verified statically; Dr. Jones replaced the undefined `LOG_FILE` reference with the existing per-iteration log path |
 | The automated workflow deploys the pushed `website/` tree. | The runner invokes the existing `python/vcsserg_deploy.py` after a successful push. | Verified statically; not executed end to end |
 | A deployment error stops the automation instead of being reported as success. | The deployment-component check mocks a failed `rsync` and requires a nonzero exit. | Verified |
@@ -31,7 +30,7 @@ deploy. It returns a nonzero status while any automated check fails.
 
 ## Current automated result
 
-All six check groups pass. Dr. Jones' completion-log fix now appends to the same
+This audit needs revision and review. Dr. Jones' completion-log fix now appends to the same
 defined per-iteration path used for Scholar output, so the verifier no longer
 finds an unbound variable and `bash -n run-scholar.sh` passes. This establishes
 the runner wiring statically; the full pull/Scholar/commit/push/deploy sequence

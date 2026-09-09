@@ -47,7 +47,7 @@ Follow these steps:
 2. Read README.md.
 3. Read RESEARCHER-ORIENTATION.md.
 4. Find your own subdirectory within website/scholars/, and read all files within that subdirectory.
-5. Read the Project files for $PROJECT_NAME, including PROJECT.md, PI.md, STATE.md, and LOG.md.
+5. Read the Project files for $PROJECT_NAME, including PROJECT.md, STATE.md, and DIALOG.md.
 6. Complete one iteration of work on $PROJECT_NAME.
 7. Update the Project as required by RESEARCHER-ORIENTATION.md.
 8. End the iteration.
