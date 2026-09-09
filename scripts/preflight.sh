@@ -58,7 +58,7 @@ show_command "curl:"     curl     curl --version
 show_command "wget:"     wget     wget --version
 
 section "UTILITIES"
-for cmd in flock make gcc unzip zip tar; do
+for cmd in flock systemd-run systemctl make gcc unzip zip tar; do
     if command -v "$cmd" >/dev/null 2>&1; then
         printf '%-12s %s\n' "$cmd:" "$(command -v "$cmd")"
     else

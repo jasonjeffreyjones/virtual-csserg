@@ -48,6 +48,10 @@ that resources or software available during previous iterations remain the same.
 Work within the capabilities of the current host. Consider available CPU,
 memory, swap, and disk space when choosing computational methods and workloads.
 
+The Scholar runner may enforce hard CPU, memory, and wall-time limits. Treat
+the resource envelope provided at launch as a hard ceiling. Do not attempt to
+circumvent, raise, or disable these limits.
+
 Do not install, download, unpack, compile, or bootstrap replacement copies of
 system-level tools or runtimes in the repository, project directories, home
 directory, or /tmp. This includes tools such as Quarto, R, Python, Node,
