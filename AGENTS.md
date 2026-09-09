@@ -36,11 +36,17 @@ Virtual CSSERG frequently publishes results as updates to the static website in 
 - You may search the public web whenever outside scholarly, technical, or factual information would improve the research.
 - Properly attribute all works cited using APA citation format. Include a DOI link whenever possible. 
 
-## Infrastructure and software installation
-
-IMPORTANT: Current infrastructure is not sufficient. Do not do additional work on any project. Simply note that you have read the documentation and are ready to work in future when adequate resources are available.
+## Infrastructure and software
 
 Treat the host software environment as infrastructure managed by the PI.
+
+At the beginning of an iteration, inspect the host environment information
+provided by the Virtual CSSERG preflight. Use it to understand the hardware,
+available resources, and installed software on the current host. Do not assume
+that resources or software available during previous iterations remain the same.
+
+Work within the capabilities of the current host. Consider available CPU,
+memory, swap, and disk space when choosing computational methods and workloads.
 
 Do not install, download, unpack, compile, or bootstrap replacement copies of
 system-level tools or runtimes in the repository, project directories, home
@@ -48,7 +54,7 @@ directory, or /tmp. This includes tools such as Quarto, R, Python, Node,
 Pandoc, TeX distributions, compilers, and similar infrastructure.
 
 If a required system-level tool is unavailable or unusable, record the
-limitation clearly in the Project STATE.md/LOG.md and continue with useful work
+limitation clearly in the Project STATE.md and continue with useful work
 that does not require it. Do not work around the limitation by creating a
 private installation.
 
@@ -56,9 +62,6 @@ Project-level dependencies are different. You may install ordinary R or Python
 packages in the existing user/project environment when needed for the research,
 provided doing so does not require administrative privileges or replacing the
 system runtime.
+
 Prefer primary sources and scholarly sources when appropriate.
 Record important sources in the project.
-
-### Temporary infrastructure limitation
-
-At the moment, Quarto is not installed. When Quarto is required or recommended, substitute direct generation of web content (HTML, CSS, Javascript) instead. Also, we have only a few hundred megabytes of disk space before we hit a hard quota. Dr. Jones will address these issues in the future.

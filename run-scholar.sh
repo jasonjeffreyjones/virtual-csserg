@@ -1,22 +1,46 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export HOME="/home/ec2-user"
-export PATH="$HOME/.nvm/versions/node/v22.22.1/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin"
+# Locate Virtual CSSERG from this script rather than assuming a username,
+# home directory, or installation path.
+REPO="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+LOG_DIR="$REPO/logs"
+
+# Give scheduled/non-interactive runs a useful, portable baseline PATH.
+export PATH="$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH:-}"
+
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 SCHOLAR_NAME PROJECT_NAME" >&2
+    exit 2
+fi
 
 SCHOLAR_NAME="$1"
 PROJECT_NAME="$2"
 
-REPO="/home/ec2-user/virtual-csserg"
-LOG_DIR="$REPO/logs"
-
 cd "$REPO"
-
 mkdir -p "$LOG_DIR"
+
+# Only one Scholar may work on this host at a time.
+exec 9>/tmp/virtual-csserg.lock
+flock -n 9 || {
+    echo "Another Scholar iteration is already running."
+    exit 1
+}
+
+# Start from the current shared repository state.
+git pull --ff-only origin main
+
+# Describe the actual host environment at the beginning of every iteration.
+PREFLIGHT="$("$REPO/scripts/preflight.sh")"
 
 PROMPT=$(cat <<EOF
 Hello! Your name is $SCHOLAR_NAME. You are a Scholar within Virtual CSSERG.
 Your assigned Project for this iteration is $PROJECT_NAME.
+
+Here is the Virtual CSSERG preflight report for the host on which you are
+working during this iteration:
+
+$PREFLIGHT
 
 Follow these steps:
 1. Read AGENTS.md.
@@ -30,22 +54,20 @@ Follow these steps:
 EOF
 )
 
-exec 9>/tmp/virtual-csserg.lock
-flock -n 9 || {
-    echo "Another Scholar iteration is already running."
-    exit 1
-}
-
-git pull --ff-only origin main
-
 codex exec \
+    --sandbox workspace-write \
     -c 'web_search="live"' \
     -c 'sandbox_workspace_write.network_access=true' \
     "$PROMPT" \
     >> "$LOG_DIR/${SCHOLAR_NAME}_${PROJECT_NAME}.log" 2>&1
 
 git add -A
-git commit -m "Scholar $SCHOLAR_NAME: iterate on $PROJECT_NAME"
+
+if git diff --cached --quiet; then
+    echo "Scholar completed iteration with no repository changes."
+else
+    git commit -m "Scholar $SCHOLAR_NAME: iterate on $PROJECT_NAME"
+fi
 
 git pull --rebase origin main
 git push origin main
