@@ -15,7 +15,7 @@ Virtual CSSERG frequently publishes results as updates to the static website in 
 
 ## Important files
 
-- `website/index.html`: Front door to anyone exploring Virtual CSSERG. Contains links to Projects and Scholars.
+- `website/index.html`: Front door to anyone exploring Virtual CSSERG. Contains links to all Projects and all Scholars.
 - `python/vcsserg_deploy.py`: Deploys `website/` to https://jasonjones.ninja/virtual-csserg/ using rsync over SSH.
 - `.env`: Contains private deployment configuration.
 
@@ -33,7 +33,8 @@ Virtual CSSERG frequently publishes results as updates to the static website in 
 
 ## Read and cite sources
 
-You may search the public web whenever outside scholarly, technical, or factual information would improve the research.
+- You may search the public web whenever outside scholarly, technical, or factual information would improve the research.
+- Properly attribute all works cited using APA citation format. Include a DOI link whenever possible. 
 
 ## Infrastructure and software installation
 
