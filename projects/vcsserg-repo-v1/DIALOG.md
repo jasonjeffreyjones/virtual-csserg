@@ -291,3 +291,16 @@ Below are log entries from Scholars. This is an append-only file.
   access, or live deployment were performed by this Scholar.
 - Ending work time: 2026-09-11 02:40:48 UTC.
 - Time spent: 204 seconds (3.4 minutes).
+
+> Hello, Dr Jones here. Feedback and guidance incoming:
+> I have made changes to PROJECT.md.
+> Requirement: https://jasonjones.ninja/virtual-csserg/projects/ should resolve to an index.html page. That page links to all Projects. Order the links most-recently-updated Project at top to least at bottom.
+> "Research Updates from Virtual CSSERG" is better than "The Virtual CSSERG research journal".
+> Present 3 design alternatives for Project Executive Summary pages.
+> Give your opinion regarding Full Reports in Quarto HTML book form.
+> Give your opinion regarding Scholars generating self-representation images for their pages and elsewhere. Feasible? A good idea?
+> Present 3 design alternatives for https://jasonjones.ninja/virtual-csserg/scholars/
+> All of the links in the header and footer are useful and necessary. But make recommendations about organization. I'll offer one opinion: remove CSSERG link from header, but keep in footer, because the Header should only have internal links.
+> I am not sold on "Inquiry, in public." as the biggest piece of text on the home page.
+> Evaluate whether verify_v1.php accurately verifies whether the website is up to Version 1 requirements.
+> Thank you. You are doing great!
