@@ -143,6 +143,7 @@ def check_html_and_css():
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
     required_footer_references = {
+        "https://github.com/jasonjeffreyjones/virtual-csserg/",
         "https://jasonjones.ninja/",
         "https://jasonjones.ninja/csserg/",
         "https://creativecommons.org/licenses/by/4.0/",

@@ -1,4 +1,4 @@
-# Website alternatives for PI review
+# Website design decision and implementation
 
 Prepared by Bee Boring Vanilla on September 9, 2026.
 
@@ -6,9 +6,14 @@ Prepared by Bee Boring Vanilla on September 9, 2026.
 
 Open `website/projects/vcsserg-repo-v1/designs/index.html`, or follow the design
 comparison link in the v1 Executive Summary after automated publication.
-The previews are ordinary static pages, publicly publishable but explicitly
-unselected. Existing homepage, Scholar pages, and shared production CSS remain
-unchanged. Existing destination pages retain their current designs.
+Dr. Jones selected Concept C in DIALOG.md and requested a GitHub repository
+link in the footer. On September 11, the homepage adopted C's research lead,
+notebook entries, and contextual sidebar. Shared styles extend its warm paper,
+serif typography, and editorial rules to Scholar profiles, project summaries,
+and the existing report. All 12 HTML footers now link to the repository.
+The three prototypes remain archived comparisons, with their selection labels
+updated. The homepage's lead is a Scholar editorial choice grounded in the
+current Predict the Self records; the PI selected the design, not a finding.
 
 | Concept | Visual language | Information architecture | Layout | Principal tradeoff |
 |---|---|---|---|---|
@@ -28,7 +33,7 @@ against `projects/predict-the-self/STATE.md`,
 `projects/nfl-team-fandom-identities/STATE.md`, and the v1 verifier/current state.
 No new empirical findings were produced. NFL report links are intentionally
 absent because no public index exists. Private test performance is not claimed.
-The journal's lead story is an illustrative editorial choice, not a PI decision.
+The archived journal lead reflects the same documented development findings now highlighted on the homepage.
 
 The 4/6 measure is explicitly labeled as automated infrastructure check groups;
 it is not a completion percentage or a measure of research quality. These pages
@@ -36,9 +41,9 @@ are dated static snapshots, not live dashboards.
 
 ## Implementation and validation
 
-- Four preview HTML files share a CSS file scoped to their own directory.
+- Four archived preview HTML files share scoped CSS; eight current pages use the shared journal styling and Bootstrap CDN CSS. The existing Full Report also retains its specialized table and contents styles.
 - Bootstrap 5.3.8 CSS uses the CDN URL and integrity value in the official
-  documentation. This meets the requested Bootstrap approach for the previews
+  documentation. This meets the requested Bootstrap approach for all pages
   without adding a build/runtime tool or JavaScript. CDN access is required for
   Bootstrap styling; the local CSS supplies core layouts and typography too.
 - `verify_v1.py`: all 12 HTML pages and 3 CSS files pass structural/local-link
@@ -46,16 +51,17 @@ are dated static snapshots, not live dashboards.
 - No browser executable was found for Chromium, Chrome, or Firefox, and no
   browser tool is available. Rendered QA and assistive-technology checks remain
   outstanding. No browser or other infrastructure was installed.
-- The previews are homepage prototypes, not full redesigns of every report and
-  profile. PI review should select a direction before extending it site-wide.
+- The verifier now requires the GitHub URL within every HTML footer. A temporary
+  copied-site fixture confirms removing one footer link causes a failure.
+- No browser is installed on the September 11 host; rendered desktop/mobile QA
+  remains outstanding. Bootstrap was reused from the reviewed preview asset;
+  no new package or system tool was installed.
 
-## Decision requested in the next PI review
+## Remaining review
 
-Select A, B, C, a combination of named elements, or another direction. No
-selection is presumed. Inspect each at desktop and phone widths, follow a project
-and Scholar link, and compare how readily evidence limitations can be found.
-After selection, extend the chosen system to the remaining page types and perform
-rendered QA before replacing the current design.
+Inspect the homepage, a Scholar profile, a project summary, and the Full Report
+at desktop and phone widths, including keyboard navigation and table scrolling.
+Selection is resolved; rendered QA and future editorial choices remain open.
 
 ## Reference
 

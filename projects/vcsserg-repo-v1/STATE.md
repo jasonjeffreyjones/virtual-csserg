@@ -2,70 +2,69 @@
 
 ## Status
 
-Active. On September 9, 2026, four of six automated verification groups pass.
-Three substantially different homepage design previews and a comparison page
-are ready for PI review. The current production design remains in place.
+Active. On September 11, 2026, four of six automated verification groups pass.
+Dr. Jones selected Concept C (research journal) and requested a GitHub repository
+footer link. That decision is implemented in `website/`, ready for the normal
+post-iteration automated publication. Version 1.0 is not yet complete.
 
 ## Completed work and current evidence
 
-- The static site has shared branding, linked Scholar profiles, and the v1
-  Executive Summary. All 12 HTML pages and 3 stylesheets pass the verifier's
-  structural and local-link checks; this is not full publication compliance.
-- `_template` now has the three required memory files and a README covering
-  charter ownership, iteration timing, report formats, branding, and publication.
-  Empty legacy PI/LOG placeholders were removed; `PROJECT.md` was not edited.
-- `verify_v1.py` includes `_template` in memory checks and correctly reports
-  three required files. Temporary-fixture checks confirm that a complete template
-  passes and removal of its DIALOG file fails.
-- Repository guidance, static HTML/CSS, runner wiring, and mocked deployment
-  behavior pass. Deployment uses guarded, shell-free rsync mirroring and
-  propagates failures. No live deployment was performed by this Scholar.
-- `V1-AUDIT.md` and the public summary now disclose current failures and the
-  new charter's outstanding design work.
+- Three distinct design alternatives remain as archived homepage prototypes with
+  a comparison page. Selection labels now reflect the PI decision.
+- The homepage adopts C's research lead, notebook entries, and contextual sidebar
+  with project and Scholar navigation. Content reflects current project records;
+  Predict the Self development findings remain provisional, with test scores pending.
+- Eight current HTML pages use Bootstrap CDN CSS and shared journal styling:
+  warm paper, serif typography, editorial rules, responsive layouts. The existing
+  Full Report retains its specialized contents/table styles. Four archived design
+  pages retain their scoped styles and Bootstrap.
+- All 12 HTML pages include the GitHub repository link in their footer. The
+  verifier enforces this; a temporary copied-site fixture passes before removing
+  a footer link and fails after removal. All 12 pages and 3 stylesheets pass
+  structural/local-link checks. This does not establish visual or full publication compliance.
+- Bee's profile now uses the assigned name and exact supplied biography.
+- `_template` has the three required memory files and reporting/workflow guidance;
+  its README also records journal styling and the GitHub footer requirement.
+- Repository guidance, runner wiring, and mocked deployment behavior pass.
+  Deployment uses guarded, shell-free rsync mirroring and propagates failures.
 
 ## Current problems and decisions
 
-- `nfl-team-fandom-identities` and `predict-the-self` lack `DIALOG.md`; existing
-  legacy research records need careful migration without changing PI text.
-- The NFL project lacks `website/projects/nfl-team-fandom-identities/index.html`.
-- Three alternatives are implemented: research directory, evidence observatory,
-  and research journal. Each differs in visual design, information architecture,
-  and layout. They are isolated homepage prototypes; links open existing project
-  and Scholar pages. PI selection is pending before a site-wide replacement.
-- Initial Scholar biographies need comparison with the charter: Bee's profile
-  omits the supplied biography. The verifier checks profile existence, not text.
-- The v1 Executive Summary lacks its required dense key figure. Existing v1 pages
-  retain custom CSS; the four preview/comparison pages use the official
-  documentation's Bootstrap CDN with an integrity hash.
+- `nfl-team-fandom-identities` and `predict-the-self` lack `DIALOG.md`; legacy
+  research records need careful migration without changing PI text.
+- NFL lacks `website/projects/nfl-team-fandom-identities/index.html`.
+- Aleph/Ceetown profiles still abbreviate or alter charter biographies; compare
+  against the charter before restoring full supplied text. The verifier checks
+  existence, not biography fidelity.
+- The v1 Executive Summary still lacks its required dense key figure.
 - Live production parity, an observed complete Scholar workflow, and rendered
-  desktop/mobile QA remain unverified. This iteration found no Chromium,
-  Chrome, or Firefox executable and no browser tool; rendered QA is outstanding.
+  desktop/mobile QA remain unverified. No Chromium, Chrome, Firefox, or browser
+  tool was available this iteration. No replacement infrastructure was installed.
 - The v1 charter exempts this project from a Quarto Full Report.
+- Bootstrap CDN access is needed for Bootstrap styling; core journal layouts and
+  typography are also defined locally. No JavaScript or new build dependency added.
 
 ## Resources
 
-This iteration's preflight reports Python 3.12.3, R 4.3.3, Quarto 1.10.18,
-and a hard ceiling of 1 CPU, 3000M memory, 55 minutes, with no Scholar swap.
-The work used lightweight local file processing and installed no software.
+September 11 preflight: Python 3.12.3, R 4.3.3, Quarto 1.10.18; hard ceiling of
+1 CPU, 3000M memory, 55 minutes, no Scholar swap. Lightweight local file processing
+and standard-library validation fit this envelope; no installations or agents used.
 
 ## Important files
 
 - `projects/_template/`: project scaffold and reporting checklist.
 - `projects/vcsserg-repo-v1/verify_v1.py`: non-destructive automated checks.
 - `projects/vcsserg-repo-v1/V1-AUDIT.md`: promise-to-evidence matrix and open gates.
-- `projects/vcsserg-repo-v1/DESIGN-REVIEW.md`: design rationale, provenance, and review route.
-- `website/projects/vcsserg-repo-v1/designs/`: comparison page, three previews, scoped CSS.
-- `projects/vcsserg-repo-v1/DIALOG.md`: append-only iteration record.
+- `projects/vcsserg-repo-v1/DESIGN-REVIEW.md`: selected design, provenance, QA route.
+- `website/projects/vcsserg-repo-v1/designs/`: archived alternatives and comparison.
+- `website/index.html`, `website/assets/styles.css`: selected journal implementation.
 - `website/projects/vcsserg-repo-v1/index.html`: public Executive Summary.
-- `website/assets/styles.css`: current production visual system.
 - `python/vcsserg_deploy.py`: deployment component.
 - `run-scholar.sh`: PI-owned automation; Scholars must not edit it.
 
 ## Unresolved PI questions and next steps
 
-PI review question: select the directory, observatory, journal, a combination,
-or another direction; concrete previews are now linked from the v1 summary.
-While selection is pending, address memory migration, missing public project
-output, biography fidelity, and summary requirements. Rerun verification and arrange browser/production
-checks before claiming Version 1.0 is complete. Automation handles commit, push,
-and deployment after this iteration.
+No blocking PI question; design selection is resolved. Perform rendered QA when
+a browser is available. Address memory migration, missing NFL public output,
+remaining biography fidelity, and the summary figure; rerun verification.
+Automation handles commit, push, and deployment after this iteration.

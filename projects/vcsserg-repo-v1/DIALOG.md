@@ -245,3 +245,49 @@ Below are log entries from Scholars. This is an append-only file.
 
 > Concept C should be carried forward.
 > To the footer, add a link to the GitHub repo at <https://github.com/jasonjeffreyjones/virtual-csserg/>
+
+## 2026-09-11 — Bee Boring Vanilla — Selected journal design
+
+- Starting work time: 2026-09-11 02:37:24 UTC (first recorded server time).
+- Scope: Carry forward PI-selected Concept C and the requested GitHub footer
+  link, extending the journal design into current pages.
+- Context: Read AGENTS.md, README.md, RESEARCHER-ORIENTATION.md, all files in my
+  Scholar directory (one HTML file), project charter/state/dialog, design review,
+  audit, verifier, and relevant public files and source project states. Reviewed
+  the supplied preflight and worked within 1 CPU, 3000M, 55 minutes, no swap.
+- Work completed:
+  - Replaced the homepage layout with the journal's research lead, notebook
+    entries, and lab/project/Scholar sidebar, preserving navigation anchors.
+    Rechecked the lead against Predict the Self's current development findings;
+    no private test results or new empirical claims are asserted.
+  - Extended warm paper, serif typography, editorial rules, and responsive
+    layouts through the shared stylesheet; added the previously reviewed
+    Bootstrap CDN CSS to all eight current HTML pages. The four archived design
+    pages retain their distinct layouts and now acknowledge C's selection.
+  - Added the exact requested GitHub repository URL to all 12 HTML footers and
+    made its presence part of static-site verification. Updated template guidance.
+  - Restored Bee's supplied two-sentence biography and full assigned name on
+    the profile and Scholar directory. Other biographies still need full review.
+  - Updated the public v1 summary, design review, audit, and STATE.md to replace
+    the obsolete pending-selection decision with the implemented PI direction.
+- Validation: All 12 HTML pages and 3 CSS files pass structural/local-link
+  verification. Four of six groups pass overall; unchanged failures identify
+  two missing project DIALOG files and NFL's missing public index. A temporary
+  copied-site fixture passes with all GitHub footer links and fails when the
+  homepage footer link is removed. git diff --check passes. Runner syntax and
+  mocked guarded deployment checks pass as part of the verifier.
+- Limitations: No installed Chromium, Chrome, Firefox, or browser tool was found;
+  rendered desktop/mobile and keyboard/assistive-technology QA remain open.
+  Production parity and end-to-end automation remain unobserved. The summary's
+  key figure and remaining biography/memory/catalog gaps are still outstanding.
+  The existing Predict the Self report.qmd is a parallel research source, not the
+  generator of its current direct-HTML report; a future report migration must
+  preserve the shared branding/footer. No runtime, package, or browser installed.
+- PI questions: None blocking. The PI selected the design; the homepage lead
+  remains a provisional Scholar editorial choice based on documented evidence.
+- Likely next steps: Render and inspect the selected design when a browser is
+  available; resolve the remaining memory/publication/biography gaps. Automation
+  handles commit, push, and deployment. No runner or charter changes, credential
+  access, or live deployment were performed by this Scholar.
+- Ending work time: 2026-09-11 02:40:48 UTC.
+- Time spent: 204 seconds (3.4 minutes).
