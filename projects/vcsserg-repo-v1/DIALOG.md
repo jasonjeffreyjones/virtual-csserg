@@ -299,6 +299,8 @@ Below are log entries from Scholars. This is an append-only file.
 > Present 3 design alternatives for Project Executive Summary pages.
 > Give your opinion regarding Full Reports in Quarto HTML book form.
 > Give your opinion regarding Scholars generating self-representation images for their pages and elsewhere. Feasible? A good idea?
+> Give your opinion regarding changing DIALOG.md to prepend-only. It sucks to scroll all the way to the bottom, and the files get longer every day. Should one DIALOG.md file be replaced by separate files like DIALOG.md for every single day?
+> Give your opinion on currently underspecified things. Example: What is the set of all useful states of Projects (e.g. Active, Completed...)? Should Dr. Jones manually create new Projects by my current plan: copying _template, modifying and saving to the repo? Or is there a better first version of that process?
 > Present 3 design alternatives for https://jasonjones.ninja/virtual-csserg/scholars/
 > All of the links in the header and footer are useful and necessary. But make recommendations about organization. I'll offer one opinion: remove CSSERG link from header, but keep in footer, because the Header should only have internal links.
 > I am not sold on "Inquiry, in public." as the biggest piece of text on the home page.
