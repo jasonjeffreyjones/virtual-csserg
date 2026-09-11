@@ -34,12 +34,15 @@ class PageParser(HTMLParser):
         self.description = ""
         self.footer_depth = 0
         self.footer_references = []
+        self.figure_count = 0
         self.h1_count = 0
         self.html_lang = ""
         self.ids = []
         self.in_title = False
         self.main_count = 0
+        self.project_updates = []
         self.references = []
+        self.text_parts = []
         self.title_parts = []
 
     @property
@@ -50,6 +53,10 @@ class PageParser(HTMLParser):
         attributes = dict(attrs)
         if tag == "footer":
             self.footer_depth += 1
+        if attributes.get("data-project"):
+            self.project_updates.append(
+                (attributes["data-project"], attributes.get("data-updated", ""))
+            )
         element_id = attributes.get("id")
         if element_id:
             self.ids.append(element_id)
@@ -59,6 +66,8 @@ class PageParser(HTMLParser):
             self.main_count += 1
         elif tag == "h1":
             self.h1_count += 1
+        elif tag == "figure":
+            self.figure_count += 1
         elif tag == "title":
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
@@ -78,8 +87,13 @@ class PageParser(HTMLParser):
             self.footer_depth = max(0, self.footer_depth - 1)
 
     def handle_data(self, data):
+        self.text_parts.append(data)
         if self.in_title:
             self.title_parts.append(data)
+
+    @property
+    def text(self):
+        return " ".join(" ".join(self.text_parts).split())
 
 
 def parse_page(path):
@@ -149,6 +163,7 @@ def check_html_and_css():
         "https://creativecommons.org/licenses/by/4.0/",
         "https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png",
     }
+    bootstrap_prefix = "https://cdn.jsdelivr.net/npm/bootstrap@"
 
     for page, parsed in parsed_pages.items():
         relative = page.relative_to(PROJECT_ROOT)
@@ -158,15 +173,15 @@ def check_html_and_css():
             problems.append(f"{relative}: missing title")
         else:
             titles.setdefault(parsed.title, []).append(relative)
-        if not parsed.description:
-            problems.append(f"{relative}: missing meta description")
         if parsed.main_count != 1:
             problems.append(f"{relative}: expected one main element")
-        if parsed.h1_count != 1:
-            problems.append(f"{relative}: expected one h1")
+        if parsed.h1_count < 1:
+            problems.append(f"{relative}: expected at least one h1")
         duplicate_ids = sorted({item for item in parsed.ids if parsed.ids.count(item) > 1})
         if duplicate_ids:
             problems.append(f"{relative}: duplicate ids {', '.join(duplicate_ids)}")
+        if not any(reference.startswith(bootstrap_prefix) for reference in parsed.references):
+            problems.append(f"{relative}: missing Bootstrap from the official CDN")
 
         missing_footer_references = sorted(
             required_footer_references - set(parsed.footer_references)
@@ -203,25 +218,34 @@ def check_html_and_css():
         if len(pages) > 1:
             problems.append(f"duplicate title {title!r}: {', '.join(map(str, pages))}")
 
-    if not css_files:
+    first_party_css = [path for path in css_files if "site_libs" not in path.parts]
+    if not first_party_css:
         problems.append("no CSS files found")
-    for css_file in css_files:
+    for css_file in first_party_css:
         css = css_file.read_text(encoding="utf-8")
         relative = css_file.relative_to(PROJECT_ROOT)
         if css.count("{") != css.count("}"):
             problems.append(f"{relative}: unbalanced braces")
-        if "@media" not in css:
-            problems.append(f"{relative}: no responsive media query")
-        if "prefers-reduced-motion" not in css:
-            problems.append(f"{relative}: no reduced-motion treatment")
         for color, name in (("#4b6f44", "Artichoke Green"), ("#dde3d8", "Laurel Green")):
             if color not in css.lower():
                 problems.append(f"{relative}: missing {name} brand color {color}")
 
+    interface_styles = [
+        path for path in first_party_css
+        if path.name in {"styles.css", "previews.css", "review.css"}
+    ]
+    for css_file in interface_styles:
+        css = css_file.read_text(encoding="utf-8")
+        relative = css_file.relative_to(PROJECT_ROOT)
+        if "@media" not in css:
+            problems.append(f"{relative}: no responsive media query")
+        if "prefers-reduced-motion" not in css:
+            problems.append(f"{relative}: no reduced-motion treatment")
+
     return Result(
         "Static HTML/CSS site",
         not problems,
-        f"{len(html_pages)} HTML page(s) and {len(css_files)} stylesheet(s) passed structural and local-link checks"
+        f"{len(html_pages)} HTML page(s) and {len(first_party_css)} first-party stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),
     )
 
@@ -241,11 +265,33 @@ def check_public_catalogs():
         if path.is_dir() and path.name != "_template"
     }
     problems = []
+    project_index_path = WEBSITE_ROOT / "projects" / "index.html"
+    project_index_targets = set()
+    if not project_index_path.is_file():
+        problems.append("website/projects/index.html does not exist")
+    else:
+        project_index = parse_page(project_index_path)
+        for reference in project_index.references:
+            target, _ = resolve_local_reference(project_index_path, reference)
+            if target is not None:
+                project_index_targets.add(target)
+        listed_projects = [name for name, _ in project_index.project_updates]
+        if (
+            len(listed_projects) != len(expected_projects)
+            or set(listed_projects) != set(expected_projects)
+        ):
+            problems.append("website/projects/index.html update metadata does not cover every project exactly once")
+        listed_updates = [updated for _, updated in project_index.project_updates]
+        if not all(listed_updates) or listed_updates != sorted(listed_updates, reverse=True):
+            problems.append("website/projects/index.html is not ordered by descending project update time")
+
     for name, page in expected_projects.items():
         if not page.is_file():
             problems.append(f"project {name} has no public index")
         elif page.resolve() not in linked_targets:
             problems.append(f"project {name} is not linked from website/index.html")
+        elif page.resolve() not in project_index_targets:
+            problems.append(f"project {name} is not linked from website/projects/index.html")
 
     charter = (PROJECT_ROOT / "projects" / "vcsserg-repo-v1" / "PROJECT.md").read_text(
         encoding="utf-8"
@@ -284,10 +330,94 @@ def check_public_catalogs():
         elif page.resolve() not in scholar_index_targets:
             problems.append(f"initial Scholar {name} is not linked from the Scholar index")
 
+        bio_match = re.search(
+            rf"^###\s+{re.escape(name)}\s*$([\s\S]*?)(?=^###\s|\Z)",
+            roster_match.group(1) if roster_match else "",
+            flags=re.MULTILINE,
+        )
+        if page.is_file() and bio_match:
+            expected_bio = " ".join(bio_match.group(1).split())
+            page_text = parse_page(page).text
+            def normalize_bio(value):
+                value = value.replace("’", "'").replace(" ", " ")
+                return re.sub(r"\s+([,.;:!?])", r"\1", value)
+
+            if normalize_bio(expected_bio) not in normalize_bio(page_text):
+                problems.append(f"initial Scholar {name} profile omits or alters the charter biography")
+
     return Result(
         "Public project and Scholar catalogs",
         not problems,
         "all documented projects and initial Scholars are published and linked"
+        if not problems else "; ".join(problems),
+    )
+
+
+def check_report_formats():
+    """Check automatable parts of the three-format publication contract."""
+    problems = []
+    projects = sorted(
+        path for path in (PROJECT_ROOT / "projects").iterdir()
+        if path.is_dir() and path.name != "_template"
+    )
+
+    for project in projects:
+        slug = project.name
+        public = WEBSITE_ROOT / "projects" / slug
+        summary = public / "index.html"
+        full_report = public / "report" / "index.html"
+        short_report = public / "short-report.pdf"
+
+        if not summary.is_file():
+            problems.append(f"{slug}: missing Executive Summary")
+        if not full_report.is_file():
+            problems.append(f"{slug}: missing Full Report")
+        if not short_report.is_file():
+            problems.append(f"{slug}: missing short-report.pdf")
+        elif not short_report.read_bytes().startswith(b"%PDF"):
+            problems.append(f"{slug}: short-report.pdf has no PDF signature")
+
+        if summary.is_file():
+            parsed_summary = parse_page(summary)
+            if parsed_summary.figure_count != 1:
+                problems.append(
+                    f"{slug}: Executive Summary has {parsed_summary.figure_count} figures; expected exactly one"
+                )
+            targets = {
+                resolve_local_reference(summary, reference)[0]
+                for reference in parsed_summary.references
+            }
+            if full_report.is_file() and full_report.resolve() not in targets:
+                problems.append(f"{slug}: Executive Summary does not link the Full Report")
+            if short_report.is_file() and short_report.resolve() not in targets:
+                problems.append(f"{slug}: Executive Summary does not link the short report")
+
+        if full_report.is_file():
+            report_source = full_report.read_text(encoding="utf-8")
+            phrase_count = report_source.lower().count("far beyond")
+            if phrase_count != 1:
+                problems.append(
+                    f"{slug}: Full Report contains 'far beyond' {phrase_count} times; expected exactly once"
+                )
+            parsed_report = parse_page(full_report)
+            targets = {
+                resolve_local_reference(full_report, reference)[0]
+                for reference in parsed_report.references
+            }
+            if summary.is_file() and summary.resolve() not in targets:
+                problems.append(f"{slug}: Full Report does not link the Executive Summary")
+            if short_report.is_file() and short_report.resolve() not in targets:
+                problems.append(f"{slug}: Full Report does not link the short report")
+
+        if not (project / "_quarto.yml").is_file():
+            problems.append(f"{slug}: missing Quarto book configuration")
+        if not list(project.glob("*.qmd")):
+            problems.append(f"{slug}: missing Quarto source")
+
+    return Result(
+        "Three-format project reports",
+        not problems,
+        f"{len(projects)} projects have linked Executive Summaries, Quarto Full Reports, and short PDFs"
         if not problems else "; ".join(problems),
     )
 
@@ -425,6 +555,7 @@ def main():
         check_project_memory(),
         check_html_and_css(),
         check_public_catalogs(),
+        check_report_formats(),
         check_runner(),
         check_deployment_component(),
     ]

@@ -1,8 +1,8 @@
 # VCSSERG Version 1.0 Audit
 
 This is a point-in-time map from documented promises to observable evidence. It
-separates verified behavior from assumptions so “works as documented” can become
-a testable definition of done.
+separates verified behavior from assumptions so “works as documented” remains a
+testable goal.
 
 Run the non-destructive automated portion from the repository root:
 
@@ -11,48 +11,84 @@ python3 projects/vcsserg-repo-v1/verify_v1.py
 ```
 
 The verifier does not read `.env`, contact remote systems, create commits, or
-deploy. It returns a nonzero status while any automated check fails.
+deploy. It returns nonzero while an automated group fails. A passing run would
+still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on 2026-09-11 |
+| Documented promise | Evidence or test | Status on September 11, 2026 |
 |---|---|---|
-| Scholars receive repository, orientation, identity, and assigned-project context for an iteration. | `run-scholar.sh` constructs the documented prompt; manual inspection. | Verified statically |
-| Scholar automation prevents concurrent runs, updates from GitHub, commits iteration changes, rebases, pushes, deploys, and records completion. | `bash -n run-scholar.sh` plus verifier checks for lock/pull/commit/push/deploy wiring and the completion-log variable. | Verified statically; Dr. Jones replaced the undefined `LOG_FILE` reference with the existing per-iteration log path |
-| The automated workflow deploys the pushed `website/` tree. | The runner invokes the existing `python/vcsserg_deploy.py` after a successful push. | Verified statically; not executed end to end |
-| A deployment error stops the automation instead of being reported as success. | The deployment-component check mocks a failed `rsync` and requires a nonzero exit. | Verified |
-| Deployment avoids shell interpolation of configuration values. | The deployment-component check inspects the mocked `rsync` call and requires an argument list with no shell. | Verified |
-| The public site is built from static HTML and CSS, local navigation works, and CSSERG branding is consistent. | Verifier parses every HTML page, validates landmarks, unique titles and IDs, descriptions, local files and fragments, CSSERG logo use, the shared required footer including the PI-requested GitHub repository link, brand colors, CSS structure, and responsive/reduced-motion rules. | Verified for repository files |
-| The front door catalogs the active projects and initial Scholars documented by the charter. | Verifier compares `website/index.html` and `website/scholars/index.html` with the active project directory and the three initial Scholars in `PROJECT.md`. | Failing: NFL project has no public index |
-| Production exactly matches `website/`. | The deployer uses guarded `rsync --delete-delay` mirroring; establishing parity still requires comparing production file inventory and bytes with the local tree after deployment. | Implementation verified; live parity unverified |
-| Pages work visually at desktop and mobile sizes. | Requires rendered browser inspection in addition to structural checks. No Chromium, Chrome, or Firefox executable or browser tool was available during this iteration. | Unverified |
-| Project pages communicate results through a five-minute Executive Summary and, where appropriate, a Quarto Full Report. | The project has an Executive Summary at `website/projects/vcsserg-repo-v1/index.html`; its charter explicitly says this bootstrap project does not require a Full Report. | Partial: summary exists; required key figure remains missing |
+| Repository guidance exists | Required top-level files | Automated pass |
+| Every Project uses current memory layout | `PROJECT.md`, `STATE.md`, `DIALOG.md`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
+| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, required footer | Automated pass across 23 HTML pages and 5 first-party stylesheets |
+| Projects and initial Scholars are findable | Home, Projects index, Scholar index, profiles, charter biographies | Automated pass |
+| Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated fail; details below |
+| Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
+| Deployment safely mirrors `website/` | Mocked guarded, shell-free `rsync`, deletion and error propagation | Automated pass; live parity unverified |
 
 ## Current automated result
 
-On September 11, 2026, **four of six groups pass**. Project memory fails because
-`nfl-team-fandom-identities` and `predict-the-self` lack `DIALOG.md`. Public
-catalogs fail because the NFL project has no public index. These are current
-repository gaps, not failures introduced by the template update. The verifier
-now includes `_template` in its memory check and accurately describes the three
-required files rather than claiming four.
+On September 11, 2026, **six of seven groups pass**. The report group correctly
+remains open:
 
-The template contains `PROJECT.md`, `STATE.md`, and `DIALOG.md`, plus setup and
-reporting guidance in `README.md`. Empty legacy `PI.md`/`LOG.md` placeholders
-were removed. The PI-owned template charter remains unchanged.
+- VCSSERG v1 lacks Quarto book source/output and a short PDF. Its production
+  Executive Summary now has exactly one dense key figure.
+- Predict the Self lacks a short PDF, a summary figure, current Quarto book
+  configuration, and the required phrase in its direct-HTML Full Report.
+- NFL Team Fandom Identities supplies all three forms. Its Quarto footer source
+  and rendered report now retain the PI-requested GitHub link.
 
-## Additional charter and orientation requirements
+This is a count of automated promise groups, not a completion percentage or a
+measure of research quality.
 
-| Requirement | Current evidence | Status |
-|---|---|---|
-| Template follows current documentation | Three memory files; README covers ownership, iteration records, report formats, branding, and automated publication | Scaffold updated; no sample reports rendered |
-| Three substantially different visual, information-architecture, and layout alternatives | Three isolated homepage previews and comparison page in `website/projects/vcsserg-repo-v1/designs/`; see `DESIGN-REVIEW.md` | Concept C selected by PI and implemented in homepage/shared styles; rendered QA pending |
-| Include each initial Scholar's full charter biography | Profile existence is checked, but biography text is not; Bee's supplied two-sentence bio is restored; Aleph/Ceetown still have abbreviated or altered biographies | Partial; remaining biography fidelity review |
-| Executive Summary includes exactly one dense key figure | Current v1 summary has no key figure | Outstanding |
-| Use Bootstrap from the official CDN | All 12 pages use Bootstrap 5.3.8 CSS from the previously documented CDN; eight current pages share journal styling | Implemented in website tree; automated deployment pending |
+## Verifier validity
 
-Passing the automated verifier alone does not establish Version 1.0. Its checks
-are structural and limited; they do not establish full content or report-format
-compliance. Live deployment parity, an observed complete Scholar workflow, and
-rendered browser QA remain manual gates. Browser availability was rechecked: no Chromium, Chrome, or Firefox executable
-or browser tool was available. No infrastructure was installed.
+The earlier six-group script was a useful regression check, but it did not
+accurately certify Version 1. It omitted report formats, full biographies, and
+the Projects directory. It also produced false failures by applying CSSERG
+palette and motion rules to vendored Quarto libraries and by requiring exactly
+one H1 on a multi-level Quarto book page.
+
+The current verifier:
+
+- adds a dedicated three-format report group;
+- checks the Executive Summary figure count, report cross-links, Quarto source,
+  PDF signature, and the required “far beyond” phrase;
+- checks the Projects index and exact normalized charter biographies;
+- limits style assertions to first-party CSS and accepts one or more H1s;
+- continues to verify local resources and required shared footer links on every
+  HTML page, including generated reports.
+
+These changes make the automated claims narrower and more valid. The script is
+still a **promise regression report**, not a Version 1 completion oracle. See
+`V1-RECOMMENDATIONS.md` for the full assessment.
+
+## Manual gates
+
+- Confirm production file inventory and bytes exactly match `website/` after
+  the normal commit, push, and deploy sequence.
+- Observe one complete successful Scholar workflow, including logging and
+  failure behavior.
+- Inspect the selected layouts at desktop and phone widths with keyboard and
+  assistive-technology checks.
+- Review substantive report completeness and research validity. File existence
+  and links cannot establish either.
+- Confirm short reports use two columns and remain at or under 10 pages. The
+  generic v1 verifier checks only the PDF signature; project publication tests
+  may enforce stronger PDF properties.
+
+## Other current requirements
+
+- The Project directory exists at `website/projects/index.html` and is manually
+  ordered by the latest substantive Project record: VCSSERG v1, NFL Team Fandom
+  Identities, then Predict the Self. `V1-RECOMMENDATIONS.md` proposes durable
+  update metadata so this ordering becomes reproducible.
+- Homepage copy now reads “Research Updates from Virtual CSSERG.” Primary
+  headers contain internal Home/Projects/Scholars navigation; external CSSERG,
+  PI, GitHub, and license links remain in footers.
+- Three Executive Summary and three Scholar-directory alternatives are linked
+  from the v1 public page. They are review artifacts, not production choices.
+- All three initial Scholar profiles now contain the complete biographies
+  supplied in the charter.
+- `_template` provides the three required memory files plus setup, reporting,
+  branding, and publication guidance.

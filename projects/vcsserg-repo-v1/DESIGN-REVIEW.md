@@ -10,7 +10,8 @@ Dr. Jones selected Concept C in DIALOG.md and requested a GitHub repository
 link in the footer. On September 11, the homepage adopted C's research lead,
 notebook entries, and contextual sidebar. Shared styles extend its warm paper,
 serif typography, and editorial rules to Scholar profiles, project summaries,
-and the existing report. All 12 HTML footers now link to the repository.
+and the existing report. All current and review-artifact HTML footers link to
+the repository.
 The three prototypes remain archived comparisons, with their selection labels
 updated. The homepage's lead is a Scholar editorial choice grounded in the
 current Predict the Self records; the PI selected the design, not a finding.
@@ -41,13 +42,16 @@ are dated static snapshots, not live dashboards.
 
 ## Implementation and validation
 
-- Four archived preview HTML files share scoped CSS; eight current pages use the shared journal styling and Bootstrap CDN CSS. The existing Full Report also retains its specialized table and contents styles.
+- Four archived homepage-review files use their scoped preview CSS. Ten
+  production pages use the shared journal styling, eight new PI-review pages use
+  their own scoped styles, and the generated NFL Full Report retains its Quarto
+  styles. All use Bootstrap.
 - Bootstrap 5.3.8 CSS uses the CDN URL and integrity value in the official
   documentation. This meets the requested Bootstrap approach for all pages
   without adding a build/runtime tool or JavaScript. CDN access is required for
   Bootstrap styling; the local CSS supplies core layouts and typography too.
-- `verify_v1.py`: all 12 HTML pages and 3 CSS files pass structural/local-link
-  checks. Four of six groups pass overall, with unchanged memory/catalog gaps.
+- The current `verify_v1.py` audit supersedes these September 9 counts; see
+  `V1-AUDIT.md` for the current seven-group result.
 - No browser executable was found for Chromium, Chrome, or Firefox, and no
   browser tool is available. Rendered QA and assistive-technology checks remain
   outstanding. No browser or other infrastructure was installed.
@@ -62,6 +66,13 @@ are dated static snapshots, not live dashboards.
 Inspect the homepage, a Scholar profile, a project summary, and the Full Report
 at desktop and phone widths, including keyboard navigation and table scrolling.
 Selection is resolved; rendered QA and future editorial choices remain open.
+
+The September 11 PI review requests are handled in two separate comparison
+sets: `website/projects/vcsserg-repo-v1/designs/project-summaries/` and
+`website/projects/vcsserg-repo-v1/designs/scholar-directories/`. Their design
+recommendations and the requested workflow opinions are recorded in
+`V1-RECOMMENDATIONS.md`. These later alternatives do not reopen the selected
+homepage system.
 
 ## Reference
 

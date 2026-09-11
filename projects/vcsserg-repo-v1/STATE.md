@@ -2,69 +2,126 @@
 
 ## Status
 
-Active. On September 11, 2026, four of six automated verification groups pass.
-Dr. Jones selected Concept C (research journal) and requested a GitHub repository
-footer link. That decision is implemented in `website/`, ready for the normal
-post-iteration automated publication. Version 1.0 is not yet complete.
+Active. On September 11, 2026, six of seven automated promise groups pass.
+Version 1.0 is not complete because required report artifacts and manual
+publication/workflow evidence remain open. The current charter now requires all
+three report forms for this bootstrap Project; the former Full Report exemption
+is obsolete.
 
 ## Completed work and current evidence
 
-- Three distinct design alternatives remain as archived homepage prototypes with
-  a comparison page. Selection labels now reflect the PI decision.
-- The homepage adopts C's research lead, notebook entries, and contextual sidebar
-  with project and Scholar navigation. Content reflects current project records;
-  Predict the Self development findings remain provisional, with test scores pending.
-- Eight current HTML pages use Bootstrap CDN CSS and shared journal styling:
-  warm paper, serif typography, editorial rules, responsive layouts. The existing
-  Full Report retains its specialized contents/table styles. Four archived design
-  pages retain their scoped styles and Bootstrap.
-- All 12 HTML pages include the GitHub repository link in their footer. The
-  verifier enforces this; a temporary copied-site fixture passes before removing
-  a footer link and fails after removal. All 12 pages and 3 stylesheets pass
-  structural/local-link checks. This does not establish visual or full publication compliance.
-- Bee's profile now uses the assigned name and exact supplied biography.
-- `_template` has the three required memory files and reporting/workflow guidance;
-  its README also records journal styling and the GitHub footer requirement.
-- Repository guidance, runner wiring, and mocked deployment behavior pass.
-  Deployment uses guarded, shell-free rsync mirroring and propagates failures.
+- `website/projects/index.html` now resolves as the public all-Projects index.
+  It links all three Projects in descending order of their latest substantive
+  project record: VCSSERG v1, NFL Team Fandom Identities, Predict the Self.
+- The homepage heading is “Research Updates from Virtual CSSERG.” The rejected
+  “Inquiry, in public.” headline is gone. Primary headers use internal Home,
+  Projects, and Scholars navigation; external institutional/source/license
+  links remain in footers.
+- Three isolated Project Executive Summary alternatives compare an evidence
+  brief, research poster, and field-notes layout. Three Scholar-directory
+  alternatives compare a portrait roster, work map, and field guide. No new
+  production design is presumed pending PI review.
+- All three initial Scholar profiles contain the complete charter biographies.
+  This is enforced with normalized text comparison rather than mere profile
+  existence.
+- Predict the Self now has the current `DIALOG.md` memory file; legacy `LOG.md`
+  and `PI.md` remain unchanged. Every Project and `_template` now has the three
+  required memory files.
+- The production v1 Executive Summary now includes exactly one dense key figure
+  showing the automated promise map and links both new design reviews.
+- The NFL Full Report's Quarto footer source and generated HTML retain the
+  required GitHub repository link.
 
-## Current problems and decisions
+## Verifier assessment
 
-- `nfl-team-fandom-identities` and `predict-the-self` lack `DIALOG.md`; legacy
-  research records need careful migration without changing PI text.
-- NFL lacks `website/projects/nfl-team-fandom-identities/index.html`.
-- Aleph/Ceetown profiles still abbreviate or alter charter biographies; compare
-  against the charter before restoring full supplied text. The verifier checks
-  existence, not biography fidelity.
-- The v1 Executive Summary still lacks its required dense key figure.
-- Live production parity, an observed complete Scholar workflow, and rendered
-  desktop/mobile QA remain unverified. No Chromium, Chrome, Firefox, or browser
-  tool was available this iteration. No replacement infrastructure was installed.
-- The v1 charter exempts this project from a Quarto Full Report.
-- Bootstrap CDN access is needed for Bootstrap styling; core journal layouts and
-  typography are also defined locally. No JavaScript or new build dependency added.
+`verify_v1.py` is a promise regression suite, not a Version 1 certification.
+The earlier version had false positives (omitted report formats, project index,
+and biography fidelity) and false negatives (applied first-party design rules to
+vendored Quarto CSS and rejected a valid multi-H1 Quarto book hierarchy).
 
-## Resources
+The verifier now has seven groups. It checks automatable parts of the three-form
+report contract, including summary figure count, local cross-links, Quarto book
+source/configuration, PDF signature, and the exact Full Report phrase. Design
+assertions apply to first-party CSS; third-party libraries still participate in
+local-reference checking through their HTML consumers. The Projects directory,
+declared update order, and full charter biographies are checked.
 
-September 11 preflight: Python 3.12.3, R 4.3.3, Quarto 1.10.18; hard ceiling of
-1 CPU, 3000M memory, 55 minutes, no Scholar swap. Lightweight local file processing
-and standard-library validation fit this envelope; no installations or agents used.
+Six groups pass: repository guidance, project memory, static HTML/CSS, public
+catalogs, runner wiring, and guarded deployment behavior. Report formats fail:
+
+- VCSSERG v1 lacks a Quarto Full Report and short PDF.
+- Predict the Self lacks a short PDF and summary figure, and its direct-HTML
+  report lacks current Quarto book configuration and the required phrase.
+
+The generic check does not validate PDF page count/columns, substantive research
+quality, production parity, rendered usability, or observed automation.
+
+## Current design and governance recommendations
+
+`V1-RECOMMENDATIONS.md` records the requested opinions. Current recommendations:
+
+- Select Executive Summary **A (evidence brief)** as the reusable default.
+- Select Scholar directory **A (portrait roster)** for Version 1; add a work map
+  later when the group is larger.
+- Keep Quarto HTML books as the default Full Report, using direct HTML only as a
+  documented temporary runtime contingency.
+- Permit generated Scholar self-representations only as clearly illustrative,
+  provenance-recorded, non-biographical assets; keep monograms as the default.
+- Do not prepend to `DIALOG.md`. Migrate, after PI approval and documentation
+  changes, toward one uniquely named immutable file per iteration plus a short
+  newest-first index.
+- Use lifecycle states Proposed, Active, Blocked, Paused, Completed, Archived;
+  track review/publication readiness separately.
+- Replace manual template copying with a small validated, no-overwrite scaffold
+  command while retaining PI authorship of `PROJECT.md` and withholding public
+  listing until substantive content exists.
+
+## Current problems and manual gates
+
+- Build and validate outstanding report forms. This is the only failing
+  automated group.
+- Live production parity, one observed complete Scholar workflow, and rendered
+  desktop/mobile/keyboard/assistive-technology QA remain unverified.
+- The Project update order is manually encoded. A durable source of truth for
+  `title`, `status`, and `updated` is still underspecified.
+- New summary and Scholar-directory selections await PI review.
+- Archived September 9 homepage prototypes contain dated evidence and are
+  explicitly labeled as archived; they should not be read as current reports.
+
+## Resources and limitations
+
+September 11 preflight: 2 logical CPUs and 3.7 GiB host RAM; enforced ceiling of
+1 CPU, 3000M memory, 55 minutes, no Scholar swap. Installed tools include Python
+3.12.3, R 4.3.3, and Quarto 1.10.18. Work used lightweight file processing and
+standard-library validation. No software or agents were installed or used.
+No local Chromium, Chrome, or Firefox executable/browser tool is available, so
+rendered QA remains open. The NFL publication verifier could not start because
+its declared `pypdf` package is absent from this host; no package was installed
+for the small footer-only change, which is covered by the v1 structural check.
+No credentials were accessed and no deployment run.
 
 ## Important files
 
-- `projects/_template/`: project scaffold and reporting checklist.
+- `projects/vcsserg-repo-v1/V1-AUDIT.md`: current promise/evidence matrix.
+- `projects/vcsserg-repo-v1/V1-RECOMMENDATIONS.md`: requested design and
+  governance opinions with rationale.
 - `projects/vcsserg-repo-v1/verify_v1.py`: non-destructive automated checks.
-- `projects/vcsserg-repo-v1/V1-AUDIT.md`: promise-to-evidence matrix and open gates.
-- `projects/vcsserg-repo-v1/DESIGN-REVIEW.md`: selected design, provenance, QA route.
-- `website/projects/vcsserg-repo-v1/designs/`: archived alternatives and comparison.
-- `website/index.html`, `website/assets/styles.css`: selected journal implementation.
-- `website/projects/vcsserg-repo-v1/index.html`: public Executive Summary.
-- `python/vcsserg_deploy.py`: deployment component.
+- `website/projects/index.html`: public Project directory.
+- `website/projects/vcsserg-repo-v1/designs/project-summaries/`: three Project
+  Executive Summary alternatives and comparison.
+- `website/projects/vcsserg-repo-v1/designs/scholar-directories/`: three Scholar
+  directory alternatives and comparison.
+- `website/index.html`, `website/assets/styles.css`: selected journal system.
+- `website/projects/vcsserg-repo-v1/index.html`: production Executive Summary.
+- `python/vcsserg_deploy.py`: guarded deployment component.
 - `run-scholar.sh`: PI-owned automation; Scholars must not edit it.
 
-## Unresolved PI questions and next steps
+## Unresolved PI questions and likely next steps
 
-No blocking PI question; design selection is resolved. Perform rendered QA when
-a browser is available. Address memory migration, missing NFL public output,
-remaining biography fidelity, and the summary figure; rerun verification.
-Automation handles commit, push, and deployment after this iteration.
+No blocking question. PI choices requested: select or combine one Project
+Executive Summary alternative and one Scholar-directory alternative; accept,
+revise, or reject the proposed image, dialog, state, and project-creation
+policies. Independent next work is to produce the VCSSERG v1 Quarto Full Report
+first, derive its two-column short PDF, then address Predict the Self publication
+gaps and complete the manual gates. Automation handles commit, push, and
+deployment after this iteration.

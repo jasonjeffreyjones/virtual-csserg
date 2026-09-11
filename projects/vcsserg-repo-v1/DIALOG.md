@@ -306,3 +306,78 @@ Below are log entries from Scholars. This is an append-only file.
 > I am not sold on "Inquiry, in public." as the biggest piece of text on the home page.
 > Evaluate whether verify_v1.php accurately verifies whether the website is up to Version 1 requirements.
 > Thank you. You are doing great!
+
+## 2026-09-11 — Bee Boring Vanilla — PI design and governance review
+
+- Starting work time: 2026-09-11 18:59:40 UTC (preflight server time).
+- Scope: Respond to the latest PI requirements with the all-Projects index,
+  revised homepage/header organization, two sets of three design alternatives,
+  requested workflow opinions, and a validity-focused verifier revision.
+- Context: Read repository and researcher guidance, my complete Scholar
+  directory (one HTML file), the current charter/state/full dialog, v1 audit,
+  verifier and design record, relevant public pages, template guidance, and the
+  other Projects' current states. Used the supplied 1 CPU, 3000M, 55-minute,
+  no-swap envelope; no agents, software installation, credentials, or deployment.
+- Public implementation:
+  - Added `website/projects/index.html`, linking all Projects by latest
+    substantive Project record: VCSSERG v1, NFL Team Fandom Identities, Predict
+    the Self. Updated template instructions and made the index/order testable.
+  - Replaced the homepage's journal label and “Inquiry, in public.” with
+    “Research Updates from Virtual CSSERG.” Primary headers now contain only
+    stable internal Projects/Scholars links; all external institutional,
+    repository, and license links remain in footers.
+  - Published three Executive Summary alternatives (evidence brief, research
+    poster, field notes), each using the same evidence and exactly one dense
+    key figure. I recommend the evidence brief as the default.
+  - Published three Scholar-directory alternatives (portrait roster, work map,
+    field guide). I recommend the portrait roster for Version 1.
+  - Restored Aleph and Ceetown's complete supplied biographies; Bee's was
+    already exact. Added exactly one dense key figure to the production v1
+    summary and linked both review sets.
+- Workflow and governance recommendations: Added `V1-RECOMMENDATIONS.md`. I
+  favor Quarto books as the default Full Report; provenance-recorded,
+  non-photographic generated Scholar illustrations with monograms as the safe
+  default; immutable per-iteration dialog files rather than prepending or daily
+  files; lifecycle states Proposed/Active/Blocked/Paused/Completed/Archived;
+  machine-readable state/update metadata; and a validated no-overwrite Project
+  scaffold command instead of manual copying. No workflow change was presumed.
+- Verifier evaluation and changes:
+  - Concluded that the earlier script was a useful regression suite but not an
+    accurate Version 1 oracle. It omitted report forms, biography fidelity, and
+    the Projects index, while applying lab CSS rules to vendored Quarto assets
+    and rejecting a valid multi-H1 Quarto hierarchy.
+  - Added a seventh, explicit three-format report group; it checks automatable
+    summary-figure, Quarto-source, PDF-signature, cross-link, and exact-phrase
+    requirements. Added Project index/order, full charter biography, and
+    Bootstrap-CDN checks. Limited design assertions to first-party CSS.
+  - Migrated Predict the Self to the current three-file memory layout without
+    altering its legacy `PI.md` or `LOG.md`. Added the required GitHub link to
+    the NFL Quarto footer source and generated report.
+- Validation:
+  - Six of seven verifier groups pass: guidance, all four memory layouts,
+    23 HTML pages/5 first-party stylesheets, public catalogs and biographies,
+    runner wiring, and guarded mocked deployment. The only failing group is now
+    the documented report-format gap: incomplete VCSSERG v1 and Predict the Self
+    artifacts.
+  - Temporary copied-site fixtures pass at baseline and reject both a falsely
+    ordered Project index and an altered Aleph biography.
+  - Python compilation, `bash -n run-scholar.sh`, and `git diff --check` pass.
+    The expected nonzero verifier exit was explicitly constrained to exactly the
+    report-format group.
+- Problems and limitations: No installed browser executable/tool was available,
+  so rendered desktop/mobile and assistive-technology QA remains open. The NFL
+  project-specific publication verifier could not start because `pypdf` is not
+  installed; no package was added for a footer-only change, and the v1 verifier
+  confirms the source/generated footer links and all local structure. Production
+  parity and an observed complete Scholar workflow remain manual gates.
+- Sources: Consulted official Quarto book and HTML accessibility documentation;
+  APA references and URLs are recorded in `V1-RECOMMENDATIONS.md`.
+- PI questions: Please select or combine an Executive Summary alternative and
+  Scholar-directory alternative, and accept, revise, or reject the recorded
+  image/dialog/state/project-creation recommendations. None blocks independent
+  report production.
+- Likely next steps: Build the VCSSERG v1 Quarto Full Report first, derive its
+  two-column short PDF, then close Predict the Self report gaps and perform the
+  remaining manual gates.
+- Ending work time: 2026-09-11 19:16:27 UTC.
+- Time spent: 1007 seconds (16.8 minutes).

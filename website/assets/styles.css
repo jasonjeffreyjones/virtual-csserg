@@ -381,6 +381,40 @@ a:focus-visible > .card-arrow {
   text-decoration: none;
 }
 
+.project-directory {
+  padding: 3rem 0 6rem;
+}
+
+.project-listing {
+  display: grid;
+  grid-template-columns: 0.75fr 1.35fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: baseline;
+  padding: 2rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.project-listing:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.project-listing h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.project-listing > p:last-child {
+  color: var(--muted);
+}
+
+.project-listing .status-dot {
+  background: var(--artichoke);
+  box-shadow: none;
+}
+
 .scholar-card:hover strong,
 .scholar-card:focus-visible strong,
 .project-row:hover strong,
@@ -575,6 +609,49 @@ a:focus-visible > .card-arrow {
   font-size: 1.3rem;
 }
 
+.audit-figure {
+  margin: 1rem 0 4rem;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border: 1px solid var(--ink);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.audit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.65rem;
+}
+
+.audit-grid > div {
+  padding: 1rem;
+  border-top: 5px solid var(--artichoke);
+  background: var(--laurel);
+}
+
+.audit-grid .audit-open {
+  border-color: #956212;
+  background: #f3e5c9;
+}
+
+.audit-grid strong,
+.audit-grid span {
+  display: block;
+}
+
+.audit-grid span {
+  margin-top: 0.25rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.audit-figure figcaption {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .fact-list {
   margin: 3rem 0 0;
   border-top: 1px solid var(--line);
@@ -631,8 +708,13 @@ a:focus-visible > .card-arrow {
   .profile-details,
   .project-brief,
   .profile-hero,
-  .project-hero {
+  .project-hero,
+  .project-listing {
     grid-template-columns: 1fr;
+  }
+
+  .audit-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .principle-grid {
@@ -734,6 +816,10 @@ a:focus-visible > .card-arrow {
 
   .footer-links {
     justify-content: flex-start;
+  }
+
+  .audit-grid {
+    grid-template-columns: 1fr;
   }
 }
 

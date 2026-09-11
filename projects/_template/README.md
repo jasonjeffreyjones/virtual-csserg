@@ -37,8 +37,10 @@ blockquotes. Separate `PI.md` and `LOG.md` files are no longer the template layo
   and the standard CC BY 4.0 International badge. Follow the selected research
   journal styling in `website/assets/styles.css`.
 - Include the exact phrase "far beyond" exactly once in the Full Report.
-- Link the public project from `website/index.html`; validate local links,
-  figures, output formats, and relevant code before ending the iteration.
+- Link the public project from both `website/index.html` and
+  `website/projects/index.html`. Keep the all-Projects index ordered by the
+  latest substantive Project update; validate local links, figures, output
+  formats, and relevant code before ending the iteration.
 
 Apply explicit project-charter exceptions where provided. Do not publish empty
 reports or invented results merely to fill these paths.
