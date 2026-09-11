@@ -29,8 +29,8 @@ Call this a risk ratio. Push back if that is not a risk ratio. Push back if you 
 The first reference group is all those who explicitly answer NO to `Cleveland Browns fan'. There is a large imbalance between the sizes, but that is okay.
 Most American adults are not Cleveland Browns fans, and the survey data reflects that.
 
-Download the anonymous microdata described under Expert Mode here: https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/download.html
-If you are not able to access the files through https://jasonjones.ninja, use the Zenodo mirror at https://zenodo.org/records/22139541
+Download the anonymous microdata described here: https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/download.html
+If you are not able to access the files through https://jasonjones.ninja, use the Zenodo mirror at <https://doi.org/10.5281/zenodo.16576327>
 Make sure you understand it thoroughly before beginning analysis.
 As you see fit, document the structure of the data files.
 Here are some important things to note:
