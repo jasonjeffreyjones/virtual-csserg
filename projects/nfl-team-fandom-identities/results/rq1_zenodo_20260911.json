@@ -1,0 +1,225 @@
+{
+  "analysis": "NFL Team Fandom Identities RQ1",
+  "estimates": {
+    "ci_level": 0.95,
+    "cluster_bootstrap": {
+      "ci_level": 0.95,
+      "method": "respondent-cluster percentile bootstrap",
+      "prevalence_difference_ci": [
+        0.0055641577812585675,
+        0.12170343514879295
+      ],
+      "prevalence_difference_successful_replicates": 2000,
+      "prevalence_ratio_ci": [
+        1.0071369160391848,
+        1.1603847798623357
+      ],
+      "prevalence_ratio_successful_replicates": 2000,
+      "requested_replicates": 2000,
+      "seed": 20260828
+    },
+    "fandom_no_n": 7919,
+    "fandom_yes_n": 316,
+    "happy_prevalence_fandom_no": 0.7655006945321379,
+    "happy_prevalence_fandom_yes": 0.8322784810126582,
+    "prevalence_difference": 0.06677778648052035,
+    "prevalence_difference_ci": [
+      0.024540135428841467,
+      0.10901543753219924
+    ],
+    "prevalence_difference_ci_method": "unpooled Wald interval (respondent-days treated as independent)",
+    "prevalence_ratio": 1.0872341291882615,
+    "prevalence_ratio_ci": [
+      1.033201815791939,
+      1.144092115987723
+    ],
+    "prevalence_ratio_ci_method": "Katz log interval (respondent-days treated as independent)",
+    "two_by_two": {
+      "fandom_no_happy_no": 1857,
+      "fandom_no_happy_yes": 6062,
+      "fandom_yes_happy_no": 53,
+      "fandom_yes_happy_yes": 263
+    }
+  },
+  "fandom_signifier": "Cleveland Browns fan",
+  "inputs": {
+    "demographics_file": "zenodo-demographics.csv",
+    "demographics_sha256": "776967c16393f2fe54322274ac8b1948b76d306d0f04103ebdb8c628831421f4",
+    "responses_file": "zenodo-responses.csv",
+    "responses_sha256": "ad9029600beed9f7a75fd08ff168f11624e87f86b30207fc1472077fa4d61449"
+  },
+  "join_audit": {
+    "analysis_eligible_demographic_join_keys": 8663,
+    "conflicting_relevant_rows": 1,
+    "conflicting_target_respondent_days_excluded": 1,
+    "consent_revoked_demographic_rows_excluded": 113,
+    "demographic_join_keys_without_responses": 41,
+    "demographic_rows": 8776,
+    "earliest_eligible_obs_date": "2025-07-08",
+    "eligible_repeated_respondents": 1392,
+    "eligible_respondent_days": 8235,
+    "eligible_unique_respondents": 4686,
+    "identical_duplicate_relevant_rows_collapsed": 3,
+    "joined_response_keys": 8622,
+    "joined_response_rows": 673535,
+    "latest_eligible_obs_date": "2026-08-27",
+    "maximum_eligible_days_per_respondent": 39,
+    "relevant_joined_response_rows": 16850,
+    "response_rows": 675480,
+    "unique_demographic_join_keys": 8776,
+    "unique_response_join_keys": 8647,
+    "unmatched_response_rows_excluded": 1945
+  },
+  "outcome_signifier": "happy",
+  "reference_group": "explicit No to Cleveland Browns fan",
+  "temporal_sensitivity": {
+    "by_month": [
+      {
+        "eligible_respondent_days": 486,
+        "fandom_no_n": 464,
+        "fandom_yes_n": 22,
+        "happy_prevalence_fandom_no": 0.7521551724137931,
+        "happy_prevalence_fandom_yes": 0.9090909090909091,
+        "month": "2025-07",
+        "prevalence_difference": 0.1569357366771159,
+        "prevalence_ratio": 1.2086480854389163
+      },
+      {
+        "eligible_respondent_days": 624,
+        "fandom_no_n": 602,
+        "fandom_yes_n": 22,
+        "happy_prevalence_fandom_no": 0.7425249169435216,
+        "happy_prevalence_fandom_yes": 0.8636363636363636,
+        "month": "2025-08",
+        "prevalence_difference": 0.12111144669284202,
+        "prevalence_ratio": 1.1631075859263778
+      },
+      {
+        "eligible_respondent_days": 610,
+        "fandom_no_n": 588,
+        "fandom_yes_n": 22,
+        "happy_prevalence_fandom_no": 0.7653061224489796,
+        "happy_prevalence_fandom_yes": 0.9090909090909091,
+        "month": "2025-09",
+        "prevalence_difference": 0.1437847866419295,
+        "prevalence_ratio": 1.187878787878788
+      },
+      {
+        "eligible_respondent_days": 621,
+        "fandom_no_n": 595,
+        "fandom_yes_n": 26,
+        "happy_prevalence_fandom_no": 0.7378151260504202,
+        "happy_prevalence_fandom_yes": 0.8076923076923077,
+        "month": "2025-10",
+        "prevalence_difference": 0.0698771816418875,
+        "prevalence_ratio": 1.0947082530226038
+      },
+      {
+        "eligible_respondent_days": 605,
+        "fandom_no_n": 582,
+        "fandom_yes_n": 23,
+        "happy_prevalence_fandom_no": 0.7663230240549829,
+        "happy_prevalence_fandom_yes": 0.782608695652174,
+        "month": "2025-11",
+        "prevalence_difference": 0.016285671597191076,
+        "prevalence_ratio": 1.0212517059855721
+      },
+      {
+        "eligible_respondent_days": 610,
+        "fandom_no_n": 584,
+        "fandom_yes_n": 26,
+        "happy_prevalence_fandom_no": 0.7568493150684932,
+        "happy_prevalence_fandom_yes": 0.8076923076923077,
+        "month": "2025-12",
+        "prevalence_difference": 0.05084299262381453,
+        "prevalence_ratio": 1.067177166724678
+      },
+      {
+        "eligible_respondent_days": 599,
+        "fandom_no_n": 573,
+        "fandom_yes_n": 26,
+        "happy_prevalence_fandom_no": 0.7591623036649214,
+        "happy_prevalence_fandom_yes": 0.7307692307692307,
+        "month": "2026-01",
+        "prevalence_difference": -0.028393072895690707,
+        "prevalence_ratio": 0.9625994694960212
+      },
+      {
+        "eligible_respondent_days": 566,
+        "fandom_no_n": 551,
+        "fandom_yes_n": 15,
+        "happy_prevalence_fandom_no": 0.7731397459165155,
+        "happy_prevalence_fandom_yes": 0.8666666666666667,
+        "month": "2026-02",
+        "prevalence_difference": 0.09352692075015123,
+        "prevalence_ratio": 1.1209702660406886
+      },
+      {
+        "eligible_respondent_days": 592,
+        "fandom_no_n": 563,
+        "fandom_yes_n": 29,
+        "happy_prevalence_fandom_no": 0.7477797513321492,
+        "happy_prevalence_fandom_yes": 0.896551724137931,
+        "month": "2026-03",
+        "prevalence_difference": 0.1487719728057818,
+        "prevalence_ratio": 1.198951593087067
+      },
+      {
+        "eligible_respondent_days": 575,
+        "fandom_no_n": 553,
+        "fandom_yes_n": 22,
+        "happy_prevalence_fandom_no": 0.7757685352622061,
+        "happy_prevalence_fandom_yes": 0.7727272727272727,
+        "month": "2026-04",
+        "prevalence_difference": -0.00304126253493342,
+        "prevalence_ratio": 0.9960796778978597
+      },
+      {
+        "eligible_respondent_days": 631,
+        "fandom_no_n": 608,
+        "fandom_yes_n": 23,
+        "happy_prevalence_fandom_no": 0.8026315789473685,
+        "happy_prevalence_fandom_yes": 0.8260869565217391,
+        "month": "2026-05",
+        "prevalence_difference": 0.02345537757437066,
+        "prevalence_ratio": 1.029223093371347
+      },
+      {
+        "eligible_respondent_days": 603,
+        "fandom_no_n": 579,
+        "fandom_yes_n": 24,
+        "happy_prevalence_fandom_no": 0.7944732297063903,
+        "happy_prevalence_fandom_yes": 0.875,
+        "month": "2026-06",
+        "prevalence_difference": 0.08052677029360966,
+        "prevalence_ratio": 1.101358695652174
+      },
+      {
+        "eligible_respondent_days": 617,
+        "fandom_no_n": 597,
+        "fandom_yes_n": 20,
+        "happy_prevalence_fandom_no": 0.7822445561139029,
+        "happy_prevalence_fandom_yes": 0.8,
+        "month": "2026-07",
+        "prevalence_difference": 0.017755443886097177,
+        "prevalence_ratio": 1.0226980728051391
+      },
+      {
+        "eligible_respondent_days": 496,
+        "fandom_no_n": 480,
+        "fandom_yes_n": 16,
+        "happy_prevalence_fandom_no": 0.75625,
+        "happy_prevalence_fandom_yes": 0.8125,
+        "month": "2026-08",
+        "prevalence_difference": 0.05625000000000002,
+        "prevalence_ratio": 1.0743801652892562
+      }
+    ],
+    "dates_with_both_fandom_groups": 227,
+    "eligible_dates": 410,
+    "maximum_eligible_respondent_days_per_date": 22,
+    "median_eligible_respondent_days_per_date": 20.0,
+    "minimum_eligible_respondent_days_per_date": 17
+  },
+  "unit": "respondent-day with explicit answers to both target signifiers"
+}

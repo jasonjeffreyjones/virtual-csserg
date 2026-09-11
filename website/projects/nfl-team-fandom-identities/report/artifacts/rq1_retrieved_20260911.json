@@ -1,0 +1,95 @@
+{
+  "analysis": "NFL Team Fandom Identities RQ1",
+  "estimates": {
+    "ci_level": 0.95,
+    "cluster_bootstrap": {
+      "ci_level": 0.95,
+      "method": "respondent-cluster percentile bootstrap",
+      "prevalence_difference_ci": [
+        -0.05002704326923076,
+        0.29230769230769227
+      ],
+      "prevalence_difference_successful_replicates": 2000,
+      "prevalence_ratio_ci": [
+        0.9377289377289377,
+        1.4130897317298794
+      ],
+      "prevalence_ratio_successful_replicates": 2000,
+      "requested_replicates": 2000,
+      "seed": 20260828
+    },
+    "fandom_no_n": 130,
+    "fandom_yes_n": 12,
+    "happy_prevalence_fandom_no": 0.7692307692307693,
+    "happy_prevalence_fandom_yes": 0.9166666666666666,
+    "prevalence_difference": 0.14743589743589736,
+    "prevalence_difference_ci": [
+      -0.02489876773240654,
+      0.3197705626042012
+    ],
+    "prevalence_difference_ci_method": "unpooled Wald interval (respondent-days treated as independent)",
+    "prevalence_ratio": 1.1916666666666667,
+    "prevalence_ratio_ci": [
+      0.9806908631547533,
+      1.4480296470554115
+    ],
+    "prevalence_ratio_ci_method": "Katz log interval (respondent-days treated as independent)",
+    "two_by_two": {
+      "fandom_no_happy_no": 30,
+      "fandom_no_happy_yes": 100,
+      "fandom_yes_happy_no": 1,
+      "fandom_yes_happy_yes": 11
+    }
+  },
+  "fandom_signifier": "Cleveland Browns fan",
+  "inputs": {
+    "demographics_file": "ipseity-daily-demographics.csv",
+    "demographics_sha256": "f1f81321dccb1ae0339085fd4ef50358438a4e12def3eb5d02388ee223b207fe",
+    "responses_file": "ipseity-daily-responses.csv",
+    "responses_sha256": "d52389d8f0e77028037dccd7c2bd5d236feb3aaa306d37298cdda0d7a12d696a"
+  },
+  "join_audit": {
+    "analysis_eligible_demographic_join_keys": 148,
+    "conflicting_relevant_rows": 0,
+    "conflicting_target_respondent_days_excluded": 0,
+    "consent_revoked_demographic_rows_excluded": 3,
+    "demographic_join_keys_without_responses": 0,
+    "demographic_rows": 151,
+    "earliest_eligible_obs_date": "2025-07-08",
+    "eligible_repeated_respondents": 5,
+    "eligible_respondent_days": 142,
+    "eligible_unique_respondents": 137,
+    "identical_duplicate_relevant_rows_collapsed": 0,
+    "joined_response_keys": 148,
+    "joined_response_rows": 10498,
+    "latest_eligible_obs_date": "2025-07-14",
+    "maximum_eligible_days_per_respondent": 2,
+    "relevant_joined_response_rows": 290,
+    "response_rows": 10570,
+    "unique_demographic_join_keys": 151,
+    "unique_response_join_keys": 149,
+    "unmatched_response_rows_excluded": 72
+  },
+  "outcome_signifier": "happy",
+  "reference_group": "explicit No to Cleveland Browns fan",
+  "temporal_sensitivity": {
+    "by_month": [
+      {
+        "eligible_respondent_days": 142,
+        "fandom_no_n": 130,
+        "fandom_yes_n": 12,
+        "happy_prevalence_fandom_no": 0.7692307692307693,
+        "happy_prevalence_fandom_yes": 0.9166666666666666,
+        "month": "2025-07",
+        "prevalence_difference": 0.14743589743589736,
+        "prevalence_ratio": 1.1916666666666667
+      }
+    ],
+    "dates_with_both_fandom_groups": 7,
+    "eligible_dates": 7,
+    "maximum_eligible_respondent_days_per_date": 21,
+    "median_eligible_respondent_days_per_date": 20.0,
+    "minimum_eligible_respondent_days_per_date": 19
+  },
+  "unit": "respondent-day with explicit answers to both target signifiers"
+}

@@ -15,7 +15,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Dict, Iterable, Mapping, Optional, Sequence, Tuple
 
-from rq1_risk_ratio import AnalysisError, Key, Record, load_records, require_columns
+from rq1_risk_ratio import AnalysisError, Key, Record, load_records, require_columns, descriptive_estimate, sha256
 
 
 Cell = Tuple[str, str]
@@ -202,6 +202,11 @@ def analyze(args: argparse.Namespace) -> Dict[str, object]:
     return {
         "analysis": "NFL Team Fandom Identities RQ1 age-by-sex weighting sensitivity",
         "status": "appendix sensitivity; unweighted descriptive estimate is primary",
+        "inputs": {
+            "responses_sha256": sha256(args.responses_csv),
+            "demographics_sha256": sha256(args.demographics_csv),
+        },
+        "complete_case_unweighted": descriptive_estimate(record for record, cell in typed_complete),
         "target": {
             "source": "U.S. Census Bureau, 2024 ACS 1-year table B01001",
             "source_url": ACS_SOURCE,

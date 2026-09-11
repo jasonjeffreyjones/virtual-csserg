@@ -27,7 +27,7 @@ png(
   bg = paper,
   type = "cairo"
 )
-par(mar = c(6, 5, 4, 1), fg = forest, col.axis = forest, col.lab = forest)
+par(mar = c(8, 5, 4, 1), fg = forest, col.axis = forest, col.lab = forest)
 prevalence <- 100 * c(
   result$estimates$happy_prevalence_fandom_yes,
   result$estimates$happy_prevalence_fandom_no
@@ -38,8 +38,8 @@ bars <- barplot(
   col = c(artichoke, forest),
   border = NA,
   ylim = c(0, 100),
-  ylab = "Happy prevalence (%)",
-  main = "Happiness is more prevalent among Browns fans",
+  ylab = "Endorsing happy (%)",
+  main = "Happy endorsement and Browns fandom",
   cex.names = 1.05
 )
 abline(h = seq(0, 100, 20), col = laurel, lwd = 1)
@@ -63,6 +63,16 @@ mtext(
   cex = 0.85,
   col = muted
 )
+mtext(sprintf("Difference %+.2f percentage points (95%% CI %+.2f to %+.2f)",
+  100 * result$estimates$prevalence_difference,
+  100 * result$estimates$cluster_bootstrap$prevalence_difference_ci[[1]],
+  100 * result$estimates$cluster_bootstrap$prevalence_difference_ci[[2]]),
+  side = 1, line = 5.7, cex = 0.8, col = muted)
+mtext(sprintf("%s to %s | %s respondents | Unweighted respondent-days",
+  result$join_audit$earliest_eligible_obs_date,
+  result$join_audit$latest_eligible_obs_date,
+  format(result$join_audit$eligible_unique_respondents, big.mark = ",")),
+  side = 1, line = 6.8, cex = 0.75, col = muted)
 dev.off()
 
 monthly <- result$temporal_sensitivity$by_month

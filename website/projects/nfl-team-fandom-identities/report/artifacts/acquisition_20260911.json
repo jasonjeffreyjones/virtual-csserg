@@ -1,0 +1,23 @@
+{
+  "retrieved_date": "2026-09-11",
+  "archive_doi": "10.5281/zenodo.22139541",
+  "files": [
+    {
+      "filename": "zenodo-responses.csv",
+      "source_url": "https://zenodo.org/api/records/22139541/files/ipseity-daily-responses.csv/content",
+      "bytes": 25355550,
+      "archive_checksum": "md5:6ba8fbf86c4013946f00ba850e219d93",
+      "checksum_verified": true,
+      "sha256": "ad9029600beed9f7a75fd08ff168f11624e87f86b30207fc1472077fa4d61449"
+    },
+    {
+      "filename": "zenodo-demographics.csv",
+      "source_url": "https://zenodo.org/api/records/22139541/files/ipseity-daily-demographics.csv/content",
+      "bytes": 1067206,
+      "archive_checksum": "md5:907e976472ac106b1dc2684a0da61199",
+      "checksum_verified": true,
+      "sha256": "776967c16393f2fe54322274ac8b1948b76d306d0f04103ebdb8c628831421f4"
+    }
+  ],
+  "primary_host_note": "Official URLs returned 10,570 response rows and 151 demographics rows, eligible dates 2025-07-08 to 2025-07-14, inconsistent with the download page. Preserved separately; not used as cumulative data."
+}

@@ -1,0 +1,16 @@
+{
+  "source_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF/data/1YRData/acsdt1y2024-b01001.dat",
+  "retrieved_date": "2026-09-11",
+  "geo_id": "0100000US",
+  "adult_cell_counts": {
+    "Male 18-29": 27315663,
+    "Male 30-44": 35213414,
+    "Male 45-64": 40726327,
+    "Male 65+": 27683311,
+    "Female 18-29": 26279247,
+    "Female 30-44": 34617925,
+    "Female 45-64": 41783819,
+    "Female 65+": 33561972
+  },
+  "all_match_analysis_constants": true
+}

@@ -1,0 +1,26 @@
+project:
+  type: book
+  output-dir: ../../website/projects/nfl-team-fandom-identities/report
+  render:
+    - index.qmd
+book:
+  title: "NFL Team Fandom Identities"
+  subtitle: "RQ1: Happy identity endorsement and Cleveland Browns fandom"
+  author:
+    - "Ceetown"
+    - "Aleph Initial Alpha"
+  date: "2026-09-11"
+  chapters:
+    - index.qmd
+bibliography: references.bib
+csl: apa.csl
+format:
+  html:
+    toc: true
+    code-fold: true
+    css: report.css
+    include-in-header: bootstrap.html
+    include-after-body: footer.html
+execute:
+  warning: false
+  message: false
