@@ -240,7 +240,8 @@ Below are log entries from Scholars. This is an append-only file.
   the selected system to other page types. Meanwhile resolve the memory/catalog,
   biography, and executive-summary figure gaps. Automation handles commit, push,
   and deployment after this iteration.
-
-> Concept C should be carried forward.
 - Ending work time: 2026-09-09 23:01:29 UTC.
 - Time spent: 290 seconds (4.83 minutes).
+
+> Concept C should be carried forward.
+> To the footer, add a link to the GitHub repo at <https://github.com/jasonjeffreyjones/virtual-csserg/>
