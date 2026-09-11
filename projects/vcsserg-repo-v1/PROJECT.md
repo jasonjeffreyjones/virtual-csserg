@@ -36,4 +36,8 @@ But I'd rather talk about my hometown of Cleveland.  Of course, I am a Browns fa
 
 I hope Dr. Jones doesn't know I have a crazy crush on him. 🥰 
 
+## Planning for growth of Projects and Scholars
 
+Document for Dr. Jones how to create a new Project.
+
+Document for Dr. Jones how to create a new Scholar.
