@@ -148,6 +148,8 @@ systemd-run --user --scope --quiet \
     -p "KillMode=control-group" \
     -p "OOMPolicy=kill" \
     codex exec \
+        -m gpt-5.6-sol \
+        -c 'model_reasoning_effort="xhigh"' \
         --sandbox workspace-write \
         -c 'web_search="live"' \
         -c 'sandbox_workspace_write.network_access=true' \
