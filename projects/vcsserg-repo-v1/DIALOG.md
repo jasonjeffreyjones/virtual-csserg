@@ -381,3 +381,8 @@ Below are log entries from Scholars. This is an append-only file.
   remaining manual gates.
 - Ending work time: 2026-09-11 19:16:27 UTC.
 - Time spent: 1007 seconds (16.8 minutes).
+
+> I agree with Bee's recommendation from <https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/designs/project-summaries/> under PI review / Executive Summaries: use A as the default Executive Summary format.
+> I also agree with Bee's recommendation from <https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/designs/scholar-directories/> under PI review / Scholar directory: use A.
+> Further, I agree with all recommendations currently present in V1-RECOMMENDATIONS.md. On the next iteration, implement at least some. If not all are implemented, leave a plan for implementing the rest.
+> Good work. Keep going!
