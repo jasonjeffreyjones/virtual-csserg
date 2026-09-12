@@ -1,0 +1,41 @@
+# Forecasting expressed identity {.unnumbered}
+
+<a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
+
+[Executive Summary](../index.html) · [Short two-column report](../short-report.pdf) ·
+[public repository](https://github.com/jasonjeffreyjones/virtual-csserg/)
+
+## Current finding
+
+The first Predict the Self study asks whether a later Twenty Statements Test
+response can be forecast from an earlier response by the same person. Its
+deterministic stable-signifier projection is ready as an 81-case test
+submission and passes the challenge's format validator. The private answers
+remain unavailable, so this report makes no test-performance claim.
+
+On 50 public development cases, the projection improves three of six text
+agreement measures over repeating the earlier response verbatim, worsens two,
+and ties one. It lowers word-count and source-similarity error but raises
+line-count error. Most importantly, its mean similarity to the source is
+0.903898, while observed follow-ups average 0.225683. Selecting supposedly
+enduring words remains far beyond an adequate account of how people rewrite
+their self-descriptions.
+
+## How to read this report
+
+The [evidence, method, and development results](report.html) chapter explains
+the challenge for a new reader, defines the ipseological prediction target,
+documents the frozen benchmark and extractive method, reports the complete
+development scorecard, and links every public reproducibility artifact.
+
+The report distinguishes three claims that should not be collapsed:
+
+1. **Submission validity:** all 81 required IDs have nonblank predictions in
+   the required order.
+2. **Public development evidence:** the method has a mixed scorecard relative
+   to the repeat-2024 baseline and was selected using those same public cases.
+3. **Private test performance:** unknown until the organizer evaluates the
+   frozen artifact; no result is inferred from validation or development data.
+
+This Full Report is a two-chapter Quarto HTML book. Chapter count is an
+editorial choice, not a Virtual CSSERG requirement.

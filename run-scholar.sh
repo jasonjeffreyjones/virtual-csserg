@@ -18,7 +18,7 @@ SCHOLAR_NAME="$1"
 PROJECT_NAME="$2"
 LOG_FILE="$LOG_DIR/${SCHOLAR_NAME}_${PROJECT_NAME}.log"
 
-for cmd in git flock systemd-run systemctl codex python3; do
+for cmd in git flock codex python3; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "Required command is not installed: $cmd" >&2
         exit 127
@@ -50,16 +50,9 @@ working during this iteration:
 
 $PREFLIGHT
 
-This iteration also has hard resource limits enforced by the host:
-
-# TODO communicate here.
-#Maximum CPU capacity: $MAX_CPUS logical CPU(s)
-#Maximum memory: $MEMORY_MAX
-#Maximum wall time: $WALL_TIME
-#Scholar swap usage: disabled
-
-Plan and scope your work accordingly. Do not attempt to circumvent or change
-these resource limits.
+This iteration may be subject to CPU, memory, and runtime limits enforced
+externally by the host. Plan and scope your work conservatively. Do not attempt
+to circumvent or change host resource limits.
 
 Follow these steps:
 1. Read AGENTS.md.

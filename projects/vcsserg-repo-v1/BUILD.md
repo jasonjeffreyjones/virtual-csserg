@@ -1,11 +1,14 @@
 # Build and validate the VCSSERG v1 reports
 
-The Full Report source is `index.qmd`, configured as a one-chapter Quarto book
-by `_quarto.yml`. Quarto renders into the ignored project-local `_book/`, then
+The Full Report source is `index.qmd`, currently configured as a one-chapter
+Quarto book by `_quarto.yml`; that chapter count is an editorial choice, not a
+requirement. Quarto renders into the ignored project-local `_book/`, then
 `analysis/publish_full_report.py` safely replaces the complete generated tree at
 `website/projects/vcsserg-repo-v1/report/`. Keeping Quarto's output inside its
 project lets it clean stale libraries without warnings. The Executive Summary
-is maintained as static HTML, and `short-report.md` is the derivative PDF source.
+is maintained as static HTML, and `short-report.md` is the derivative PDF
+source. Its current output fits one page, but the requirement is two columns
+and no more than ten pages—not exactly one page.
 
 Quarto uses a writable temporary cache. The host has no TeX PDF engine, so the
 short-report renderer uses the optional build-only packages in

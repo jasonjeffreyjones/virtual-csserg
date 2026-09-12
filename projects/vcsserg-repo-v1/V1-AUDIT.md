@@ -20,26 +20,28 @@ still not establish the manual gates below.
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
-| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, required footer | Automated pass across 24 HTML pages and 6 first-party stylesheets |
+| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, required footer | Automated pass across 25 HTML pages and 6 first-party stylesheets |
 | Projects and initial Scholars are findable | Home, Projects index, Scholar index, profiles, charter biographies | Automated pass |
-| Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated fail; details below |
+| Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
 | Deployment safely mirrors `website/` | Mocked guarded, shell-free `rsync`, deletion and error propagation | Automated pass; live parity unverified |
 
 ## Current automated result
 
-On September 12, 2026, **six of seven groups pass**. The report group correctly
-remains open:
+On September 12, 2026, **all seven groups pass**. The final automated gap closed
+when Predict the Self adopted the current publication structure:
 
-- VCSSERG v1 now supplies a Quarto HTML book, linked one-page two-column PDF,
-  and the PI-selected evidence-brief Executive Summary with one dense figure.
-- Predict the Self lacks a short PDF, a summary figure, current Quarto book
-  configuration, and the required phrase in its direct-HTML Full Report.
+- VCSSERG v1 supplies a Quarto HTML book, linked two-column PDF, and the
+  PI-selected evidence-brief Executive Summary with one dense figure.
+- Predict the Self now supplies a two-chapter Quarto book, guarded publication
+  pipeline, one-figure evidence brief, and linked two-column PDF. Its book and
+  short report explicitly allow content-driven chapter/page counts within the
+  documented constraints.
 - NFL Team Fandom Identities supplies all three forms. Its Quarto footer source
   and rendered report now retain the PI-requested GitHub link.
 
-This is a count of automated promise groups, not a completion percentage or a
-measure of research quality.
+This is a count of automated promise groups, not a Version 1 completion
+declaration or a measure of research quality. The manual gates remain open.
 
 ## Verifier validity
 

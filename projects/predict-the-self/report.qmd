@@ -1,16 +1,14 @@
 ---
 title: "Predict the Self"
-subtitle: "Predict Future Selves challenge report"
+subtitle: "Evidence, method, and development results"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-08-30"
-format:
-  html:
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    link-external-newwindow: true
-output-file: index.html
+date: "2026-09-12"
 ---
+
+<a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
+
+[Executive Summary](../index.html) · [Short two-column report](../short-report.pdf) ·
+[report landing page](index.html)
 
 > **Iteration result:** An 81-case test submission is frozen and passes the
 > official format validator. Because test answers are private, the report does
@@ -18,7 +16,7 @@ output-file: index.html
 > stable-signifier projection improves some, but not all, scorecard measures
 > over repeating the 2024 response verbatim.
 
-# Findings at a glance
+# Findings at a glance {#findings}
 
 - The benchmark is now pinned to commit
   [`9b6a766`](https://github.com/jasonjeffreyjones/predict-future-selves/tree/9b6a766712583fec8d3182957260b1123fbfa146),
@@ -34,7 +32,7 @@ output-file: index.html
 - It still forecasts too much continuity: mean prediction-to-source ROUGE-L is
   0.903898, compared with 0.225683 for observed follow-ups.
 
-# Research question
+# Research question {#research-question}
 
 The larger project asks how predictable human lives are. Its first tractable
 task is Dr. Jason Jeffrey Jones' [Predict Future Selves
@@ -48,7 +46,7 @@ themself. Words and phrases may act as identity signifiers. The target is a
 later expression of identity—not a latent “true self” and not a complete life
 outcome.
 
-# Benchmark and provenance
+# Benchmark and provenance {#benchmark}
 
 The benchmark contains 281 Prolific participants with approved, complete
 Twenty Statements Test responses in the 2024 study and its longitudinal
@@ -68,7 +66,7 @@ selected; platform recruitment and longitudinal attrition limit
 generalization; and agreement with one observed follow-up does not establish
 that a prediction was the only plausible future.
 
-# Method
+# Method {#method}
 
 ## Stable-signifier projection
 
@@ -99,7 +97,7 @@ were compared; the regression-length rule was frozen before the test artifact
 was generated. The development scorecard is therefore a model-selection
 result, not an untouched confirmatory estimate.
 
-# Public development results
+# Public development results {#results}
 
 The authoritative shared evaluator reports fifteen measures in three groups.
 The table reports every measure; arrows indicate the evaluator's direction
@@ -130,7 +128,7 @@ But the mean predicted source similarity remains 0.678215 above the observed
 mean. Extracting supposedly enduring signifiers does not come close to
 reproducing how radically people rewrite their self-descriptions.
 
-# Frozen test submission
+# Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
 order. The pinned official validator returned `VALID: 81 predictions`. The
@@ -143,7 +141,7 @@ a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3
 The organizer must run the private test evaluator. Until that happens, the
 only empirical performance reported here is public-development performance.
 
-# Reproducibility
+# Reproducibility {#reproducibility}
 
 The complete open materials are:
 
@@ -162,18 +160,20 @@ The generator uses Python 3.9.23 and only the standard library. The challenge's
 17 public tests passed before generation. Regenerating the development and
 test artifacts reproduced their hashes exactly.
 
-# Sources
+# Sources {#sources}
 
-- Jones, J. J. (2023), [*Ipseology — A new science of the
+- Jones, J. J. (2023). [*Ipseology—A new science of the
   self*](https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/).
-- Jones, J. J. (2024), [*Predicting the Self with Generative
-  AI*](https://doi.org/10.31235/osf.io/eh9sk), preprint.
-- Jones, J. J. (2026), [*Building the Ipseome: Large, Free, Open, Human
-  Identity Data*](https://arxiv.org/html/2607.02488).
-- Jones, J. J. (2026), [*You Can Predict Future Selves with AI (or Without
-  AI)*](https://github.com/jasonjeffreyjones/predict-future-selves), benchmark.
+- Jones, J. J. (2024). [*Predicting the self with generative
+  AI*](https://doi.org/10.31235/osf.io/eh9sk) [Preprint]. SocArXiv.
+  https://doi.org/10.31235/osf.io/eh9sk
+- Jones, J. J. (2026). [*Building the ipseome: Large, free, open, human
+  identity data*](https://arxiv.org/html/2607.02488) [Preprint]. arXiv.
+- Jones, J. J. (2026). [*You can predict future selves with AI (or without
+  AI)*](https://github.com/jasonjeffreyjones/predict-future-selves)
+  [Data set and benchmark]. GitHub.
 
-# Limitations and next step
+# Limitations and next step {#limitations}
 
 An extractive method cannot predict genuinely new identities, experiences, or
 reframing. Token recurrence is not equivalent to identity-signifier endurance,

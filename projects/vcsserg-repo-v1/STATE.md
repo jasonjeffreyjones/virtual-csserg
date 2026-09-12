@@ -1,16 +1,17 @@
 ---
 title: "Virtual CSSERG Version 1.0"
 status: Active
-updated: 2026-09-12T19:58:15Z
+updated: 2026-09-12T21:06:55Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 12, 2026, six of seven automated promise groups pass.
-Version 1.0 is not complete because Predict the Self still lacks required
-report artifacts and the manual publication/workflow gates remain open.
+Active. On September 12, 2026, all seven automated promise groups pass.
+Version 1.0 is not complete because production parity, an observed Scholar
+workflow, rendered accessibility/usability, and substantive review remain
+manual gates.
 
 ## Completed work and current evidence
 
@@ -26,10 +27,17 @@ report artifacts and the manual publication/workflow gates remain open.
   now uses the evidence brief (question, status, one figure, linked findings)
   and portrait roster (equal monogram cards and authoritative profile links).
   The alternatives are labeled as dated decision archives.
-- VCSSERG v1 now has all three linked report forms: `index.qmd` renders a
-  one-chapter Quarto HTML book; `short-report.md` renders a one-page,
-  two-column PDF; and the production Executive Summary contains exactly one
-  dense promise-map figure and five findings derived from the Full Report.
+- VCSSERG v1 now has all three linked report forms: `index.qmd` currently
+  renders a one-chapter Quarto HTML book; `short-report.md` currently renders a
+  one-page, two-column PDF; and the production Executive Summary contains
+  exactly one dense promise-map figure and five Full Report-linked findings.
+  Neither one chapter nor one page is a requirement; Full Report structure is
+  content-driven and the short PDF has a ten-page ceiling.
+- Predict the Self now conforms to the same current publication system. It has
+  a two-chapter Quarto book, guarded complete-tree publisher, one-figure
+  evidence brief, linked short PDF, build guide, five tests, and a project
+  publication verifier. Its empirical claims and frozen test artifact were not
+  changed during this structural adaptation.
 - `python/create_project.py` atomically creates a personalized private scaffold,
   validates lowercase hyphenated slugs, and refuses overwrite. Four unit tests
   cover personalization, completeness, unsafe inputs, and immutability on a
@@ -52,13 +60,12 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-Six groups pass. The report-format group now fails only for Predict the Self:
-it lacks a short PDF and summary figure, and its direct-HTML report lacks the
-current Quarto book configuration and required phrase. The generic check does
-not validate PDF page layout, research quality, production parity, rendered
-usability, or an observed automation run. The v1-specific publication verifier
-does validate reciprocal report links, one summary figure, phrase count, PDF
-links, both PDF columns, nonempty pages, and the ten-page ceiling.
+All seven groups pass across 25 HTML pages and six first-party stylesheets.
+The generic check does not validate PDF page layout, research quality,
+production parity, rendered usability, or an observed automation run.
+Project-specific publication verifiers for VCSSERG v1 and Predict the Self do
+validate reciprocal report links, one summary figure, phrase count, PDF links,
+both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Decisions currently in force
 
@@ -78,8 +85,6 @@ links, both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Current problems and manual gates
 
-- Complete the outstanding Predict the Self report forms. This is the sole
-  automated promise-group failure.
 - Confirm production inventory and bytes equal `website/` after the normal
   commit/push/deploy sequence; witness one complete Scholar workflow.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
@@ -91,13 +96,12 @@ links, both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Resources and limitations
 
-September 12 preflight: 2 logical CPUs, 3.7 GiB host RAM, and 65 GiB free disk;
-enforced ceiling of 1 CPU, 3000M memory, 55 minutes, and no Scholar swap.
-Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and Ghostscript were
-usable. No TeX PDF engine or browser was installed. As documented in `BUILD.md`,
-ordinary build-only ReportLab/pypdf packages were placed in `/tmp` for the
-derivative PDF and its validation; they are not production dependencies. No
-system runtime was installed or replaced.
+September 12 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
+Ghostscript were usable. No TeX PDF engine or browser was installed. Existing
+temporary build-only ReportLab/pypdf packages rendered and validated the PDFs;
+they are not production dependencies. No package or system runtime was
+installed or replaced in this iteration.
 
 ## Important files
 
@@ -111,6 +115,8 @@ system runtime was installed or replaced.
   `analysis/verify_publication.py`: guarded HTML publication, PDF build, and
   project publication checks.
 - `python/create_project.py`: validated, atomic, unpublished Project scaffold.
+- `projects/predict-the-self/BUILD.md`, `_quarto.yml`, publication scripts, and
+  current `STATE.md`: the conformed handoff for its next Scholar iteration.
 - `website/projects/vcsserg-repo-v1/`: Executive Summary, Full Report, short
   report, and design-decision archives.
 - `website/scholars/index.html`: selected production portrait roster.
@@ -119,8 +125,8 @@ system runtime was installed or replaced.
 
 ## Unresolved PI questions and likely next steps
 
-No blocking PI question. Next, close Predict the Self publication gaps and run
-the seven-group verifier to zero. Then coordinate immutable dialog storage,
-footer grouping, and Scholar assignment metadata, and complete the production,
-workflow, browser, keyboard, accessibility, and substantive manual gates before
-marking Version 1 Completed.
+No blocking PI question. The PI's chapter/page question is resolved: the
+orientation specifies no exact count. Next, coordinate immutable dialog
+storage, footer grouping, and Scholar assignment metadata, and complete the
+production, workflow, browser, keyboard, accessibility, and substantive manual
+gates before marking Version 1 Completed.

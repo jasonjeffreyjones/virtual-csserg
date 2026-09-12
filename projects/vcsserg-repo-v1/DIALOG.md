@@ -452,3 +452,72 @@ Below are log entries from Scholars. This is an append-only file.
 > To my knowledge, there is no requirement that the short report be exactly one page. If that is written somewhere, please tell me where.
 > Please adapt the Predict the Self project to the conform to current project expected structure.
 > I would like the Predict the Self project to be ready for a Scholar iteration as soon as possible.> 
+
+## 2026-09-12 — Bee Boring Vanilla — Predict the Self conformance
+
+- Starting work time: 2026-09-12 20:48:22 UTC (preflight server time).
+- Scope: Follow the latest PI direction by resolving the report-count question,
+  adapting Predict the Self to the current Project/publication structure, and
+  closing the sole automated Version 1 gap without changing its research
+  method, evidence, frozen test artifact, or PI-owned charter.
+- Requirement clarification:
+  - No repository rule requires a Full Report to have exactly one chapter.
+    `RESEARCHER-ORIENTATION.md` requires a Quarto HTML book; chapter structure
+    is content-driven. Earlier one-chapter language in `BUILD.md`, `STATE.md`,
+    the audit, and report described the existing VCSSERG v1 artifact rather
+    than a requirement. Those current documents now say this explicitly.
+  - No repository rule requires the short report to have exactly one page. The
+    orientation requires two columns and at most ten pages including figures
+    and references. The current one-page outputs happen to fit; both renderers
+    and verifiers accept any nonempty output through ten pages.
+- Predict the Self adaptation:
+  - Added a two-chapter Quarto book: `index.qmd` establishes the claim boundary,
+    while `report.qmd` retains the expanded challenge explanation, method,
+    complete development scorecard, references, and reproducibility links.
+  - Added ignored local build paths, Bootstrap/header/footer sources, report
+    CSS, build-only dependency pins, `BUILD.md`, a guarded complete-tree
+    publisher, and two publisher regression tests. The publisher carries the
+    six authoritative artifacts into the book and preserves the earlier
+    `report/artifacts/` URLs as byte-identical compatibility copies.
+  - Added `short-report.md` and a two-column PDF renderer. Rebuilt the Executive
+    Summary as the PI-selected evidence brief with exactly one quantitative
+    figure, six linked findings, and both report choices.
+  - Added a publication verifier covering reciprocal links and fragments,
+    artifact completeness/compatibility, the required phrase exactly once
+    across the book, PDF annotations, nonempty pages, both columns, and the
+    ten-page ceiling.
+  - Replaced Predict the Self's stale state with an accurate future-Scholar
+    handoff and appended a migration record to its current `DIALOG.md`.
+    Historical `PI.md` and `LOG.md` remain unchanged because the approved
+    immutable-dialog redesign still requires a coordinated lab-wide change.
+- VCSSERG v1 update: Changed the audit, recommendations, current state, Full
+  Report, short-report source, Executive Summary promise map, homepage update,
+  and metadata-derived Projects order from the obsolete 6/7 result to the
+  observed 7/7 result. Version 1 remains Active; passing automation does not
+  close its production, workflow, browser/accessibility, or substantive gates.
+- Validation:
+  - Quarto 1.10.18 rendered both Predict the Self chapters and the refreshed
+    VCSSERG v1 book cleanly. Both guarded publishers completed.
+  - All five Predict the Self tests and all six VCSSERG v1 tests pass. Both
+    project-specific publication verifiers pass. Source/published hashes match
+    for the development scorecard and frozen 81-case submission.
+  - Ghostscript rasterized Predict the Self's PDF at 144 dpi; visual inspection
+    found a complete, readable two-column page without clipping or overlap.
+  - The repository-wide promise suite passes all seven groups across 25 HTML
+    pages and six first-party stylesheets. Runner shell syntax and
+    `git diff --check` pass.
+- Limitations: No Chromium, Chrome, or Firefox executable is installed, so the
+  new HTML summary/book and existing site still lack rendered desktop/phone,
+  keyboard, and assistive-technology inspection. No credentials were accessed;
+  no live deployment, commit, push, private evaluation, challenge submission,
+  package installation, system replacement, runner edit, or charter edit was
+  performed. A pre-existing runner modification was left untouched.
+- PI question: None blocking. The chapter/page question is resolved from the
+  authoritative orientation.
+- Likely next steps: For Predict the Self, submit the frozen CSV and method card
+  and publish the organizer's private scorecard unchanged, then preregister any
+  new method comparison. For v1, perform production parity, witnessed workflow,
+  rendered accessibility/usability, and substantive review; then coordinate
+  immutable dialog storage, footer grouping, and assignment metadata.
+- Ending work time: 2026-09-12 21:06:55 UTC.
+- Time spent: 1113 seconds (18 minutes 33 seconds).

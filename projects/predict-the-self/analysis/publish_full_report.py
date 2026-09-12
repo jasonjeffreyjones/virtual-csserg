@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""Replace the public Full Report with the complete local Quarto build."""
+
+from pathlib import Path
+import shutil
+import tempfile
+import uuid
+
+
+PROJECT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT.parents[1]
+SOURCE = PROJECT / "_book"
+PUBLIC = ROOT / "website/projects/predict-the-self/report"
+COMPATIBILITY_ARTIFACTS = {
+    "BENCHMARK_PROVENANCE.md": "artifacts/BENCHMARK_PROVENANCE.md",
+    "analysis/stable_signifier_projection.py": "artifacts/stable_signifier_projection.py",
+    "results/stable_signifier_dev_predictions.csv": "artifacts/stable_signifier_dev_predictions.csv",
+    "results/stable_signifier_dev_scorecard.json": "artifacts/stable_signifier_dev_scorecard.json",
+    "submissions/aleph_initial_alpha_submission.csv": "artifacts/aleph_initial_alpha_submission.csv",
+    "submissions/aleph_initial_alpha_method.md": "artifacts/aleph_initial_alpha_method.md",
+}
+
+
+class PublicationError(ValueError):
+    """Raised when the completed local report cannot be safely published."""
+
+
+def normalize_generated_html(tree: Path) -> None:
+    """Remove generator-introduced line-end whitespace from public HTML."""
+    for path in tree.rglob("*.html"):
+        source = path.read_text(encoding="utf-8")
+        normalized = "\n".join(line.rstrip() for line in source.splitlines())
+        if source.endswith(("\n", "\r")):
+            normalized += "\n"
+        path.write_text(normalized, encoding="utf-8")
+
+
+def publish(source: Path = SOURCE, public: Path = PUBLIC) -> None:
+    source = Path(source).resolve()
+    public = Path(public).resolve()
+    required = (source / "index.html", source / "report.html", source / "report.css")
+    required += tuple(source / path for path in COMPATIBILITY_ARTIFACTS)
+    for artifact in required:
+        if not artifact.is_file():
+            raise PublicationError(f"missing build artifact {artifact}")
+
+    public.parent.mkdir(parents=True, exist_ok=True)
+    staging = Path(tempfile.mkdtemp(prefix=".predict-report-stage-", dir=public.parent))
+    backup = public.parent / f".predict-report-backup-{uuid.uuid4().hex}"
+    moved_existing = False
+    try:
+        shutil.copytree(source, staging, dirs_exist_ok=True)
+        for current, legacy in COMPATIBILITY_ARTIFACTS.items():
+            alias = staging / legacy
+            alias.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(staging / current, alias)
+        normalize_generated_html(staging)
+        if public.exists():
+            public.rename(backup)
+            moved_existing = True
+        staging.rename(public)
+    except Exception:
+        if not public.exists() and moved_existing and backup.exists():
+            backup.rename(public)
+        if staging.exists():
+            shutil.rmtree(staging)
+        raise
+    else:
+        if backup.exists():
+            shutil.rmtree(backup)
+
+
+def main() -> int:
+    try:
+        publish()
+    except PublicationError as error:
+        raise SystemExit(f"publish_full_report: {error}") from error
+    print(f"Published {SOURCE.relative_to(ROOT)} to {PUBLIC.relative_to(ROOT)}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

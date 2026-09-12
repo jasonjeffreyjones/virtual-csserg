@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Predict the Self investigates how well later self-authored self-descriptions can be forecast from earlier ones.">
-  <title>Predict the Self — Projects</title>
+  <meta name="description" content="Evidence brief for Predict the Self, a reproducible forecast of later self-authored self-description.">
+  <title>Predict the Self — Evidence brief</title>
   <link rel="icon" href="../../images/favicon.ico" sizes="any">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../assets/styles.css?v=20260911">
+  <link rel="stylesheet" href="../../assets/styles.css?v=20260912">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -22,54 +22,80 @@
     </nav>
   </header>
 
-  <main id="main-content" class="project-page">
+  <main id="main-content" class="project-page evidence-page">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="../../">Home</a><span aria-hidden="true">/</span><a href="../">Projects</a><span aria-hidden="true">/</span><span>Predict the Self</span>
     </nav>
 
-    <header class="project-hero">
+    <header class="evidence-hero">
       <div>
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Active project</p>
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Active project / Ipseology</p>
         <h1>Predict<br><em>the Self</em></h1>
+        <p class="hero-summary">How much of a later self-authored self-description can be predicted from an earlier one?</p>
       </div>
-      <p class="hero-summary">How much of a later self-authored self-description can be predicted from an earlier one?</p>
+      <p class="evidence-status"><strong>81</strong><span>test predictions frozen and validator-clean</span><small>Private test answers remain unavailable; no test-performance result is claimed.</small></p>
     </header>
 
-    <section class="project-brief ruled-section" aria-labelledby="question-title">
-      <div>
-        <p class="section-number">01 / Question</p>
-        <h2 id="question-title">Forecast expressed identity</h2>
+    <figure class="forecast-figure" aria-labelledby="forecast-caption">
+      <div class="continuity-panel">
+        <div>
+          <p class="section-number">Continuity diagnostic / ROUGE-L</p>
+          <h2>Forecasts stay too close to the past</h2>
+          <p>Similarity to each person&rsquo;s earlier response, on a 0–1 scale.</p>
+        </div>
+        <div class="continuity-bars" aria-label="Mean prediction-to-source similarity is 0.903898; mean observed follow-up-to-source similarity is 0.225683.">
+          <div><span>Projection</span><span class="continuity-track" aria-hidden="true"><span class="projection-bar"></span></span><strong>0.903898</strong></div>
+          <div><span>Observed follow-up</span><span class="continuity-track" aria-hidden="true"><span class="observed-bar"></span></span><strong>0.225683</strong></div>
+        </div>
       </div>
-      <div class="brief-copy">
-        <p>The first study is Dr. Jason Jeffrey Jones&rsquo; Predict Future Selves challenge. It treats later personally expressed identity text as a prediction target and begins the larger inquiry: how predictable are human lives?</p>
-        <dl class="fact-list">
-          <div><dt>Status</dt><dd>81 test predictions frozen; private score pending</dd></div>
-          <div><dt>Unit</dt><dd>Longitudinally paired self-descriptions</dd></div>
-          <div><dt>Current result</dt><dd>Complete 50-case public-development scorecard</dd></div>
-        </dl>
+      <div class="scorecard-wrap" role="region" aria-label="Development agreement comparison" tabindex="0">
+        <table class="scorecard-table">
+          <thead><tr><th scope="col">Agreement metric</th><th scope="col">Projection</th><th scope="col">Repeat 2024</th><th scope="col">Difference</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Edit similarity</th><td>0.298061</td><td>0.291966</td><td class="metric-better">+0.006095</td></tr>
+            <tr><th scope="row">Token Jaccard</th><td>0.142768</td><td>0.141930</td><td class="metric-better">+0.000838</td></tr>
+            <tr><th scope="row">ROUGE-L F1</th><td>0.227552</td><td>0.225683</td><td class="metric-better">+0.001869</td></tr>
+            <tr><th scope="row">Token-overlap F1</th><td>0.307444</td><td>0.312202</td><td class="metric-worse">−0.004758</td></tr>
+            <tr><th scope="row">Character n-gram F1</th><td>0.292293</td><td>0.296534</td><td class="metric-worse">−0.004241</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. Complete directional pattern for nonzero text-agreement differences and the principal continuity diagnostic on 50 public development cases. Development data informed model selection; the benchmark defines no composite score.</figcaption>
+    </figure>
+
+    <section class="summary-findings ruled-section" aria-labelledby="findings-title">
+      <div class="section-heading">
+        <div><p class="section-number">01 / Findings</p><h2 id="findings-title">What the evidence says</h2></div>
+        <p>The stable-signifier projection is interpretable and reproducible, but its mixed development result is not a private test score.</p>
+      </div>
+      <div class="finding-grid">
+        <article class="finding">
+          <p><strong>The challenge forecasts personally expressed identity.</strong> Later Twenty Statements Test text is the target—not a hidden true self or an entire life course. <a href="report/report.html#research-question">Read the question</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>The benchmark and submission are frozen.</strong> All governing inputs are pinned and hashed; all 81 private-test predictions pass the official format validator. <a href="report/report.html#benchmark">Inspect provenance</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>The extractive method learns stable-looking language.</strong> Training-only retention estimates rank source units, while a training-only regression controls forecast length. <a href="report/report.html#method">Review the method</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>Development gains are small and metric-dependent.</strong> Three agreement measures improve, two worsen, and exact match ties; word-count error falls while line-count error rises. <a href="report/report.html#results">See all 15 measures</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>Predicted identities remain much too stable.</strong> Projection-to-source similarity is 0.903898 versus 0.225683 for real follow-ups, exposing the method&rsquo;s central failure. <a href="report/report.html#limitations">Read the interpretation</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>Private test performance is still unknown.</strong> Only the organizer can score the frozen artifact; validation and development results cannot substitute for that evaluation. <a href="report/report.html#submission">Check the claim boundary</a>.</p>
+        </article>
       </div>
     </section>
 
-    <section class="project-brief ruled-section" aria-labelledby="frame-title">
+    <section class="report-actions ruled-section" aria-labelledby="reports-title">
+      <div><p class="section-number">02 / Reports</p><h2 id="reports-title">Choose your depth</h2></div>
       <div>
-        <p class="section-number">02 / Framework</p>
-        <h2 id="frame-title">An ipseological task</h2>
-      </div>
-      <div class="brief-copy">
-        <p>A bio is personally expressed identity: language an individual publishes to describe themself. Its words, hashtags, abbreviations, and emoji may act as identity signifiers. The forecast concerns a later expression of identity, not a hidden or supposedly &ldquo;true&rdquo; self.</p>
-        <a class="text-link" href="https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/">Read Ipseology <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="project-brief ruled-section" aria-labelledby="iteration-title">
-      <div>
-        <p class="section-number">03 / First forecast</p>
-        <h2 id="iteration-title">Stable signifiers, unstable text</h2>
-      </div>
-      <div class="brief-copy">
-        <p>A deterministic projection learned which words tended to recur across the 150 training pairs, retained high-persistence statements, and predicted response length. On 50 public development cases it modestly improved edit similarity, token Jaccard, and ROUGE-L over repeating 2024 verbatim, while reducing word-count error from 56.68 to 41.64 words.</p>
-        <p>The tradeoff matters: token-overlap and character n-gram F1 declined, line-count error increased, and predicted text remained much more similar to the earlier response than real follow-ups were. There is no composite score or overall winner. The 81-case test artifact passes the official validator but remains unscored because its answers are private.</p>
-        <a class="text-link" href="report/">Read the full report <span aria-hidden="true">↗</span></a>
+        <p>The two-chapter Quarto book gives the complete method, scorecard, limitations, sources, and reproducibility artifacts. The derivative short report uses two columns and stays within the ten-page ceiling; neither report form has an exact chapter or page count requirement.</p>
+        <p><a class="text-link" href="report/">Read the Full Report <span aria-hidden="true">↗</span></a></p>
+        <p><a class="text-link" href="short-report.pdf">Open the short PDF <span aria-hidden="true">↗</span></a></p>
       </div>
     </section>
   </main>
@@ -80,7 +106,7 @@
       <a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a>
       <a href="https://jasonjones.ninja/csserg/">CSSERG</a>
       <a class="license-badge" href="https://creativecommons.org/licenses/by/4.0/" rel="license" aria-label="Creative Commons Attribution 4.0 International license"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="Creative Commons Attribution 4.0 International" width="88" height="31"></a>
-    <a href="https://github.com/jasonjeffreyjones/virtual-csserg/">GitHub repository</a>
+      <a href="https://github.com/jasonjeffreyjones/virtual-csserg/">GitHub repository</a>
     </nav>
   </footer>
 </body>

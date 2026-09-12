@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Predict the Self",
+    "section": "",
+    "text": "Forecasting expressed identity\nVirtual CSSERG\nExecutive Summary · Short two-column report · public repository",
+    "crumbs": [
+      "Forecasting expressed identity"
+    ]
+  },
+  {
+    "objectID": "index.html#current-finding",
+    "href": "index.html#current-finding",
+    "title": "Predict the Self",
+    "section": "Current finding",
+    "text": "Current finding\nThe first Predict the Self study asks whether a later Twenty Statements Test response can be forecast from an earlier response by the same person. Its deterministic stable-signifier projection is ready as an 81-case test submission and passes the challenge’s format validator. The private answers remain unavailable, so this report makes no test-performance claim.\nOn 50 public development cases, the projection improves three of six text agreement measures over repeating the earlier response verbatim, worsens two, and ties one. It lowers word-count and source-similarity error but raises line-count error. Most importantly, its mean similarity to the source is 0.903898, while observed follow-ups average 0.225683. Selecting supposedly enduring words remains far beyond an adequate account of how people rewrite their self-descriptions.",
+    "crumbs": [
+      "Forecasting expressed identity"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-read-this-report",
+    "href": "index.html#how-to-read-this-report",
+    "title": "Predict the Self",
+    "section": "How to read this report",
+    "text": "How to read this report\nThe evidence, method, and development results chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and extractive method, reports the complete development scorecard, and links every public reproducibility artifact.\nThe report distinguishes three claims that should not be collapsed:\n\nSubmission validity: all 81 required IDs have nonblank predictions in the required order.\nPublic development evidence: the method has a mixed scorecard relative to the repeat-2024 baseline and was selected using those same public cases.\nPrivate test performance: unknown until the organizer evaluates the frozen artifact; no result is inferred from validation or development data.\n\nThis Full Report is a two-chapter Quarto HTML book. Chapter count is an editorial choice, not a Virtual CSSERG requirement.",
+    "crumbs": [
+      "Forecasting expressed identity"
+    ]
+  },
+  {
+    "objectID": "report.html",
+    "href": "report.html",
+    "title": "1  Predict the Self",
+    "section": "",
+    "text": "2 Findings at a glance\nVirtual CSSERG\nExecutive Summary · Short two-column report · report landing page",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#stable-signifier-projection",
+    "href": "report.html#stable-signifier-projection",
+    "title": "1  Predict the Self",
+    "section": "5.1 Stable-signifier projection",
+    "text": "5.1 Stable-signifier projection\nThe method is deterministic and extractive. It uses the 150 public training pairs and no external data or model.\n\nFor every source token, estimate the proportion of training documents in which that token also appears at follow-up. Smooth toward the corpus-wide retention rate with ten equivalent prior observations.\nDivide each source response using its strongest repeated boundary: lines, sentences, comma phrases, or the complete response.\nScore each response unit by the mean estimated retention probability of its unique content tokens.\nFit a training-only ordinary least squares regression of follow-up word count on source word count.\nRetain high-scoring units while doing so moves the response closer to the predicted length, then restore their original order.\n\nDemographic metadata is not used. The method has no random choices and no case-level manual editing. It is deliberately interpretable: every predicted word comes from that person’s earlier self-description.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#model-selection",
+    "href": "report.html#model-selection",
+    "title": "1  Predict the Self",
+    "section": "5.2 Model selection",
+    "text": "5.2 Model selection\nPublic development data were used for model selection, as the challenge allows. Fixed extraction fractions and the training-only length regression were compared; the regression-length rule was frozen before the test artifact was generated. The development scorecard is therefore a model-selection result, not an untouched confirmatory estimate.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  }
+]

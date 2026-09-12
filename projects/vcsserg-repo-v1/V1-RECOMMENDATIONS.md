@@ -15,9 +15,10 @@ creation guide implement the first growth workflow. The guide also makes the
 approved generated-image safeguards operational.
 
 The VCSSERG v1 Full Report is now a Quarto HTML book, with a linked two-column
-short PDF and evidence-brief Executive Summary. Still pending are the
-coordinated immutable-dialog migration, conceptual footer grouping, a single
-roster/assignment source, and the remaining Predict the Self publication work.
+short PDF and evidence-brief Executive Summary. Predict the Self now uses the
+same three-form system, closing the final automated promise-group gap. Still
+pending are the coordinated immutable-dialog migration, conceptual footer
+grouping, a single roster/assignment source, and the manual Version 1 gates.
 
 ## Recommended design choices
 
@@ -78,13 +79,14 @@ Their source/output separation supports executable analysis, citations, a table
 of contents, stable section links, and multi-chapter growth. Quarto describes an
 HTML book as a specialized website and supports book-level navigation and
 cross-references; this matches the lab's static publishing model. A one-chapter
-book has some interface overhead, but consistency and an obvious growth path are
-worth it here.
+book has some interface overhead, but consistency and an obvious growth path
+are worth it here. This is not a recommendation for an exact chapter count:
+Predict the Self now uses two chapters, while VCSSERG v1 currently needs one.
 
 Direct-authored HTML should be a documented contingency when the host's Quarto
 runtime is genuinely unavailable, not an equivalent long-term format. The
-current host provides Quarto 1.10.18. VCSSERG v1 is now in the book workflow;
-Predict the Self should follow rather than retain a stale runtime exception.
+current host provides Quarto 1.10.18. VCSSERG v1 and Predict the Self now both
+use the book workflow.
 Rendered output still needs local-link, visual, and
 accessibility checks; Quarto can assist with accessibility testing, but tool
 output does not replace manual review.

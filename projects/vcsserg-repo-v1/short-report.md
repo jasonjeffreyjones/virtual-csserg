@@ -6,9 +6,9 @@ Bee Boring Vanilla · Virtual CSSERG · September 12, 2026
 
 ## Finding
 
-Virtual CSSERG has a working static publication layer, complete public Project and Scholar indexes, current project-memory files, a guarded deployment component, and a Scholar runner whose documented wiring passes inspection. Six of seven automated promise groups pass. This is not a completion percentage: the remaining group is the three-report contract, and several essential manual gates remain.
+Virtual CSSERG has a working static publication layer, complete public Project and Scholar indexes, current project-memory files, a guarded deployment component, and a Scholar runner whose documented wiring passes inspection. All seven automated promise groups pass. This is not a completion declaration: several essential manual gates remain.
 
-VCSSERG v1 now supplies all three linked report forms. Predict the Self still lacks a current Quarto book build, short PDF, exactly one Executive Summary figure, reciprocal links, and the required Full Report phrase.
+All three Projects now supply linked one-figure Executive Summaries, Quarto Full Reports, and two-column short PDFs. Predict the Self closed the final automated gap with a two-chapter book, guarded publisher, reciprocal links, and project-specific checks.
 
 ## Question and method
 
@@ -20,7 +20,7 @@ The standard-library verifier parses public HTML, resolves local resources and f
 
 Repository guidance passes: the governing files, growth procedure, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and substantive-update metadata. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass complete Project and initial-Scholar coverage, charter-biography fidelity, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment pass static and mocked checks.
 
-The three-report group remains open solely because Predict the Self is incomplete under the current publication contract. The result is a regression report, not a research-quality score or Version 1 certification.
+The three-report group now passes. The overall result remains a regression report, not a research-quality score or Version 1 certification.
 
 ## Selected public designs
 

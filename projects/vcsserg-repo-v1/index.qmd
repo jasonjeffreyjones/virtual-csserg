@@ -13,11 +13,11 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-Six of seven automated promise groups pass on September 12, 2026. The remaining
-group is not a vague quality score: it is the three-report publication contract.
-This Project now supplies its Full Report, short PDF, and Executive Summary, but
-Predict the Self does not yet meet the same contract. Production parity, a
-witnessed end-to-end run, and rendered accessibility remain manual gates.
+All seven automated promise groups pass on September 12, 2026. Predict the Self
+closed the last structural gap by adding a Quarto book, short PDF, one-figure
+Executive Summary, reciprocal links, and guarded publication checks. Production
+parity, a witnessed end-to-end run, rendered accessibility, and substantive
+review remain manual gates.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -80,7 +80,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 | Project memory | Pass | Every Project and `_template` has the three memory files and valid state metadata. |
 | Static HTML/CSS | Pass | Public pages have basic semantics, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Project and initial Scholar is linked; biographies and metadata-derived update order agree with their sources. |
-| Three report forms | Open | VCSSERG v1 and NFL comply; Predict the Self still has publication gaps. |
+| Three report forms | Pass | Every Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Shell syntax and required lock, pull, commit, push, logging, and deploy wiring are present. |
 | Deployment | Pass | Mocked `rsync` is shell-free, guarded, failure-propagating, and configured for exact mirroring. |
 
@@ -91,9 +91,9 @@ Projects directory. It also became narrower where old rules created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
 
-The result should be read as a regression report. Treating six passing groups
-as 86 percent complete, or as a measure of research quality, would go far
-beyond the evidence.
+The result should be read as a regression report. Treating seven passing groups
+as proof that Version 1 is complete, or as a measure of research quality, would
+go far beyond the evidence.
 
 ## Growth workflow {#growth}
 
@@ -134,10 +134,11 @@ and chapter structure (Quarto, n.d.-a). Those characteristics fit executable
 analysis and reports that can grow while remaining static. Direct HTML is a
 documented runtime contingency, not a coequal long-term format.
 
-This report is itself a one-chapter Quarto book. The Executive Summary derives
-its narrow findings from this account, and the short report compresses the same
-evidence into a two-column PDF under the ten-page limit. The three forms link to
-one another.
+This report happens to be a one-chapter Quarto book. The Executive Summary
+derives its narrow findings from this account, and the short report currently
+fits the same evidence into a one-page two-column PDF. Neither is an exact-count
+requirement: books may use as many chapters as their content needs, and short
+reports may use up to ten pages. The three forms link to one another.
 
 Quarto can add automated accessibility checks to rendered HTML, but its own
 documentation cautions that conformance tooling cannot detect every issue and
@@ -165,10 +166,10 @@ still need network access for their intended presentation.
 
 ## Remaining work {#remaining-work}
 
-The only failing automated group is the report contract. Predict the Self needs
-a current Quarto book build, exactly one dense Executive Summary figure, a
-two-column short PDF of at most ten pages, reciprocal report links, and the
-required Full Report phrase.
+No automated promise group currently fails. Predict the Self now has a
+two-chapter Quarto build, exactly one dense Executive Summary figure, a linked
+two-column short PDF within the ten-page ceiling, reciprocal report links,
+guarded publishing, and the required Full Report phrase.
 
 The approved dialog migration also remains. It should replace the growing log
 with one immutable timestamped file per iteration and a newest-first index, but
@@ -177,9 +178,9 @@ active Projects, and verifier. Partial migration would leave contradictory
 instructions. Footer link grouping and a durable roster/assignment source are
 smaller follow-ups.
 
-After those automated gaps close, the manual gates above determine whether the
-charter's definition of done is actually satisfied. Version 1 should not be
-declared complete merely because the verifier returns zero.
+The manual gates above now determine whether the charter's definition of done
+is actually satisfied. Version 1 should not be declared complete merely because
+the verifier returns zero.
 
 ## Reproduction
 

@@ -652,6 +652,135 @@ a:focus-visible > .card-arrow {
   font-size: 0.85rem;
 }
 
+.forecast-figure {
+  margin: 2rem 0 4rem;
+  border: 1px solid var(--ink);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.continuity-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: var(--laurel);
+}
+
+.continuity-panel h2 {
+  margin-bottom: 0.75rem;
+}
+
+.continuity-panel p:last-child {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.continuity-bars {
+  display: grid;
+  gap: 1.25rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.78rem;
+}
+
+.continuity-bars > div {
+  display: grid;
+  grid-template-columns: 8rem minmax(8rem, 1fr) 4.5rem;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.continuity-bars strong {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.continuity-track {
+  display: block;
+  height: 1.1rem;
+  background: rgba(24, 53, 43, 0.14);
+}
+
+.continuity-track > span {
+  display: block;
+  height: 100%;
+}
+
+.projection-bar {
+  width: 90.3898%;
+  background: #956212;
+}
+
+.observed-bar {
+  width: 22.5683%;
+  background: var(--artichoke);
+}
+
+.scorecard-wrap {
+  overflow-x: auto;
+}
+
+.scorecard-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-family: system-ui, sans-serif;
+  font-size: 0.84rem;
+}
+
+.scorecard-table th,
+.scorecard-table td {
+  padding: 0.85rem clamp(0.75rem, 2vw, 1.5rem);
+  border-top: 1px solid var(--line);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.scorecard-table th:first-child {
+  text-align: left;
+}
+
+.scorecard-table thead th {
+  border-top: 0;
+  background: var(--forest);
+  color: var(--paper);
+  font-size: 0.7rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.scorecard-table .metric-better {
+  color: var(--artichoke);
+  font-weight: 800;
+}
+
+.scorecard-table .metric-worse {
+  color: #7b5111;
+  font-weight: 800;
+}
+
+.forecast-figure figcaption {
+  padding: 1rem clamp(1.5rem, 4vw, 3rem);
+  border-top: 1px solid var(--ink);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 700px) {
+  .continuity-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .continuity-bars > div {
+    grid-template-columns: 1fr 4.5rem;
+  }
+
+  .continuity-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
 .fact-list {
   margin: 3rem 0 0;
   border-top: 1px solid var(--line);
