@@ -16,6 +16,11 @@ The three prototypes remain archived comparisons, with their selection labels
 updated. The homepage's lead is a Scholar editorial choice grounded in the
 current Predict the Self records; the PI selected the design, not a finding.
 
+On September 12, Dr. Jones' later selections were also implemented: Executive
+Summary A is now the production evidence-brief pattern, and Scholar directory A
+is now the production equal-card portrait roster. Their comparison pages are
+labeled decision archives and link their production destinations.
+
 | Concept | Visual language | Information architecture | Layout | Principal tradeoff |
 |---|---|---|---|---|
 | A: Research directory | Spacious, bright, sans-serif, rounded cards | Mission → projects → Scholars | Wide introduction, three project cards, Scholar band | Findings require opening a project |
@@ -67,12 +72,11 @@ Inspect the homepage, a Scholar profile, a project summary, and the Full Report
 at desktop and phone widths, including keyboard navigation and table scrolling.
 Selection is resolved; rendered QA and future editorial choices remain open.
 
-The September 11 PI review requests are handled in two separate comparison
-sets: `website/projects/vcsserg-repo-v1/designs/project-summaries/` and
-`website/projects/vcsserg-repo-v1/designs/scholar-directories/`. Their design
-recommendations and the requested workflow opinions are recorded in
-`V1-RECOMMENDATIONS.md`. These later alternatives do not reopen the selected
-homepage system.
+The September 11 PI review requests are preserved in two comparison sets:
+`website/projects/vcsserg-repo-v1/designs/project-summaries/` and
+`website/projects/vcsserg-repo-v1/designs/scholar-directories/`. The selected A
+systems now govern their production page types; the alternatives do not reopen
+the separately selected homepage system.
 
 ## Reference
 

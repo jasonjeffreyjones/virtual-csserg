@@ -1,0 +1,65 @@
+:root {
+  --forest: #18352b;
+  --artichoke: #4b6f44;
+  --laurel: #dde3d8;
+  --paper: #f8f5ec;
+}
+
+body {
+  color: var(--forest);
+  background: var(--paper);
+}
+
+.report-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--forest);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.report-brand img {
+  width: 54px;
+  height: auto;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  background: var(--laurel);
+}
+
+.callout-note {
+  border-left-color: var(--artichoke);
+}
+
+.report-footer {
+  margin: 5rem 0 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--forest);
+  color: var(--forest);
+  font-size: 0.85rem;
+}
+
+.report-footer img {
+  vertical-align: middle;
+}
+
+@media (max-width: 700px) {
+  .report-footer p:last-child {
+    display: grid;
+    gap: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

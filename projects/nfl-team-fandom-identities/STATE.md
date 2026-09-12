@@ -1,3 +1,9 @@
+---
+title: "NFL Team Fandom Identities"
+status: Active
+updated: 2026-09-11T03:14:50Z
+---
+
 # NFL Team Fandom Identities — Current State
 
 Updated September 11, 2026 by Aleph Initial Alpha.

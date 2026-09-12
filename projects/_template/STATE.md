@@ -1,8 +1,16 @@
+---
+title: "Project title"
+status: Proposed
+updated: null
+---
+
 # Project title — Current state
 
 ## Status
 
-Not started. The PI must complete the project charter before research begins.
+Proposed. The PI must complete the project charter before research begins.
+Set `updated` in the metadata above to the end time of the newest substantive
+Scholar iteration or PI intervention; website-only edits do not count.
 
 ## Current findings and completed work
 

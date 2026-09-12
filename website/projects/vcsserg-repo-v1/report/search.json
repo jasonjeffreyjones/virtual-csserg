@@ -1,0 +1,112 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "",
+    "text": "1 Evidence, decisions, and remaining gates\nVirtual CSSERG\nExecutive Summary · Short two-column report · public repository",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#executive-finding",
+    "href": "index.html#executive-finding",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.1 Executive finding",
+    "text": "1.1 Executive finding\nVirtual CSSERG now has a working static publication layer, complete public Project and Scholar indexes, current project-memory files, a guarded deployment component, and an automated Scholar runner whose documented wiring passes inspection. A standard-library verifier tests those promises without reading deployment credentials, contacting production, committing, or deploying.\nSix of seven automated promise groups pass on September 12, 2026. The remaining group is not a vague quality score: it is the three-report publication contract. This Project now supplies its Full Report, short PDF, and Executive Summary, but Predict the Self does not yet meet the same contract. Production parity, a witnessed end-to-end run, and rendered accessibility remain manual gates.\nThis is an audit of documented infrastructure and public artifacts, not a claim that automation can certify research truth. Passing structural checks cannot establish whether a substantive inference is sound or whether a page is usable by every reader.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#project-question-and-method",
+    "href": "index.html#project-question-and-method",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.2 Project question and method",
+    "text": "1.2 Project question and method\nThe charter defines Version 1.0 as the point at which everything promised in the repository documentation works as documented. The audit therefore treats the documentation as a set of falsifiable promises and asks what observable evidence supports each one.\nThe method has three layers:\n\nTranslate statements in AGENTS.md, RESEARCHER-ORIENTATION.md, the Project charter, and current PI guidance into concrete evidence expectations.\nTest the safe, deterministic subset with verify_v1.py.\nKeep claims requiring a browser, credentials, human judgment, or a complete external workflow as named manual gates rather than silently treating them as passed.\n\nThe verifier uses Python’s standard library. It parses public HTML, resolves local resources and fragments, inspects project memory and report artifacts, checks runner syntax and required commands, and exercises the deploy function with mocked process calls and non-secret placeholder configuration.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#public-system",
+    "href": "index.html#public-system",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.3 Public system",
+    "text": "1.3 Public system\nThe public site is a static tree under website/. Its homepage presents recent research, while stable Projects and Scholars directories provide complete catalogs. Primary headers link only inside Virtual CSSERG. Every footer links Dr. Jason Jeffrey Jones, CSSERG, the public repository, and the CC BY 4.0 International license.\nThe Projects page contains one entry per Project and orders them by the newest substantive Scholar iteration or PI intervention. Version 1 replaces hand-kept dates as the implicit source of truth with title, status, and updated metadata at the top of each STATE.md. The verifier now derives the expected ordering from those records and requires the public data-updated values to match.\nThe Scholar directory now uses the PI-selected portrait-roster pattern: equal cards, honest monograms, short introductions, and direct links to authoritative profiles. The three initial profiles reproduce the full charter biographies. The directory is designed to scan quickly rather than duplicate those biographies.\nThe Project Executive Summary now uses the PI-selected evidence-brief pattern. It asks the Project question, reports status without presenting it as a completion percentage, shows exactly one dense promise map, and then gives five linked findings. The unselected alternatives remain labeled review artifacts.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#verification",
+    "href": "index.html#verification",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.4 Verification evidence",
+    "text": "1.4 Verification evidence\n\n\n\n\n\n\n\n\nPromise group\nCurrent result\nWhat the automated check establishes\n\n\n\n\nRepository guidance\nPass\nRequired guidance, growth procedure, and scaffold command exist.\n\n\nProject memory\nPass\nEvery Project and _template has the three memory files and valid state metadata.\n\n\nStatic HTML/CSS\nPass\nPublic pages have basic semantics, branding, complete footer links, Bootstrap, and resolvable local references.\n\n\nPublic catalogs\nPass\nEvery Project and initial Scholar is linked; biographies and metadata-derived update order agree with their sources.\n\n\nThree report forms\nOpen\nVCSSERG v1 and NFL comply; Predict the Self still has publication gaps.\n\n\nScholar runner\nPass\nShell syntax and required lock, pull, commit, push, logging, and deploy wiring are present.\n\n\nDeployment\nPass\nMocked rsync is shell-free, guarded, failure-propagating, and configured for exact mirroring.\n\n\n\nThe verifier became stricter where earlier checks could pass incomplete work: it now covers the three report forms, exact Executive Summary figure count, cross-links, Quarto book configuration, full charter biographies, and the Projects directory. It also became narrower where old rules created false failures: first-party design requirements no longer apply to vendored Quarto CSS, and a Quarto book may validly contain more than one first-level heading.\nThe result should be read as a regression report. Treating six passing groups as 86 percent complete, or as a measure of research quality, would go far beyond the evidence.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#growth",
+    "href": "index.html#growth",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.5 Growth workflow",
+    "text": "1.5 Growth workflow\nVersion 1 adopts six lifecycle states: Proposed, Active, Blocked, Paused, Completed, and Archived. Publication readiness remains separate. State changes must record the actor, time, and reason; completion requires both automated evidence and named manual gates.\nThe new command\npython3 python/create_project.py &lt;project-slug&gt; \"Project title\"\nvalidates a permanent lowercase hyphenated slug, refuses overwrite, stages a complete copy of _template, personalizes its title and state, and renames it atomically into projects/. It does not publish an empty Project or replace PI authorship of PROJECT.md. Unit tests cover successful personalization, required files, unsafe slugs and titles, and no-overwrite behavior.\nScholar creation remains deliberately review-led. The PI supplies the name, slug, biography, and assignment; the public profile must preserve those claims without invention. A profile, portrait-roster card, homepage link, and runner configuration are then validated together. Automating this before defining a single roster and assignment source could manufacture an unauthorized public identity, so no Scholar scaffolder is claimed.\nGenerated Scholar representations are permitted only as clearly illustrative, provenance-recorded assets selected by the PI. Monograms remain canonical by default. The complete procedure is in CREATING-PROJECTS-AND-SCHOLARS.md.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#publication-system",
+    "href": "index.html#publication-system",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.6 Publication system",
+    "text": "1.6 Publication system\nQuarto HTML books remain the default Full Report format. Quarto describes an HTML book as a specialized website with navigation, search, cross-references, and chapter structure (Quarto, n.d.-a). Those characteristics fit executable analysis and reports that can grow while remaining static. Direct HTML is a documented runtime contingency, not a coequal long-term format.\nThis report is itself a one-chapter Quarto book. The Executive Summary derives its narrow findings from this account, and the short report compresses the same evidence into a two-column PDF under the ten-page limit. The three forms link to one another.\nQuarto can add automated accessibility checks to rendered HTML, but its own documentation cautions that conformance tooling cannot detect every issue and still requires manual inspection (Quarto, n.d.-b). Version 1 therefore keeps rendered accessibility as a manual gate.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#manual-gates",
+    "href": "index.html#manual-gates",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.7 Manual gates and limitations",
+    "text": "1.7 Manual gates and limitations\nFour kinds of evidence remain outside this run:\n\nProduction parity. After normal commit, push, and deployment, compare the production inventory and bytes with website/ without exposing credentials.\nObserved automation. Witness one complete Scholar run, including its log, commit, push, deploy, success behavior, and safe failure behavior.\nRendered usability. Inspect representative pages at desktop and phone widths with keyboard navigation and assistive technology. No Chromium, Chrome, or Firefox executable was available on this host.\nSubstantive review. File existence, links, and phrases do not establish that a research report is complete, its method is valid, or its claims follow from evidence.\n\nThe site also relies on CDN-hosted Bootstrap and the Creative Commons badge. Local CSS preserves core layout and typography, but those remote resources still need network access for their intended presentation.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#remaining-work",
+    "href": "index.html#remaining-work",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.8 Remaining work",
+    "text": "1.8 Remaining work\nThe only failing automated group is the report contract. Predict the Self needs a current Quarto book build, exactly one dense Executive Summary figure, a two-column short PDF of at most ten pages, reciprocal report links, and the required Full Report phrase.\nThe approved dialog migration also remains. It should replace the growing log with one immutable timestamped file per iteration and a newest-first index, but only through one coordinated change to orientation, template, runner prompt, active Projects, and verifier. Partial migration would leave contradictory instructions. Footer link grouping and a durable roster/assignment source are smaller follow-ups.\nAfter those automated gaps close, the manual gates above determine whether the charter’s definition of done is actually satisfied. Version 1 should not be declared complete merely because the verifier returns zero.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#reproduction",
+    "href": "index.html#reproduction",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "1.9 Reproduction",
+    "text": "1.9 Reproduction\nFrom the repository root:\npython3 -m unittest discover -s projects/vcsserg-repo-v1/tests -v\nXDG_CACHE_HOME=/tmp/vcsserg-v1-quarto-cache quarto render projects/vcsserg-repo-v1\npython3 projects/vcsserg-repo-v1/analysis/publish_full_report.py\nPYTHONPATH=/tmp/vcsserg-v1-publishing-deps \\\n  python3 projects/vcsserg-repo-v1/analysis/render_short_report.py\nPYTHONPATH=/tmp/vcsserg-v1-publishing-deps \\\n  python3 projects/vcsserg-repo-v1/analysis/verify_publication.py\npython3 projects/vcsserg-repo-v1/verify_v1.py\nThe Quarto cache path is writable temporary state, not a replacement runtime. The PDF packages are optional build-only dependencies recorded in requirements-publication.txt; the deployed website remains static.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Virtual CSSERG Version 1.0",
+    "section": "References",
+    "text": "References\nQuarto. (n.d.-a). Creating a book. Retrieved September 11, 2026, from https://quarto.org/docs/books/\nQuarto. (n.d.-b). HTML accessibility checks. Retrieved September 11, 2026, from https://quarto.org/docs/output-formats/html-accessibility.html",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Evidence, decisions, and remaining gates</span>"
+    ]
+  }
+]

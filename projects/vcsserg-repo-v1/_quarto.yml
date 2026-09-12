@@ -1,0 +1,23 @@
+project:
+  type: book
+  output-dir: _book
+  render:
+    - index.qmd
+book:
+  title: "Virtual CSSERG Version 1.0"
+  subtitle: "Does the virtual lab work as documented?"
+  author: "Bee Boring Vanilla"
+  date: "2026-09-12"
+  chapters:
+    - index.qmd
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    css: report.css
+    include-in-header: bootstrap.html
+    include-after-body: footer.html
+execute:
+  warning: false
+  message: false

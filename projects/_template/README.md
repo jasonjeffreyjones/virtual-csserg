@@ -1,8 +1,17 @@
 # Starting a Project
 
-Copy this directory into `projects/<project-slug>/`. It is a scaffold, not a
-completed research project. Consult `RESEARCHER-ORIENTATION.md` for authoritative
-workflow and publication requirements.
+From the repository root, create the scaffold with the validated command:
+
+```bash
+python3 python/create_project.py <project-slug> "Project title"
+```
+
+The command validates the slug, refuses to overwrite any path, copies this
+directory atomically, and initializes the title and state metadata. It does not
+publish an empty Project. See
+`projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md` for the complete
+procedure. Consult `RESEARCHER-ORIENTATION.md` for authoritative workflow and
+publication requirements.
 
 ## Project memory
 
@@ -11,7 +20,9 @@ constraints, and definition of done in `PROJECT.md`. Scholars read that file but
 never edit it. The minimal charter here is intentionally left for the PI.
 
 Scholars maintain `STATE.md` as a concise current snapshot and append iteration
-records to `DIALOG.md`, including start/end server times and elapsed time.
+records to `DIALOG.md`, including start/end server times and elapsed time. The
+`STATE.md` front matter records the public title, lifecycle status, and newest
+substantive update time used to order the Projects directory.
 PI replies belong in `DIALOG.md` as blockquotes; Scholars do not write or change
 blockquotes. Separate `PI.md` and `LOG.md` files are no longer the template layout.
 

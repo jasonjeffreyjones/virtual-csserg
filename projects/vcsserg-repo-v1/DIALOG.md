@@ -386,3 +386,64 @@ Below are log entries from Scholars. This is an append-only file.
 > I also agree with Bee's recommendation from <https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/designs/scholar-directories/> under PI review / Scholar directory: use A.
 > Further, I agree with all recommendations currently present in V1-RECOMMENDATIONS.md. On the next iteration, implement at least some. If not all are implemented, leave a plan for implementing the rest.
 > Good work. Keep going!
+
+## 2026-09-12 — Bee Boring Vanilla — Selected systems, growth workflow, and reports
+
+- Starting work time: 2026-09-12 19:32:31 UTC (preflight server time).
+- Scope: Implement the PI-selected Executive Summary and Scholar-directory A
+  systems, operationalize a coherent subset of the approved governance
+  recommendations, document how to create Projects and Scholars, and complete
+  the missing VCSSERG v1 report forms.
+- Context: Read repository and researcher guidance, my complete Scholar
+  directory, the project charter/state/full dialog, audit, recommendations,
+  design record, verifier, template, runner, relevant public pages, and other
+  Project update records. Used the supplied 1 CPU, 3000M, 55-minute, no-swap
+  envelope; no agents, credentials, deployment, commit, or push were used.
+- Selected public systems: Rebuilt the v1 Executive Summary around A's
+  question–status–figure–findings evidence brief and the Scholar directory
+  around A's equal-card portrait roster. The summary has exactly one dense
+  promise map and five Full Report-linked findings. Comparison pages are now
+  labeled dated decision archives rather than pending PI reviews.
+- Reports: Wrote and rendered a one-chapter Quarto HTML book, derived a linked
+  one-page two-column PDF, and connected all three report forms reciprocally.
+  The Full Report documents the audit method, evidence, growth decisions,
+  limits, and remaining gates and contains the required exact phrase once.
+- Build reliability: Quarto initially warned that it would not clean an output
+  directory outside its Project. Changed the pipeline to render into ignored
+  local `_book/`, then added a guarded publisher that replaces the complete
+  public report tree so stale libraries cannot survive. Six unit tests cover
+  Project scaffolding and report-tree replacement/preservation.
+- Growth workflow: Added authoritative `title`, lifecycle `status`, and
+  substantive `updated` front matter to every Project state and `_template`.
+  The Projects directory is now verified against this source. Added the tested
+  `python/create_project.py` command, which validates slugs, refuses overwrite,
+  stages atomically, personalizes memory files, and never publishes empty work.
+  Added a PI-facing guide for the six lifecycle states, Project publication,
+  review-led Scholar creation, host-managed runner invocation, and the approved
+  generated-image provenance policy.
+- Verifier changes: Repository guidance now exercises the scaffold in a
+  temporary directory; memory checks validate state metadata; catalog checks
+  derive Project order/timestamps from state and enforce the selected A
+  patterns. Failure fixtures confirmed that stale order/metadata and removal of
+  the selected roster are rejected.
+- Validation: Quarto rendered cleanly; the guarded publisher and PDF renderer
+  completed; all six unit tests passed. The project publication verifier passed
+  one figure, local links/fragments, reciprocal report links, required phrase,
+  PDF annotations, both PDF columns, nonempty pages, and the ten-page limit. I
+  rendered the PDF through Ghostscript and visually inspected its complete,
+  readable one-page layout. Python compilation, runner shell syntax, and
+  `git diff --check` passed.
+- Current audit result: Six of seven groups pass. The report group now fails
+  only for Predict the Self: missing short PDF and Executive Summary figure,
+  plus no current Quarto book configuration or required Full Report phrase.
+  The expected nonzero result was constrained to exactly those gaps.
+- Limitations and remaining plan: No Chromium, Chrome, or Firefox executable is
+  available, so production HTML still lacks desktop/phone, keyboard, and
+  assistive-technology inspection. Production parity and an observed full
+  Scholar workflow remain manual gates. Next close Predict the Self publication
+  gaps; then coordinate the approved immutable-per-iteration dialog migration,
+  group footer links, define one roster/assignment source and report-archive
+  policy, and complete all manual gates before marking Version 1 Completed.
+- PI question: None blocking.
+- Ending work time: 2026-09-12 19:58:15 UTC.
+- Time spent: 1544 seconds (25 minutes 44 seconds).

@@ -1,0 +1,122 @@
+#!/usr/bin/env python3
+"""Render the derivative two-column short report without a TeX runtime."""
+
+from pathlib import Path
+import re
+from xml.sax.saxutils import escape
+
+from pypdf import PdfReader
+from reportlab.lib import colors
+from reportlab.lib.enums import TA_LEFT
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.platypus import BaseDocTemplate, Frame, Image, PageTemplate, Paragraph, Spacer
+
+
+PROJECT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT.parents[1]
+PUBLIC = ROOT / "website/projects/vcsserg-repo-v1"
+FOREST = colors.HexColor("#18352b")
+ARTICHOKE = colors.HexColor("#4b6f44")
+
+
+def inline(text: str) -> str:
+    escaped = escape(text).replace("&lt;i&gt;", "<i>").replace("&lt;/i&gt;", "</i>")
+    return re.sub(
+        r"\[([^\]]+)\]\((https?://[^)]+)\)",
+        r'<a href="\2" color="#4b6f44"><u>\1</u></a>',
+        escaped,
+    )
+
+
+def main() -> int:
+    output = PUBLIC / "short-report.pdf"
+    output.parent.mkdir(parents=True, exist_ok=True)
+    width, height = 612, 792
+    margin, gap = 42, 20
+    column = (width - 2 * margin - gap) / 2
+    document = BaseDocTemplate(
+        str(output),
+        pagesize=(width, height),
+        title="Virtual CSSERG Version 1.0",
+        author="Bee Boring Vanilla, Virtual CSSERG",
+        subject="Short report on the Virtual CSSERG Version 1.0 promise audit",
+    )
+    frames = [
+        Frame(
+            margin + index * (column + gap),
+            45,
+            column,
+            height - 95,
+            leftPadding=0,
+            rightPadding=0,
+            topPadding=0,
+            bottomPadding=0,
+        )
+        for index in range(2)
+    ]
+
+    def footer(canvas, doc):
+        canvas.saveState()
+        canvas.setFillColor(FOREST)
+        canvas.setFont("Helvetica", 7.5)
+        canvas.drawString(margin, 25, "Virtual CSSERG | CC BY 4.0")
+        canvas.linkURL(
+            "https://creativecommons.org/licenses/by/4.0/", (margin, 20, 150, 34)
+        )
+        canvas.drawString(170, 25, "Full report | Executive Summary")
+        canvas.linkURL(
+            "https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/",
+            (170, 20, 224, 34),
+        )
+        canvas.linkURL(
+            "https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/",
+            (229, 20, 315, 34),
+        )
+        canvas.drawRightString(width - margin, 25, str(doc.page))
+        canvas.restoreState()
+
+    document.addPageTemplates(PageTemplate(id="TwoColumns", frames=frames, onPage=footer))
+    styles = getSampleStyleSheet()
+    styles.add(
+        ParagraphStyle(
+            name="ReportBody",
+            fontName="Helvetica",
+            fontSize=9.1,
+            leading=11.8,
+            spaceAfter=7,
+            textColor=FOREST,
+            alignment=TA_LEFT,
+        )
+    )
+    styles["Heading1"].fontSize = 17
+    styles["Heading1"].leading = 20
+    styles["Heading1"].textColor = FOREST
+    styles["Heading2"].fontSize = 11
+    styles["Heading2"].leading = 14
+    styles["Heading2"].textColor = ARTICHOKE
+    styles["Heading2"].spaceBefore = 7
+    styles["Heading2"].spaceAfter = 5
+
+    logo = ROOT / "website/images/csserg-transparent-logo.png"
+    story = [Image(str(logo), width=31, height=35, hAlign="LEFT"), Spacer(1, 7)]
+    for block in (PROJECT / "short-report.md").read_text(encoding="utf-8").strip().split("\n\n"):
+        block = block.strip()
+        style = styles["ReportBody"]
+        if block.startswith("# "):
+            style, block = styles["Heading1"], block[2:]
+        elif block.startswith("## "):
+            style, block = styles["Heading2"], block[3:]
+        story.append(Paragraph(inline(block).replace("\n", "<br/>"), style))
+
+    document.build(story)
+    pages = PdfReader(output).pages
+    if not 1 <= len(pages) <= 10:
+        raise RuntimeError(f"short report has {len(pages)} pages; expected 1-10")
+    if not all(page.extract_text().strip() for page in pages):
+        raise RuntimeError("short report contains an empty page")
+    print(f"{output.name}: {len(pages)} pages, two-column page template")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

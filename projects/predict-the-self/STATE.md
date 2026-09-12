@@ -1,3 +1,9 @@
+---
+title: "Predict the Self"
+status: Active
+updated: 2026-08-31
+---
+
 # Predict the Self — Current State
 
 ## Status

@@ -3,6 +3,22 @@
 Prepared by Bee Boring Vanilla on September 11, 2026 in response to the latest
 PI guidance in `DIALOG.md`.
 
+## Decision and implementation status
+
+Dr. Jones approved every recommendation below and selected both A alternatives.
+On September 12, the production Executive Summary adopted the evidence brief,
+and the production Scholar directory adopted the portrait roster. All Project
+states and `_template` now carry authoritative `title`, `status`, and `updated`
+metadata; the verifier derives public update order from it. A tested, atomic,
+no-overwrite `python/create_project.py` command and a complete Project/Scholar
+creation guide implement the first growth workflow. The guide also makes the
+approved generated-image safeguards operational.
+
+The VCSSERG v1 Full Report is now a Quarto HTML book, with a linked two-column
+short PDF and evidence-brief Executive Summary. Still pending are the
+coordinated immutable-dialog migration, conceptual footer grouping, a single
+roster/assignment source, and the remaining Predict the Self publication work.
+
 ## Recommended design choices
 
 ### Project Executive Summaries
@@ -30,8 +46,8 @@ Three working alternatives are published under
 2. **B — Work map:** roster plus a Scholar-to-current-Project matrix.
 3. **C — Field guide:** full charter biographies lead each long entry.
 
-I recommend **A for Version 1**, retaining monograms until an image policy is
-approved. It scales cleanly beyond three Scholars and keeps authoritative
+I recommend **A for Version 1**, retaining monograms under the approved image
+policy. It scales cleanly beyond three Scholars and keeps authoritative
 profiles one click away. B becomes more useful when the lab has enough
 simultaneous work that assignments are otherwise hard to see. C best expresses
 personality, but makes the directory slower to scan and duplicates biography
@@ -47,9 +63,9 @@ homepage editorial layout.
 
 All four external footer destinations remain necessary. I recommend presenting
 them in two conceptual groups when the footer is next redesigned: **About**
-(Dr. Jason Jeffrey Jones, CSSERG) and **Open work** (GitHub, CC BY 4.0). This is
-an information-architecture recommendation; the current shared footer remains
-flat to avoid redesigning production before PI selection.
+(Dr. Jason Jeffrey Jones, CSSERG) and **Open work** (GitHub, CC BY 4.0). The
+current shared footer remains flat; grouping it consistently across source and
+generated pages is queued as a separate production change.
 
 The homepage now uses **“Research Updates from Virtual CSSERG”** as its main
 heading. It replaces both the rejected journal label and the oversized
@@ -67,9 +83,9 @@ worth it here.
 
 Direct-authored HTML should be a documented contingency when the host's Quarto
 runtime is genuinely unavailable, not an equivalent long-term format. The
-current host provides Quarto 1.10.18, so the VCSSERG v1 and Predict the Self
-reports should be brought into the book workflow rather than retaining a stale
-runtime exception. Rendered output still needs local-link, visual, and
+current host provides Quarto 1.10.18. VCSSERG v1 is now in the book workflow;
+Predict the Self should follow rather than retain a stale runtime exception.
+Rendered output still needs local-link, visual, and
 accessibility checks; Quarto can assist with accessibility testing, but tool
 output does not replace manual review.
 
@@ -93,7 +109,9 @@ I recommend a first-version policy with these constraints:
   representation.
 
 This policy makes provenance public and keeps claims on the profile grounded in
-Virtual CSSERG records. Monograms remain an honest default.
+Virtual CSSERG records. Monograms remain an honest default. The approved policy
+is now part of `CREATING-PROJECTS-AND-SCHOLARS.md`; no generated portrait has
+been adopted.
 
 ## Dialog storage
 
@@ -113,8 +131,9 @@ Timestamped iteration files provide stable ordering and natural authorship.
 `DIALOG.md` should become a short, newest-first index and retain the complete
 legacy record unchanged. PI replies can be appended as blockquotes to the
 specific iteration file. A migration requires coordinated edits to the
-orientation, template, runner prompt, and verifier, so this iteration only
-records the recommendation.
+orientation, template, runner prompt, active Projects, and verifier. It remains
+queued as one indivisible workflow change; the current append-only rule
+continues until then.
 
 ## Project states and metadata
 
@@ -136,10 +155,10 @@ why. Completion should require both automated evidence and named manual gates.
 
 The phrase **most recently updated** should mean the end time of the newest
 substantive Scholar iteration or PI intervention in that Project—not a CSS edit,
-deployment, or unrelated commit. The new Projects page applies that judgment
-manually. For reliable sorting, I recommend small machine-readable front matter
-in `STATE.md` with at least `title`, `status`, and `updated`, while keeping the
-rest of the file human-readable.
+deployment, or unrelated commit. Version 1 now uses small machine-readable front
+matter in `STATE.md` with `title`, `status`, and `updated`, while keeping the
+rest of the file human-readable. The verifier makes these records authoritative
+for public Projects-directory order and timestamps.
 
 ## Creating Projects
 
@@ -157,10 +176,10 @@ still write and commit `PROJECT.md`; the script would make the mechanical part
 atomic and testable. A separate publication step should add the Project to the
 public directory only after a substantive Executive Summary exists.
 
-Additional details worth specifying centrally are slug immutability, who may
-change lifecycle state, the exact completion checklist, whether previews remain
-public after selection, how superseded reports are archived, and the source of
-truth for Scholar–Project assignments.
+The command and procedure are now implemented and tested. The central guide
+also specifies slug immutability, state changes, publication gating, and the
+manual Scholar process. Still underspecified are one source of truth for
+Scholar–Project assignments and a complete policy for superseded reports.
 
 ## What `verify_v1.py` can and cannot establish
 
@@ -175,8 +194,10 @@ Version 1. It was a useful regression suite with two problems:
   generated Quarto book page, and treated optional descriptions as a release
   gate.
 
-This iteration adds an explicit three-format report group, biography and
-Projects-directory coverage, and report cross-link/phrase/figure checks. It
+The September 11 revision added an explicit three-format report group,
+biography and Projects-directory coverage, and report
+cross-link/phrase/figure checks. The current revision adds state metadata,
+selected-layout, and guarded-scaffold checks. The suite
 limits design assertions to first-party CSS and accepts Quarto's multi-H1 book
 structure. These changes make the automated evidence more valid, but the script
 still cannot establish production byte parity, rendered layout, keyboard or

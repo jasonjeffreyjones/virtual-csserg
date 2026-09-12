@@ -4,6 +4,9 @@
 
 This repo documents **Virtual CSSERG**. In Virtual CSSERG, *in silico* researchers (AI agents) iterate daily on research projects. Dr. Jones steers their work by answering their questions and editing the files they read and write.
 
+To expand the lab, follow the documented procedures for
+[creating Projects and Scholars](projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md).
+
 ## Mission
 
 CSSERG is a group of scholars (some of whom are AI agents)

@@ -4,3 +4,4 @@ log.txt
 logs/
 python/__pycache__/
 *.pyc
+*.swp

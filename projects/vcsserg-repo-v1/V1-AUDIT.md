@@ -16,11 +16,11 @@ still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 11, 2026 |
+| Documented promise | Evidence or test | Status on September 12, 2026 |
 |---|---|---|
-| Repository guidance exists | Required top-level files | Automated pass |
-| Every Project uses current memory layout | `PROJECT.md`, `STATE.md`, `DIALOG.md`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
-| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, required footer | Automated pass across 23 HTML pages and 5 first-party stylesheets |
+| Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold | Automated pass |
+| Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
+| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, required footer | Automated pass across 24 HTML pages and 6 first-party stylesheets |
 | Projects and initial Scholars are findable | Home, Projects index, Scholar index, profiles, charter biographies | Automated pass |
 | Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated fail; details below |
 | Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
@@ -28,11 +28,11 @@ still not establish the manual gates below.
 
 ## Current automated result
 
-On September 11, 2026, **six of seven groups pass**. The report group correctly
+On September 12, 2026, **six of seven groups pass**. The report group correctly
 remains open:
 
-- VCSSERG v1 lacks Quarto book source/output and a short PDF. Its production
-  Executive Summary now has exactly one dense key figure.
+- VCSSERG v1 now supplies a Quarto HTML book, linked one-page two-column PDF,
+  and the PI-selected evidence-brief Executive Summary with one dense figure.
 - Predict the Self lacks a short PDF, a summary figure, current Quarto book
   configuration, and the required phrase in its direct-HTML Full Report.
 - NFL Team Fandom Identities supplies all three forms. Its Quarto footer source
@@ -55,6 +55,8 @@ The current verifier:
 - checks the Executive Summary figure count, report cross-links, Quarto source,
   PDF signature, and the required “far beyond” phrase;
 - checks the Projects index and exact normalized charter biographies;
+- checks lifecycle/update metadata, metadata-derived public order, the guarded
+  Project scaffold, and the two selected production patterns;
 - limits style assertions to first-party CSS and accepts one or more H1s;
 - continues to verify local resources and required shared footer links on every
   HTML page, including generated reports.
@@ -79,16 +81,17 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 
 ## Other current requirements
 
-- The Project directory exists at `website/projects/index.html` and is manually
-  ordered by the latest substantive Project record: VCSSERG v1, NFL Team Fandom
-  Identities, then Predict the Self. `V1-RECOMMENDATIONS.md` proposes durable
-  update metadata so this ordering becomes reproducible.
+- The Project directory exists at `website/projects/index.html` and is ordered
+  by authoritative `STATE.md` metadata: VCSSERG v1, NFL Team Fandom Identities,
+  then Predict the Self. The verifier rejects stale timestamps or order.
 - Homepage copy now reads “Research Updates from Virtual CSSERG.” Primary
   headers contain internal Home/Projects/Scholars navigation; external CSSERG,
   PI, GitHub, and license links remain in footers.
-- Three Executive Summary and three Scholar-directory alternatives are linked
-  from the v1 public page. They are review artifacts, not production choices.
+- Executive Summary A and Scholar-directory A are production defaults by PI
+  decision. Their two three-way comparison sets remain dated decision archives.
 - All three initial Scholar profiles now contain the complete biographies
   supplied in the charter.
 - `_template` provides the three required memory files plus setup, reporting,
-  branding, and publication guidance.
+  branding, publication, lifecycle, and update-metadata guidance. A tested
+  command creates a personalized no-overwrite scaffold without publishing it;
+  the creation guide also documents the review-led Scholar procedure.

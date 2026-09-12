@@ -6,11 +6,13 @@ from dataclasses import dataclass
 from html.parser import HTMLParser
 import importlib.util
 import io
+import json
 import os
 from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 from unittest.mock import patch
 from urllib.parse import unquote, urlsplit
 
@@ -19,6 +21,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEBSITE_ROOT = PROJECT_ROOT / "website"
 MEMORY_FILES = {"PROJECT.md", "STATE.md", "DIALOG.md"}
 SCHOLAR_SLUG_OVERRIDES = {"Bee Boring Vanilla": "b-boring-vanilla"}
+PROJECT_STATES = {"Proposed", "Active", "Blocked", "Paused", "Completed", "Archived"}
 
 
 @dataclass
@@ -102,6 +105,30 @@ def parse_page(path):
     return parser
 
 
+def read_state_metadata(project):
+    """Read the deliberately small YAML front matter subset used by STATE.md."""
+    state_path = project / "STATE.md"
+    source = state_path.read_text(encoding="utf-8")
+    match = re.match(r"\A---\s*\n(.*?)\n---\s*\n", source, flags=re.DOTALL)
+    if not match:
+        raise ValueError("missing YAML front matter")
+
+    metadata = {}
+    for line in match.group(1).splitlines():
+        key, separator, raw_value = line.partition(":")
+        if not separator:
+            raise ValueError(f"invalid metadata line {line!r}")
+        value = raw_value.strip()
+        if value == "null":
+            parsed = None
+        elif value.startswith('"'):
+            parsed = json.loads(value)
+        else:
+            parsed = value
+        metadata[key.strip()] = parsed
+    return metadata
+
+
 def resolve_local_reference(page, reference):
     parsed = urlsplit(reference)
     if parsed.scheme or parsed.netloc or reference.startswith(("mailto:", "tel:")):
@@ -122,12 +149,58 @@ def resolve_local_reference(page, reference):
 
 
 def check_repository_documents():
-    required = {"AGENTS.md", "README.md", "RESEARCHER-ORIENTATION.md"}
+    required = {
+        "AGENTS.md",
+        "README.md",
+        "RESEARCHER-ORIENTATION.md",
+        "projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md",
+        "python/create_project.py",
+    }
     missing = sorted(name for name in required if not (PROJECT_ROOT / name).is_file())
+    problems = [f"missing: {', '.join(missing)}"] if missing else []
+    if not missing:
+        guide = (
+            PROJECT_ROOT
+            / "projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md"
+        ).read_text(encoding="utf-8")
+        for expected in (
+            "## Create a Project",
+            "## Create a Scholar",
+            "python3 python/create_project.py",
+        ):
+            if expected not in guide:
+                problems.append(f"growth guide missing {expected!r}")
+
+        try:
+            scaffold_path = PROJECT_ROOT / "python/create_project.py"
+            spec = importlib.util.spec_from_file_location(
+                "create_project_for_check", scaffold_path
+            )
+            scaffold = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(scaffold)
+            with tempfile.TemporaryDirectory() as temporary:
+                projects_root = Path(temporary) / "projects"
+                created = scaffold.create_project(
+                    "audit-fixture", "Audit Fixture", projects_root
+                )
+                expected_names = {
+                    path.name for path in (PROJECT_ROOT / "projects/_template").iterdir()
+                }
+                if {path.name for path in created.iterdir()} != expected_names:
+                    problems.append("Project scaffold did not copy the complete template")
+                try:
+                    scaffold.create_project("audit-fixture", "Replacement", projects_root)
+                except scaffold.ScaffoldError:
+                    pass
+                else:
+                    problems.append("Project scaffold overwrote an existing destination")
+        except Exception as error:
+            problems.append(f"Project scaffold failed: {type(error).__name__}: {error}")
     return Result(
         "Repository guidance",
-        not missing,
-        "all required guidance files exist" if not missing else f"missing: {', '.join(missing)}",
+        not problems,
+        "required guidance and the guarded Project scaffold passed"
+        if not problems else "; ".join(problems),
     )
 
 
@@ -141,10 +214,39 @@ def check_project_memory():
         missing = sorted(name for name in MEMORY_FILES if not (project / name).is_file())
         if missing:
             problems.append(f"{project.name} missing {', '.join(missing)}")
+            continue
+        try:
+            metadata = read_state_metadata(project)
+        except (ValueError, json.JSONDecodeError) as error:
+            problems.append(f"{project.name} STATE.md metadata: {error}")
+            continue
+        missing_metadata = sorted({"title", "status", "updated"} - set(metadata))
+        if missing_metadata:
+            problems.append(
+                f"{project.name} STATE.md metadata missing {', '.join(missing_metadata)}"
+            )
+        if metadata.get("status") not in PROJECT_STATES:
+            problems.append(
+                f"{project.name} has invalid lifecycle state {metadata.get('status')!r}"
+            )
+        if not isinstance(metadata.get("title"), str) or not metadata.get(
+            "title", ""
+        ).strip():
+            problems.append(f"{project.name} has no valid metadata title")
+        updated = metadata.get("updated")
+        if project.name != "_template" and not updated:
+            problems.append(f"{project.name} has no substantive update date")
+        elif project.name != "_template" and (
+            not isinstance(updated, str)
+            or not re.fullmatch(
+                r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}Z)?", updated
+            )
+        ):
+            problems.append(f"{project.name} has a non-ISO update value")
     return Result(
         "Project memory layout",
         not problems,
-        f"{len(project_directories)} project directories (including _template) have all three memory files"
+        f"{len(project_directories)} project directories (including _template) have current memory files and state metadata"
         if not problems else "; ".join(problems),
     )
 
@@ -259,12 +361,21 @@ def check_public_catalogs():
         if target is not None:
             linked_targets.add(target)
 
-    expected_projects = {
-        path.name: WEBSITE_ROOT / "projects" / path.name / "index.html"
-        for path in (PROJECT_ROOT / "projects").iterdir()
-        if path.is_dir() and path.name != "_template"
-    }
     problems = []
+    project_records = []
+    for path in (PROJECT_ROOT / "projects").iterdir():
+        if path.is_dir() and path.name != "_template":
+            try:
+                metadata = read_state_metadata(path)
+                updated = metadata.get("updated")
+            except (ValueError, json.JSONDecodeError) as error:
+                problems.append(f"{path.name} STATE.md metadata: {error}")
+                updated = ""
+            project_records.append((path.name, updated or ""))
+    expected_projects = {
+        name: WEBSITE_ROOT / "projects" / name / "index.html"
+        for name, _ in project_records
+    }
     project_index_path = WEBSITE_ROOT / "projects" / "index.html"
     project_index_targets = set()
     if not project_index_path.is_file():
@@ -280,10 +391,21 @@ def check_public_catalogs():
             len(listed_projects) != len(expected_projects)
             or set(listed_projects) != set(expected_projects)
         ):
-            problems.append("website/projects/index.html update metadata does not cover every project exactly once")
-        listed_updates = [updated for _, updated in project_index.project_updates]
-        if not all(listed_updates) or listed_updates != sorted(listed_updates, reverse=True):
-            problems.append("website/projects/index.html is not ordered by descending project update time")
+            problems.append(
+                "website/projects/index.html update metadata does not cover "
+                "every project exactly once"
+            )
+        expected_order = [
+            name for name, _ in sorted(project_records, key=lambda item: item[1], reverse=True)
+        ]
+        if listed_projects != expected_order:
+            problems.append("website/projects/index.html does not follow STATE.md update order")
+        listed_update_map = dict(project_index.project_updates)
+        for name, updated in project_records:
+            if listed_update_map.get(name) != updated:
+                problems.append(
+                    f"website/projects/index.html has stale update metadata for {name}"
+                )
 
     for name, page in expected_projects.items():
         if not page.is_file():
@@ -313,12 +435,28 @@ def check_public_catalogs():
         problems.append("website/scholars/index.html does not exist")
         scholar_index_targets = set()
     else:
+        scholar_source = scholar_index_path.read_text(encoding="utf-8")
         scholar_index = parse_page(scholar_index_path)
         scholar_index_targets = set()
         for reference in scholar_index.references:
             target, _ = resolve_local_reference(scholar_index_path, reference)
             if target is not None:
                 scholar_index_targets.add(target)
+        if 'class="scholar-grid"' not in scholar_source:
+            problems.append("Scholar index does not use the selected portrait-roster grid")
+        if scholar_source.count('class="scholar-tile"') != len(scholar_names):
+            problems.append(
+                "Scholar index does not give every initial Scholar one selected roster card"
+            )
+
+    v1_summary = WEBSITE_ROOT / "projects/vcsserg-repo-v1/index.html"
+    if v1_summary.is_file():
+        v1_source = v1_summary.read_text(encoding="utf-8")
+        if (
+            'class="evidence-hero"' not in v1_source
+            or 'class="finding-grid"' not in v1_source
+        ):
+            problems.append("VCSSERG v1 does not use the selected evidence-brief summary")
 
     for name in scholar_names:
         slug = SCHOLAR_SLUG_OVERRIDES.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
