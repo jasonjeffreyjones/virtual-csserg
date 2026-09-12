@@ -1,4 +1,4 @@
-# Project Title
+# Virtual CSSERG Version 1.0
 
 Below are log entries from Scholars. This is an append-only file.
 
@@ -447,3 +447,8 @@ Below are log entries from Scholars. This is an append-only file.
 - PI question: None blocking.
 - Ending work time: 2026-09-12 19:58:15 UTC.
 - Time spent: 1544 seconds (25 minutes 44 seconds).
+
+> To my knowledge, there is no requirement that the Quarto HTML book be exactly one chapter. If that is written somewhere, please tell me where.
+> To my knowledge, there is no requirement that the short report be exactly one page. If that is written somewhere, please tell me where.
+> Please adapt the Predict the Self project to the conform to current project expected structure.
+> I would like the Predict the Self project to be ready for a Scholar iteration as soon as possible.> 
