@@ -76,8 +76,8 @@ PROMPT_EOF
 echo "$(date -u '+%Y-%m-%d %H:%M:%S UTC') ITERATION START: $SCHOLAR_NAME / $PROJECT_NAME" \
     >> "$LOG_FILE"
 
-echo "Resource limits: CPUs=$MAX_CPUS Memory=$MEMORY_MAX WallTime=$WALL_TIME Swap=0" \
-    >> "$LOG_FILE"
+#echo "Resource limits: CPUs=$MAX_CPUS Memory=$MEMORY_MAX WallTime=$WALL_TIME Swap=0" \
+#    >> "$LOG_FILE"
 
 set +e
 
