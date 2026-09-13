@@ -1,6 +1,6 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 12, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 13, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
@@ -26,7 +26,7 @@ The three-report group now passes. The overall result remains a regression repor
 
 The Project Executive Summary now uses the PI-selected evidence brief: question and status, exactly one dense promise map, then five linked findings and report choices. The Scholar directory uses the selected portrait roster: equal cards, monograms, short introductions, and direct profile links. Authoritative biographies remain on the profiles.
 
-Primary headers contain internal Home, Projects, and Scholars navigation. Footers retain Dr. Jason Jeffrey Jones, CSSERG, GitHub, and CC BY 4.0 links. Quarto HTML books remain the default Full Report because their source/output separation, navigation, citations, and growth path suit a static research publication.
+Primary headers contain internal Home, Projects, and Scholars navigation. Every footer places Dr. Jason Jeffrey Jones and CSSERG under About, and GitHub and CC BY 4.0 under Open work. Quarto HTML books remain the default Full Report because their source/output separation, navigation, citations, and growth path suit a static research publication.
 
 ## Growth workflow
 
@@ -34,11 +34,11 @@ Projects use one of six lifecycle states: Proposed, Active, Blocked, Paused, Com
 
 The new create_project.py command validates a permanent lowercase hyphenated slug, refuses overwrite, stages a complete template copy, personalizes its title and state, and renames it atomically. It never publishes an empty Project or displaces PI authorship of the charter. Unit tests cover the success and failure paths.
 
-Scholar creation stays review-led. The PI supplies the name, slug, biography, and assignment. The profile, roster, homepage, and runner configuration are updated and checked together. Monograms remain the default; any generated illustration requires repository provenance, accurate alt text, non-photographic presentation, and PI selection.
+Scholar creation stays review-led. The PI supplies the name, slug, biography, and assignment. `scholars.json` is the operational source for names, permanent slugs, monograms, and current Projects; a validator rejects duplicates, malformed records, and unknown Projects. The public profiles are checked against it, while PI-authored text remains authoritative for biography. Monograms remain the default; any generated illustration requires repository provenance, accurate alt text, non-photographic presentation, and PI selection.
 
 ## Manual gates
 
-Production parity requires comparing deployed inventory and bytes with website/ after the normal commit, push, and deploy sequence. End-to-end automation requires witnessing a complete run and its failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology. No local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
+Production parity requires comparing deployed inventory and bytes with website/ after the normal commit, push, and deploy sequence. A September 13 pre-iteration public probe found only 73 of 109 expected files byte-identical; 10 differed and 26 returned 404, including the new Predict the Self publication tree. This identifies a real parity failure but not its cause, and the probe cannot find extra remote files. End-to-end automation requires witnessing a complete run and its failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology. No local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
 
 The approved dialog redesign also remains coordinated future work: one immutable timestamped file per iteration plus a newest-first index, changed together across the orientation, template, runner prompt, active Projects, and verifier.
 

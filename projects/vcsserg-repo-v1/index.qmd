@@ -13,11 +13,12 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 12, 2026. Predict the Self
-closed the last structural gap by adding a Quarto book, short PDF, one-figure
-Executive Summary, reciprocal links, and guarded publication checks. Production
-parity, a witnessed end-to-end run, rendered accessibility, and substantive
-review remain manual gates.
+All seven automated promise groups pass on September 13, 2026. The validated
+`scholars.json` record now governs the operational roster and current
+assignments, while PI-authored charters and dialog remain authoritative for
+biography. Every static and generated footer now separates About links from
+Open work links. Production parity, a witnessed end-to-end run, rendered
+accessibility, and substantive review remain manual gates.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -116,10 +117,12 @@ required files, unsafe slugs and titles, and no-overwrite behavior.
 
 Scholar creation remains deliberately review-led. The PI supplies the name,
 slug, biography, and assignment; the public profile must preserve those claims
-without invention. A profile, portrait-roster card, homepage link, and runner
-configuration are then validated together. Automating this before defining a
-single roster and assignment source could manufacture an unauthorized public
-identity, so no Scholar scaffolder is claimed.
+without invention. The versioned `scholars.json` file is now the operational
+source for each name, permanent slug, monogram, and current Project. A strict
+standard-library validator rejects malformed records, duplicates, and unknown
+Projects. The Version 1 verifier then checks every homepage and directory link,
+profile monogram, assignment target, and assignment title against that record.
+Biography fidelity remains a separate check against PI-authored source text.
 
 Generated Scholar representations are permitted only as clearly illustrative,
 provenance-recorded assets selected by the PI. Monograms remain canonical by
@@ -151,6 +154,8 @@ Four kinds of evidence remain outside this run:
 
 - **Production parity.** After normal commit, push, and deployment, compare the
   production inventory and bytes with `website/` without exposing credentials.
+  A September 13 pre-iteration probe found 73 of 109 expected files identical,
+  10 different, and 26 unavailable, so production did not match that checkout.
 - **Observed automation.** Witness one complete Scholar run, including its log,
   commit, push, deploy, success behavior, and safe failure behavior.
 - **Rendered usability.** Inspect representative pages at desktop and phone
@@ -164,6 +169,12 @@ The site also relies on CDN-hosted Bootstrap and the Creative Commons badge.
 Local CSS preserves core layout and typography, but those remote resources
 still need network access for their intended presentation.
 
+The new expected-file parity probe uses ordinary public HTTP requests and no
+deployment configuration. It cannot enumerate unexpected remote files, so its
+byte comparison closes only one half of the inventory-and-bytes gate. The
+deployment side still needs a remote inventory or authenticated dry run after
+automation publishes this iteration.
+
 ## Remaining work {#remaining-work}
 
 No automated promise group currently fails. Predict the Self now has a
@@ -175,8 +186,9 @@ The approved dialog migration also remains. It should replace the growing log
 with one immutable timestamped file per iteration and a newest-first index, but
 only through one coordinated change to orientation, template, runner prompt,
 active Projects, and verifier. Partial migration would leave contradictory
-instructions. Footer link grouping and a durable roster/assignment source are
-smaller follow-ups.
+instructions, and Scholars may not edit the PI-owned runner. A superseded-report
+archive policy also remains to be specified. Footer grouping and the durable
+roster/assignment source are now implemented and enforced.
 
 The manual gates above now determine whether the charter's definition of done
 is actually satisfied. Version 1 should not be declared complete merely because
@@ -187,6 +199,7 @@ the verifier returns zero.
 From the repository root:
 
 ```bash
+python3 python/scholar_roster.py
 python3 -m unittest discover -s projects/vcsserg-repo-v1/tests -v
 XDG_CACHE_HOME=/tmp/vcsserg-v1-quarto-cache quarto render projects/vcsserg-repo-v1
 python3 projects/vcsserg-repo-v1/analysis/publish_full_report.py
@@ -195,6 +208,12 @@ PYTHONPATH=/tmp/vcsserg-v1-publishing-deps \
 PYTHONPATH=/tmp/vcsserg-v1-publishing-deps \
   python3 projects/vcsserg-repo-v1/analysis/verify_publication.py
 python3 projects/vcsserg-repo-v1/verify_v1.py
+```
+
+After deployment, run the separate public-network check:
+
+```bash
+python3 projects/vcsserg-repo-v1/analysis/check_production_parity.py
 ```
 
 The Quarto cache path is writable temporary state, not a replacement runtime.

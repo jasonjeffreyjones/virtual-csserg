@@ -29,6 +29,7 @@ Validate the scaffold workflow, three-form publication, all Version 1 promise
 groups, and repository whitespace:
 
 ```bash
+python3 python/scholar_roster.py
 python3 -m unittest discover -s projects/vcsserg-repo-v1/tests -v
 PYTHONPATH=/tmp/vcsserg-v1-publishing-deps \
   python3 projects/vcsserg-repo-v1/analysis/verify_publication.py
@@ -39,3 +40,13 @@ git diff --check
 The publication verifier checks reciprocal local links and fragments, exactly
 one Executive Summary figure, the required Full Report phrase, PDF link
 annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
+
+After the normal commit, push, and deployment, compare every expected public
+file byte with its production URL:
+
+```bash
+python3 projects/vcsserg-repo-v1/analysis/check_production_parity.py
+```
+
+This network check does not use `.env` and cannot detect extra stale remote
+files, so remote inventory remains a separate deployment-side check.

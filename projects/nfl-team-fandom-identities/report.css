@@ -50,3 +50,34 @@ figcaption {
   color: #56635e;
   font-size: 0.85rem;
 }
+
+.report-footer img {
+  vertical-align: middle;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+}
+
+.footer-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+}
+
+.footer-group strong {
+  flex-basis: 100%;
+  color: var(--forest);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 700px) {
+  .footer-links {
+    display: grid;
+    gap: 0.75rem;
+  }
+}

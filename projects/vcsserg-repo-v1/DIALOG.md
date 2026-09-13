@@ -521,3 +521,74 @@ Below are log entries from Scholars. This is an append-only file.
   immutable dialog storage, footer grouping, and assignment metadata.
 - Ending work time: 2026-09-12 21:06:55 UTC.
 - Time spent: 1113 seconds (18 minutes 33 seconds).
+
+## 2026-09-13 — Bee Boring Vanilla — Roster, footer governance, and parity evidence
+
+- Starting work time: 2026-09-13 08:01:04 UTC (preflight server time).
+- Scope: Implement the approved durable Scholar roster/assignment source and
+  conceptual footer grouping, turn both into enforceable Version 1 promises,
+  and investigate the open production-parity gate without credentials or live
+  deployment.
+- Context: Read AGENTS.md, README.md, RESEARCHER-ORIENTATION.md, the complete
+  Bee Scholar directory, the charter/state/full dialog, audit,
+  recommendations, growth guide, report/build sources, verifier, current public
+  pages, runner, and relevant cross-Project publication sources. Used the
+  supplied 2-CPU, 3.7-GiB RAM, 4-GiB swap, and 65-GiB-free host conservatively;
+  no agents, packages, replacement runtimes, credentials, or `.env` access.
+- Production evidence: Before changing local files, fetched all 109 expected
+  production URLs over public HTTPS and compared response bodies byte for byte.
+  Seventy-three matched, 10 differed, and 26 returned HTTP 404. The missing
+  set was the recent Predict the Self short PDF and most of its Quarto book
+  tree; several v1 files also differed. This demonstrates that production did
+  not match the pre-iteration checkout, but does not identify the cause or rule
+  out stale extra remote files.
+- Scholar governance:
+  - Added versioned `scholars.json` as the operational source for names,
+    permanent slugs, unique monograms, and current Project assignments. It does
+    not override PI-authored biography records.
+  - Added the read-only standard-library `python/scholar_roster.py` validator
+    and four tests for the repository record, duplicates, unknown Projects, and
+    unexpected fields.
+  - Extended `verify_v1.py` to derive the public roster from this source and
+    reject missing homepage/directory links, wrong monograms, stale assignment
+    links, or assignment titles that disagree with Project state metadata.
+- Footer system: Implemented the approved **About** (Dr. Jones, CSSERG) and
+  **Open work** (GitHub, CC BY 4.0) groups on all 25 public HTML pages. Updated
+  direct pages, shared CSS, all three Quarto footer/CSS sources and generated
+  books, and the archived design pages. The verifier now checks both group
+  presence and exact link placement.
+- Parity workflow and publication: Added a credential-free expected-file byte
+  probe plus two mocked tests and documented its deliberate remote-inventory
+  limitation. Updated the audit, recommendations, creation guide, template,
+  root README, Full Report, Executive Summary, short report, homepage, and
+  project state. Re-rendered all three Quarto reports from source and rebuilt
+  the v1 short report; its expanded content now occupies two valid columns on
+  each of two pages, below the ten-page ceiling.
+- Validation:
+  - Twelve v1 unit tests pass. The roster validator reports three valid Scholars
+    and three current assignments.
+  - The repository promise suite passes all seven groups across 25 HTML pages
+    and six first-party stylesheets. Both footer groups occur on every page.
+  - VCSSERG v1, Predict the Self, and NFL Team Fandom Identities publication
+    verifiers all pass their figures, links/fragments, phrase, PDF, and
+    project-specific evidence checks. Python compilation, runner shell syntax,
+    text-browser content order, protected-file checks, and `git diff --check`
+    pass.
+- Problems and limitations: The NFL Quarto render repeated its known warning
+  about an output directory outside the Project, but completed and passed its
+  publication verifier; no research content changed there. No Chromium,
+  Chrome, or Firefox executable is installed, so w3m text rendering does not
+  close desktop/phone visual, keyboard, or assistive-technology review. The
+  new local tree cannot be compared to production until normal automation
+  deploys it, and the public probe cannot enumerate remote-only stale files.
+- PI question: None blocking. The immutable-per-iteration dialog migration
+  remains PI-coordinated because it must change the runner prompt atomically and
+  Scholars may not edit `run-scholar.sh`. A superseded-report archive policy is
+  also still unspecified.
+- Likely next steps: After automation deploys this iteration, re-run the parity
+  probe and obtain remote inventory; witness a full Scholar success/failure
+  workflow; complete graphical browser, keyboard, assistive-technology, and
+  substantive review; then resolve report archiving and the coordinated dialog
+  migration before marking Version 1 Completed.
+- Ending work time: 2026-09-13 08:19:43 UTC.
+- Time spent: 1119 seconds (18 minutes 39 seconds).

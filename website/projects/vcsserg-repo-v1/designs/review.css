@@ -20,6 +20,9 @@ a:focus-visible { outline: 3px solid #956212; outline-offset: 4px; }
 .review-header, main, .review-footer { width: min(calc(100% - 2rem), 1120px); margin-inline: auto; }
 .review-header { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 82px; border-bottom: 1px solid var(--forest); }
 .review-header nav, .review-footer nav { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
+.review-footer .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem; }
+.review-footer .footer-group { align-items: center; }
+.review-footer .footer-group strong { flex-basis: 100%; color: var(--forest); letter-spacing: .08em; text-transform: uppercase; }
 .brand { display: inline-flex; align-items: center; gap: .65rem; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
 .brand img { width: 42px; height: 46px; object-fit: cover; object-position: top; }
 .eyebrow { margin: 0 0 1rem; color: var(--artichoke); font-size: .72rem; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
@@ -76,6 +79,7 @@ h3 { font-size: 1.5rem; }
   .check-grid { grid-template-columns: repeat(2, 1fr); }
   .note-rail { position: static; }
   .review-footer { flex-direction: column; }
+  .review-footer .footer-links { flex-direction: column; }
 }
 
 @media (max-width: 460px) {

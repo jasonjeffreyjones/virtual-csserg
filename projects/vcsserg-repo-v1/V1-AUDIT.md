@@ -16,20 +16,21 @@ still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 12, 2026 |
+| Documented promise | Evidence or test | Status on September 13, 2026 |
 |---|---|---|
-| Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold | Automated pass |
+| Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold, validated Scholar roster | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
-| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, required footer | Automated pass across 25 HTML pages and 6 first-party stylesheets |
-| Projects and initial Scholars are findable | Home, Projects index, Scholar index, profiles, charter biographies | Automated pass |
+| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 25 HTML pages and 6 first-party stylesheets |
+| Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, charter biographies | Automated pass |
 | Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
 | Deployment safely mirrors `website/` | Mocked guarded, shell-free `rsync`, deletion and error propagation | Automated pass; live parity unverified |
 
 ## Current automated result
 
-On September 12, 2026, **all seven groups pass**. The final automated gap closed
-when Predict the Self adopted the current publication structure:
+On September 13, 2026, **all seven groups pass**. The final report-format gap
+had closed the previous day when Predict the Self adopted the current
+publication structure:
 
 - VCSSERG v1 supplies a Quarto HTML book, linked two-column PDF, and the
   PI-selected evidence-brief Executive Summary with one dense figure.
@@ -39,6 +40,10 @@ when Predict the Self adopted the current publication structure:
   documented constraints.
 - NFL Team Fandom Identities supplies all three forms. Its Quarto footer source
   and rendered report now retain the PI-requested GitHub link.
+- On September 13, `scholars.json` became the validated operational source for
+  roster, slug, monogram, and current-assignment data. Public profiles are
+  checked against it and Project title metadata. Every footer now places its
+  required links into the approved About and Open work groups.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. The manual gates remain open.
@@ -81,6 +86,16 @@ still a **promise regression report**, not a Version 1 completion oracle. See
   generic v1 verifier checks only the PDF signature; project publication tests
   may enforce stronger PDF properties.
 
+The September 13 pre-iteration expected-file probe found production was not
+current with the repository checkout: of 109 expected files, 73 were
+byte-identical, 10 differed, and 26 returned HTTP 404. The unavailable files
+were the newly published Predict the Self short PDF and most of its Quarto book
+tree; several v1 files also differed. This observation does not establish why
+deployment lagged. Re-run
+`analysis/check_production_parity.py` after this iteration's normal deployment.
+The probe compares all expected bytes without credentials but cannot discover
+extra stale production files, so complete remote inventory remains open.
+
 ## Other current requirements
 
 - The Project directory exists at `website/projects/index.html` and is ordered
@@ -92,7 +107,8 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 - Executive Summary A and Scholar-directory A are production defaults by PI
   decision. Their two three-way comparison sets remain dated decision archives.
 - All three initial Scholar profiles now contain the complete biographies
-  supplied in the charter.
+  supplied in the charter. `scholars.json` separately governs the operational
+  roster and assignments.
 - `_template` provides the three required memory files plus setup, reporting,
   branding, publication, lifecycle, and update-metadata guidance. A tested
   command creates a personalized no-overwrite scaffold without publishing it;

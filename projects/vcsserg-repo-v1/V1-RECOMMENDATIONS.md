@@ -17,8 +17,9 @@ approved generated-image safeguards operational.
 The VCSSERG v1 Full Report is now a Quarto HTML book, with a linked two-column
 short PDF and evidence-brief Executive Summary. Predict the Self now uses the
 same three-form system, closing the final automated promise-group gap. Still
-pending are the coordinated immutable-dialog migration, conceptual footer
-grouping, a single roster/assignment source, and the manual Version 1 gates.
+pending are the coordinated immutable-dialog migration and the manual Version
+1 gates. The conceptual footer grouping and single roster/assignment source
+were implemented on September 13.
 
 ## Recommended design choices
 
@@ -62,11 +63,10 @@ keeps the wordmark as **Home**; the external CSSERG link remains in every
 footer. This is clearer than fragment links whose destination changes with the
 homepage editorial layout.
 
-All four external footer destinations remain necessary. I recommend presenting
-them in two conceptual groups when the footer is next redesigned: **About**
-(Dr. Jason Jeffrey Jones, CSSERG) and **Open work** (GitHub, CC BY 4.0). The
-current shared footer remains flat; grouping it consistently across source and
-generated pages is queued as a separate production change.
+All four external footer destinations remain necessary. Every current static,
+generated, and archived-design page now presents them in two conceptual groups:
+**About** (Dr. Jason Jeffrey Jones, CSSERG) and **Open work** (GitHub, CC BY
+4.0). The verifier rejects missing groups and misplaced links.
 
 The homepage now uses **“Research Updates from Virtual CSSERG”** as its main
 heading. It replaces both the rejected journal label and the oversized
@@ -180,8 +180,11 @@ public directory only after a substantive Executive Summary exists.
 
 The command and procedure are now implemented and tested. The central guide
 also specifies slug immutability, state changes, publication gating, and the
-manual Scholar process. Still underspecified are one source of truth for
-Scholar–Project assignments and a complete policy for superseded reports.
+manual Scholar process. The versioned `scholars.json` file is now authoritative
+for operational roster and current-assignment data, with a strict read-only
+validator and public-profile drift checks. PI-authored biographies remain
+authoritative in charters and dialog. A complete policy for superseded reports
+is still underspecified.
 
 ## What `verify_v1.py` can and cannot establish
 

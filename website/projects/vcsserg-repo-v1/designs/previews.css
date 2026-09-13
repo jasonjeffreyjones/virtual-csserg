@@ -36,6 +36,9 @@ section { margin-bottom: 3.5rem; scroll-margin-top: 1rem; }
 .people { display: flex; flex-wrap: wrap; gap: 1rem 2rem; list-style: none; padding: 0; }
 footer { border-top: 1px solid #b3c1ad; margin-top: 3rem; padding: 2rem 4%; font-size: .9rem; }
 footer nav { align-items: center; }
+footer .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem 2.5rem; }
+footer .footer-group { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; }
+footer .footer-group strong { flex-basis: 100%; letter-spacing: .08em; text-transform: uppercase; }
 .observatory { background: #f0f3ee; }
 .observatory main { max-width: 1500px; padding-top: 0; }
 .workspace { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 2.5rem; }

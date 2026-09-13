@@ -4,6 +4,15 @@ This is the Version 1 procedure for Dr. Jones. It separates private research
 setup from public publication, preserves PI authority over charters and
 biographies, and makes the mechanical parts reviewable.
 
+The versioned `scholars.json` file is the operational source of truth for the
+Scholar roster, permanent slugs, monograms, and current Project assignments.
+It does not replace PI-authored biographies in charters or dialog. Validate it
+from the repository root with:
+
+```bash
+python3 python/scholar_roster.py
+```
+
 ## Project lifecycle and update metadata
 
 Every `STATE.md` begins with these machine-readable fields:
@@ -55,10 +64,11 @@ Then:
 2. Change the state from Proposed to Active only when work is authorized. Record
    the change and its reason in `DIALOG.md` and set `updated` to that
    intervention time.
-3. Record the assignment in the Project state and on the Scholar's public
-   profile. The PI's host-managed scheduler invokes
-   `run-scholar.sh "Scholar name" "Project title"`; keep scheduler details,
-   credentials, and host paths outside this public repository.
+3. Record the assignment in `scholars.json`, the Project state, and the
+   Scholar's public profile. The Version 1 verifier rejects drift between the
+   roster record, assignment link, and Project title. The PI's host-managed
+   scheduler invokes `run-scholar.sh "Scholar name" "Project title"`; keep
+   scheduler details, credentials, and host paths outside this public repository.
 4. Conduct research in `projects/<project-slug>/`. Keep sources, code, data
    provenance, results, and Quarto source there.
 5. Publish only after substantive content exists. Create the Quarto Full Report,
@@ -81,22 +91,27 @@ biography and representation are PI-authored identity claims, not boilerplate.
 1. Dr. Jones chooses a permanent lowercase, hyphen-separated slug and supplies
    the Scholar's display name and full authoritative biography in a Project
    charter or dialog entry.
-2. Create `website/scholars/<scholar-slug>/index.html` by adapting a current
+2. Add one record to `scholars.json` with the exact display name, permanent
+   slug, unique uppercase monogram, and current Project slug (or `null` if
+   unassigned). This is roster and assignment data, not a biography source.
+3. Create `website/scholars/<scholar-slug>/index.html` by adapting a current
    profile. Preserve the standard header, Bootstrap CDN, logo, footer, skip
    link, responsive behavior, and semantic headings.
-3. Reproduce the PI-supplied biography faithfully. Do not invent history,
+4. Reproduce the PI-supplied biography faithfully. Do not invent history,
    demographics, credentials, relationships, preferences, or accomplishments.
-4. Add a portrait-roster card to `website/scholars/index.html` and a homepage
-   link. Record the current Project assignment on the profile, and update it as
-   assignments change.
-5. Add a host-managed scheduler invocation using the Scholar name and assigned
+5. Add a portrait-roster card to `website/scholars/index.html` and a homepage
+   link. Render the current assignment from the roster record on the profile.
+   For later reassignments, update `scholars.json`, the profile, and the two
+   affected Project states in the same change.
+6. Add a host-managed scheduler invocation using the Scholar name and assigned
    Project title as the two `run-scholar.sh` arguments. Run the static-site
-   verifier, open the new profile from both indexes, and inspect it at desktop
-   and phone widths with keyboard navigation.
+   verifier and `python3 python/scholar_roster.py`, open the new profile from
+   both indexes, and inspect it at desktop and phone widths with keyboard
+   navigation.
 
-There is no automated Scholar scaffolder yet. Add one only after the source of
-truth for the roster and current assignments is specified; otherwise a command
-could create a plausible-looking but unauthorized public identity.
+There is no automated Scholar scaffolder yet. The source of truth is now
+specified, but public identity creation remains review-led; a future scaffolder
+must require an existing PI-approved roster record and must refuse overwrite.
 
 ## Scholar-generated images
 
@@ -113,5 +128,9 @@ history.
 The approved dialog migration requires one immutable file per iteration and a
 newest-first `DIALOG.md` index. Implement it in one coordinated change to
 `RESEARCHER-ORIENTATION.md`, `_template`, the runner prompt, every active
-Project, and the verifier; do not partially switch formats. Footer grouping and
-the source of truth for Scholar assignments likewise remain follow-up work.
+Project, and the verifier; do not partially switch formats. The PI-owned runner
+cannot be edited by Scholars, so this remains a PI-coordinated workflow change.
+
+Footer links are now grouped on every public page as **About** (Dr. Jones and
+CSSERG) and **Open work** (GitHub and CC BY 4.0). The verifier checks both the
+presence and placement of those links.

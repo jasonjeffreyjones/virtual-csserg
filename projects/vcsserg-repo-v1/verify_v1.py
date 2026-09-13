@@ -20,7 +20,6 @@ from urllib.parse import unquote, urlsplit
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEBSITE_ROOT = PROJECT_ROOT / "website"
 MEMORY_FILES = {"PROJECT.md", "STATE.md", "DIALOG.md"}
-SCHOLAR_SLUG_OVERRIDES = {"Bee Boring Vanilla": "b-boring-vanilla"}
 PROJECT_STATES = {"Proposed", "Active", "Blocked", "Paused", "Completed", "Archived"}
 
 
@@ -35,7 +34,12 @@ class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.description = ""
+        self.assignment = None
+        self.assignments = []
         self.footer_depth = 0
+        self.footer_group = None
+        self.footer_group_references = {}
+        self.footer_group_tag = None
         self.footer_references = []
         self.figure_count = 0
         self.h1_count = 0
@@ -56,6 +60,13 @@ class PageParser(HTMLParser):
         attributes = dict(attrs)
         if tag == "footer":
             self.footer_depth += 1
+        footer_group = attributes.get("data-footer-group")
+        if self.footer_depth and footer_group:
+            self.footer_group = footer_group
+            self.footer_group_tag = tag
+            self.footer_group_references.setdefault(footer_group, [])
+        if tag == "a" and "project-row" in attributes.get("class", "").split():
+            self.assignment = {"href": attributes.get("href", ""), "text": []}
         if attributes.get("data-project"):
             self.project_updates.append(
                 (attributes["data-project"], attributes.get("data-updated", ""))
@@ -82,15 +93,30 @@ class PageParser(HTMLParser):
                 self.references.append(reference)
                 if self.footer_depth:
                     self.footer_references.append(reference)
+                    if self.footer_group:
+                        self.footer_group_references[self.footer_group].append(reference)
 
     def handle_endtag(self, tag):
         if tag == "title":
             self.in_title = False
+        elif tag == "a" and self.assignment is not None:
+            self.assignments.append(
+                (
+                    self.assignment["href"],
+                    " ".join(" ".join(self.assignment["text"]).split()),
+                )
+            )
+            self.assignment = None
+        if tag == self.footer_group_tag:
+            self.footer_group = None
+            self.footer_group_tag = None
         elif tag == "footer":
             self.footer_depth = max(0, self.footer_depth - 1)
 
     def handle_data(self, data):
         self.text_parts.append(data)
+        if self.assignment is not None:
+            self.assignment["text"].append(data)
         if self.in_title:
             self.title_parts.append(data)
 
@@ -129,6 +155,14 @@ def read_state_metadata(project):
     return metadata
 
 
+def load_scholar_roster():
+    path = PROJECT_ROOT / "python/scholar_roster.py"
+    spec = importlib.util.spec_from_file_location("scholar_roster_for_check", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.load_roster()
+
+
 def resolve_local_reference(page, reference):
     parsed = urlsplit(reference)
     if parsed.scheme or parsed.netloc or reference.startswith(("mailto:", "tel:")):
@@ -155,6 +189,8 @@ def check_repository_documents():
         "RESEARCHER-ORIENTATION.md",
         "projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md",
         "python/create_project.py",
+        "python/scholar_roster.py",
+        "scholars.json",
     }
     missing = sorted(name for name in required if not (PROJECT_ROOT / name).is_file())
     problems = [f"missing: {', '.join(missing)}"] if missing else []
@@ -167,6 +203,8 @@ def check_repository_documents():
             "## Create a Project",
             "## Create a Scholar",
             "python3 python/create_project.py",
+            "python3 python/scholar_roster.py",
+            "scholars.json",
         ):
             if expected not in guide:
                 problems.append(f"growth guide missing {expected!r}")
@@ -194,8 +232,9 @@ def check_repository_documents():
                     pass
                 else:
                     problems.append("Project scaffold overwrote an existing destination")
+            load_scholar_roster()
         except Exception as error:
-            problems.append(f"Project scaffold failed: {type(error).__name__}: {error}")
+            problems.append(f"growth control failed: {type(error).__name__}: {error}")
     return Result(
         "Repository guidance",
         not problems,
@@ -265,6 +304,17 @@ def check_html_and_css():
         "https://creativecommons.org/licenses/by/4.0/",
         "https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png",
     }
+    expected_footer_groups = {
+        "about": {
+            "https://jasonjones.ninja/",
+            "https://jasonjones.ninja/csserg/",
+        },
+        "open-work": {
+            "https://github.com/jasonjeffreyjones/virtual-csserg/",
+            "https://creativecommons.org/licenses/by/4.0/",
+            "https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png",
+        },
+    }
     bootstrap_prefix = "https://cdn.jsdelivr.net/npm/bootstrap@"
 
     for page, parsed in parsed_pages.items():
@@ -293,6 +343,18 @@ def check_html_and_css():
                 f"{relative}: footer missing brand/license references "
                 f"{', '.join(missing_footer_references)}"
             )
+        if set(parsed.footer_group_references) != set(expected_footer_groups):
+            problems.append(f"{relative}: footer does not have About and Open work groups")
+        else:
+            for group, expected_references in expected_footer_groups.items():
+                missing = expected_references - set(
+                    parsed.footer_group_references[group]
+                )
+                if missing:
+                    problems.append(
+                        f"{relative}: {group} footer group has misplaced/missing references "
+                        f"{', '.join(sorted(missing))}"
+                    )
 
         local_targets = set()
         for reference in parsed.references:
@@ -415,6 +477,12 @@ def check_public_catalogs():
         elif page.resolve() not in project_index_targets:
             problems.append(f"project {name} is not linked from website/projects/index.html")
 
+    try:
+        scholar_records = load_scholar_roster()
+    except Exception as error:
+        problems.append(f"scholars.json: {type(error).__name__}: {error}")
+        scholar_records = []
+
     charter = (PROJECT_ROOT / "projects" / "vcsserg-repo-v1" / "PROJECT.md").read_text(
         encoding="utf-8"
     )
@@ -429,6 +497,9 @@ def check_public_catalogs():
     )
     if not scholar_names:
         problems.append("PROJECT.md has no parseable Initial Scholars roster")
+    roster_names = {record.name for record in scholar_records}
+    if not set(scholar_names).issubset(roster_names):
+        problems.append("scholars.json omits an initial Scholar named in PROJECT.md")
 
     scholar_index_path = WEBSITE_ROOT / "scholars" / "index.html"
     if not scholar_index_path.is_file():
@@ -444,9 +515,9 @@ def check_public_catalogs():
                 scholar_index_targets.add(target)
         if 'class="scholar-grid"' not in scholar_source:
             problems.append("Scholar index does not use the selected portrait-roster grid")
-        if scholar_source.count('class="scholar-tile"') != len(scholar_names):
+        if scholar_source.count('class="scholar-tile"') != len(scholar_records):
             problems.append(
-                "Scholar index does not give every initial Scholar one selected roster card"
+                "Scholar index does not give every rostered Scholar one selected roster card"
             )
 
     v1_summary = WEBSITE_ROOT / "projects/vcsserg-repo-v1/index.html"
@@ -458,15 +529,45 @@ def check_public_catalogs():
         ):
             problems.append("VCSSERG v1 does not use the selected evidence-brief summary")
 
-    for name in scholar_names:
-        slug = SCHOLAR_SLUG_OVERRIDES.get(name, re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-"))
-        page = WEBSITE_ROOT / "scholars" / slug / "index.html"
+    for record in scholar_records:
+        name = record.name
+        page = WEBSITE_ROOT / "scholars" / record.slug / "index.html"
         if not page.is_file():
-            problems.append(f"initial Scholar {name} has no public profile")
+            problems.append(f"rostered Scholar {name} has no public profile")
         elif page.resolve() not in linked_targets:
-            problems.append(f"initial Scholar {name} is not linked from website/index.html")
+            problems.append(f"rostered Scholar {name} is not linked from website/index.html")
         elif page.resolve() not in scholar_index_targets:
-            problems.append(f"initial Scholar {name} is not linked from the Scholar index")
+            problems.append(f"rostered Scholar {name} is not linked from the Scholar index")
+
+        if page.is_file():
+            parsed_profile = parse_page(page)
+            if record.monogram not in parsed_profile.text:
+                problems.append(f"rostered Scholar {name} profile omits its monogram")
+            if record.current_project is None:
+                if parsed_profile.assignments:
+                    problems.append(f"rostered Scholar {name} has an unrecorded assignment")
+            elif len(parsed_profile.assignments) != 1:
+                problems.append(f"rostered Scholar {name} does not show exactly one assignment")
+            else:
+                assignment_href, assignment_text = parsed_profile.assignments[0]
+                assignment_target, _ = resolve_local_reference(page, assignment_href)
+                expected_target = (
+                    WEBSITE_ROOT
+                    / "projects"
+                    / record.current_project
+                    / "index.html"
+                ).resolve()
+                if assignment_target != expected_target:
+                    problems.append(f"rostered Scholar {name} profile has a stale assignment link")
+                try:
+                    project_title = read_state_metadata(
+                        PROJECT_ROOT / "projects" / record.current_project
+                    )["title"]
+                except (KeyError, ValueError, json.JSONDecodeError) as error:
+                    problems.append(f"cannot resolve {name}'s assignment title: {error}")
+                else:
+                    if project_title not in assignment_text:
+                        problems.append(f"rostered Scholar {name} profile has a stale assignment title")
 
         bio_match = re.search(
             rf"^###\s+{re.escape(name)}\s*$([\s\S]*?)(?=^###\s|\Z)",
@@ -486,7 +587,7 @@ def check_public_catalogs():
     return Result(
         "Public project and Scholar catalogs",
         not problems,
-        "all documented projects and initial Scholars are published and linked"
+        "all documented projects and rostered Scholars are published, assigned, and linked"
         if not problems else "; ".join(problems),
     )
 

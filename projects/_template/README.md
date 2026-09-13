@@ -44,9 +44,10 @@ blockquotes. Separate `PI.md` and `LOG.md` files are no longer the template layo
   followed by 1–3 explanatory sentences and links into the Full Report.
 - Use the CSSERG logo, forest green, Artichoke Green `#4B6F44`, Laurel Green
   `#dde3d8`, and Bootstrap from its official CDN. Include the shared footer
-  linking Dr. Jones, CSSERG, the [GitHub repository](https://github.com/jasonjeffreyjones/virtual-csserg/),
-  and the standard CC BY 4.0 International badge. Follow the selected research
-  journal styling in `website/assets/styles.css`.
+  with **About** links to Dr. Jones and CSSERG and **Open work** links to the
+  [GitHub repository](https://github.com/jasonjeffreyjones/virtual-csserg/) and
+  standard CC BY 4.0 International badge. Follow the selected research journal
+  styling in `website/assets/styles.css`.
 - Include the exact phrase "far beyond" exactly once in the Full Report.
 - Link the public project from both `website/index.html` and
   `website/projects/index.html`. Keep the all-Projects index ordered by the

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Bee Boring Vanilla">
-<meta name="dcterms.date" content="2026-09-12">
+<meta name="dcterms.date" content="2026-09-13">
 
 <title>Virtual CSSERG Version 1.0</title>
 <style>
@@ -205,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 12, 2026</p>
+      <p class="date">September 13, 2026</p>
     </div>
   </div>
   
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="executive-finding" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="executive-finding"><span class="header-section-number">1.1</span> Executive finding</h2>
 <p>Virtual CSSERG now has a working static publication layer, complete public Project and Scholar indexes, current project-memory files, a guarded deployment component, and an automated Scholar runner whose documented wiring passes inspection. A standard-library verifier tests those promises without reading deployment credentials, contacting production, committing, or deploying.</p>
-<p>All seven automated promise groups pass on September 12, 2026. Predict the Self closed the last structural gap by adding a Quarto book, short PDF, one-figure Executive Summary, reciprocal links, and guarded publication checks. Production parity, a witnessed end-to-end run, rendered accessibility, and substantive review remain manual gates.</p>
+<p>All seven automated promise groups pass on September 13, 2026. The validated <code>scholars.json</code> record now governs the operational roster and current assignments, while PI-authored charters and dialog remain authoritative for biography. Every static and generated footer now separates About links from Open work links. Production parity, a witnessed end-to-end run, rendered accessibility, and substantive review remain manual gates.</p>
 <p>This is an audit of documented infrastructure and public artifacts, not a claim that automation can certify research truth. Passing structural checks cannot establish whether a substantive inference is sound or whether a page is usable by every reader.</p>
 </section>
 <section id="project-question-and-method" class="level2" data-number="1.2">
@@ -307,7 +307,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The new command</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> python/create_project.py <span class="op">&lt;</span>project-slug<span class="op">&gt;</span> <span class="st">"Project title"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>validates a permanent lowercase hyphenated slug, refuses overwrite, stages a complete copy of <code>_template</code>, personalizes its title and state, and renames it atomically into <code>projects/</code>. It does not publish an empty Project or replace PI authorship of <code>PROJECT.md</code>. Unit tests cover successful personalization, required files, unsafe slugs and titles, and no-overwrite behavior.</p>
-<p>Scholar creation remains deliberately review-led. The PI supplies the name, slug, biography, and assignment; the public profile must preserve those claims without invention. A profile, portrait-roster card, homepage link, and runner configuration are then validated together. Automating this before defining a single roster and assignment source could manufacture an unauthorized public identity, so no Scholar scaffolder is claimed.</p>
+<p>Scholar creation remains deliberately review-led. The PI supplies the name, slug, biography, and assignment; the public profile must preserve those claims without invention. The versioned <code>scholars.json</code> file is now the operational source for each name, permanent slug, monogram, and current Project. A strict standard-library validator rejects malformed records, duplicates, and unknown Projects. The Version 1 verifier then checks every homepage and directory link, profile monogram, assignment target, and assignment title against that record. Biography fidelity remains a separate check against PI-authored source text.</p>
 <p>Generated Scholar representations are permitted only as clearly illustrative, provenance-recorded assets selected by the PI. Monograms remain canonical by default. The complete procedure is in <a href="https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md"><code>CREATING-PROJECTS-AND-SCHOLARS.md</code></a>.</p>
 </section>
 <section id="publication-system" class="level2" data-number="1.6">
@@ -320,30 +320,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.7" class="anchored" data-anchor-id="manual-gates"><span class="header-section-number">1.7</span> Manual gates and limitations</h2>
 <p>Four kinds of evidence remain outside this run:</p>
 <ul>
-<li><strong>Production parity.</strong> After normal commit, push, and deployment, compare the production inventory and bytes with <code>website/</code> without exposing credentials.</li>
+<li><strong>Production parity.</strong> After normal commit, push, and deployment, compare the production inventory and bytes with <code>website/</code> without exposing credentials. A September 13 pre-iteration probe found 73 of 109 expected files identical, 10 different, and 26 unavailable, so production did not match that checkout.</li>
 <li><strong>Observed automation.</strong> Witness one complete Scholar run, including its log, commit, push, deploy, success behavior, and safe failure behavior.</li>
 <li><strong>Rendered usability.</strong> Inspect representative pages at desktop and phone widths with keyboard navigation and assistive technology. No Chromium, Chrome, or Firefox executable was available on this host.</li>
 <li><strong>Substantive review.</strong> File existence, links, and phrases do not establish that a research report is complete, its method is valid, or its claims follow from evidence.</li>
 </ul>
 <p>The site also relies on CDN-hosted Bootstrap and the Creative Commons badge. Local CSS preserves core layout and typography, but those remote resources still need network access for their intended presentation.</p>
+<p>The new expected-file parity probe uses ordinary public HTTP requests and no deployment configuration. It cannot enumerate unexpected remote files, so its byte comparison closes only one half of the inventory-and-bytes gate. The deployment side still needs a remote inventory or authenticated dry run after automation publishes this iteration.</p>
 </section>
 <section id="remaining-work" class="level2" data-number="1.8">
 <h2 data-number="1.8" class="anchored" data-anchor-id="remaining-work"><span class="header-section-number">1.8</span> Remaining work</h2>
 <p>No automated promise group currently fails. Predict the Self now has a two-chapter Quarto build, exactly one dense Executive Summary figure, a linked two-column short PDF within the ten-page ceiling, reciprocal report links, guarded publishing, and the required Full Report phrase.</p>
-<p>The approved dialog migration also remains. It should replace the growing log with one immutable timestamped file per iteration and a newest-first index, but only through one coordinated change to orientation, template, runner prompt, active Projects, and verifier. Partial migration would leave contradictory instructions. Footer link grouping and a durable roster/assignment source are smaller follow-ups.</p>
+<p>The approved dialog migration also remains. It should replace the growing log with one immutable timestamped file per iteration and a newest-first index, but only through one coordinated change to orientation, template, runner prompt, active Projects, and verifier. Partial migration would leave contradictory instructions, and Scholars may not edit the PI-owned runner. A superseded-report archive policy also remains to be specified. Footer grouping and the durable roster/assignment source are now implemented and enforced.</p>
 <p>The manual gates above now determine whether the charter’s definition of done is actually satisfied. Version 1 should not be declared complete merely because the verifier returns zero.</p>
 </section>
 <section id="reproduction" class="level2" data-number="1.9">
 <h2 data-number="1.9" class="anchored" data-anchor-id="reproduction"><span class="header-section-number">1.9</span> Reproduction</h2>
 <p>From the repository root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> projects/vcsserg-repo-v1/tests <span class="at">-v</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="va">XDG_CACHE_HOME</span><span class="op">=</span>/tmp/vcsserg-v1-quarto-cache <span class="ex">quarto</span> render projects/vcsserg-repo-v1</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/publish_full_report.py</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">PYTHONPATH</span><span class="op">=</span>/tmp/vcsserg-v1-publishing-deps <span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/render_short_report.py</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">PYTHONPATH</span><span class="op">=</span>/tmp/vcsserg-v1-publishing-deps <span class="dt">\</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/verify_publication.py</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> projects/vcsserg-repo-v1/verify_v1.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> python/scholar_roster.py</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> unittest discover <span class="at">-s</span> projects/vcsserg-repo-v1/tests <span class="at">-v</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">XDG_CACHE_HOME</span><span class="op">=</span>/tmp/vcsserg-v1-quarto-cache <span class="ex">quarto</span> render projects/vcsserg-repo-v1</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/publish_full_report.py</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">PYTHONPATH</span><span class="op">=</span>/tmp/vcsserg-v1-publishing-deps <span class="dt">\</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/render_short_report.py</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="va">PYTHONPATH</span><span class="op">=</span>/tmp/vcsserg-v1-publishing-deps <span class="dt">\</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/verify_publication.py</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> projects/vcsserg-repo-v1/verify_v1.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After deployment, run the separate public-network check:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> projects/vcsserg-repo-v1/analysis/check_production_parity.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The Quarto cache path is writable temporary state, not a replacement runtime. The PDF packages are optional build-only dependencies recorded in <code>requirements-publication.txt</code>; the deployed website remains static.</p>
 </section>
 <section id="references" class="level2 unnumbered">
@@ -356,7 +360,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
-<footer class="report-footer"><p>Virtual CSSERG — discover and document truth efficiently and at scale.</p><p><a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a> · <a href="https://jasonjones.ninja/csserg/">CSSERG</a> · <a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="Creative Commons Attribution 4.0 International" width="88" height="31"></a> · <a href="https://github.com/jasonjeffreyjones/virtual-csserg/">GitHub repository</a></p></footer>
+<footer class="report-footer">
+  <p>Virtual CSSERG — discover and document truth efficiently and at scale.</p>
+  <div class="footer-links">
+    <nav class="footer-group" data-footer-group="about" aria-label="About"><strong>About</strong> <a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a> <a href="https://jasonjones.ninja/csserg/">CSSERG</a></nav>
+    <nav class="footer-group" data-footer-group="open-work" aria-label="Open work"><strong>Open work</strong> <a href="https://github.com/jasonjeffreyjones/virtual-csserg/">GitHub repository</a> <a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="Creative Commons Attribution 4.0 International" width="88" height="31"></a></nav>
+  </div>
+</footer>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
