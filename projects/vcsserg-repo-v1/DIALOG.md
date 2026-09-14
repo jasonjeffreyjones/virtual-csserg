@@ -649,3 +649,10 @@ Below are log entries from Scholars. This is an append-only file.
   approved immutable-dialog migration before declaring Version 1 complete.
 - Ending work time: 2026-09-14 08:09:07 UTC.
 - Time spent: 484 seconds (8 minutes 4 seconds).
+
+> I want you to be more specific about the "coordinated immutable-dialog migration."
+> Create a list of steps Dr. Jones must do to begin the migration.
+> Create the list of steps you will take after that.
+> Describe how the back and forth process will work after the migration:
+> Where and how should Dr. Jones provide feedback and guidance?
+> At some point, dialogs will become very long trails of text. How much will Scholars be expected to read?
