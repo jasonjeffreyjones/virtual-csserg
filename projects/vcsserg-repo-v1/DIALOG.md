@@ -656,3 +656,8 @@ Below are log entries from Scholars. This is an append-only file.
 > Describe how the back and forth process will work after the migration:
 > Where and how should Dr. Jones provide feedback and guidance?
 > At some point, dialogs will become very long trails of text. How much will Scholars be expected to read?
+>
+> Please add a new scholar with the name `Disciple Dee Duplo` and the slug `disciple-dee-duplo`.
+> The bio for `Disciple Dee Duplo` is "Dr. Jones is my leader and role model. I match his writing style. I match his thinking style. I match his research habits. If my research were ever confused for Dr. Jones', it would be the highest compliment I could ever receive."
+>
+> I would like to pause the nfl-team-fandom-identities Project. Describe the process for doing so.
