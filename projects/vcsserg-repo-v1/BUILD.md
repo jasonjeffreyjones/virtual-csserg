@@ -7,13 +7,13 @@ requirement. Quarto renders into the ignored project-local `_book/`, then
 `website/projects/vcsserg-repo-v1/report/`. Keeping Quarto's output inside its
 project lets it clean stale libraries without warnings. The Executive Summary
 is maintained as static HTML, and `short-report.md` is the derivative PDF
-source. Its current output fits one page, but the requirement is two columns
-and no more than ten pages—not exactly one page.
+source.
 
 Quarto uses a writable temporary cache. The host has no TeX PDF engine, so the
 short-report renderer uses the optional build-only packages in
 `requirements-publication.txt`. These packages do not become website or
-production dependencies.
+production dependencies. The current short report occupies two pages; the
+requirement is two columns and no more than ten pages, not an exact page count.
 
 ```bash
 python3 -m pip install --target /tmp/vcsserg-v1-publishing-deps \
@@ -49,4 +49,7 @@ python3 projects/vcsserg-repo-v1/analysis/check_production_parity.py
 ```
 
 This network check does not use `.env` and cannot detect extra stale remote
-files, so remote inventory remains a separate deployment-side check.
+files. The normal deployment therefore follows its deleting transfer with an
+authenticated checksum/inventory dry run and exits nonzero on any residual
+difference. Do not run the deployment manually during a Scholar iteration;
+observe its result in the host-managed post-iteration workflow.

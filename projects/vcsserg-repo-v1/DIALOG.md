@@ -592,3 +592,60 @@ Below are log entries from Scholars. This is an append-only file.
   migration before marking Version 1 Completed.
 - Ending work time: 2026-09-13 08:19:43 UTC.
 - Time spent: 1119 seconds (18 minutes 39 seconds).
+
+## 2026-09-14 — Bee Boring Vanilla — Public parity and deployment inventory verification
+
+- Starting work time: 2026-09-14 08:01:03 UTC (preflight server time).
+- Scope: Re-test production after the prior normal deployment, close the
+  expected-byte half of the parity gate, and make complete remote inventory a
+  fail-closed part of subsequent deployments.
+- Context: Read the repository and researcher guidance, my complete Scholar
+  directory, the charter/state/full dialog, audit, recommendations, growth and
+  build guides, report sources, verifier, deployment component, runner, and
+  current public pages. Used the supplied 2-CPU, 3.7-GiB RAM, 4-GiB swap, and
+  65-GiB-free host conservatively; no agents or installations were used.
+- Production evidence: Before local edits, the credential-free HTTPS probe
+  fetched all 109 expected public files. All 109 were byte-identical to the
+  checkout; none differed or was unavailable. This closes the expected-file
+  byte check and improves on the September 13 result of 73 identical, 10
+  different, and 26 unavailable. Public HTTP still cannot discover unexpected
+  remote-only files.
+- Deployment hardening:
+  - Kept the guarded, deleting, shell-free transfer and added a second
+    authenticated `rsync` phase using recursive checksum comparison, dry-run
+    deletion, and itemized changes.
+  - Deployment now exits nonzero instead of reporting success when that phase
+    finds any missing, changed, or remote-only path. It still does not print
+    configured destinations or credentials.
+  - Extended `verify_v1.py` to require both phases and the checksum, dry-run,
+    deletion, and itemization options, and to reject simulated residual drift.
+- Publication and handoff: Updated the audit, recommendations, build guide,
+  Full Report, two-page short report, Executive Summary, homepage update,
+  Project index metadata, and current state. Re-rendered and safely published
+  the one-chapter Quarto book and rebuilt the short PDF. The charter and
+  PI-owned runner were not edited.
+- Validation:
+  - A real local `rsync` fixture confirmed an identical mirror produces no
+    itemized output and a remote-only file is reported for deletion.
+  - All 12 v1 unit tests and all seven promise groups pass. Mocked deployment
+    checks cover success, residual drift, subprocess failure, missing `rsync`,
+    invalid port, and unsafe destination behavior.
+  - The VCSSERG v1, Predict the Self, and NFL Team Fandom Identities publication
+    verifiers pass. Quarto rendered cleanly; the v1 verifier confirms a linked,
+    nonempty, two-page, two-column PDF within the ten-page ceiling.
+  - Python compilation, runner shell syntax, and `git diff --check` pass.
+- Limitations: No deployment credentials or `.env` were accessed, and no live
+  deployment, commit, or push was performed. The new authenticated inventory
+  phase will first run in the host-managed post-iteration workflow, so it still
+  needs observation before the full inventory-and-bytes gate closes. No
+  Chromium, Chrome, or Firefox executable was available for graphical,
+  keyboard, or assistive-technology review. Research-validity and substantive
+  review also remain human gates.
+- PI question: None blocking.
+- Likely next steps: Confirm the post-iteration deployment reports an exact
+  remote mirror, then rerun the public probe against this checkout. Witness a
+  complete Scholar workflow and its failure path, conduct browser and
+  substantive review, define superseded-report archiving, and coordinate the
+  approved immutable-dialog migration before declaring Version 1 complete.
+- Ending work time: 2026-09-14 08:09:07 UTC.
+- Time spent: 484 seconds (8 minutes 4 seconds).

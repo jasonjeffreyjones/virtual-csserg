@@ -16,7 +16,7 @@ still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 13, 2026 |
+| Documented promise | Evidence or test | Status on September 14, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold, validated Scholar roster | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
@@ -24,11 +24,11 @@ still not establish the manual gates below.
 | Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, charter biographies | Automated pass |
 | Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
-| Deployment safely mirrors `website/` | Mocked guarded, shell-free `rsync`, deletion and error propagation | Automated pass; live parity unverified |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; public expected-file probe | Automated pass; all 109 expected production files match, while the new remote-inventory phase awaits an observed deployment |
 
 ## Current automated result
 
-On September 13, 2026, **all seven groups pass**. The final report-format gap
+On September 14, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -74,8 +74,8 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 
 ## Manual gates
 
-- Confirm production file inventory and bytes exactly match `website/` after
-  the normal commit, push, and deploy sequence.
+- Confirm the next normal deployment's authenticated checksum dry run finds no
+  missing, changed, or remote-only paths.
 - Observe one complete successful Scholar workflow, including logging and
   failure behavior.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
@@ -86,15 +86,15 @@ still a **promise regression report**, not a Version 1 completion oracle. See
   generic v1 verifier checks only the PDF signature; project publication tests
   may enforce stronger PDF properties.
 
-The September 13 pre-iteration expected-file probe found production was not
-current with the repository checkout: of 109 expected files, 73 were
-byte-identical, 10 differed, and 26 returned HTTP 404. The unavailable files
-were the newly published Predict the Self short PDF and most of its Quarto book
-tree; several v1 files also differed. This observation does not establish why
-deployment lagged. Re-run
-`analysis/check_production_parity.py` after this iteration's normal deployment.
-The probe compares all expected bytes without credentials but cannot discover
-extra stale production files, so complete remote inventory remains open.
+The September 13 pre-iteration expected-file probe found 73 of 109 production
+files byte-identical, 10 different, and 26 unavailable. After the normal
+automation published that iteration, the September 14 probe found all 109
+expected files byte-identical, with none different or unavailable. This closes
+the public expected-byte check. Because HTTP cannot discover remote-only files,
+the deployment component now follows its deleting transfer with an authenticated
+checksum dry run and exits nonzero if any missing, changed, or extra path
+remains. That inventory phase is mocked and regression-tested here but needs one
+observed normal deployment before the complete parity gate closes.
 
 ## Other current requirements
 

@@ -717,17 +717,47 @@ def check_deployment_component():
     problems = []
 
     with patch.dict(os.environ, fake_environment, clear=False):
-        with patch.object(deployment.subprocess, "run") as mocked_run:
+        completed = subprocess.CompletedProcess(
+            ["rsync"], 0, stdout="", stderr=""
+        )
+        with patch.object(
+            deployment.subprocess, "run", side_effect=[completed, completed]
+        ) as mocked_run:
             with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
                 deployment.deploy()
-            command = mocked_run.call_args.args[0]
-            options = mocked_run.call_args.kwargs
-            if not isinstance(command, list) or options.get("shell") is True:
-                problems.append("rsync is not invoked as a shell-free argument list")
-            if options.get("check") is not True:
-                problems.append("rsync subprocess failures are not checked")
-            if not any(part.startswith("--delete") for part in command):
+            calls = mocked_run.call_args_list
+            if len(calls) != 2:
+                problems.append("deployment does not run transfer and verification phases")
+                calls = []
+            for call in calls:
+                command = call.args[0]
+                options = call.kwargs
+                if not isinstance(command, list) or options.get("shell") is True:
+                    problems.append("rsync is not invoked as a shell-free argument list")
+                if options.get("check") is not True:
+                    problems.append("rsync subprocess failures are not checked")
+            transfer_command = calls[0].args[0] if calls else []
+            verification_command = calls[1].args[0] if calls else []
+            if not any(part.startswith("--delete") for part in transfer_command):
                 problems.append("rsync does not delete stale remote website files")
+            for option in ("--checksum", "--dry-run", "--delete", "--itemize-changes"):
+                if option not in verification_command:
+                    problems.append(f"post-deployment verification omits {option}")
+
+        drift = subprocess.CompletedProcess(
+            ["rsync"], 0, stdout=">fcs....... unexpected.html\n", stderr=""
+        )
+        with patch.object(
+            deployment.subprocess, "run", side_effect=[completed, drift]
+        ):
+            try:
+                with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                    deployment.deploy()
+            except SystemExit as error:
+                if error.code in {None, 0}:
+                    problems.append("post-deployment drift produced a successful exit status")
+            else:
+                problems.append("post-deployment drift did not reach the caller")
 
         failure = subprocess.CalledProcessError(23, ["rsync"])
         with patch.object(deployment.subprocess, "run", side_effect=failure):
@@ -783,7 +813,7 @@ def check_deployment_component():
     return Result(
         "Deployment component",
         not problems,
-        "guarded exact-mirror rsync and nonzero failure propagation passed"
+        "guarded exact-mirror rsync, checksum inventory verification, and nonzero failure propagation passed"
         if not problems else "; ".join(problems),
     )
 

@@ -72,23 +72,42 @@ def get_remote_path():
 
 def deploy():
     source_path = str(PROJECT_ROOT / "website") + "/"
+    ssh_transport = f"ssh -p {get_ssh_port()}"
     destination = (
         f'{get_required_env_var("VCSSERG_DEPLOY_SSH_USER")}@'
         f'{get_required_env_var("VCSSERG_DEPLOY_SSH_HOST")}:'
         f'{get_remote_path()}'
     )
-    command = [
+    transfer_command = [
         "rsync",
         "-avz",
         "--delete-delay",
         "-e",
-        f"ssh -p {get_ssh_port()}",
+        ssh_transport,
+        source_path,
+        destination,
+    ]
+    verification_command = [
+        "rsync",
+        "--recursive",
+        "--links",
+        "--checksum",
+        "--dry-run",
+        "--delete",
+        "--itemize-changes",
+        "-e",
+        ssh_transport,
         source_path,
         destination,
     ]
 
     try:
-        subprocess.run(command, check=True, capture_output=True, text=True)
+        subprocess.run(
+            transfer_command, check=True, capture_output=True, text=True
+        )
+        verification = subprocess.run(
+            verification_command, check=True, capture_output=True, text=True
+        )
     except FileNotFoundError:
         print("Deployment failed: rsync is not installed.", file=sys.stderr)
         raise SystemExit(127) from None
@@ -96,7 +115,14 @@ def deploy():
         print("Deployment failed during rsync.", file=sys.stderr)
         raise SystemExit(error.returncode or 1) from None
 
-    print("Deployment completed successfully.")
+    if verification.stdout.strip():
+        print(
+            "Deployment verification failed: the remote tree differs from website/.",
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
+
+    print("Deployment completed and exact remote mirror verified.")
 
 
 def main():

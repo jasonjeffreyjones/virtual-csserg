@@ -1,6 +1,6 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 13, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 14, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
@@ -18,7 +18,7 @@ The standard-library verifier parses public HTML, resolves local resources and f
 
 ## Automated evidence
 
-Repository guidance passes: the governing files, growth procedure, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and substantive-update metadata. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass complete Project and initial-Scholar coverage, charter-biography fidelity, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment pass static and mocked checks.
+Repository guidance passes: the governing files, growth procedure, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and substantive-update metadata. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass complete Project and initial-Scholar coverage, charter-biography fidelity, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
 
 The three-report group now passes. The overall result remains a regression report, not a research-quality score or Version 1 certification.
 
@@ -38,7 +38,7 @@ Scholar creation stays review-led. The PI supplies the name, slug, biography, an
 
 ## Manual gates
 
-Production parity requires comparing deployed inventory and bytes with website/ after the normal commit, push, and deploy sequence. A September 13 pre-iteration public probe found only 73 of 109 expected files byte-identical; 10 differed and 26 returned 404, including the new Predict the Self publication tree. This identifies a real parity failure but not its cause, and the probe cannot find extra remote files. End-to-end automation requires witnessing a complete run and its failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology. No local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
+After the normal September 13 publication, a September 14 public probe found all 109 expected production files byte-identical. That closes the expected-byte check but cannot find remote-only files. Deployment now refuses success when an authenticated post-transfer checksum/inventory dry run reports a missing, changed, or extra path; this new phase awaits observation in the next normal workflow. End-to-end automation still requires witnessed success and failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology; no local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
 
 The approved dialog redesign also remains coordinated future work: one immutable timestamped file per iteration plus a newest-first index, changed together across the orientation, template, runner prompt, active Projects, and verifier.
 

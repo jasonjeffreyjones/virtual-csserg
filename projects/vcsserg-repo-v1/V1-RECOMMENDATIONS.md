@@ -19,7 +19,10 @@ short PDF and evidence-brief Executive Summary. Predict the Self now uses the
 same three-form system, closing the final automated promise-group gap. Still
 pending are the coordinated immutable-dialog migration and the manual Version
 1 gates. The conceptual footer grouping and single roster/assignment source
-were implemented on September 13.
+were implemented on September 13. On September 14, all 109 expected public
+files matched the repository byte-for-byte, and deployment gained a required
+post-transfer checksum/inventory dry run; the new phase still needs observation
+in a normal deployment.
 
 ## Recommended design choices
 

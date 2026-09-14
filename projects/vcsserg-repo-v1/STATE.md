@@ -1,17 +1,18 @@
 ---
 title: "Virtual CSSERG Version 1.0"
 status: Active
-updated: 2026-09-13T08:19:43Z
+updated: 2026-09-14T08:09:07Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 13, 2026, all seven automated promise groups pass.
-Version 1.0 is not complete. A public expected-file probe found production did
-not match the pre-iteration checkout, and remote inventory, an observed Scholar
-workflow, rendered accessibility/usability, and substantive review remain open.
+Active. On September 14, 2026, all seven automated promise groups pass and all
+109 expected production files are byte-identical to the pre-iteration checkout.
+Version 1.0 is not complete. The new authenticated remote-inventory check still
+needs an observed deployment; a witnessed Scholar workflow, rendered
+accessibility/usability, and substantive review also remain open.
 
 ## Completed work and current evidence
 
@@ -29,7 +30,7 @@ workflow, rendered accessibility/usability, and substantive review remain open.
   The alternatives are labeled as dated decision archives.
 - VCSSERG v1 now has all three linked report forms: `index.qmd` currently
   renders a one-chapter Quarto HTML book; `short-report.md` currently renders a
-  one-page, two-column PDF; and the production Executive Summary contains
+  two-page, two-column PDF; and the production Executive Summary contains
   exactly one dense promise-map figure and five Full Report-linked findings.
   Neither one chapter nor one page is a requirement; Full Report structure is
   content-driven and the short PDF has a ten-page ceiling.
@@ -59,14 +60,16 @@ workflow, rendered accessibility/usability, and substantive review remain open.
   states, update semantics, Project creation/publication, review-led Scholar
   creation, and the approved provenance safeguards for generated illustrations.
   `_template` and the root README lead users to the process.
-- A standard-library public parity probe now compares every expected website
-  file byte without credentials. Before local edits on September 13, it found
-  73 of 109 files byte-identical, 10 different, and 26 unavailable (HTTP 404),
-  concentrated in the recent Predict the Self publication and v1 updates. It
-  cannot discover extra remote files and does not establish why parity failed.
-- The guarded deployment component and PI-owned Scholar runner pass structural
-  and mocked checks. No credential, live deployment, commit, or push was used
-  during this iteration; automation performs those after the Scholar finishes.
+- The standard-library public parity probe compares every expected website file
+  byte without credentials. The September 14 post-deployment run found all 109
+  expected files identical, improving on the September 13 pre-deployment result
+  of 73 identical, 10 different, and 26 unavailable. HTTP cannot discover
+  remote-only files.
+- The guarded deployment now follows its deleting transfer with an authenticated
+  recursive checksum/inventory dry run and exits nonzero on any residual
+  missing, changed, or extra path. Mocked success, detected drift, subprocess
+  failure, missing rsync, invalid port, and unsafe path behavior pass. The
+  PI-owned Scholar runner remains unchanged.
 
 ## Verifier assessment
 
@@ -78,9 +81,11 @@ runner wiring, and guarded deployment behavior.
 All seven groups pass across 25 HTML pages and six first-party stylesheets.
 The checks now include validated roster/assignment data and exact footer-link
 group placement.
-The generic check does not validate PDF page layout, research quality,
-production parity, rendered usability, or an observed automation run. The
-separate network probe checks expected bytes but not unexpected remote files.
+The generic check does not validate PDF page layout, research quality, public
+network state, rendered usability, or an observed automation run. The separate
+network probe checks expected bytes but not unexpected remote files; the mocked
+deployment check validates the new inventory phase's commands and fail-closed
+behavior but does not constitute a live run.
 Project-specific publication verifiers for VCSSERG v1 and Predict the Self do
 validate reciprocal report links, one summary figure, phrase count, PDF links,
 both PDF columns, nonempty pages, and the ten-page ceiling.
@@ -108,9 +113,9 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Current problems and manual gates
 
-- Re-run the expected-byte production probe after the normal
-  commit/push/deploy sequence. Resolve any mismatches and obtain a complete
-  remote inventory to rule out stale extra files.
+- Observe the next normal deployment's checksum/inventory dry run complete with
+  no missing, changed, or remote-only paths; then re-run the public byte probe
+  against the new checkout.
 - Witness one complete Scholar workflow, including success and failure paths.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive technology. No installed Chromium, Chrome, or Firefox executable is
@@ -120,13 +125,12 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Resources and limitations
 
-September 13 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 14 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
-Ghostscript were usable. The text browser w3m was also available, but no
-Chromium, Chrome, or Firefox executable was installed. Existing temporary
-build-only ReportLab/pypdf packages rendered and validated the two-page v1 PDF;
-they are not production dependencies. No package or system runtime was installed
-or replaced in this iteration.
+rsync 3.2.7 were usable. No Chromium, Chrome, or Firefox executable was found.
+Existing temporary build-only ReportLab/pypdf packages rendered and validated
+the two-page v1 PDF; they are not production dependencies. No package or system
+runtime was installed or replaced in this iteration.
 
 ## Important files
 
@@ -149,13 +153,15 @@ or replaced in this iteration.
 - `website/projects/vcsserg-repo-v1/`: Executive Summary, Full Report, short
   report, and design-decision archives.
 - `website/scholars/index.html`: selected production portrait roster.
-- `python/vcsserg_deploy.py`: guarded deployment component.
+- `python/vcsserg_deploy.py`: guarded transfer plus fail-closed remote checksum
+  and inventory verification.
 - `run-scholar.sh`: PI-owned automation; Scholars must not edit it.
 
 ## Unresolved PI questions and likely next steps
 
-No blocking PI question. Next, re-run expected-byte parity after this
-iteration's deployment, obtain remote inventory, witness a complete workflow,
-perform browser/keyboard/assistive-technology and substantive review, and define
-superseded-report archiving. The immutable-dialog migration still requires a
-coordinated PI change because Scholars may not edit the runner.
+No blocking PI question. Next, confirm the new deployment-side inventory phase
+in the post-iteration result, re-run expected-byte parity, witness a complete
+workflow and its failure path, perform browser/keyboard/assistive-technology and
+substantive review, and define superseded-report archiving. The immutable-dialog
+migration still requires a coordinated PI change because Scholars may not edit
+the runner.
