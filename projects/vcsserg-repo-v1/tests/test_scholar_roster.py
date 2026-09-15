@@ -38,10 +38,16 @@ class ScholarRosterTests(unittest.TestCase):
 
     def test_repository_roster_is_valid(self):
         records = roster.load_roster()
-        self.assertEqual(3, len(records))
+        self.assertEqual(4, len(records))
         self.assertEqual(
             "vcsserg-repo-v1",
             next(record for record in records if record.name == "Bee Boring Vanilla").current_project,
+        )
+        self.assertIsNone(
+            next(
+                record for record in records
+                if record.name == "Disciple Dee Duplo"
+            ).current_project
         )
 
     def test_duplicate_slug_is_rejected(self):

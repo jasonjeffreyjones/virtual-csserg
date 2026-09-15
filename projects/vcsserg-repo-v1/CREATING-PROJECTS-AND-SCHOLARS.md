@@ -83,6 +83,28 @@ Then:
 Manual copying of `_template` remains a recovery option, but the command is the
 default because it makes validation and no-overwrite behavior consistent.
 
+## Pause or resume a Project
+
+Pausing changes priority, not evidence. Use this sequence:
+
+1. Dr. Jones records an explicit pause instruction in Project dialog. Include a
+   reason when useful; a pause does not require a technical blocker.
+2. A Scholar sets the `STATE.md` lifecycle value to `Paused`, sets `updated` to
+   the PI intervention time, and summarizes what remains valid and what work is
+   deferred. Append the state-change record to the Project dialog.
+3. Preserve published reports, data, code, and the roster assignment unless the
+   PI separately asks to retract, archive, or reassign them. Public status labels
+   should say Paused so readers do not mistake publication for current activity.
+4. Dr. Jones disables future host-scheduler invocations for the Project. Host
+   scheduler details remain outside the public repository, so a Scholar can
+   record this required action but cannot verify it from repository files.
+
+To resume, Dr. Jones records an explicit resume instruction and re-enables the
+schedule. The next Scholar changes the state to Active, updates public labels
+and `updated`, reads the preserved state and relevant dialog, and continues the
+highest-value work. If a Scholar is reassigned during either transition, update
+`scholars.json`, their profile, and both affected Project states together.
+
 ## Create a Scholar
 
 Scholar creation is intentionally review-led in Version 1 because the public
@@ -127,9 +149,11 @@ history.
 
 The approved dialog migration requires one immutable file per iteration and a
 newest-first `DIALOG.md` index. Implement it in one coordinated change to
-`RESEARCHER-ORIENTATION.md`, `_template`, the runner prompt, every active
+`RESEARCHER-ORIENTATION.md`, `_template`, the runner prompt, every existing
 Project, and the verifier; do not partially switch formats. The PI-owned runner
 cannot be edited by Scholars, so this remains a PI-coordinated workflow change.
+The exact trigger, migration sequence, feedback convention, and bounded reading
+rule are specified in `DIALOG-MIGRATION.md`.
 
 Footer links are now grouped on every public page as **About** (Dr. Jones and
 CSSERG) and **Open work** (GitHub and CC BY 4.0). The verifier checks both the

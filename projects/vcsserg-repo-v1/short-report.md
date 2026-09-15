@@ -1,14 +1,14 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 14, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 15, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
 ## Finding
 
-Virtual CSSERG has a working static publication layer, complete public Project and Scholar indexes, current project-memory files, a guarded deployment component, and a Scholar runner whose documented wiring passes inspection. All seven automated promise groups pass. This is not a completion declaration: several essential manual gates remain.
+Virtual CSSERG has a working static publication layer, complete public indexes for publication-eligible Projects and rostered Scholars, current project-memory files, a guarded deployment component, and a Scholar runner whose documented wiring passes inspection. All seven automated promise groups pass. Proposed scaffolds remain private until substantive work produces the required reports. This is not a completion declaration: several essential manual gates remain.
 
-All three Projects now supply linked one-figure Executive Summaries, Quarto Full Reports, and two-column short PDFs. Predict the Self closed the final automated gap with a two-chapter book, guarded publisher, reciprocal links, and project-specific checks.
+All three publication-eligible Projects now supply linked one-figure Executive Summaries, Quarto Full Reports, and two-column short PDFs. Predict the Self closed the final automated gap with a two-chapter book, guarded publisher, reciprocal links, and project-specific checks.
 
 ## Question and method
 
@@ -18,7 +18,7 @@ The standard-library verifier parses public HTML, resolves local resources and f
 
 ## Automated evidence
 
-Repository guidance passes: the governing files, growth procedure, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and substantive-update metadata. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass complete Project and initial-Scholar coverage, charter-biography fidelity, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
+Repository guidance passes: the governing files, growth procedure, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and update metadata appropriate to that state. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass publication-eligible Project and rostered-Scholar coverage, PI-biography fidelity, assignment checks, lifecycle status, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
 
 The three-report group now passes. The overall result remains a regression report, not a research-quality score or Version 1 certification.
 
@@ -34,13 +34,15 @@ Projects use one of six lifecycle states: Proposed, Active, Blocked, Paused, Com
 
 The new create_project.py command validates a permanent lowercase hyphenated slug, refuses overwrite, stages a complete template copy, personalizes its title and state, and renames it atomically. It never publishes an empty Project or displaces PI authorship of the charter. Unit tests cover the success and failure paths.
 
-Scholar creation stays review-led. The PI supplies the name, slug, biography, and assignment. `scholars.json` is the operational source for names, permanent slugs, monograms, and current Projects; a validator rejects duplicates, malformed records, and unknown Projects. The public profiles are checked against it, while PI-authored text remains authoritative for biography. Monograms remain the default; any generated illustration requires repository provenance, accurate alt text, non-photographic presentation, and PI selection.
+Scholar creation stays review-led. The PI supplies the name, slug, biography, and assignment. `scholars.json` is the operational source for names, permanent slugs, monograms, and current Projects; a validator rejects duplicates, malformed records, and unknown Projects. Disciple Dee Duplo is now the fourth public Scholar, faithfully using the supplied biography and a null assignment rather than an invented Project. The public profiles are checked against the roster, while PI-authored text remains authoritative for biography. Monograms remain the default; any generated illustration requires repository provenance, accurate alt text, non-photographic presentation, and PI selection.
+
+Pausing is now operational: record the PI instruction, set state and public labels to Paused, preserve reports and assignments unless separately changed, and disable the external schedule. NFL Team Fandom Identities is paused under this procedure; its findings remain published.
 
 ## Manual gates
 
-After the normal September 13 publication, a September 14 public probe found all 109 expected production files byte-identical. That closes the expected-byte check but cannot find remote-only files. Deployment now refuses success when an authenticated post-transfer checksum/inventory dry run reports a missing, changed, or extra path; this new phase awaits observation in the next normal workflow. End-to-end automation still requires witnessed success and failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology; no local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
+September 14 and September 15 pre-iteration public probes found all 109 files in the previous checkout byte-identical. This iteration adds a fourth profile, making 110 expected files, so the changed tree needs normal deployment and another probe. HTTP cannot find remote-only files. Deployment refuses success when an authenticated post-transfer checksum/inventory dry run reports a missing, changed, or extra path; that phase awaits host-side observation. End-to-end automation still requires witnessed success and failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology; no local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
 
-The approved dialog redesign also remains coordinated future work: one immutable timestamped file per iteration plus a newest-first index, changed together across the orientation, template, runner prompt, active Projects, and verifier.
+The approved dialog redesign now has an operational runbook: Dr. Jones first changes the PI-owned runner prompt and starts one canary; the Scholar then migrates all Projects atomically, preserves legacy bytes, updates guidance/template/tests, and creates bounded indexes. Scholars will read the full charter and state, the 20-entry landing index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Until the runner trigger, the append-only rule remains in force.
 
 ## References
 

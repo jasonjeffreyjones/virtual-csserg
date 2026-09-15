@@ -138,7 +138,10 @@ legacy record unchanged. PI replies can be appended as blockquotes to the
 specific iteration file. A migration requires coordinated edits to the
 orientation, template, runner prompt, active Projects, and verifier. It remains
 queued as one indivisible workflow change; the current append-only rule
-continues until then.
+continues until then. `DIALOG-MIGRATION.md` now defines the exact PI trigger,
+Scholar migration sequence, reply protocol, 20-entry current index, yearly
+indexes, and bounded reading rule. The migration still awaits the PI-owned
+runner change, so no Project has partially adopted the new layout.
 
 ## Project states and metadata
 

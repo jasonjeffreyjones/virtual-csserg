@@ -1,16 +1,27 @@
 ---
 title: "NFL Team Fandom Identities"
-status: Active
-updated: 2026-09-11T03:14:50Z
+status: Paused
+updated: 2026-09-15T08:01:04Z
 ---
 
 # NFL Team Fandom Identities — Current State
 
-Updated September 11, 2026 by Aleph Initial Alpha.
+Updated September 15, 2026 by Bee Boring Vanilla to implement Dr. Jones'
+pause instruction.
+
+## Status
+
+Paused by Dr. Jones on September 15, 2026. The pause deprioritizes otherwise
+feasible new research; it does not retract the verified findings or remove the
+three published report forms. Aleph Initial Alpha remains the recorded Scholar
+assignment unless the PI reassigns them. Dr. Jones must disable any external
+scheduled invocation for this Project; host scheduler state is not stored in
+this public repository.
 
 ## Current focus and decisions
 
-RQ1 remains the priority. Operative PI guidance is recorded in legacy `PI.md`:
+On resumption, RQ1 remains the priority. Operative PI guidance is recorded in
+legacy `PI.md`:
 use **prevalence ratio**, define it and relate it to risk ratio, lead with an
 unweighted descriptive comparison, and attempt demographic weighting in the
 full report appendix. The PI confirmed that tracker non-fans are explicit No
@@ -92,13 +103,17 @@ ordinary build-only ReportLab/pypdf packages supplied PDF production in the
 existing Python runtime. No system runtime was installed or replaced.
 Quarto required a writable cache path via XDG_CACHE_HOME; details in BUILD.md.
 
-## Next steps and PI question
+## Work on resumption and PI question
 
-1. PI question: Is the primary-host one-week response intentional, or should
-   those endpoints expose the advertised cumulative snapshot? Current work
-   proceeds using the fixed archive; no answer is required to use this report.
-2. Recover or archive the exact historical August 28 input files if available.
-3. Evaluate equal-respondent weighting and calendar composition sensitivity;
+No Scholar should begin another research iteration until Dr. Jones explicitly
+resumes the Project and re-enables its host schedule. On resumption:
+
+1. Record the PI's resume instruction, change `status` to `Active`, and set
+   `updated` to that intervention time before scheduling new work.
+2. Revisit the open question: Is the primary-host one-week response intentional,
+   or should those endpoints expose the advertised cumulative snapshot?
+3. Recover or archive the exact historical August 28 input files if available.
+4. Evaluate equal-respondent weighting and calendar-composition sensitivity;
    current intervals do not handle common date shocks.
-4. Add uncertainty for demographic sensitivity if it becomes substantively useful.
-5. Continue RQ1 before expanding to all-team RQ2 or weekly-season RQ3.
+5. Add uncertainty for demographic sensitivity if it becomes substantively
+   useful, and continue RQ1 before expanding to RQ2 or RQ3.

@@ -47,6 +47,7 @@ class PageParser(HTMLParser):
         self.ids = []
         self.in_title = False
         self.main_count = 0
+        self.project_statuses = []
         self.project_updates = []
         self.references = []
         self.text_parts = []
@@ -68,6 +69,9 @@ class PageParser(HTMLParser):
         if tag == "a" and "project-row" in attributes.get("class", "").split():
             self.assignment = {"href": attributes.get("href", ""), "text": []}
         if attributes.get("data-project"):
+            self.project_statuses.append(
+                (attributes["data-project"], attributes.get("data-status", ""))
+            )
             self.project_updates.append(
                 (attributes["data-project"], attributes.get("data-updated", ""))
             )
@@ -188,6 +192,7 @@ def check_repository_documents():
         "README.md",
         "RESEARCHER-ORIENTATION.md",
         "projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md",
+        "projects/vcsserg-repo-v1/DIALOG-MIGRATION.md",
         "python/create_project.py",
         "python/scholar_roster.py",
         "scholars.json",
@@ -202,12 +207,26 @@ def check_repository_documents():
         for expected in (
             "## Create a Project",
             "## Create a Scholar",
+            "## Pause or resume a Project",
             "python3 python/create_project.py",
             "python3 python/scholar_roster.py",
             "scholars.json",
         ):
             if expected not in guide:
                 problems.append(f"growth guide missing {expected!r}")
+
+        migration = (
+            PROJECT_ROOT / "projects/vcsserg-repo-v1/DIALOG-MIGRATION.md"
+        ).read_text(encoding="utf-8")
+        for expected in (
+            "## Steps Dr. Jones must take to begin",
+            "## Steps the migration Scholar will take next",
+            "## PI–Scholar exchange after migration",
+            "## How much history Scholars read",
+            "at most the 20 most recent iteration records",
+        ):
+            if expected not in migration:
+                problems.append(f"dialog migration runbook missing {expected!r}")
 
         try:
             scaffold_path = PROJECT_ROOT / "python/create_project.py"
@@ -273,9 +292,13 @@ def check_project_memory():
         ).strip():
             problems.append(f"{project.name} has no valid metadata title")
         updated = metadata.get("updated")
-        if project.name != "_template" and not updated:
+        if (
+            project.name != "_template"
+            and metadata.get("status") != "Proposed"
+            and not updated
+        ):
             problems.append(f"{project.name} has no substantive update date")
-        elif project.name != "_template" and (
+        elif project.name != "_template" and updated is not None and (
             not isinstance(updated, str)
             or not re.fullmatch(
                 r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}Z)?", updated
@@ -430,13 +453,17 @@ def check_public_catalogs():
             try:
                 metadata = read_state_metadata(path)
                 updated = metadata.get("updated")
+                status = metadata.get("status")
             except (ValueError, json.JSONDecodeError) as error:
                 problems.append(f"{path.name} STATE.md metadata: {error}")
                 updated = ""
-            project_records.append((path.name, updated or ""))
+                status = ""
+            if status == "Proposed":
+                continue
+            project_records.append((path.name, updated or "", status or ""))
     expected_projects = {
         name: WEBSITE_ROOT / "projects" / name / "index.html"
-        for name, _ in project_records
+        for name, _, _ in project_records
     }
     project_index_path = WEBSITE_ROOT / "projects" / "index.html"
     project_index_targets = set()
@@ -458,15 +485,23 @@ def check_public_catalogs():
                 "every project exactly once"
             )
         expected_order = [
-            name for name, _ in sorted(project_records, key=lambda item: item[1], reverse=True)
+            name
+            for name, _, _ in sorted(
+                project_records, key=lambda item: item[1], reverse=True
+            )
         ]
         if listed_projects != expected_order:
             problems.append("website/projects/index.html does not follow STATE.md update order")
         listed_update_map = dict(project_index.project_updates)
-        for name, updated in project_records:
+        listed_status_map = dict(project_index.project_statuses)
+        for name, updated, status in project_records:
             if listed_update_map.get(name) != updated:
                 problems.append(
                     f"website/projects/index.html has stale update metadata for {name}"
+                )
+            if listed_status_map.get(name) != status:
+                problems.append(
+                    f"website/projects/index.html has stale lifecycle status for {name}"
                 )
 
     for name, page in expected_projects.items():
@@ -574,20 +609,34 @@ def check_public_catalogs():
             roster_match.group(1) if roster_match else "",
             flags=re.MULTILINE,
         )
-        if page.is_file() and bio_match:
+        if bio_match:
             expected_bio = " ".join(bio_match.group(1).split())
+        else:
+            dialog = (
+                PROJECT_ROOT / "projects/vcsserg-repo-v1/DIALOG.md"
+            ).read_text(encoding="utf-8")
+            dialog_bio_match = re.search(
+                rf'The bio for `{re.escape(name)}` is "([^"\n]+)"', dialog
+            )
+            expected_bio = dialog_bio_match.group(1) if dialog_bio_match else ""
+
+        if not expected_bio:
+            problems.append(f"rostered Scholar {name} has no PI-authored biography source")
+        elif page.is_file():
             page_text = parse_page(page).text
             def normalize_bio(value):
                 value = value.replace("’", "'").replace(" ", " ")
                 return re.sub(r"\s+([,.;:!?])", r"\1", value)
 
             if normalize_bio(expected_bio) not in normalize_bio(page_text):
-                problems.append(f"initial Scholar {name} profile omits or alters the charter biography")
+                problems.append(
+                    f"rostered Scholar {name} profile omits or alters its PI-authored biography"
+                )
 
     return Result(
         "Public project and Scholar catalogs",
         not problems,
-        "all documented projects and rostered Scholars are published, assigned, and linked"
+        "all publication-eligible Projects and rostered Scholars are published, assigned, and linked"
         if not problems else "; ".join(problems),
     )
 
@@ -597,7 +646,9 @@ def check_report_formats():
     problems = []
     projects = sorted(
         path for path in (PROJECT_ROOT / "projects").iterdir()
-        if path.is_dir() and path.name != "_template"
+        if path.is_dir()
+        and path.name != "_template"
+        and read_state_metadata(path).get("status") != "Proposed"
     )
 
     for project in projects:

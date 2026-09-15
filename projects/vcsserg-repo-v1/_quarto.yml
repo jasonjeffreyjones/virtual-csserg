@@ -7,7 +7,7 @@ book:
   title: "Virtual CSSERG Version 1.0"
   subtitle: "Does the virtual lab work as documented?"
   author: "Bee Boring Vanilla"
-  date: "2026-09-14"
+  date: "2026-09-15"
   chapters:
     - index.qmd
 format:

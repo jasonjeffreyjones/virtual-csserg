@@ -661,3 +661,77 @@ Below are log entries from Scholars. This is an append-only file.
 > The bio for `Disciple Dee Duplo` is "Dr. Jones is my leader and role model. I match his writing style. I match his thinking style. I match his research habits. If my research were ever confused for Dr. Jones', it would be the highest compliment I could ever receive."
 >
 > I would like to pause the nfl-team-fandom-identities Project. Describe the process for doing so.
+
+## 2026-09-15 — Bee Boring Vanilla — Dialog protocol, fourth Scholar, and Project pause
+
+- Starting work time: 2026-09-15 08:01:42 UTC (first recorded server time).
+- Scope: Answer the PI's dialog-migration questions operationally, add Disciple
+  Dee Duplo without inventing an assignment or biography detail, implement and
+  document the requested NFL Team Fandom Identities pause, and keep Version 1
+  evidence and reports synchronized.
+- Context and resources: Read repository/researcher guidance, my complete
+  Scholar directory, the v1 charter/state/full dialog, current governance,
+  audit, build, verifier, runner, roster, public pages, and the NFL charter,
+  state, and dialog. Used the supplied 2-CPU, 3.7-GiB RAM, 4-GiB swap, and
+  65-GiB-free host conservatively. No agents, credentials, `.env`, runner edit,
+  manual deployment, or replacement runtime was used.
+- Production evidence: Before changing the checkout, the credential-free probe
+  again found all 109 expected files byte-identical to production. The new
+  profile makes the changed tree 110 files, so this evidence does not substitute
+  for the normal post-iteration deployment and follow-up probe. HTTP still
+  cannot discover remote-only paths.
+- Dialog protocol: Added `DIALOG-MIGRATION.md`, defining the target file tree,
+  byte-preserved legacy copy, filename and no-overwrite rule, the exact five PI
+  trigger steps, six subsequent Scholar steps, canary/rollback boundary, and
+  PI-blockquote feedback flow. `DIALOG.md` will be a bounded landing page with
+  at most 20 recent links and complete yearly indexes. Scholars will read the
+  full charter/state/index, active PI guidance, the newest three records, their
+  own newest record, and cited older records as needed—not the entire corpus.
+  The current append-only protocol remains operative until the PI-owned runner
+  prompt changes; no partial migration was performed.
+- Scholar addition: Added Disciple Dee Duplo to `scholars.json` with the supplied
+  permanent slug, unique `DDD` monogram, and `current_project: null` because no
+  assignment was supplied. Added the complete PI-authored biography to a new
+  profile and linked it from the selected Scholar directory and homepage. The
+  responsive roster grid now accommodates four cards. No scheduler invocation
+  should exist until the PI assigns a Project.
+- Project pause: Changed NFL Team Fandom Identities from Active to Paused at the
+  PI intervention time and recorded the transition in its state and dialog.
+  Updated the public Projects directory, Executive Summary, homepage, and Aleph
+  profile. Findings, report files, and Aleph's roster assignment are preserved;
+  the public pause is not a retraction. The creation guide now gives exact pause
+  and resume steps. Dr. Jones must disable its external schedule, which public
+  repository files cannot inspect.
+- Verifier correction: The new Proposed Ipseity Daily Pulse scaffold exposed a
+  contradiction between the no-empty-publication procedure and the old verifier.
+  Proposed Projects may now validly retain `updated: null` and remain outside
+  publication/catalog gates; all other lifecycle states remain covered. The
+  public Project index now carries and is checked against exact lifecycle status.
+  The catalog check also verifies non-charter Scholar biographies against
+  PI-authored dialog text.
+- Publication: Updated and cleanly re-rendered the v1 Quarto Full Report and
+  two-page, two-column PDF, then updated the one-figure Executive Summary, audit,
+  recommendations, current state, public indexes, and homepage. Installed only
+  the documented ordinary ReportLab/pypdf build packages into `/tmp`; they are
+  not production dependencies. Visual inspection of both PDF pages found no
+  clipping or overlap.
+- Validation: The roster reports four Scholars and three assignments. All 12 v1
+  unit tests pass. VCSSERG v1, Predict the Self, and NFL project publication
+  verifiers pass. All seven promise groups pass across five Project/template
+  memory directories, 26 HTML pages, six first-party stylesheets, three
+  publication-eligible report sets, the runner wiring, and guarded deployment.
+  Python compilation, runner shell syntax, and `git diff --check` pass.
+- Problems and limitations: Graphical HTML, keyboard, and assistive-technology
+  checks remain unavailable because no Chromium, Chrome, or Firefox executable
+  is installed. Host-side scheduler state, the deployment's authenticated
+  inventory result, the complete workflow failure path, substantive review, and
+  superseded-report archiving remain outside this iteration.
+- PI actions and next steps: First disable the NFL schedule. For the dialog
+  migration, let this iteration deploy, pause all Scholar schedules, apply the
+  runner-prompt trigger in `DIALOG-MIGRATION.md`, commit it, and launch one Bee
+  v1 canary. After the Scholar migration and validation pass, resume Active
+  schedules only. Then confirm the 110-file public probe and host inventory.
+- PI question: None blocking. Disciple Dee Duplo remains intentionally
+  unassigned until the PI supplies a Project.
+- Ending work time: 2026-09-15 08:16:05 UTC.
+- Time spent: 863 seconds (14 minutes 23 seconds).

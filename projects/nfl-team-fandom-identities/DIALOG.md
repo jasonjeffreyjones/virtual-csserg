@@ -20,3 +20,25 @@ Ongoing append-only record under RESEARCHER-ORIENTATION.md. Earlier Scholar entr
 - **PI question:** Should the primary-host microdata endpoints expose the advertised cumulative files, or is their one-week content intentional? The archive permits useful work while this is unresolved.
 - **Next steps:** Recover the exact August 28 inputs if available; evaluate equal-respondent weighting and calendar-composition sensitivity; consider weighted uncertainty before stronger claims; retain RQ1 priority before expanding RQ2/RQ3.
 - **Handoff:** STATE, METHODS, data notes, and BUILD instructions updated. Website artifacts are ready for the automatic post-iteration commit/push/deploy; no manual deployment or messages to third parties were performed.
+
+## 2026-09-15 — Project paused by PI direction
+
+- **Decision time:** 2026-09-15 08:01:04 UTC (iteration preflight time used for
+  the PI intervention recorded in the VCSSERG v1 dialog).
+- **Authority and reason:** Dr. Jones explicitly asked to pause this Project.
+  Under the approved lifecycle vocabulary, Paused means the PI has intentionally
+  deprioritized otherwise feasible work; it is not a research blocker or a
+  retraction of results.
+- **Repository implementation:** `STATE.md` now records `status: Paused`, the
+  decision time, the unchanged findings, and the conditions for resumption. The
+  public Projects directory, homepage, Executive Summary, and Aleph Initial
+  Alpha's assignment label disclose the pause. Aleph's roster assignment is
+  preserved because no reassignment was requested.
+- **Host action for Dr. Jones:** Disable any scheduled invocation of
+  `run-scholar.sh` for NFL Team Fandom Identities. Scheduler configuration is
+  intentionally outside this public repository and cannot be changed or
+  verified by a Scholar iteration.
+- **Resume process:** Dr. Jones records an explicit resume instruction and
+  re-enables scheduling; the next Scholar changes the state to Active, records
+  that intervention, reviews the saved open question and next steps, and only
+  then resumes research.

@@ -1,29 +1,35 @@
 ---
 title: "Virtual CSSERG Version 1.0"
 status: Active
-updated: 2026-09-14T08:09:07Z
+updated: 2026-09-15T08:16:05Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 14, 2026, all seven automated promise groups pass and all
-109 expected production files are byte-identical to the pre-iteration checkout.
-Version 1.0 is not complete. The new authenticated remote-inventory check still
-needs an observed deployment; a witnessed Scholar workflow, rendered
-accessibility/usability, and substantive review also remain open.
+Active. On September 15, 2026, all seven automated promise groups pass across
+26 HTML pages and six first-party stylesheets. A pre-iteration public probe
+reconfirmed all 109 files in the previous checkout byte-for-byte; the new
+Scholar profile raises the current tree to 110 expected files, so it needs the
+normal deployment and another probe. Version 1.0 is not complete. The
+authenticated remote-inventory phase still needs host-side observation; a
+witnessed Scholar workflow, rendered accessibility/usability, and substantive
+review also remain open.
 
 ## Completed work and current evidence
 
 - Every Project and `_template` has `PROJECT.md`, `STATE.md`, and `DIALOG.md`.
-  State front matter now supplies authoritative `title`, lifecycle `status`, and
+  State front matter supplies authoritative `title`, lifecycle `status`, and
   substantive `updated` metadata. The Projects page order and timestamps are
-  verified against those records.
-- The public homepage, Projects directory, and Scholar directory link all three
-  Projects and initial Scholars. Profiles contain the complete charter
-  biographies. Primary headers use internal navigation; branded footers retain
-  PI, CSSERG, GitHub, and CC BY 4.0 links.
+  verified against those records; Proposed scaffolds remain private until a
+  substantive iteration produces all report forms.
+- The public homepage and Projects directory link all three publication-eligible
+  Projects, while the Scholar directory links four rostered Scholars. The three
+  initial profiles contain the
+  complete charter biographies; Disciple Dee Duplo's profile contains the exact
+  PI-supplied biography. Primary headers use internal navigation; branded
+  footers retain PI, CSSERG, GitHub, and CC BY 4.0 links.
 - Dr. Jones selected Executive Summary A and Scholar-directory A. Production
   now uses the evidence brief (question, status, one figure, linked findings)
   and portrait roster (equal monogram cards and authoritative profile links).
@@ -44,7 +50,9 @@ accessibility/usability, and substantive review also remain open.
   cover personalization, completeness, unsafe inputs, and immutability on a
   repeated request.
 - `scholars.json` is the single operational source for Scholar names, permanent
-  slugs, monograms, and current Project assignments. The read-only
+  slugs, monograms, and current Project assignments. It now records four
+  Scholars and three assignments; Disciple Dee Duplo is explicitly unassigned
+  rather than given an invented Project. The read-only
   `python/scholar_roster.py` validator rejects malformed records, duplicates,
   and unknown Projects. The v1 verifier checks homepage/directory membership,
   profile monograms, assignment targets, and assignment titles against it;
@@ -58,13 +66,23 @@ accessibility/usability, and substantive review also remain open.
   of the current public tree when a build is incomplete.
 - `CREATING-PROJECTS-AND-SCHOLARS.md` documents the six approved lifecycle
   states, update semantics, Project creation/publication, review-led Scholar
-  creation, and the approved provenance safeguards for generated illustrations.
-  `_template` and the root README lead users to the process.
+  creation, Project pause/resume, and the approved provenance safeguards for
+  generated illustrations. `_template` and the root README lead users to the
+  process.
+- NFL Team Fandom Identities now records the PI-directed Paused lifecycle state
+  in its state, dialog, public summary, Projects listing, homepage, and assigned
+  Scholar profile. Its findings, reports, and Aleph's assignment are preserved.
+- `DIALOG-MIGRATION.md` now specifies the previously underspecified coordinated
+  change: PI runner trigger, canary, all-Project Scholar migration, legacy-byte
+  preservation, PI reply convention, bounded 20-entry landing index with yearly
+  indexes, and exact reading expectations. The current protocol remains in
+  force until the PI changes the runner.
 - The standard-library public parity probe compares every expected website file
-  byte without credentials. The September 14 post-deployment run found all 109
-  expected files identical, improving on the September 13 pre-deployment result
-  of 73 identical, 10 different, and 26 unavailable. HTTP cannot discover
-  remote-only files.
+  byte without credentials. September 14 and September 15 pre-iteration runs
+  found all 109 then-expected files identical, improving on the September 13
+  result of 73 identical, 10 different, and 26 unavailable. The current tree
+  adds one profile and awaits deployment. HTTP cannot discover remote-only
+  files.
 - The guarded deployment now follows its deleting transfer with an authenticated
   recursive checksum/inventory dry run and exits nonzero on any residual
   missing, changed, or extra path. Mocked success, detected drift, subprocess
@@ -78,9 +96,9 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups pass across 25 HTML pages and six first-party stylesheets.
-The checks now include validated roster/assignment data and exact footer-link
-group placement.
+All seven groups pass across 26 HTML pages and six first-party stylesheets.
+The checks now include validated roster/assignment data, PI-source biography
+fidelity, exact Project lifecycle status, and footer-link group placement.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files; the mocked
@@ -105,37 +123,49 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 - `scholars.json` governs operational roster and current assignments;
   biographies remain grounded in PI-authored records. Scholar creation stays
   review-led even though the data source is now specified.
+- An unassigned roster value is explicit and public; it does not authorize a
+  scheduler invocation or imply a Project assignment.
+- Pausing preserves evidence, publication, and a current assignment unless the
+  PI separately directs retraction, archiving, or reassignment. The PI disables
+  and later re-enables the external schedule.
 - Footer links use two semantic groups everywhere: About (PI, CSSERG) and Open
   work (GitHub, license).
 - The single append-only `DIALOG.md` remains operative until the approved
   immutable-per-iteration migration can update orientation, template, runner,
-  active Projects, and verifier together.
+  every Project, and verifier together. After migration, Scholars will read the
+  bounded index, all active PI guidance, the newest three records, their own
+  most recent record, and cited older material when needed—not the entire corpus.
 
 ## Current problems and manual gates
 
 - Observe the next normal deployment's checksum/inventory dry run complete with
-  no missing, changed, or remote-only paths; then re-run the public byte probe
-  against the new checkout.
+  no missing, changed, or remote-only paths; then verify all 110 current files
+  with the public byte probe.
 - Witness one complete Scholar workflow, including success and failure paths.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive technology. No installed Chromium, Chrome, or Firefox executable is
   available on this host.
 - Specify superseded-report archiving.
-- Migrate dialog storage only as one coordinated workflow change.
+- Dr. Jones must disable the external NFL schedule to complete the operational
+  side of the pause; repository files cannot observe host scheduler state.
+- Dr. Jones must change the PI-owned runner prompt and launch one VCSSERG v1
+  canary before a Scholar performs the coordinated dialog migration.
 
 ## Resources and limitations
 
-September 14 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 15 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
-rsync 3.2.7 were usable. No Chromium, Chrome, or Firefox executable was found.
-Existing temporary build-only ReportLab/pypdf packages rendered and validated
-the two-page v1 PDF; they are not production dependencies. No package or system
-runtime was installed or replaced in this iteration.
+rsync 3.2.7 are available. No Chromium, Chrome, or Firefox executable was found.
+ReportLab/pypdf are not installed in the base Python environment; any PDF build
+uses the documented temporary build-only packages, not production dependencies.
+No system runtime was installed or replaced in this iteration.
 
 ## Important files
 
 - `V1-AUDIT.md`: current promise/evidence matrix and manual gates.
 - `V1-RECOMMENDATIONS.md`: approved design/governance decisions and rollout.
+- `DIALOG-MIGRATION.md`: exact PI trigger, Scholar migration plan, reply
+  protocol, and bounded-reading rule for immutable-per-iteration dialog.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `scholars.json` and `python/scholar_roster.py`: authoritative operational
@@ -159,9 +189,9 @@ runtime was installed or replaced in this iteration.
 
 ## Unresolved PI questions and likely next steps
 
-No blocking PI question. Next, confirm the new deployment-side inventory phase
-in the post-iteration result, re-run expected-byte parity, witness a complete
-workflow and its failure path, perform browser/keyboard/assistive-technology and
-substantive review, and define superseded-report archiving. The immutable-dialog
-migration still requires a coordinated PI change because Scholars may not edit
-the runner.
+No blocking PI question. Dr. Jones has two host-side actions: disable the NFL
+schedule to complete that pause, and later apply the runner trigger in
+`DIALOG-MIGRATION.md` when ready for the dialog canary. After this iteration,
+confirm the deployment inventory and 110-file byte parity. Then witness the
+workflow failure path, perform browser/keyboard/assistive-technology and
+substantive review, and define superseded-report archiving.

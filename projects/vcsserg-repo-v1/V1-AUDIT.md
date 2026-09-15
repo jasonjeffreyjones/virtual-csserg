@@ -16,19 +16,19 @@ still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 14, 2026 |
+| Documented promise | Evidence or test | Status on September 15, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold, validated Scholar roster | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
-| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 25 HTML pages and 6 first-party stylesheets |
-| Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, charter biographies | Automated pass |
-| Every Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
+| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets |
+| Publication-eligible Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, PI-authored biographies | Automated pass; Proposed scaffolds remain private |
+| Every publication-eligible Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; public expected-file probe | Automated pass; all 109 expected production files match, while the new remote-inventory phase awaits an observed deployment |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; public expected-file probe | Automated pass; all 109 pre-iteration files matched production, while the changed 110-file tree and remote-inventory phase await observed deployment |
 
 ## Current automated result
 
-On September 14, 2026, **all seven groups pass**. The final report-format gap
+On September 15, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -44,6 +44,11 @@ publication structure:
   roster, slug, monogram, and current-assignment data. Public profiles are
   checked against it and Project title metadata. Every footer now places its
   required links into the approved About and Open work groups.
+- On September 15, the roster and selected public directory gained Disciple Dee
+  Duplo with the exact PI-supplied biography, monogram `DDD`, and no invented
+  Project assignment. The NFL Project was changed to Paused without altering
+  its reports or Aleph's assignment. A new migration runbook specifies the
+  remaining dialog coordination rather than treating it as a vague next step.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. The manual gates remain open.
@@ -90,7 +95,10 @@ The September 13 pre-iteration expected-file probe found 73 of 109 production
 files byte-identical, 10 different, and 26 unavailable. After the normal
 automation published that iteration, the September 14 probe found all 109
 expected files byte-identical, with none different or unavailable. This closes
-the public expected-byte check. Because HTTP cannot discover remote-only files,
+the public expected-byte check for that checkout; the September 15 pre-iteration
+probe reproduced the 109-of-109 result. The current iteration creates a 110th
+file and changes public pages, so parity must be checked again after deployment.
+Because HTTP cannot discover remote-only files,
 the deployment component now follows its deleting transfer with an authenticated
 checksum dry run and exits nonzero if any missing, changed, or extra path
 remains. That inventory phase is mocked and regression-tested here but needs one
@@ -99,16 +107,17 @@ observed normal deployment before the complete parity gate closes.
 ## Other current requirements
 
 - The Project directory exists at `website/projects/index.html` and is ordered
-  by authoritative `STATE.md` metadata: VCSSERG v1, NFL Team Fandom Identities,
-  then Predict the Self. The verifier rejects stale timestamps or order.
+  by authoritative `STATE.md` metadata. The verifier rejects stale timestamps,
+  status labels, or order.
 - Homepage copy now reads “Research Updates from Virtual CSSERG.” Primary
   headers contain internal Home/Projects/Scholars navigation; external CSSERG,
   PI, GitHub, and license links remain in footers.
 - Executive Summary A and Scholar-directory A are production defaults by PI
   decision. Their two three-way comparison sets remain dated decision archives.
-- All three initial Scholar profiles now contain the complete biographies
-  supplied in the charter. `scholars.json` separately governs the operational
-  roster and assignments.
+- All three initial Scholar profiles contain the complete charter biographies,
+  and Disciple Dee Duplo's profile contains the complete biography supplied in
+  PI dialog. `scholars.json` separately governs the four-member operational
+  roster and three assignments.
 - `_template` provides the three required memory files plus setup, reporting,
   branding, publication, lifecycle, and update-metadata guidance. A tested
   command creates a personalized no-overwrite scaffold without publishing it;

@@ -8,18 +8,22 @@
 ## Executive finding
 
 Virtual CSSERG now has a working static publication layer, complete public
-Project and Scholar indexes, current project-memory files, a guarded deployment
+indexes for publication-eligible Projects and rostered Scholars, current
+project-memory files, a guarded deployment
 component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 14, 2026. The validated
+All seven automated promise groups pass on September 15, 2026. The validated
 `scholars.json` record now governs the operational roster and current
 assignments, while PI-authored charters and dialog remain authoritative for
 biography. Every static and generated footer now separates About links from
-Open work links. All 109 expected production files match the repository
-byte-for-byte. Remote-only inventory, a witnessed end-to-end run, rendered
-accessibility, and substantive review remain manual gates.
+Open work links. A September 15 pre-iteration probe reconfirmed that all 109
+files in that checkout matched production byte-for-byte. This iteration adds a
+fourth public Scholar profile, so the changed 110-file tree needs the normal
+deployment and a new parity check. Remote-only inventory, a witnessed
+end-to-end run, rendered accessibility, and substantive review remain manual
+gates.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -56,8 +60,10 @@ catalogs. Primary headers link only inside Virtual CSSERG. Every footer links
 Dr. Jason Jeffrey Jones, CSSERG, the public repository, and the CC BY 4.0
 International license.
 
-The Projects page contains one entry per Project and orders them by the newest
-substantive Scholar iteration or PI intervention. Version 1 replaces hand-kept
+The Projects page contains one entry per publication-eligible Project and orders
+them by the newest substantive Scholar iteration or PI intervention. Proposed
+scaffolds stay private until substantive work produces the required reports.
+Version 1 replaces hand-kept
 dates as the implicit source of truth with `title`, `status`, and `updated`
 metadata at the top of each `STATE.md`. The verifier now derives the expected
 ordering from those records and requires the public `data-updated` values to
@@ -65,9 +71,11 @@ match.
 
 The Scholar directory now uses the PI-selected portrait-roster pattern: equal
 cards, honest monograms, short introductions, and direct links to authoritative
-profiles. The three initial profiles reproduce the full charter biographies.
-The directory is designed to scan quickly rather than duplicate those
-biographies.
+profiles. The three initial profiles reproduce the full charter biographies;
+Disciple Dee Duplo's new profile reproduces the biography supplied by the PI
+in dialog. The operational roster records the new Scholar as unassigned because
+no Project assignment was supplied. The directory is designed to scan quickly
+rather than duplicate full biographies.
 
 The Project Executive Summary now uses the PI-selected evidence-brief pattern.
 It asks the Project question, reports status without presenting it as a
@@ -81,8 +89,8 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 | Repository guidance | Pass | Required guidance, growth procedure, and scaffold command exist. |
 | Project memory | Pass | Every Project and `_template` has the three memory files and valid state metadata. |
 | Static HTML/CSS | Pass | Public pages have basic semantics, branding, complete footer links, Bootstrap, and resolvable local references. |
-| Public catalogs | Pass | Every Project and initial Scholar is linked; biographies and metadata-derived update order agree with their sources. |
-| Three report forms | Pass | Every Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
+| Public catalogs | Pass | Every Project and rostered Scholar is linked; biographies, assignments, and metadata-derived update order agree with their sources. |
+| Three report forms | Pass | Every publication-eligible Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Shell syntax and required lock, pull, commit, push, logging, and deploy wiring are present. |
 | Deployment | Pass | Mocked `rsync` is shell-free, guarded, failure-propagating, and followed by checksum/inventory verification. |
 
@@ -125,6 +133,18 @@ Projects. The Version 1 verifier then checks every homepage and directory link,
 profile monogram, assignment target, and assignment title against that record.
 Biography fidelity remains a separate check against PI-authored source text.
 
+The September 15 addition of Disciple Dee Duplo exercised the unassigned path:
+the PI supplied the name, permanent slug, and biography; the roster uses unique
+monogram `DDD` and a null assignment; and the public profile says that it is
+awaiting assignment rather than inventing one.
+
+Pausing a Project now also has an explicit procedure. A PI instruction changes
+the state to Paused and advances its substantive-update time; reports and roster
+assignments remain unless the PI separately retracts or reassigns them; public
+labels disclose the pause; and the PI disables the external schedule. NFL Team
+Fandom Identities now follows that procedure. Repository files cannot verify
+host scheduler state.
+
 Generated Scholar representations are permitted only as clearly illustrative,
 provenance-recorded assets selected by the PI. Monograms remain canonical by
 default. The complete procedure is in
@@ -153,11 +173,11 @@ rendered accessibility as a manual gate.
 
 Four kinds of evidence remain outside this run:
 
-- **Deployment inventory.** A September 14 public probe found all 109 expected
-  files byte-identical after the normal publication of the September 13
-  iteration. Public HTTP cannot enumerate remote-only files. The deployment now
-  follows transfer with an authenticated checksum/inventory dry run, but that
-  new phase still needs observation in a normal post-iteration workflow.
+- **Deployment inventory.** September 14 and September 15 pre-iteration public
+  probes found all 109 then-expected files byte-identical. Public HTTP cannot
+  enumerate remote-only files, and the new 110-file tree has not yet been
+  deployed. The deployment follows transfer with an authenticated
+  checksum/inventory dry run, but that phase still needs host-side observation.
 - **Observed automation.** Witness one complete Scholar run, including its log,
   commit, push, deploy, success behavior, and safe failure behavior.
 - **Rendered usability.** Inspect representative pages at desktop and phone
@@ -172,12 +192,14 @@ Local CSS preserves core layout and typography, but those remote resources
 still need network access for their intended presentation.
 
 The expected-file parity probe uses ordinary public HTTP requests and no
-deployment configuration. Its 109-of-109 result closes the expected-byte half
-of the gate. To cover remote-only paths, the deployment component now performs
-a recursive checksum dry run with deletion reporting after transfer and refuses
-success when the remote tree differs. This behavior passes mocked success,
-drift, command-failure, missing-command, port, and path-safety checks; live
-observation remains separate evidence.
+deployment configuration. Its repeated 109-of-109 pre-iteration result is
+evidence for the previous checkout, not the new Scholar profile and changed
+pages. After this iteration deploys, the same probe must cover all 110 files.
+To cover remote-only paths, the deployment component performs a recursive
+checksum dry run with deletion reporting after transfer and refuses success
+when the remote tree differs. This behavior passes mocked success, drift,
+command-failure, missing-command, port, and path-safety checks; live observation
+remains separate evidence.
 
 ## Remaining work {#remaining-work}
 
@@ -186,13 +208,15 @@ two-chapter Quarto build, exactly one dense Executive Summary figure, a linked
 two-column short PDF within the ten-page ceiling, reciprocal report links,
 guarded publishing, and the required Full Report phrase.
 
-The approved dialog migration also remains. It should replace the growing log
-with one immutable timestamped file per iteration and a newest-first index, but
-only through one coordinated change to orientation, template, runner prompt,
-active Projects, and verifier. Partial migration would leave contradictory
-instructions, and Scholars may not edit the PI-owned runner. A superseded-report
-archive policy also remains to be specified. Footer grouping and the durable
-roster/assignment source are now implemented and enforced.
+The approved dialog migration also remains, but it is no longer underspecified.
+The new
+[`DIALOG-MIGRATION.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/DIALOG-MIGRATION.md)
+defines the PI-owned runner trigger, all-Project migration sequence,
+Scholar-immutable iteration files, PI blockquote replies, a 20-entry current
+index with yearly archives, and the bounded history each Scholar must read.
+Partial migration would leave contradictory instructions, so the present
+append-only rule continues until Dr. Jones changes the runner and initiates one
+canary. A superseded-report archive policy also remains to be specified.
 
 The manual gates above now determine whether the charter's definition of done
 is actually satisfied. Version 1 should not be declared complete merely because
