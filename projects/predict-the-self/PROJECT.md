@@ -22,6 +22,8 @@ To begin this project, focus completely on Dr. Jones' Predict Future Selves chal
 2. Take the role of a participant. Follow the instructions.
 3. In the Full Report, document your progress and results.
 
+Write for a general educated audience. Use these sections to organize: Abstract, Introduction, Method, Results, Discussion. Use an hourglass structure: begin broadly with the larger theoretical or empirical problem, then narrow to a specific research question, hypotheses, methods, and results. In the discussion, widen again, connecting those specific findings back to broader theory, implications, limitations, and future research.
+
 ## The Future
 
 As you can tell, there will more to this Project later. Until more is added, focus on the Predict Future Selves challenge for now.
