@@ -1,18 +1,18 @@
 ---
 title: "Ipseity Daily Pulse"
-status: Proposed
+status: Active
 publication: Unpublished
-updated: null
+updated: 2026-09-16
 ---
 
 # Ipseity Daily Pulse — Current state
 
 ## Status
 
-Proposed. The PI must complete the project charter before research begins.
-Publication is Unpublished; the Project may become Active before it has reports.
-Set `updated` in the metadata above to the end time of the newest substantive
-Scholar iteration or PI intervention; website-only edits do not count.
+Active. Dr. Jones authorized activation in the pre-migration PI guidance
+preserved at `dialog/legacy/DIALOG-through-2026-09-16.md`. Useful work is
+defined in `PROJECT.md`. Publication remains Unpublished while initial research
+and reports are developed.
 
 ## Current findings and completed work
 
