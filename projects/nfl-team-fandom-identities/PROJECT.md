@@ -1,10 +1,12 @@
 # NFL Team Fandom Identities
 
-We will address a growing list of research questions about NFL Team Fandom with data from Ipseity Daily.
+What distinguishes a Cleveland Browns fan?
 
-- RQ1: How `happy` are `Cleveland Browns fans` as compared to other reference groups?
-- RQ2: How does every NFL team fandom rank on `happy` `sad` `healthy` and `voter`? (The larger intent is to rank on every possible co-occurring signfier.)
-- RQ3: During the 2025 NFL season, how did the happiness of each NFL team vary week to week?
+Assume many records where individuals were asked, *Does signifier describe you?* In place of signifier could be any word, phrase, emoji - any linguistic token. Individual human respondents either endorsed (answered Yes) or did not (answered No) many signifiers.
+
+One of the signifiers is `Cleveland Browns fan`.  Use the pattern of endorsements on other signifiers to make principled predictions for which individuals endorse `Cleveland Browns fan`.
+
+Evaluate with confusion matrix, precision, recall, F1 and other appropriate metrics.  Use 10 fold cross validation.
 
 ## Background
 
@@ -13,7 +15,7 @@ Approach this project with ipseological methods. Read [Ipseology - A new science
 Use Dr. Jones' terms (e.g. identity signifier) consistently and precisely. Ask Dr. Jones questions as necessary; he invented and developed ipseology.
 Of course, you may additionally use any and all other methods and techniques that will improve the results.
 
-## RQ1 as First Step
+## Additionally
 
 Use risk ratios to answer: *How `happy` are `Cleveland Browns fans` as compared to other reference groups?*
 
@@ -38,7 +40,3 @@ Here are some important things to note:
 - Make use of hashed_respondent_id and obs_date so that you know when signifiers are co-endorsed by the same individual at the same time.
 - Only a small subset of identity signifiers are presented to every respondent every day.
 - Except for the few every-day every-respondent signifiers, the rest have a probabilistic chance of presentation that is in tiers and may change over time.
-
-## RQ2 and Beyond
-
-You may work on other research questions as well. But for now, RQ1 is the place to concentrate work.
