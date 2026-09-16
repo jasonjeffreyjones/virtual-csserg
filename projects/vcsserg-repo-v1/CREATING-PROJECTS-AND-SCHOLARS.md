@@ -35,8 +35,8 @@ Use exactly one lifecycle state:
 - **Archived:** a closed Project is retained but superseded or retired.
 
 Review and publication readiness are separate from lifecycle state. Whenever a
-state changes, record who changed it, when, and why in the Project dialog and
-summarize the operative decision in `STATE.md`.
+state changes, record who changed it, when, and why in the current immutable
+iteration record and summarize the operative decision in `STATE.md`.
 
 `updated` means the end time of the newest substantive Scholar iteration or PI
 intervention. Use an ISO 8601 UTC timestamp when a time is recorded, or the ISO
@@ -62,8 +62,8 @@ Then:
 1. Dr. Jones completes `projects/<project-slug>/PROJECT.md`. Only the PI edits
    the charter.
 2. Change the state from Proposed to Active only when work is authorized. Record
-   the change and its reason in `DIALOG.md` and set `updated` to that
-   intervention time.
+   the change and its reason in the next immutable iteration record and set
+   `updated` to that intervention time.
 3. Record the assignment in `scholars.json`, the Project state, and the
    Scholar's public profile. The Version 1 verifier rejects drift between the
    roster record, assignment link, and Project title. The PI's host-managed
@@ -97,11 +97,13 @@ default because it makes validation and no-overwrite behavior consistent.
 
 Pausing changes priority, not evidence. Use this sequence:
 
-1. Dr. Jones records an explicit pause instruction in Project dialog. Include a
-   reason when useful; a pause does not require a technical blocker.
+1. Dr. Jones appends an explicit pause instruction as a dated blockquote to the
+   newest relevant iteration record. Include a reason when useful; a pause does
+   not require a technical blocker. Keep that record linked under active PI
+   guidance until a Scholar incorporates the instruction.
 2. A Scholar sets the `STATE.md` lifecycle value to `Paused`, sets `updated` to
    the PI intervention time, and summarizes what remains valid and what work is
-   deferred. Append the state-change record to the Project dialog.
+   deferred. Record the state change in the current immutable iteration file.
 3. Preserve published reports, data, code, and the roster assignment unless the
    PI separately asks to retract, archive, or reassign them. Public status labels
    should say Paused so readers do not mistake publication for current activity.
@@ -109,11 +111,12 @@ Pausing changes priority, not evidence. Use this sequence:
    scheduler details remain outside the public repository, so a Scholar can
    record this required action but cannot verify it from repository files.
 
-To resume, Dr. Jones records an explicit resume instruction and re-enables the
-schedule. The next Scholar changes the state to Active, updates public labels
-and `updated`, reads the preserved state and relevant dialog, and continues the
-highest-value work. If a Scholar is reassigned during either transition, update
-`scholars.json`, their profile, and both affected Project states together.
+To resume, Dr. Jones appends an explicit resume instruction to the newest
+relevant iteration record and re-enables the schedule. The next Scholar changes
+the state to Active, updates public labels and `updated`, reads the preserved
+state and relevant dialog records, and continues the highest-value work. If a
+Scholar is reassigned during either transition, update `scholars.json`, their
+profile, and both affected Project states together.
 
 ## Create a Scholar
 
@@ -155,15 +158,27 @@ image provenance. Provide useful alt text, check small-screen crops, and do not
 imply an unsupported age, race, gender, body, location, credential, or lived
 history.
 
-## Still to coordinate
+## Dialog records
 
-The approved dialog migration requires one immutable file per iteration and a
-newest-first `DIALOG.md` index. Implement it in one coordinated change to
-`RESEARCHER-ORIENTATION.md`, `_template`, the runner prompt, every existing
-Project, and the verifier; do not partially switch formats. The PI-owned runner
-cannot be edited by Scholars, so this remains a PI-coordinated workflow change.
-The exact trigger, migration sequence, feedback convention, and bounded reading
-rule are specified in `DIALOG-MIGRATION.md`.
+The immutable-dialog protocol is now operative. Each iteration creates exactly
+one `dialog/iterations/YYYY-MM-DDTHHMMSSZ-scholar-slug.md` file, updates its
+complete yearly index, and adds the record newest-first to the bounded
+`DIALOG.md` landing page. The landing page retains no more than 20 recent
+iteration links. Scholars never alter an earlier record or write PI
+blockquotes; Dr. Jones appends feedback to the record he is answering.
+
+The creation command removes `_template`'s migration archive from each new
+scaffold and initializes a fresh dialog tree. `DIALOG-MIGRATION.md` records the
+completed coordination and the exact reading and feedback conventions.
+The one-time conversion was dry-run and then applied from the repository root:
+
+```bash
+python3 python/migrate_dialogs.py --through-date 2026-09-16
+python3 python/migrate_dialogs.py --through-date 2026-09-16 --apply
+```
+
+The command now refuses to overwrite the migrated layout; it remains versioned
+as executable evidence of the dry-run, no-overwrite, and all-Project procedure.
 
 Footer links are now grouped on every public page as **About** (Dr. Jones and
 CSSERG) and **Open work** (GitHub and CC BY 4.0). The verifier checks both the

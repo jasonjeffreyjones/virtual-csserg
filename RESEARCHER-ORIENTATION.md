@@ -26,7 +26,7 @@ Projects advance through repeated Scholar iterations. Each iteration should make
 At the start of an iteration:
 
 1. Read `AGENTS.md` and `README.md`.
-2. Read the Project's `PROJECT.md` and `STATE.md`, along with the recent and relevant portions of `DIALOG.md`.
+2. Read the Project's `PROJECT.md`, `STATE.md`, and bounded `DIALOG.md` landing index. Read every record linked under active PI guidance or unresolved questions, the three newest iteration records, your own newest record for this Project if it is not among those three, and any older record cited as necessary context.
 3. Inspect relevant files in the Project's `projects/` and `website/projects/` directories.
 4. Decide what useful amount of work can reasonably be accomplished in this iteration.
 
@@ -35,7 +35,7 @@ Then do the work. Use judgment about what constitutes a productive iteration. Th
 At the end of the iteration:
 
 1. Update `STATE.md` so it accurately represents the Project now.
-2. Append an entry to `DIALOG.md` describing the work performed, important findings, problems encountered, unresolved questions, and likely next steps.
+2. Create exactly one timestamped record under `dialog/iterations/` describing the work performed, important findings, problems encountered, unresolved questions, and likely next steps. Add it newest-first to `DIALOG.md` and to the appropriate yearly index under `dialog/indexes/`.
 
 Do not stop merely because a question for Dr. Jones arises. When reasonable, record the question, make a provisional judgment, and continue useful work. Stop only when further progress genuinely depends on PI guidance or unavailable resources.
 
@@ -45,7 +45,7 @@ After the Scholar finishes, automation will:
 2. Push the commit to GitHub.
 3. Deploy `website/` to `https://jasonjones.ninja/virtual-csserg/` via `rsync`.
 
-Scholars may inspect `run-scholar.sh` to understand this process. They must not edit it, but may recommend changes in `DIALOG.md`.
+Scholars may inspect `run-scholar.sh` to understand this process. They must not edit it, but may recommend changes in their iteration record.
 
 ### Scholar Personalities
 
@@ -57,17 +57,20 @@ You are allowed to express your personality. **Of course, our top priority is ri
 
 ### Project Markdown Files
 
-Each Project uses three Markdown files as its persistent shared memory:
+Each Project uses three entry points plus immutable iteration records as its
+persistent shared memory:
 
 * **`PROJECT.md`** — The durable project charter: research questions, goals, data, deliverables, constraints, and definition of done. Only the PI Dr. Jones may edit `PROJECT.md`.
 * **`STATE.md`** — The Scholar's concise representation of the Project's current state. Record current findings, completed work, active problems, decisions currently in force, important files, unresolved PI questions, and likely next steps. Replace outdated information rather than accumulating history. Scholars maintain this file.
-* **`DIALOG.md`** — The append-only chronological research record and PI–Scholar conversation. Scholars record each iteration's work, reasoning, findings, problems, questions, and proposed next steps here. Also record the server time you began working, finished working and calculate the time spent. Dr. Jones may respond directly in context by appending Markdown blockquotes (`>`).
+* **`DIALOG.md`** — A bounded landing index with active PI guidance, unresolved questions, links to at most the 20 newest iteration records, yearly indexes, and the byte-preserved pre-migration archive where applicable.
+* **`dialog/iterations/`** — One immutable Markdown file per Scholar iteration. Its filename is the UTC start time and permanent Scholar slug: `YYYY-MM-DDTHHMMSSZ-scholar-slug.md`. The record includes start and finish times, scope, work, evidence, validation, limitations, decisions, questions, and likely next steps. Creation must refuse to overwrite an existing filename.
+* **`dialog/indexes/YYYY.md`** — Complete newest-first links to that year's iteration records. These indexes preserve discovery after a record ages out of the bounded landing page.
 
-At the start of each iteration, read `PROJECT.md` and `STATE.md`. Read the recent portion of `DIALOG.md` and consult older portions when needed to understand a decision, unresolved issue, or prior work.
+At the start of each iteration, read all of `PROJECT.md`, `STATE.md`, and the bounded `DIALOG.md`. Then read every record linked under active PI guidance or unresolved questions, the three newest records, your own most recent record on the Project if it is not among those three, and any older record directly cited by the charter, state, current analysis, or a newer record as necessary for provenance or a decision. If state is stale, contradictory, or missing provenance, expand the historical review until it is resolved.
 
-Do the highest-value work consistent with the Project charter, the current state, and applicable PI guidance. At the end of the iteration, update `STATE.md` to reflect what is true now and append a new entry to `DIALOG.md`.
+Do the highest-value work consistent with the Project charter, the current state, and applicable PI guidance. At the end of the iteration, update `STATE.md`, create exactly one new iteration record, add it to the top of the bounded `DIALOG.md` list, and update the appropriate yearly index. Keep no more than 20 recent iteration links in the landing index.
 
-Markdown blockquotes in `DIALOG.md` are reserved for Dr. Jones. Scholars must never create, alter, or delete blockquoted text. When referring to PI guidance elsewhere, paraphrase it rather than reproducing it as a blockquote.
+Scholar-authored iteration records are immutable after their creation. Scholars must never alter an earlier record or create, alter, or delete a Markdown blockquote. Blockquotes are reserved for Dr. Jones, who may append dated feedback to the specific iteration record he is answering. The next Scholar preserves that feedback, summarizes any operative decision in `STATE.md`, and keeps a link under active PI guidance until the response is incorporated or resolved. When referring to PI guidance elsewhere, paraphrase it rather than reproducing it as a blockquote.
 
 Questions for the PI should not prevent useful independent work unless the answer is genuinely required to proceed. When possible, state the question, explain the current judgment, and continue with a reasonable provisional choice. Active unresolved PI questions should also be summarized in `STATE.md` so they remain visible even if several iterations pass without a response.
 
@@ -75,10 +78,12 @@ When PI statements conflict, the most recent applicable and unambiguous PI state
 
 When instructions conflict, use this priority:
 
-`most recent applicable PI guidance in DIALOG.md` → `PROJECT.md` → `STATE.md` → Scholar judgment
+`most recent applicable PI guidance in an iteration record` → `PROJECT.md` → `STATE.md` → Scholar judgment
 
-Scholars read but never edit `PROJECT.md`.
-Scholars may append to `DIALOG.md` and update `STATE.md`.
+Scholars read but never edit `PROJECT.md`. They may update `STATE.md`, the
+bounded navigation indexes, and the one new iteration record created during
+their current iteration. They never edit Scholar-authored text in an earlier
+record.
 
 ### Prior Work and Context
 
@@ -90,7 +95,7 @@ Prior work is **influential but not binding**. Scholars should not assume that i
 
 Treat prior work by Dr. Jones as you would relevant work by another researcher: understand it carefully, give it appropriate weight, and exercise independent scholarly judgment.
 
-Explicit instructions in `PROJECT.md` or PI guidance in `DIALOG.md` are different: those govern the current Project.
+Explicit instructions in `PROJECT.md` or PI guidance in dialog iteration records are different: those govern the current Project.
 
 ### Publishing results
 

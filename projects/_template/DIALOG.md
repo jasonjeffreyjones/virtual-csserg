@@ -1,19 +1,33 @@
+---
+dialog_protocol: immutable-iterations-v1
+legacy_archive: dialog/legacy/DIALOG-through-2026-09-16.md
+legacy_sha256: 4c96151dfd236ea13dad31a64a8efd9a5a1812d1ea036e0dffbd3c99c2041abd
+---
+
 # Project title — Dialog
 
-Append-only chronological research record and PI–Scholar conversation.
-No iterations have been completed yet. Markdown blockquotes are reserved for
-Dr. Jones; Scholars must never create, alter, or delete them.
+This is a bounded landing index. Scholar iteration records are immutable after
+creation; Dr. Jones may append Markdown blockquotes to a specific record.
 
-For each iteration, append a dated heading with the Scholar's name and record:
+## Active PI guidance
 
-- Starting server time in UTC.
-- Planned scope and reasoning.
-- Work completed and important findings, with evidence and file links.
-- Validation performed and results, including failures and limitations.
-- Problems encountered, provisional decisions, and unresolved PI questions.
-- Likely next steps.
-- Ending server time in UTC and calculated elapsed time.
+None recorded.
 
-Do not replace prior entries. Summarize currently operative decisions and active
-questions in `STATE.md`; the most recent applicable, unambiguous PI guidance
-governs when prior instructions conflict.
+## Unresolved questions
+
+None recorded here. Consult `STATE.md` for the current handoff.
+
+## Recent iteration records
+
+Newest first; at most 20 records belong in this section.
+
+No migrated-format iteration records yet.
+
+## Yearly indexes
+
+- [2026](dialog/indexes/2026.md)
+
+## Legacy archive
+
+- [DIALOG-through-2026-09-16.md](dialog/legacy/DIALOG-through-2026-09-16.md) — pre-migration `DIALOG.md`, SHA-256
+  `4c96151dfd236ea13dad31a64a8efd9a5a1812d1ea036e0dffbd3c99c2041abd`.

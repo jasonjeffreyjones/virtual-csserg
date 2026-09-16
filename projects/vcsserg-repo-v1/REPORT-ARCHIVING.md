@@ -53,7 +53,8 @@ outgoing release rather than recording an uncertain key. Never replace or
 delete an earlier ledger entry, reuse an archive key for different bytes, or
 rewrite published history.
 
-The iteration's `DIALOG.md` entry summarizes the supersession and validation.
+The iteration record under `dialog/iterations/` summarizes the supersession and
+validation.
 The new release itself does not yet have a commit identifier while the Scholar
 is editing it; it receives one from normal post-iteration automation and is
 added to the ledger only when a later material release supersedes it.

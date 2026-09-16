@@ -1,9 +1,25 @@
 # Immutable dialog migration runbook
 
-Status: design approved; migration has not begun. The current append-only
-`DIALOG.md` rule remains authoritative until Dr. Jones completes the trigger
-steps below. This runbook makes the coordination boundary explicit without
-partially changing the workflow.
+Status: completed September 16, 2026. The immutable-per-iteration protocol is
+now authoritative across `_template` and every existing Project. The trigger
+and execution steps below are retained as the migration record.
+
+## Migration completion evidence
+
+The PI-owned runner contained the approved trigger language before the canary
+began. `python/migrate_dialogs.py` then dry-ran and migrated all five Project
+directories together. It refuses overwrite, preflights every target before
+mutation, stages every output, and restores prior landings if installation
+raises an exception. Fixture tests cover read-only dry run, exact legacy-byte
+preservation, repeat refusal, and whole-set preflight failure.
+
+The source `DIALOG.md` SHA-256 digests, now recorded in each landing page, are:
+
+- `_template`: `4c96151dfd236ea13dad31a64a8efd9a5a1812d1ea036e0dffbd3c99c2041abd`
+- `ipseity-daily-pulse`: `9d6b28e3dc60686f318397a9c398f1219febc1b6855c9fca3bd0f7744b855321`
+- `nfl-team-fandom-identities`: `316cbcf943e6a9bfec21123e6d1c3f67976a3164ebdb301658fb2ba9c8402428`
+- `predict-the-self`: `f618ab88bfac5da80e62f31119839bd054b9b590febf4cdf8b4103fdc9ced741`
+- `vcsserg-repo-v1`: `8b5d890175d767048ec77f1b191a49d773cbfcfb6a895b8115dd170fd2a6d685`
 
 ## Target layout
 

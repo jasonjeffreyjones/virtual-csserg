@@ -36,6 +36,12 @@ class CreateProjectTests(unittest.TestCase):
             self.assertIn('title: "Collective Memory: Online"', state)
             self.assertIn("status: Proposed", state)
             self.assertIn("updated: null", state)
+            dialog = (destination / "DIALOG.md").read_text(encoding="utf-8")
+            self.assertIn("dialog_protocol: immutable-iterations-v1", dialog)
+            self.assertNotIn("legacy_archive:", dialog)
+            self.assertTrue((destination / "dialog/iterations").is_dir())
+            self.assertFalse((destination / "dialog/legacy").exists())
+            self.assertEqual(1, len(list((destination / "dialog/indexes").glob("*.md"))))
 
     def test_refuses_overwrite_without_changing_existing_files(self):
         with tempfile.TemporaryDirectory() as temporary:

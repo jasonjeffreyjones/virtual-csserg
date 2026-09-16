@@ -75,15 +75,17 @@ extractive method therefore predicts far too much textual continuity.
 - Development data informed extractive-rule selection. Treat its scorecard as
   model-selection evidence, not an untouched confirmatory estimate.
 - Do not alter the frozen test artifact in response to private score feedback.
-- `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the current
-  append-only conversation. Legacy `PI.md` and `LOG.md` remain intact as
-  historical records pending the separately approved coordinated dialog
-  migration; future iterations append to `DIALOG.md`.
+- `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
+  index; future iterations create one immutable record under
+  `dialog/iterations/` and update the yearly index. The pre-migration dialog is
+  byte-preserved under `dialog/legacy/`. Legacy `PI.md` and `LOG.md` remain
+  intact as additional historical records.
 
 ## Important files
 
 - `PROJECT.md`: PI-owned charter.
-- `STATE.md` and `DIALOG.md`: current project memory and conversation.
+- `STATE.md`, `DIALOG.md`, and `dialog/`: current state, bounded navigation,
+  immutable iteration records, yearly indexes, and the preserved legacy dialog.
 - `BUILD.md`, `_quarto.yml`, `index.qmd`, `report.qmd`, `short-report.md`:
   publication sources and reproduction instructions.
 - `BENCHMARK_PROVENANCE.md`: pinned commit, licensing, and governing hashes.

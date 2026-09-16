@@ -18,7 +18,7 @@ The standard-library verifier parses public HTML, resolves local resources and f
 
 ## Automated evidence
 
-Repository guidance passes: the governing files, growth and report-archive procedures, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and update metadata appropriate to that state. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass publication-eligible Project and rostered-Scholar coverage, PI-biography fidelity, assignment checks, lifecycle status, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
+Repository guidance passes: the governing files, growth, migration, and report-archive procedures, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, a bounded DIALOG.md, immutable iteration/year indexes, verified legacy hashes where applicable, and valid lifecycle metadata. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass publication-eligible Project and rostered-Scholar coverage, PI-biography fidelity, assignment checks, lifecycle status, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
 
 The three-report group now passes. The overall result remains a regression report, not a research-quality score or Version 1 certification.
 
@@ -38,13 +38,13 @@ Scholar creation stays review-led. The PI supplies the name, slug, biography, an
 
 Pausing is now operational: record the PI instruction, set state and public labels to Paused, preserve reports and assignments unless separately changed, and disable the external schedule. NFL Team Fandom Identities is paused under this procedure; its findings remain published.
 
-Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. This report's September 15 predecessor is the first recorded superseded release.
+Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. The ledger preserves both the September 15 release and the September 16 pre-canary report set.
 
 ## Manual gates
 
 The September 15 runner log records start and completion. Completion occurs only after commit, push, guarded deployment, and an authenticated dry run with no missing, changed, or extra remote path. A September 16 public probe then found all 110 expected files byte-identical. This closes the deployment gate and observes the successful workflow path; the safe failure path still needs a witnessed run. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology; no local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
 
-The approved dialog redesign now has an operational runbook: Dr. Jones first changes the PI-owned runner prompt and starts one canary; the Scholar then migrates all Projects atomically, preserves legacy bytes, updates guidance/template/tests, and creates bounded indexes. Scholars will read the full charter and state, the 20-entry landing index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Until the runner trigger, the append-only rule remains in force.
+The dialog canary is complete. All Projects and the template now use one immutable file per iteration, a bounded 20-link landing page, and complete yearly indexes. The five former DIALOG.md files are preserved byte-for-byte with recorded SHA-256 digests; the verifier checks these hashes, record filename/metadata agreement, and unique index coverage. Scholars read the full charter/state/index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Dr. Jones appends feedback to the record he is answering.
 
 ## References
 

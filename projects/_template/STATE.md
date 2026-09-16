@@ -27,7 +27,9 @@ Inspect each iteration's preflight and stay within its resource limits.
 
 - `PROJECT.md`: PI-owned charter.
 - `STATE.md`: concise current state, maintained by Scholars.
-- `DIALOG.md`: append-only iteration record and PI conversation.
+- `DIALOG.md`: bounded index for active guidance, questions, and recent work.
+- `dialog/iterations/` and `dialog/indexes/`: immutable iteration records and
+  complete yearly navigation.
 - `README.md`: template setup and reporting checklist.
 
 ## Problems and unresolved PI questions
@@ -39,4 +41,5 @@ None recorded yet. Keep active questions here even after later iterations.
 1. Have the PI define the research question, data, constraints, deliverables,
    and definition of done in `PROJECT.md`.
 2. Inspect relevant project files and choose one useful, bounded iteration.
-3. Complete and validate the work; update this state and append to `DIALOG.md`.
+3. Complete and validate the work; update this state, create one immutable
+   iteration record, and update the bounded and yearly indexes.

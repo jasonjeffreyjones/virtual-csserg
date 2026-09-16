@@ -19,7 +19,7 @@ still not establish the manual gates below.
 | Documented promise | Evidence or test | Status on September 16, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold, validated Scholar roster | Automated pass |
-| Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
+| Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `updated`, including `_template` | Automated pass; all five pre-migration dialogs are byte-preserved |
 | Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets |
 | Publication-eligible Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, PI-authored biographies | Automated pass; Proposed scaffolds remain private |
 | Every publication-eligible Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
@@ -47,12 +47,17 @@ publication structure:
 - On September 15, the roster and selected public directory gained Disciple Dee
   Duplo with the exact PI-supplied biography, monogram `DDD`, and no invented
   Project assignment. The NFL Project was changed to Paused without altering
-  its reports or Aleph's assignment. A new migration runbook specifies the
-  remaining dialog coordination rather than treating it as a vague next step.
+  its reports or Aleph's assignment. The dialog runbook specified the
+  coordinated canary that completed on September 16.
 - On September 16, the first Git-backed superseded-report ledger recorded the
   exact outgoing v1 report commit. The operative archive policy now defines
   material changes, correction/retraction handling, retrieval, and validation
   without copying stale Quarto trees into the live website.
+- Also on September 16, the immutable-dialog canary migrated `_template` and
+  every existing Project together. The verifier checks filename/metadata
+  agreement, bounded newest-first links, complete yearly indexes, and each
+  recorded legacy SHA-256 digest. The ledger preserves the clean pre-canary
+  report commit as a second superseded release.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. The manual gates remain open.
@@ -130,7 +135,9 @@ phase.
 - `_template` provides the three required memory files plus setup, reporting,
   branding, publication, lifecycle, and update-metadata guidance. A tested
   command creates a personalized no-overwrite scaffold without publishing it;
-  the creation guide also documents the review-led Scholar procedure.
+  the creation guide also documents the review-led Scholar procedure. New
+  scaffolds receive a fresh immutable-dialog tree rather than inheriting the
+  template's migration archive.
 - `REPORT-ARCHIVING.md` keeps canonical URLs current while preserving material
   supersessions by full public commit key. `REPORT-VERSIONS.md` applies it to
   the outgoing September 15 v1 release, whose three report forms are verified

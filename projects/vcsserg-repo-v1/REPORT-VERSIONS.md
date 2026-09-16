@@ -6,6 +6,23 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 16, 2026 at 08:14 UTC
+
+- **Superseded:** September 16, 2026
+- **Archive key:**
+  [`3de0080edbe72202463b91e76576be78a4182b43`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/3de0080edbe72202463b91e76576be78a4182b43)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and v1 Project
+  records before the immutable-dialog canary was executed.
+- **Reason:** The outgoing reports correctly described the approved migration
+  as awaiting its PI-owned runner trigger. The trigger is now present, and the
+  canary migrated `_template` and every existing Project with byte-preserved
+  legacy logs, bounded landing pages, and complete yearly indexes.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/3de0080edbe72202463b91e76576be78a4182b43/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/3de0080edbe72202463b91e76576be78a4182b43/projects/vcsserg-repo-v1)
+
 ### Updated through September 15, 2026
 
 - **Superseded:** September 16, 2026

@@ -1,44 +1,33 @@
-# NFL Team Fandom Identities — Research Dialog
+---
+dialog_protocol: immutable-iterations-v1
+legacy_archive: dialog/legacy/DIALOG-through-2026-09-16.md
+legacy_sha256: 316cbcf943e6a9bfec21123e6d1c3f67976a3164ebdb301658fb2ba9c8402428
+---
 
-Ongoing append-only record under RESEARCHER-ORIENTATION.md. Earlier Scholar entries remain in `LOG.md`; prior PI guidance remains in `PI.md`. Neither legacy file was changed during this transition.
+# NFL Team Fandom Identities — Dialog
 
-## 2026-09-11 — Aleph Initial Alpha
+This is a bounded landing index. Scholar iteration records are immutable after
+creation; Dr. Jones may append Markdown blockquotes to a specific record.
 
-- **Start:** 2026-09-11 03:01:38 UTC
-- **Finish:** 2026-09-11 03:14:50 UTC
-- **Time spent:** 13 minutes 12 seconds (792 seconds).
-- **Scope:** Recover the interrupted RQ1 work, audit available inputs, rerun a verifiable snapshot, and complete all three publication forms. Read AGENTS.md, README.md, RESEARCHER-ORIENTATION.md, the Scholar profile, project charter/state, and existing methods, PI guidance, legacy log, scripts, tests, and drafts. No DIALOG.md existed at start; this file initiates the current required record while preserving legacy files.
-- **Host/resources:** Reviewed the supplied preflight and enforced envelope: one logical CPU, 3000M memory, no Scholar swap, 55 minutes. Used installed Python 3.12.3, R 4.3.3, and Quarto 1.10.18, streaming CSV analysis and lightweight rendering. No runtime replacement or limit modification.
-- **Recovery:** Existing STATE was stale. Ceetown's interrupted iteration had left exact August 28 results, weighting code, figures, and unpublished drafts. PI.md had already resolved terminology (prevalence ratio), primary weighting (unweighted), appendix weighting, and explicit-No tracker definition. These operative decisions are now in STATE; historical outputs and drafts remain unchanged and labeled in BUILD.md.
-- **Data issue discovered:** The primary URLs returned 10,570 response rows and 151 demographics rows, with eligible dates July 8–14, 2025, despite the download page advertising 677,121 observations through August 28, 2026. Kept their separate result as `results/rq1_retrieved_20260911.json`; 142 eligible days, PR 1.192, clustered interval 0.938–1.413. Cause unknown; did not interpret the mismatch as a temporal result or overwrite historical outputs.
-- **Archive verification:** Retrieved fixed Zenodo record 22139541. Verified both published MD5 values and recorded SHA-256 hashes, source URLs, and byte lengths in `results/acquisition_20260911.json`. Archive: 675,480 response rows, 8,776 demographics rows, eligible dates July 8, 2025–August 27, 2026. The archive differs from the historical August 28 inputs; the latter were unavailable, so this is not claimed as an exact same-input reproduction.
-- **Current result:** 8,235 eligible respondent-days from 4,686 people. Fan happy Yes/No cells 263/53; explicit non-fan cells 6,062/1,857. Happy endorsement 83.23% versus 76.55%; unweighted PR 1.087 (respondent-cluster percentile bootstrap 95% interval 1.007–1.160), difference +6.68 percentage points (interval +0.56–+12.17). All 2,000 bootstrap replicates finite. The point estimate weights days, not people; clustering changes uncertainty rather than those weights. No causal or representative-population claim.
-- **Sensitivity/provenance extension:** Added weighted input hashes and the unweighted complete-case comparison. Complete-case PR 1.085, pooled age-sex calibration PR 1.080, common-distribution standardization PR 1.078. Independently verified all eight ACS target counts against the national summary-file row and retained `results/acs_target_check_20260911.json`. Weighted intervals remain uncomputed; unknown fandom demographics limit interpretation.
-- **Publication:** Wrote `index.qmd` as the current single-chapter Quarto book, with executed R tables/calculation, figures, APA bibliography, snapshot comparison, limitations, and weighting appendix. Rendered to `website/projects/nfl-team-fandom-identities/report/`. Derived a seven-point HTML executive summary with one dense key figure and a two-page, two-column PDF with references and reciprocal links. Copied aggregate result artifacts, linked the homepage, and updated the Scholar's current assignment. Full Report contains the required exact phrase once.
-- **Build limitations:** No TeX PDF engine was installed. Used ordinary build-only ReportLab and pypdf packages within the existing Python runtime; versions recorded in `requirements-publication.txt`. Quarto's default cache was unwritable; a writable XDG_CACHE_HOME under /tmp resolved it. Build instructions document both choices. No production dependency or private runtime was added.
-- **Validation:** Seven synthetic-data tests pass. `analysis/verify_publication.py` passes arithmetic, dated-input consistency, artifact equality, local file/anchor links, all three reports' leading numbers, APA bibliography, executive figure count, required phrase count, PDF page limit, and two-column text placement. Inspected both PDF pages rendered by installed Ghostscript and the dense key figure; corrected an initial Markdown heading-layout issue. Final Quarto build and `git diff --check` pass.
-- **PI question:** Should the primary-host microdata endpoints expose the advertised cumulative files, or is their one-week content intentional? The archive permits useful work while this is unresolved.
-- **Next steps:** Recover the exact August 28 inputs if available; evaluate equal-respondent weighting and calendar-composition sensitivity; consider weighted uncertainty before stronger claims; retain RQ1 priority before expanding RQ2/RQ3.
-- **Handoff:** STATE, METHODS, data notes, and BUILD instructions updated. Website artifacts are ready for the automatic post-iteration commit/push/deploy; no manual deployment or messages to third parties were performed.
+## Active PI guidance
 
-## 2026-09-15 — Project paused by PI direction
+None recorded.
 
-- **Decision time:** 2026-09-15 08:01:04 UTC (iteration preflight time used for
-  the PI intervention recorded in the VCSSERG v1 dialog).
-- **Authority and reason:** Dr. Jones explicitly asked to pause this Project.
-  Under the approved lifecycle vocabulary, Paused means the PI has intentionally
-  deprioritized otherwise feasible work; it is not a research blocker or a
-  retraction of results.
-- **Repository implementation:** `STATE.md` now records `status: Paused`, the
-  decision time, the unchanged findings, and the conditions for resumption. The
-  public Projects directory, homepage, Executive Summary, and Aleph Initial
-  Alpha's assignment label disclose the pause. Aleph's roster assignment is
-  preserved because no reassignment was requested.
-- **Host action for Dr. Jones:** Disable any scheduled invocation of
-  `run-scholar.sh` for NFL Team Fandom Identities. Scheduler configuration is
-  intentionally outside this public repository and cannot be changed or
-  verified by a Scholar iteration.
-- **Resume process:** Dr. Jones records an explicit resume instruction and
-  re-enables scheduling; the next Scholar changes the state to Active, records
-  that intervention, reviews the saved open question and next steps, and only
-  then resumes research.
+## Unresolved questions
+
+- [The primary-host cumulative-snapshot question remains open in the legacy archive](dialog/legacy/DIALOG-through-2026-09-16.md). Its current scope is summarized in `STATE.md`.
+
+## Recent iteration records
+
+Newest first; at most 20 records belong in this section.
+
+No migrated-format iteration records yet.
+
+## Yearly indexes
+
+- [2026](dialog/indexes/2026.md)
+
+## Legacy archive
+
+- [DIALOG-through-2026-09-16.md](dialog/legacy/DIALOG-through-2026-09-16.md) — pre-migration `DIALOG.md`, SHA-256
+  `316cbcf943e6a9bfec21123e6d1c3f67976a3164ebdb301658fb2ba9c8402428`.

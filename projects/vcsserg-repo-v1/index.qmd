@@ -23,8 +23,10 @@ Open work links. The September 15 normal workflow reached completion only after
 its guarded deployment and authenticated inventory check returned successfully;
 a September 16 public probe then found all 110 expected files byte-identical.
 This closes the deployment gate for that release and observes the successful
-workflow path. A witnessed safe failure path, rendered accessibility, and
-substantive review remain manual gates.
+workflow path. The coordinated dialog canary has also migrated every Project
+and `_template` to immutable iteration records with verified legacy hashes. A
+witnessed safe failure path, rendered accessibility, and substantive review
+remain manual gates.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -88,7 +90,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 | Promise group | Current result | What the automated check establishes |
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and scaffold command exist. |
-| Project memory | Pass | Every Project and `_template` has the three memory files and valid state metadata. |
+| Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
 | Static HTML/CSS | Pass | Public pages have basic semantics, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Project and rostered Scholar is linked; biographies, assignments, and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every publication-eligible Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
@@ -123,7 +125,8 @@ validates a permanent lowercase hyphenated slug, refuses overwrite, stages a
 complete copy of `_template`, personalizes its title and state, and renames it
 atomically into `projects/`. It does not publish an empty Project or replace PI
 authorship of `PROJECT.md`. Unit tests cover successful personalization,
-required files, unsafe slugs and titles, and no-overwrite behavior.
+required files, unsafe slugs and titles, no-overwrite behavior, and a fresh
+immutable-dialog tree that does not inherit the template's migration archive.
 
 Scholar creation remains deliberately review-led. The PI supplies the name,
 slug, biography, and assignment; the public profile must preserve those claims
@@ -156,9 +159,20 @@ commit key in a Project ledger. Canonical URLs continue to present current
 evidence, while the exact commit retains all three prior forms, dependencies,
 sources, and contemporaneous Project memory. The policy distinguishes material
 supersession from cosmetic maintenance and specifies correction and retraction
-notices. The outgoing September 15 v1 report set is the first recorded release;
+notices. The ledger preserves both the September 15 release and the September
+16 pre-canary report set;
 see the [archive policy](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-ARCHIVING.md)
 and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md).
+
+Dialog now uses one immutable file per Scholar iteration. The bounded
+`DIALOG.md` page links at most 20 recent records plus active guidance and open
+questions; yearly indexes remain complete. Every pre-migration `DIALOG.md` is
+preserved byte-for-byte under `dialog/legacy/` with its SHA-256 digest in the
+landing page. The standard-library migration command dry-runs by default,
+refuses overwrite, preflights all Projects, and has fixture coverage for the
+whole-set failure boundary. Dr. Jones appends feedback to the record he is
+answering; Scholars preserve prior records and summarize operative guidance in
+`STATE.md`.
 
 ## Publication system
 
@@ -216,17 +230,14 @@ two-chapter Quarto build, exactly one dense Executive Summary figure, a linked
 two-column short PDF within the ten-page ceiling, reciprocal report links,
 guarded publishing, and the required Full Report phrase.
 
-The approved dialog migration also remains, but it is no longer underspecified.
-The new
+The approved dialog migration is complete. The
 [`DIALOG-MIGRATION.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/DIALOG-MIGRATION.md)
-defines the PI-owned runner trigger, all-Project migration sequence,
-Scholar-immutable iteration files, PI blockquote replies, a 20-entry current
-index with yearly archives, and the bounded history each Scholar must read.
-Partial migration would leave contradictory instructions, so the present
-append-only rule continues until Dr. Jones changes the runner and initiates one
-canary. Superseded reports no longer remain underspecified: the Git-backed
-policy and first ledger entry now preserve outgoing material releases without
-duplicating generated trees in the live site.
+records the PI-owned runner trigger, all-Project migration sequence, five
+legacy digests, Scholar-immutable iteration files, PI blockquote replies, the
+20-entry landing index with complete yearly indexes, and the bounded history
+each Scholar reads. Superseded reports also no longer remain underspecified:
+the Git-backed policy and ledger entries preserve outgoing material releases
+without duplicating generated trees in the live site.
 
 The manual gates above now determine whether the charter's definition of done
 is actually satisfied. Version 1 should not be declared complete merely because

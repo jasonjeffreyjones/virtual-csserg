@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 from pathlib import Path
 import re
 import shutil
@@ -50,6 +51,60 @@ def replace_once(path: Path, old: str, new: str) -> None:
     path.write_text(source.replace(old, new, 1), encoding="utf-8")
 
 
+def initialize_dialog(project: Path, title: str, year: int | None = None) -> None:
+    """Replace template migration history with a fresh immutable-dialog tree."""
+    year = year or datetime.now(timezone.utc).year
+    dialog_root = project / "dialog"
+    if dialog_root.exists():
+        shutil.rmtree(dialog_root)
+    (dialog_root / "iterations").mkdir(parents=True)
+    (dialog_root / "indexes").mkdir()
+    (dialog_root / "iterations" / ".gitkeep").write_text("", encoding="utf-8")
+    (dialog_root / "indexes" / f"{year}.md").write_text(
+        f"""# {title} — {year} dialog index
+
+Iteration records are listed newest first.
+
+No iteration records yet.
+""",
+        encoding="utf-8",
+    )
+    (project / "DIALOG.md").write_text(
+        f"""---
+dialog_protocol: immutable-iterations-v1
+---
+
+# {title} — Dialog
+
+This is a bounded landing index. Scholar iteration records are immutable after
+creation; Dr. Jones may append Markdown blockquotes to a specific record.
+
+## Active PI guidance
+
+None recorded.
+
+## Unresolved questions
+
+None recorded here. Consult `STATE.md` for the current handoff.
+
+## Recent iteration records
+
+Newest first; at most 20 records belong in this section.
+
+No iteration records yet.
+
+## Yearly indexes
+
+- [{year}](dialog/indexes/{year}.md)
+
+## Legacy archive
+
+Not applicable; this Project was created after the immutable-dialog protocol.
+""",
+        encoding="utf-8",
+    )
+
+
 def create_project(
     slug: str,
     title: str,
@@ -88,11 +143,7 @@ def create_project(
             "# Project title — Current state",
             f"# {title} — Current state",
         )
-        replace_once(
-            staging / "DIALOG.md",
-            "# Project title — Dialog",
-            f"# {title} — Dialog",
-        )
+        initialize_dialog(staging, title)
         staging.rename(destination)
     except Exception:
         if staging.exists():

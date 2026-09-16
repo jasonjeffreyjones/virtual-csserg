@@ -19,12 +19,15 @@ The PI supplies the title, research questions, goals, data, deliverables,
 constraints, and definition of done in `PROJECT.md`. Scholars read that file but
 never edit it. The minimal charter here is intentionally left for the PI.
 
-Scholars maintain `STATE.md` as a concise current snapshot and append iteration
-records to `DIALOG.md`, including start/end server times and elapsed time. The
-`STATE.md` front matter records the public title, lifecycle status, and newest
-substantive update time used to order the Projects directory.
-PI replies belong in `DIALOG.md` as blockquotes; Scholars do not write or change
-blockquotes. Separate `PI.md` and `LOG.md` files are no longer the template layout.
+Scholars maintain `STATE.md` as a concise current snapshot. For each iteration,
+they create exactly one immutable timestamped file under `dialog/iterations/`
+and add it newest-first to both the bounded `DIALOG.md` landing index and the
+appropriate complete yearly index under `dialog/indexes/`. Records include
+start/end server times and elapsed time. The `STATE.md` front matter records the
+public title, lifecycle status, and newest substantive update time used to order
+the Projects directory. PI replies belong as appended blockquotes in the
+specific iteration record; Scholars never write blockquotes or alter an earlier
+record. Separate `PI.md` and `LOG.md` files are no longer the template layout.
 
 ## Research and publication checklist
 

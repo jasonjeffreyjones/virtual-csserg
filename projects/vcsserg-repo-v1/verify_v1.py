@@ -2,7 +2,9 @@
 """Run non-destructive checks for documented VCSSERG Version 1.0 promises."""
 
 from contextlib import redirect_stderr, redirect_stdout
+from collections import Counter
 from dataclasses import dataclass
+import hashlib
 from html.parser import HTMLParser
 import importlib.util
 import io
@@ -21,6 +23,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEBSITE_ROOT = PROJECT_ROOT / "website"
 MEMORY_FILES = {"PROJECT.md", "STATE.md", "DIALOG.md"}
 PROJECT_STATES = {"Proposed", "Active", "Blocked", "Paused", "Completed", "Archived"}
+ITERATION_NAME = re.compile(
+    r"(?P<stamp>\d{4}-\d{2}-\d{2}T\d{6}Z)-"
+    r"(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)\.md\Z"
+)
 
 
 @dataclass
@@ -135,10 +141,9 @@ def parse_page(path):
     return parser
 
 
-def read_state_metadata(project):
-    """Read the deliberately small YAML front matter subset used by STATE.md."""
-    state_path = project / "STATE.md"
-    source = state_path.read_text(encoding="utf-8")
+def read_small_frontmatter(path):
+    """Read the deliberately small YAML front matter subset used in memory."""
+    source = path.read_text(encoding="utf-8")
     match = re.match(r"\A---\s*\n(.*?)\n---\s*\n", source, flags=re.DOTALL)
     if not match:
         raise ValueError("missing YAML front matter")
@@ -157,6 +162,152 @@ def read_state_metadata(project):
             parsed = value
         metadata[key.strip()] = parsed
     return metadata
+
+
+def read_state_metadata(project):
+    return read_small_frontmatter(project / "STATE.md")
+
+
+def markdown_links(source):
+    return re.findall(r"\[[^\]]+\]\(([^)]+)\)", source)
+
+
+def check_dialog_layout(project):
+    problems = []
+    landing_path = project / "DIALOG.md"
+    landing = landing_path.read_text(encoding="utf-8")
+    try:
+        metadata = read_small_frontmatter(landing_path)
+    except (ValueError, json.JSONDecodeError) as error:
+        return [f"{project.name} DIALOG.md metadata: {error}"]
+    if metadata.get("dialog_protocol") != "immutable-iterations-v1":
+        problems.append(f"{project.name} has no immutable dialog protocol marker")
+
+    for heading in (
+        "## Active PI guidance",
+        "## Unresolved questions",
+        "## Recent iteration records",
+        "## Yearly indexes",
+        "## Legacy archive",
+    ):
+        if heading not in landing:
+            problems.append(f"{project.name} DIALOG.md missing {heading}")
+
+    dialog_root = project / "dialog"
+    iterations_root = dialog_root / "iterations"
+    indexes_root = dialog_root / "indexes"
+    if not iterations_root.is_dir():
+        problems.append(f"{project.name} missing dialog/iterations")
+        iteration_files = []
+    else:
+        iteration_files = sorted(iterations_root.glob("*.md"))
+    if not indexes_root.is_dir():
+        problems.append(f"{project.name} missing dialog/indexes")
+        index_files = []
+    else:
+        index_files = sorted(indexes_root.glob("20[0-9][0-9].md"))
+    if not index_files:
+        problems.append(f"{project.name} has no yearly dialog index")
+
+    legacy_relative = metadata.get("legacy_archive")
+    legacy_digest = metadata.get("legacy_sha256")
+    if legacy_relative or legacy_digest:
+        if not isinstance(legacy_relative, str) or not isinstance(legacy_digest, str):
+            problems.append(f"{project.name} has incomplete legacy metadata")
+        else:
+            legacy_path = (project / legacy_relative).resolve()
+            if not legacy_path.is_relative_to(project.resolve()):
+                problems.append(f"{project.name} legacy archive leaves Project tree")
+            elif not legacy_path.is_file():
+                problems.append(f"{project.name} legacy archive is missing")
+            else:
+                actual_digest = hashlib.sha256(legacy_path.read_bytes()).hexdigest()
+                if actual_digest != legacy_digest:
+                    problems.append(f"{project.name} legacy dialog digest mismatch")
+                if legacy_relative not in markdown_links(landing):
+                    problems.append(
+                        f"{project.name} landing does not link its legacy archive"
+                    )
+
+    iteration_names = []
+    for record in iteration_files:
+        match = ITERATION_NAME.fullmatch(record.name)
+        if not match:
+            problems.append(f"{project.name} has invalid iteration filename {record.name}")
+            continue
+        iteration_names.append(record.name)
+        try:
+            record_metadata = read_small_frontmatter(record)
+        except (ValueError, json.JSONDecodeError) as error:
+            problems.append(f"{project.name}/{record.name} metadata: {error}")
+            continue
+        expected_started = (
+            match.group("stamp")[:13]
+            + ":"
+            + match.group("stamp")[13:15]
+            + ":"
+            + match.group("stamp")[15:]
+        )
+        expected = {
+            "started": expected_started,
+            "scholar_slug": match.group("slug"),
+            "project": project.name,
+        }
+        for key, value in expected.items():
+            if record_metadata.get(key) != value:
+                problems.append(
+                    f"{project.name}/{record.name} {key} does not match its path"
+                )
+        if not record_metadata.get("scholar"):
+            problems.append(f"{project.name}/{record.name} missing scholar")
+        if not re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z",
+            str(record_metadata.get("finished", "")),
+        ):
+            problems.append(f"{project.name}/{record.name} has invalid finish time")
+        record_source = record.read_text(encoding="utf-8")
+        for heading in (
+            "## Scope",
+            "## Work completed",
+            "## Evidence and validation",
+            "## Limitations and decisions",
+            "## Questions and next steps",
+        ):
+            if heading not in record_source:
+                problems.append(f"{project.name}/{record.name} missing {heading}")
+
+    landing_iteration_links = [
+        Path(link).name
+        for link in markdown_links(landing)
+        if link.startswith("dialog/iterations/") and link.endswith(".md")
+    ]
+    expected_recent = sorted(iteration_names, reverse=True)[:20]
+    if landing_iteration_links != expected_recent:
+        problems.append(
+            f"{project.name} landing does not uniquely list the newest 20 iterations"
+        )
+
+    yearly_links = []
+    for index in index_files:
+        names = [
+            Path(link).name
+            for link in markdown_links(index.read_text(encoding="utf-8"))
+            if link.startswith("../iterations/") and link.endswith(".md")
+        ]
+        if names != sorted(names, reverse=True):
+            problems.append(f"{project.name}/{index.name} is not newest-first")
+        for name in names:
+            if not (iterations_root / name).is_file():
+                problems.append(f"{project.name}/{index.name} links missing {name}")
+            if not name.startswith(index.stem + "-"):
+                problems.append(f"{project.name}/{index.name} links wrong-year {name}")
+        yearly_links.extend(names)
+    counts = Counter(yearly_links)
+    if set(counts) != set(iteration_names) or any(count != 1 for count in counts.values()):
+        problems.append(
+            f"{project.name} yearly indexes must link every iteration exactly once"
+        )
+    return problems
 
 
 def load_scholar_roster():
@@ -196,6 +347,7 @@ def check_repository_documents():
         "projects/vcsserg-repo-v1/REPORT-ARCHIVING.md",
         "projects/vcsserg-repo-v1/REPORT-VERSIONS.md",
         "python/create_project.py",
+        "python/migrate_dialogs.py",
         "python/scholar_roster.py",
         "scholars.json",
     }
@@ -211,6 +363,7 @@ def check_repository_documents():
             "## Create a Scholar",
             "## Pause or resume a Project",
             "python3 python/create_project.py",
+            "python3 python/migrate_dialogs.py",
             "python3 python/scholar_roster.py",
             "scholars.json",
             "REPORT-ARCHIVING.md",
@@ -344,6 +497,7 @@ def check_project_memory():
             )
         ):
             problems.append(f"{project.name} has a non-ISO update value")
+        problems.extend(check_dialog_layout(project))
     return Result(
         "Project memory layout",
         not problems,
@@ -651,9 +805,14 @@ def check_public_catalogs():
         if bio_match:
             expected_bio = " ".join(bio_match.group(1).split())
         else:
-            dialog = (
-                PROJECT_ROOT / "projects/vcsserg-repo-v1/DIALOG.md"
-            ).read_text(encoding="utf-8")
+            legacy_dialogs = sorted(
+                (PROJECT_ROOT / "projects/vcsserg-repo-v1/dialog/legacy").glob(
+                    "DIALOG-through-*.md"
+                )
+            )
+            dialog = "\n".join(
+                path.read_text(encoding="utf-8") for path in legacy_dialogs
+            )
             dialog_bio_match = re.search(
                 rf'The bio for `{re.escape(name)}` is "([^"\n]+)"', dialog
             )
@@ -764,6 +923,15 @@ def check_runner():
     for command in ("flock -n", "git pull --ff-only", "git commit", "git push"):
         if command not in source:
             problems.append(f"missing workflow command: {command}")
+    for protocol_text in (
+        "bounded landing index",
+        "the three newest iteration records",
+        "create exactly one timestamped record under",
+        "Refuse to overwrite an existing iteration file",
+        "Never alter Scholar-authored content in an earlier iteration record",
+    ):
+        if protocol_text not in source:
+            problems.append(f"runner missing dialog protocol: {protocol_text}")
 
     deploy_matches = re.findall(r"^\s*python3\s+([^\s]+)\s*$", source, flags=re.MULTILINE)
     if len(deploy_matches) != 1:

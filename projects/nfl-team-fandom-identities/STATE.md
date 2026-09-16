@@ -27,8 +27,10 @@ unweighted descriptive comparison, and attempt demographic weighting in the
 full report appendix. The PI confirmed that tracker non-fans are explicit No
 responses co-observed with happy. These earlier questions are resolved.
 
-`DIALOG.md` is now the ongoing iteration record. Existing `LOG.md` and `PI.md`
-are preserved unchanged as historical records. The August 29 interrupted
+`DIALOG.md` is now the bounded navigation index; new work receives one immutable
+file under `dialog/iterations/` and a yearly-index entry. The pre-migration
+dialog is byte-preserved under `dialog/legacy/`. Existing `LOG.md` and `PI.md`
+also remain unchanged as historical records. The August 29 interrupted
 iteration left exact results, code, and drafts beyond what the old STATE
 recorded; those artifacts were recovered and assessed this iteration.
 

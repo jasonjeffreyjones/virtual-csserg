@@ -16,9 +16,10 @@ approved generated-image safeguards operational.
 
 The VCSSERG v1 Full Report is now a Quarto HTML book, with a linked two-column
 short PDF and evidence-brief Executive Summary. Predict the Self now uses the
-same three-form system, closing the final automated promise-group gap. Still
-pending are the coordinated immutable-dialog migration and the manual Version
-1 gates. The conceptual footer grouping and single roster/assignment source
+same three-form system, closing the final automated promise-group gap. The
+coordinated immutable-dialog migration was completed across every Project and
+the template on September 16. The manual Version 1 gates remain. The conceptual
+footer grouping and single roster/assignment source
 were implemented on September 13. On September 14, all 109 expected public
 files matched the repository byte-for-byte, and deployment gained a required
 post-transfer checksum/inventory dry run. The September 15 normal run reached
@@ -132,20 +133,19 @@ The scrolling problem is real, but reversal is the wrong fix.
 I recommend **one immutable file per iteration**, not one per day:
 
 ```text
-projects/<slug>/dialog/2026/2026-09-11T185940Z-bee-boring-vanilla.md
+projects/<slug>/dialog/iterations/2026-09-11T185940Z-bee-boring-vanilla.md
 ```
 
 Daily files can still collide when several Scholars work on the same Project.
 Timestamped iteration files provide stable ordering and natural authorship.
-`DIALOG.md` should become a short, newest-first index and retain the complete
-legacy record unchanged. PI replies can be appended as blockquotes to the
-specific iteration file. A migration requires coordinated edits to the
-orientation, template, runner prompt, active Projects, and verifier. It remains
-queued as one indivisible workflow change; the current append-only rule
-continues until then. `DIALOG-MIGRATION.md` now defines the exact PI trigger,
-Scholar migration sequence, reply protocol, 20-entry current index, yearly
-indexes, and bounded reading rule. The migration still awaits the PI-owned
-runner change, so no Project has partially adopted the new layout.
+`DIALOG.md` is now a short, newest-first index, while each complete legacy log
+is retained byte-for-byte under `dialog/legacy/` with a recorded SHA-256 digest.
+PI replies are appended as blockquotes to the specific iteration file. The
+coordinated migration updated the orientation, template, PI-triggered runner,
+every existing Project, creation workflow, states, and verifier together.
+`DIALOG-MIGRATION.md` records the trigger, migration sequence, reply protocol,
+20-entry current index, yearly indexes, bounded reading rule, and completion
+evidence.
 
 ## Project states and metadata
 
