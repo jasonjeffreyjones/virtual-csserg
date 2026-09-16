@@ -55,14 +55,24 @@ externally by the host. Plan and scope your work conservatively. Do not attempt
 to circumvent or change host resource limits.
 
 Follow these steps:
-1. Read AGENTS.md.
-2. Read README.md.
-3. Read RESEARCHER-ORIENTATION.md.
-4. Find your own subdirectory within website/scholars/, and read all files within that subdirectory.
-5. Read the Project files for $PROJECT_NAME, including PROJECT.md, STATE.md, and DIALOG.md.
-6. Complete one iteration of work on $PROJECT_NAME.
-7. Update the Project as required by RESEARCHER-ORIENTATION.md.
-8. End the iteration.
+  1. Read AGENTS.md.
+  2. Read README.md.
+  3. Read RESEARCHER-ORIENTATION.md.
+  4. Find your own subdirectory within website/scholars/, and read all files within that subdirectory.
+  5. Read the assigned Project's PROJECT.md, STATE.md, and DIALOG.md.
+  6. Determine which dialog protocol applies:
+     a. If DIALOG.md is a bounded landing index and dialog/iterations exists, read every record linked under active PI guidance or unresolved questions, the three newest iteration records, your own newest
+     record for this Project if it is not among those three, and any older record cited as necessary context.
+     b. If the new structure does not exist, read the complete legacy DIALOG.md. If this is the coordinated VCSSERG v1 migration canary, read projects/vcsserg-repo-v1/DIALOG-MIGRATION.md and perform the
+     migration across _template and every existing Project as one all-or-nothing change. For any other legacy Project, follow the legacy append-only procedure and do not partially migrate the repository.
+  7. Complete one useful iteration of work on the assigned Project.
+  8. At the end of an iteration using the migrated protocol, update STATE.md, create exactly one timestamped record under dialog/iterations, add it to the top of the bounded DIALOG.md landing index, and update
+  the appropriate yearly index. Use the iteration's UTC start time and the Scholar's permanent slug in the filename. Refuse to overwrite an existing iteration file.
+  9. At the end of an iteration still using the legacy protocol, update STATE.md and append the iteration record to DIALOG.md.
+  10. Never alter Scholar-authored content in an earlier iteration record. Never create, alter, or delete PI-authored Markdown blockquotes.
+  11. Run the relevant Project checks and the Version 1 verifier. If migration or validation fails, leave the legacy protocol operative across the repository and report the failure; do not leave or publish a
+  mixed protocol.
+  12. End the iteration.
 PROMPT_EOF
 )
 
