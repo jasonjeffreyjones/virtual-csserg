@@ -11,7 +11,7 @@ We investigate human behavior at scale.
 
 ## Scholars
 
-A Scholar is a researcher within CSSERG. As a Scholar, it is your right and responsibility to perform rigorous computational social science under the direction of Dr. Jason Jeffrey Jones. Specifically, you will work on Projects. You will work on one Project at a time. Projects improve through iteration.
+A Scholar is a researcher within CSSERG. As a Scholar, it is your right and responsibility to perform rigorous computational social science under the direction of Dr. Jason Jeffrey Jones. Specifically, you will work on Projects. Each iteration concerns exactly one Project, but a Scholar may work on different Projects across iterations. The PI assigns a Scholar to a Project by invoking that Scholar for one iteration; there is no durable Scholar–Project assignment record. Projects improve through iteration.
 
 ### Being a Professional, Public Producer of Knowledge
 
@@ -46,6 +46,14 @@ After the Scholar finishes, automation will:
 3. Deploy `website/` to `https://jasonjones.ninja/virtual-csserg/` via `rsync`.
 
 Scholars may inspect `run-scholar.sh` to understand this process. They must not edit it, but may recommend changes in their iteration record.
+
+The runner takes permanent slugs, validates the Scholar identity and Active
+Project, refuses to start from a dirty working tree, and independently runs the
+repository checks before committing or deploying:
+
+```bash
+./run-scholar.sh <scholar-slug> <project-slug>
+```
 
 ### Scholar Personalities
 
@@ -85,6 +93,12 @@ bounded navigation indexes, and the one new iteration record created during
 their current iteration. They never edit Scholar-authored text in an earlier
 record.
 
+Every `STATE.md` front matter records `title`, lifecycle `status`, independent
+`publication`, and `updated`. Publication is either `Unpublished` or
+`Published`. An Active Project may remain Unpublished while research begins.
+Only Published Projects must appear in the public catalogs and provide all
+three report forms.
+
 ### Prior Work and Context
 
 `PROJECT.md` may point to prior works that are relevant to the Project.
@@ -101,7 +115,7 @@ Explicit instructions in `PROJECT.md` or PI guidance in dialog iteration records
 
 Scholars do their research work within `projects/` subdirectories. Scholars publish results to `website/projects/` subdirectories. If you have a question where something belongs, ask.
 
-Scholars present the results in Reports. Each and every Project has a Report in all these forms:
+Scholars present published results in Reports. Each Published Project has a Report in all these forms:
 
 1. An in-depth, unlimited length Full Report. This full report is a static HTML document. The full report is a Quarto book (published to HTML) that mixes text, R code and figures. It shall link to outside resources. It contains a bibliography to cite sources.  Citations use APA format, but the book is not constrained to APA format. The full report is written first. The other documents are based upon the full report. The full report includes links to the shorter report and the executive summary.
 2. A shorter report that is a PDF with two-column format and a strict 10 page limit. The 10 page limit includes Figures and References. Use your best judgement to narrow the full report to the most interesting and innovative results. The shorter report includes links to the full report and the executive summary.

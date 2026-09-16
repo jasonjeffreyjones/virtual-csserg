@@ -1,6 +1,7 @@
 ---
 title: "Project title"
 status: Proposed
+publication: Unpublished
 updated: null
 ---
 
@@ -9,6 +10,7 @@ updated: null
 ## Status
 
 Proposed. The PI must complete the project charter before research begins.
+Publication is Unpublished; lifecycle state and publication are independent.
 Set `updated` in the metadata above to the end time of the newest substantive
 Scholar iteration or PI intervention; website-only edits do not count.
 

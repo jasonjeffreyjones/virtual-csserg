@@ -1,6 +1,7 @@
 ---
 title: "Ipseity Daily Pulse"
 status: Proposed
+publication: Unpublished
 updated: null
 ---
 
@@ -9,6 +10,7 @@ updated: null
 ## Status
 
 Proposed. The PI must complete the project charter before research begins.
+Publication is Unpublished; the Project may become Active before it has reports.
 Set `updated` in the metadata above to the end time of the newest substantive
 Scholar iteration or PI intervention; website-only edits do not count.
 

@@ -6,6 +6,25 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 16, 2026 at 14:57 UTC
+
+- **Superseded:** September 16, 2026
+- **Archive key:**
+  [`a6e82208db4cae664d23d91010cb325993c179b3`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/a6e82208db4cae664d23d91010cb325993c179b3)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and v1 Project
+  records after immutable-dialog migration and before growth/runner hardening.
+- **Reason:** The outgoing reports accurately described the migrated dialog
+  protocol but still coupled lifecycle to publication, required hand-built
+  Scholar profiles and durable assignments, and had not exercised a controlled
+  fail-closed runner path. The next release separates publication state,
+  automates Scholar creation, makes Project pairing per-iteration, and tests
+  runner failure boundaries.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/a6e82208db4cae664d23d91010cb325993c179b3/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/a6e82208db4cae664d23d91010cb325993c179b3/projects/vcsserg-repo-v1)
+
 ### Updated through September 16, 2026 at 08:14 UTC
 
 - **Superseded:** September 16, 2026

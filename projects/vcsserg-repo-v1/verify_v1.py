@@ -23,6 +23,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEBSITE_ROOT = PROJECT_ROOT / "website"
 MEMORY_FILES = {"PROJECT.md", "STATE.md", "DIALOG.md"}
 PROJECT_STATES = {"Proposed", "Active", "Blocked", "Paused", "Completed", "Archived"}
+PUBLICATION_STATES = {"Unpublished", "Published"}
 ITERATION_NAME = re.compile(
     r"(?P<stamp>\d{4}-\d{2}-\d{2}T\d{6}Z)-"
     r"(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)\.md\Z"
@@ -314,6 +315,7 @@ def load_scholar_roster():
     path = PROJECT_ROOT / "python/scholar_roster.py"
     spec = importlib.util.spec_from_file_location("scholar_roster_for_check", path)
     module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
     spec.loader.exec_module(module)
     return module.load_roster()
 
@@ -347,7 +349,9 @@ def check_repository_documents():
         "projects/vcsserg-repo-v1/REPORT-ARCHIVING.md",
         "projects/vcsserg-repo-v1/REPORT-VERSIONS.md",
         "python/create_project.py",
+        "python/create_scholar.py",
         "python/migrate_dialogs.py",
+        "python/project_registry.py",
         "python/scholar_roster.py",
         "scholars.json",
     }
@@ -363,6 +367,7 @@ def check_repository_documents():
             "## Create a Scholar",
             "## Pause or resume a Project",
             "python3 python/create_project.py",
+            "python3 python/create_scholar.py",
             "python3 python/migrate_dialogs.py",
             "python3 python/scholar_roster.py",
             "scholars.json",
@@ -470,7 +475,9 @@ def check_project_memory():
         except (ValueError, json.JSONDecodeError) as error:
             problems.append(f"{project.name} STATE.md metadata: {error}")
             continue
-        missing_metadata = sorted({"title", "status", "updated"} - set(metadata))
+        missing_metadata = sorted(
+            {"title", "status", "publication", "updated"} - set(metadata)
+        )
         if missing_metadata:
             problems.append(
                 f"{project.name} STATE.md metadata missing {', '.join(missing_metadata)}"
@@ -479,6 +486,16 @@ def check_project_memory():
             problems.append(
                 f"{project.name} has invalid lifecycle state {metadata.get('status')!r}"
             )
+        if metadata.get("publication") not in PUBLICATION_STATES:
+            problems.append(
+                f"{project.name} has invalid publication state "
+                f"{metadata.get('publication')!r}"
+            )
+        if (
+            metadata.get("status") == "Proposed"
+            and metadata.get("publication") == "Published"
+        ):
+            problems.append(f"{project.name} cannot be Proposed and Published")
         if not isinstance(metadata.get("title"), str) or not metadata.get(
             "title", ""
         ).strip():
@@ -647,11 +664,13 @@ def check_public_catalogs():
                 metadata = read_state_metadata(path)
                 updated = metadata.get("updated")
                 status = metadata.get("status")
+                publication = metadata.get("publication")
             except (ValueError, json.JSONDecodeError) as error:
                 problems.append(f"{path.name} STATE.md metadata: {error}")
                 updated = ""
                 status = ""
-            if status == "Proposed":
+                publication = ""
+            if publication != "Published":
                 continue
             project_records.append((path.name, updated or "", status or ""))
     expected_projects = {
@@ -771,55 +790,16 @@ def check_public_catalogs():
             parsed_profile = parse_page(page)
             if record.monogram not in parsed_profile.text:
                 problems.append(f"rostered Scholar {name} profile omits its monogram")
-            if record.current_project is None:
-                if parsed_profile.assignments:
-                    problems.append(f"rostered Scholar {name} has an unrecorded assignment")
-            elif len(parsed_profile.assignments) != 1:
-                problems.append(f"rostered Scholar {name} does not show exactly one assignment")
-            else:
-                assignment_href, assignment_text = parsed_profile.assignments[0]
-                assignment_target, _ = resolve_local_reference(page, assignment_href)
-                expected_target = (
-                    WEBSITE_ROOT
-                    / "projects"
-                    / record.current_project
-                    / "index.html"
-                ).resolve()
-                if assignment_target != expected_target:
-                    problems.append(f"rostered Scholar {name} profile has a stale assignment link")
-                try:
-                    project_title = read_state_metadata(
-                        PROJECT_ROOT / "projects" / record.current_project
-                    )["title"]
-                except (KeyError, ValueError, json.JSONDecodeError) as error:
-                    problems.append(f"cannot resolve {name}'s assignment title: {error}")
-                else:
-                    if project_title not in assignment_text:
-                        problems.append(f"rostered Scholar {name} profile has a stale assignment title")
 
-        bio_match = re.search(
-            rf"^###\s+{re.escape(name)}\s*$([\s\S]*?)(?=^###\s|\Z)",
-            roster_match.group(1) if roster_match else "",
-            flags=re.MULTILINE,
+        biography_path = PROJECT_ROOT / "scholars" / record.slug / "BIOGRAPHY.md"
+        expected_bio = (
+            " ".join(biography_path.read_text(encoding="utf-8").split())
+            if biography_path.is_file()
+            else ""
         )
-        if bio_match:
-            expected_bio = " ".join(bio_match.group(1).split())
-        else:
-            legacy_dialogs = sorted(
-                (PROJECT_ROOT / "projects/vcsserg-repo-v1/dialog/legacy").glob(
-                    "DIALOG-through-*.md"
-                )
-            )
-            dialog = "\n".join(
-                path.read_text(encoding="utf-8") for path in legacy_dialogs
-            )
-            dialog_bio_match = re.search(
-                rf'The bio for `{re.escape(name)}` is "([^"\n]+)"', dialog
-            )
-            expected_bio = dialog_bio_match.group(1) if dialog_bio_match else ""
 
         if not expected_bio:
-            problems.append(f"rostered Scholar {name} has no PI-authored biography source")
+            problems.append(f"rostered Scholar {name} has no canonical biography source")
         elif page.is_file():
             page_text = parse_page(page).text
             def normalize_bio(value):
@@ -834,7 +814,7 @@ def check_public_catalogs():
     return Result(
         "Public project and Scholar catalogs",
         not problems,
-        "all publication-eligible Projects and rostered Scholars are published, assigned, and linked"
+        "all Published Projects and rostered Scholar identities are correctly sourced and linked"
         if not problems else "; ".join(problems),
     )
 
@@ -846,7 +826,7 @@ def check_report_formats():
         path for path in (PROJECT_ROOT / "projects").iterdir()
         if path.is_dir()
         and path.name != "_template"
-        and read_state_metadata(path).get("status") != "Proposed"
+        and read_state_metadata(path).get("publication") == "Published"
     )
 
     for project in projects:
@@ -920,11 +900,23 @@ def check_runner():
         problems.append("shell syntax check failed")
 
     source = runner.read_text(encoding="utf-8")
-    for command in ("flock -n", "git pull --ff-only", "git commit", "git push"):
+    for command in (
+        "flock -n",
+        "git status --porcelain --untracked-files=all",
+        "git diff --quiet HEAD -- run-scholar.sh",
+        "git pull --ff-only",
+        "python/scholar_roster.py --name-for",
+        "python/project_registry.py --active-title",
+        "python3 -m unittest discover",
+        "python3 projects/vcsserg-repo-v1/verify_v1.py",
+        "git diff --check",
+        "git commit",
+        "git push",
+    ):
         if command not in source:
             problems.append(f"missing workflow command: {command}")
     for protocol_text in (
-        "bounded landing index",
+        "bounded DIALOG.md landing index",
         "the three newest iteration records",
         "create exactly one timestamped record under",
         "Refuse to overwrite an existing iteration file",
@@ -932,6 +924,10 @@ def check_runner():
     ):
         if protocol_text not in source:
             problems.append(f"runner missing dialog protocol: {protocol_text}")
+    if source.find("python3 projects/vcsserg-repo-v1/verify_v1.py") > source.find(
+        "git add -A"
+    ):
+        problems.append("runner stages changes before independent validation")
 
     deploy_matches = re.findall(r"^\s*python3\s+([^\s]+)\s*$", source, flags=re.MULTILINE)
     if len(deploy_matches) != 1:
@@ -951,7 +947,7 @@ def check_runner():
     return Result(
         "Automated Scholar runner",
         not problems,
-        "runner syntax and pull/lock/commit/push/deploy wiring passed"
+        "runner syntax, clean-tree/identity/Active-Project gates, independent validation, and publication wiring passed"
         if not problems else "; ".join(problems),
     )
 

@@ -6,8 +6,8 @@ This repo documents **Virtual CSSERG**. In Virtual CSSERG, *in silico* researche
 
 To expand the lab, follow the documented procedures for
 [creating Projects and Scholars](projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md).
-The versioned [`scholars.json`](scholars.json) file is the operational source
-for the Scholar roster and current Project assignments.
+The versioned [`scholars.json`](scholars.json) file is the identity roster;
+canonical PI-authored biographies live under [`scholars/`](scholars/).
 
 ## Mission
 

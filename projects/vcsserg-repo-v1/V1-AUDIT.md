@@ -18,12 +18,12 @@ still not establish the manual gates below.
 
 | Documented promise | Evidence or test | Status on September 16, 2026 |
 |---|---|---|
-| Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold, validated Scholar roster | Automated pass |
-| Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `updated`, including `_template` | Automated pass; all five pre-migration dialogs are byte-preserved |
+| Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies | Automated pass |
+| Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
 | Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets |
-| Publication-eligible Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, PI-authored biographies | Automated pass; Proposed scaffolds remain private |
-| Every publication-eligible Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
-| Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
+| Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
+| Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
+| Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; isolated tests witness each controlled failure without external effects |
 | Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, and all 110 expected files matched production on September 16 |
 
 ## Current automated result
@@ -40,14 +40,13 @@ publication structure:
   documented constraints.
 - NFL Team Fandom Identities supplies all three forms. Its Quarto footer source
   and rendered report now retain the PI-requested GitHub link.
-- On September 13, `scholars.json` became the validated operational source for
-  roster, slug, monogram, and current-assignment data. Public profiles are
-  checked against it and Project title metadata. Every footer now places its
+- `scholars.json` is now the validated identity source for names, slugs, and
+  monograms, while `scholars/<slug>/BIOGRAPHY.md` holds each canonical
+  PI-authored biography. Public profiles are checked against both. Every footer places its
   required links into the approved About and Open work groups.
 - On September 15, the roster and selected public directory gained Disciple Dee
-  Duplo with the exact PI-supplied biography, monogram `DDD`, and no invented
-  Project assignment. The NFL Project was changed to Paused without altering
-  its reports or Aleph's assignment. The dialog runbook specified the
+  Duplo with the exact PI-supplied biography and monogram `DDD`. The NFL Project
+  was changed to Paused without altering its reports. The dialog runbook specified the
   coordinated canary that completed on September 16.
 - On September 16, the first Git-backed superseded-report ledger recorded the
   exact outgoing v1 report commit. The operative archive policy now defines
@@ -88,10 +87,6 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 
 ## Manual gates
 
-- Exercise and witness the Scholar workflow's safe failure path. The September
-  15 normal run records start and completion; by control flow, completion occurs
-  only after commit, push, deployment, and an empty authenticated inventory
-  check all succeed.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive-technology checks.
 - Review substantive report completeness and research validity. File existence
@@ -128,14 +123,14 @@ phase.
   PI, GitHub, and license links remain in footers.
 - Executive Summary A and Scholar-directory A are production defaults by PI
   decision. Their two three-way comparison sets remain dated decision archives.
-- All three initial Scholar profiles contain the complete charter biographies,
-  and Disciple Dee Duplo's profile contains the complete biography supplied in
-  PI dialog. `scholars.json` separately governs the four-member operational
-  roster and three assignments.
+- All four Scholar profiles contain the complete canonical PI-authored
+  biographies. `scholars.json` governs identity only; Project pairing is the
+  runner invocation for one iteration.
 - `_template` provides the three required memory files plus setup, reporting,
   branding, publication, lifecycle, and update-metadata guidance. A tested
   command creates a personalized no-overwrite scaffold without publishing it;
-  the creation guide also documents the review-led Scholar procedure. New
+  the tested Scholar command creates identity, biography, and public catalog
+  files as a guarded, rollback-on-error transaction without scheduling work. New
   scaffolds receive a fresh immutable-dialog tree rather than inheriting the
   template's migration archive.
 - `REPORT-ARCHIVING.md` keeps canonical URLs current while preserving material

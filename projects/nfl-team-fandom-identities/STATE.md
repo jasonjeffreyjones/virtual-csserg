@@ -1,6 +1,7 @@
 ---
 title: "NFL Team Fandom Identities"
 status: Paused
+publication: Published
 updated: 2026-09-15T08:01:04Z
 ---
 
@@ -13,10 +14,8 @@ pause instruction.
 
 Paused by Dr. Jones on September 15, 2026. The pause deprioritizes otherwise
 feasible new research; it does not retract the verified findings or remove the
-three published report forms. Aleph Initial Alpha remains the recorded Scholar
-assignment unless the PI reassigns them. Dr. Jones must disable any external
-scheduled invocation for this Project; host scheduler state is not stored in
-this public repository.
+three published report forms. Publication remains Published. Dr. Jones has
+confirmed that no Scholar schedules are currently enabled.
 
 ## Current focus and decisions
 
@@ -63,7 +62,8 @@ recorded; those artifacts were recovered and assessed this iteration.
 - Short report: `short-report.md` and `analysis/render_short_report.py` produce
   `website/projects/nfl-team-fandom-identities/short-report.pdf`, two pages,
   two columns, with references and links to both HTML reports.
-- Homepage links and Aleph Initial Alpha's current project assignment updated.
+- Homepage and Projects-directory links were updated for publication. Scholar
+  profiles now contain identity and biography only; Project pairing is per run.
 - Seven existing synthetic-data tests pass. Publication verifier passes:
   exact arithmetic, input consistency, artifact copies, local links/anchors,
   reported numbers, bibliography, figure count, required phrase, PDF page count

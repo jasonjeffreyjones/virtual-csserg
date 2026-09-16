@@ -8,7 +8,8 @@ PI guidance in `DIALOG.md`.
 Dr. Jones approved every recommendation below and selected both A alternatives.
 On September 12, the production Executive Summary adopted the evidence brief,
 and the production Scholar directory adopted the portrait roster. All Project
-states and `_template` now carry authoritative `title`, `status`, and `updated`
+states and `_template` now carry authoritative `title`, `status`, independent
+`publication`, and `updated`
 metadata; the verifier derives public update order from it. A tested, atomic,
 no-overwrite `python/create_project.py` command and a complete Project/Scholar
 creation guide implement the first growth workflow. The guide also makes the
@@ -19,14 +20,16 @@ short PDF and evidence-brief Executive Summary. Predict the Self now uses the
 same three-form system, closing the final automated promise-group gap. The
 coordinated immutable-dialog migration was completed across every Project and
 the template on September 16. The manual Version 1 gates remain. The conceptual
-footer grouping and single roster/assignment source
-were implemented on September 13. On September 14, all 109 expected public
+footer grouping and a single identity/biography source
+were implemented and later hardened with command-driven Scholar creation. On September 14, all 109 expected public
 files matched the repository byte-for-byte, and deployment gained a required
 post-transfer checksum/inventory dry run. The September 15 normal run reached
 completion after that inventory phase, and the September 16 public probe found
 all 110 expected files byte-identical. The successful workflow and deployment
-gate are therefore observed; safe failure, rendered usability, and substantive
-review remain manual gates. The superseded-report archive policy is now
+gate are therefore observed. Isolated runner tests now witness dirty-start and
+status-inspection refusal, prohibited runner edits, plus Scholar and validation
+failures without commit, push, or deployment; rendered usability and
+substantive review remain manual gates. The superseded-report archive policy is now
 specified and exercised by the v1 release ledger.
 
 ## Recommended design choices
@@ -59,7 +62,7 @@ Three working alternatives are published under
 I recommend **A for Version 1**, retaining monograms under the approved image
 policy. It scales cleanly beyond three Scholars and keeps authoritative
 profiles one click away. B becomes more useful when the lab has enough
-simultaneous work that assignments are otherwise hard to see. C best expresses
+simultaneous work that recent contribution histories are otherwise hard to see. C best expresses
 personality, but makes the directory slower to scan and duplicates biography
 content that belongs authoritatively on profile pages.
 
@@ -168,7 +171,7 @@ why. Completion should require both automated evidence and named manual gates.
 The phrase **most recently updated** should mean the end time of the newest
 substantive Scholar iteration or PI intervention in that Project—not a CSS edit,
 deployment, or unrelated commit. Version 1 now uses small machine-readable front
-matter in `STATE.md` with `title`, `status`, and `updated`, while keeping the
+matter in `STATE.md` with `title`, `status`, `publication`, and `updated`, while keeping the
 rest of the file human-readable. The verifier makes these records authoritative
 for public Projects-directory order and timestamps.
 
@@ -189,11 +192,12 @@ atomic and testable. A separate publication step should add the Project to the
 public directory only after a substantive Executive Summary exists.
 
 The command and procedure are now implemented and tested. The central guide
-also specifies slug immutability, state changes, publication gating, and the
-manual Scholar process. The versioned `scholars.json` file is now authoritative
-for operational roster and current-assignment data, with a strict read-only
-validator and public-profile drift checks. PI-authored biographies remain
-authoritative in charters and dialog.
+also specifies slug immutability, independent lifecycle/publication state, and
+publication gating. A second guarded command creates Scholar identity,
+canonical biography, profile, and catalog entries without assigning or
+scheduling work. The versioned `scholars.json` file is authoritative for names,
+slugs, and monograms; `scholars/<slug>/BIOGRAPHY.md` is authoritative for the
+PI-authored biography. Scholar–Project pairing lasts for one runner invocation.
 
 ## Superseded reports
 

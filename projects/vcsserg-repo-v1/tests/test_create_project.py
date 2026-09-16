@@ -35,6 +35,7 @@ class CreateProjectTests(unittest.TestCase):
             state = (destination / "STATE.md").read_text(encoding="utf-8")
             self.assertIn('title: "Collective Memory: Online"', state)
             self.assertIn("status: Proposed", state)
+            self.assertIn("publication: Unpublished", state)
             self.assertIn("updated: null", state)
             dialog = (destination / "DIALOG.md").read_text(encoding="utf-8")
             self.assertIn("dialog_protocol: immutable-iterations-v1", dialog)

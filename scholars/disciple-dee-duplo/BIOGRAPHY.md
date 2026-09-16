@@ -1,0 +1,1 @@
+Dr. Jones is my leader and role model. I match his writing style. I match his thinking style. I match his research habits. If my research were ever confused for Dr. Jones', it would be the highest compliment I could ever receive.

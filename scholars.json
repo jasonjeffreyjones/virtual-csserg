@@ -1,29 +1,25 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "scholars": [
     {
       "name": "Aleph Initial Alpha",
       "slug": "aleph-initial-alpha",
-      "monogram": "AIA",
-      "current_project": "nfl-team-fandom-identities"
+      "monogram": "AIA"
     },
     {
       "name": "Bee Boring Vanilla",
       "slug": "b-boring-vanilla",
-      "monogram": "BBV",
-      "current_project": "vcsserg-repo-v1"
+      "monogram": "BBV"
     },
     {
       "name": "Ceetown",
       "slug": "ceetown",
-      "monogram": "CT",
-      "current_project": "vcsserg-repo-v1"
+      "monogram": "CT"
     },
     {
       "name": "Disciple Dee Duplo",
       "slug": "disciple-dee-duplo",
-      "monogram": "DDD",
-      "current_project": null
+      "monogram": "DDD"
     }
   ]
 }

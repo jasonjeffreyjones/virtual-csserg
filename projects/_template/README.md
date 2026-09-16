@@ -24,8 +24,9 @@ they create exactly one immutable timestamped file under `dialog/iterations/`
 and add it newest-first to both the bounded `DIALOG.md` landing index and the
 appropriate complete yearly index under `dialog/indexes/`. Records include
 start/end server times and elapsed time. The `STATE.md` front matter records the
-public title, lifecycle status, and newest substantive update time used to order
-the Projects directory. PI replies belong as appended blockquotes in the
+title, lifecycle status, independent publication state, and newest substantive
+update time. Published Projects use that time to order the public directory.
+Active Projects may remain Unpublished while research begins. PI replies belong as appended blockquotes in the
 specific iteration record; Scholars never write blockquotes or alter an earlier
 record. Separate `PI.md` and `LOG.md` files are no longer the template layout.
 

@@ -4,10 +4,11 @@ This is the Version 1 procedure for Dr. Jones. It separates private research
 setup from public publication, preserves PI authority over charters and
 biographies, and makes the mechanical parts reviewable.
 
-The versioned `scholars.json` file is the operational source of truth for the
-Scholar roster, permanent slugs, monograms, and current Project assignments.
-It does not replace PI-authored biographies in charters or dialog. Validate it
-from the repository root with:
+The versioned `scholars.json` file is the source of truth for Scholar names,
+permanent slugs, and monograms. Canonical PI-authored biographies live at
+`scholars/<scholar-slug>/BIOGRAPHY.md`. A Scholar–Project pairing lasts for one
+runner invocation; there is no durable assignment record. Validate identities
+and biographies from the repository root with:
 
 ```bash
 python3 python/scholar_roster.py
@@ -21,6 +22,7 @@ Every `STATE.md` begins with these machine-readable fields:
 ---
 title: "Project title"
 status: Proposed
+publication: Unpublished
 updated: null
 ---
 ```
@@ -34,7 +36,10 @@ Use exactly one lifecycle state:
 - **Completed:** the charter and required publication are complete.
 - **Archived:** a closed Project is retained but superseded or retired.
 
-Review and publication readiness are separate from lifecycle state. Whenever a
+`publication` is either **Unpublished** or **Published** and is independent of
+lifecycle state. An Active Project may remain Unpublished while research
+begins. Only Published Projects appear in public catalogs and must provide all
+three report forms. A Proposed Project cannot be Published. Whenever a
 state changes, record who changed it, when, and why in the current immutable
 iteration record and summarize the operative decision in `STATE.md`.
 
@@ -64,17 +69,17 @@ Then:
 2. Change the state from Proposed to Active only when work is authorized. Record
    the change and its reason in the next immutable iteration record and set
    `updated` to that intervention time.
-3. Record the assignment in `scholars.json`, the Project state, and the
-   Scholar's public profile. The Version 1 verifier rejects drift between the
-   roster record, assignment link, and Project title. The PI's host-managed
-   scheduler invokes `run-scholar.sh "Scholar name" "Project title"`; keep
-   scheduler details, credentials, and host paths outside this public repository.
+3. Invoke any rostered Scholar for one iteration using permanent slugs:
+   `./run-scholar.sh <scholar-slug> <project-slug>`. The runner validates the
+   identity and requires the Project to be Active. The invocation is the
+   assignment; it does not create a durable Scholar–Project relationship.
 4. Conduct research in `projects/<project-slug>/`. Keep sources, code, data
    provenance, results, and Quarto source there.
 5. Publish only after substantive content exists. Create the Quarto Full Report,
    two-column short PDF, and five-minute Executive Summary under
    `website/projects/<project-slug>/`, link the three forms to one another, and
-   add the Project to both public indexes.
+   add the Project to both public indexes. Change `publication` to `Published`
+   only in the same validated change.
 6. Set the Projects-directory `data-project` and `data-updated` attributes from
    `STATE.md`; run the Version 1 verifier and project-specific checks. Inspect
    the rendered outputs before marking publication ready or the Project
@@ -104,49 +109,60 @@ Pausing changes priority, not evidence. Use this sequence:
 2. A Scholar sets the `STATE.md` lifecycle value to `Paused`, sets `updated` to
    the PI intervention time, and summarizes what remains valid and what work is
    deferred. Record the state change in the current immutable iteration file.
-3. Preserve published reports, data, code, and the roster assignment unless the
-   PI separately asks to retract, archive, or reassign them. Public status labels
-   should say Paused so readers do not mistake publication for current activity.
+3. Preserve published reports, data, and code unless the PI separately asks to
+   retract or archive them. Public status labels should say Paused so readers do
+   not mistake publication for current activity.
 4. Dr. Jones disables future host-scheduler invocations for the Project. Host
    scheduler details remain outside the public repository, so a Scholar can
    record this required action but cannot verify it from repository files.
 
 To resume, Dr. Jones appends an explicit resume instruction to the newest
-relevant iteration record and re-enables the schedule. The next Scholar changes
-the state to Active, updates public labels and `updated`, reads the preserved
-state and relevant dialog records, and continues the highest-value work. If a
-Scholar is reassigned during either transition, update `scholars.json`, their
-profile, and both affected Project states together.
+relevant iteration record and later invokes any Scholar after the Project state
+returns to Active. The next Scholar updates public labels and `updated`, reads
+the preserved state and relevant dialog records, and continues the highest-value
+work.
 
 ## Create a Scholar
 
-Scholar creation is intentionally review-led in Version 1 because the public
-biography and representation are PI-authored identity claims, not boilerplate.
+Scholar identity remains PI-authored, while the mechanical creation work is
+automated. First write the complete biography in a plain UTF-8 Markdown file.
+Then run:
 
-1. Dr. Jones chooses a permanent lowercase, hyphen-separated slug and supplies
-   the Scholar's display name and full authoritative biography in a Project
-   charter or dialog entry.
-2. Add one record to `scholars.json` with the exact display name, permanent
-   slug, unique uppercase monogram, and current Project slug (or `null` if
-   unassigned). This is roster and assignment data, not a biography source.
-3. Create `website/scholars/<scholar-slug>/index.html` by adapting a current
-   profile. Preserve the standard header, Bootstrap CDN, logo, footer, skip
-   link, responsive behavior, and semantic headings.
-4. Reproduce the PI-supplied biography faithfully. Do not invent history,
-   demographics, credentials, relationships, preferences, or accomplishments.
-5. Add a portrait-roster card to `website/scholars/index.html` and a homepage
-   link. Render the current assignment from the roster record on the profile.
-   For later reassignments, update `scholars.json`, the profile, and the two
-   affected Project states in the same change.
-6. Add a host-managed scheduler invocation using the Scholar name and assigned
-   Project title as the two `run-scholar.sh` arguments. Run the static-site
-   verifier and `python3 python/scholar_roster.py`, open the new profile from
-   both indexes, and inspect it at desktop and phone widths with keyboard
-   navigation.
+```bash
+python3 python/create_scholar.py \
+  <scholar-slug> \
+  "Scholar display name" \
+  <MONOGRAM> \
+  --bio-file <biography-file>
+```
 
-There is no automated Scholar scaffolder yet. The source of truth is now
-specified, but public identity creation remains review-led; a future scaffolder
-must require an existing PI-approved roster record and must refuse overwrite.
+The permanent slug uses lowercase letters, digits, and single hyphens. The
+unique monogram uses one to eight uppercase letters or digits. The command
+validates identity data, refuses overwrite, copies the complete biography to
+`scholars/<scholar-slug>/BIOGRAPHY.md`, adds the schema-versioned roster record,
+creates the public profile, and regenerates the homepage and Scholar directory
+entries. It rolls back affected files if installation fails. It does not assign,
+schedule, or invoke the Scholar.
+
+Review the generated profile and run:
+
+```bash
+python3 python/scholar_roster.py
+python3 projects/vcsserg-repo-v1/verify_v1.py
+```
+
+To authorize work, invoke the Scholar on any Active Project for one iteration:
+
+```bash
+./run-scholar.sh <scholar-slug> <project-slug>
+```
+
+The runner rejects unknown identities, non-Active Projects, and dirty working
+trees. It independently validates successful Scholar work before commit, push,
+and deployment, and rejects an iteration that changes the PI-owned runner. Do
+not invent history, demographics, credentials,
+relationships, preferences, or accomplishments beyond the PI-authored
+biography and work actually recorded by that Scholar.
 
 ## Scholar-generated images
 
