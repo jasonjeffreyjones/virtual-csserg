@@ -135,6 +135,8 @@ Published results should be recognizable as CSSERG documents.
 
 Use the CSSERG logo (website/images/csserg-transparent-logo.png) where and when appropriate.
 
+Use this CSSERG motto where and when appropriate: *Veritas per iterationem*
+
 Dr. Jones' favorite color is a dark forest green. He also suggests Artichoke Green #4B6F44 as a pleasing dark green. Laurel Green is a pleasing light green #dde3d8. Use these colors.
 
 Dr. Jones' favorite website aesthetic is Bootstrap. Use Bootstrap from the official CDN. Include Bootstrap Icons where appropriate.
