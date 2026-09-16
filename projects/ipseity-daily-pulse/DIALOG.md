@@ -11,17 +11,19 @@ creation; Dr. Jones may append Markdown blockquotes to a specific record.
 
 ## Active PI guidance
 
-- [Review PI-authored guidance in the legacy archive](dialog/legacy/DIALOG-through-2026-09-16.md).
+None. The activation and first-iteration request in the legacy archive is
+incorporated in `STATE.md` and completed by the record below.
 
 ## Unresolved questions
 
-None recorded here. Consult `STATE.md` for the current handoff.
+- [Should Virtual CSSERG use the proposed shared, Project-organized outreach
+  feed?](dialog/iterations/2026-09-16T204556Z-ceetown.md#questions-and-next-steps)
 
 ## Recent iteration records
 
 Newest first; at most 20 records belong in this section.
 
-No migrated-format iteration records yet.
+- [2026-09-16 20:45:56Z — Ceetown](dialog/iterations/2026-09-16T204556Z-ceetown.md)
 
 ## Yearly indexes
 

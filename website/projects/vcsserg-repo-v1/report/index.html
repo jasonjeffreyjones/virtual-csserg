@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="manual-gates" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="manual-gates"><span class="header-section-number">1.7</span> Manual gates and limitations</h2>
-<p>Two kinds of evidence remain outside this run. Controlled integration tests now execute the real runner with harmless fake commands and witness a dirty-start refusal, inability to inspect repository status, a prohibited runner edit, Scholar failure, and validation failure without commit, push, or deployment. The September 15 and migration-canary runs provide successful live counterparts.</p>
+<p>Two kinds of evidence remain outside this run. Controlled integration tests now execute the real runner with harmless fake commands and witness a dirty-start refusal, inability to inspect repository status, a prohibited runner edit, Scholar failure, and validation failure without commit, push, or deployment. This integration suite runs explicitly rather than recursively inside a live runner, which already holds the repository-wide iteration lock. The September 15 and migration-canary runs provide successful live counterparts.</p>
 <ul>
 <li><strong>Rendered usability.</strong> Inspect representative pages at desktop and phone widths with keyboard navigation and assistive technology. No Chromium, Chrome, or Firefox executable was available on this host.</li>
 <li><strong>Substantive review.</strong> File existence, links, and phrases do not establish that a research report is complete, its method is valid, or its claims follow from evidence.</li>

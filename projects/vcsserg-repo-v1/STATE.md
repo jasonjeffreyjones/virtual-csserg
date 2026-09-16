@@ -2,7 +2,7 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-16T16:37:46Z
+updated: 2026-09-16T21:16:54Z
 ---
 
 # VCSSERG v1 — Current State
@@ -100,11 +100,15 @@ complete; keyboard/assistive-technology and substantive review remain open.
   cannot discover remote-only files by itself.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
   tree, validates the identity and Active Project, and independently runs the
-  roster, registry, v1 tests, verifier, whitespace, and syntax gates before any
+  roster, registry, routine v1 tests, verifier, whitespace, and syntax gates
+  before any
   commit, push, or deployment. It also rejects changes to the PI-owned runner.
-  Isolated command fakes exercise dirty-start refusal, status-inspection
+  The separately invoked runner integration suite uses isolated command fakes
+  to exercise dirty-start refusal, status-inspection
   failure, prohibited runner edits, Scholar failure, validation failure, and
-  successful operation ordering without external effects. The guarded deployment follows its
+  successful operation ordering without external effects. It is excluded from
+  nested routine validation because a live runner already holds the iteration
+  lock. The guarded deployment follows its
   deleting transfer with an authenticated recursive checksum/inventory dry run
   and exits nonzero on any residual
   missing, changed, or extra path. Mocked success, detected drift, subprocess

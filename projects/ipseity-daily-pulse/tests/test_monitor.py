@@ -1,0 +1,124 @@
+import csv
+import datetime as dt
+import gzip
+import importlib.util
+import json
+import sys
+import tempfile
+import unittest
+import xml.etree.ElementTree as ET
+from pathlib import Path
+
+
+MODULE_PATH = Path(__file__).resolve().parents[1] / "analysis/monitor.py"
+SPEC = importlib.util.spec_from_file_location("ipseity_monitor", MODULE_PATH)
+monitor = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader is not None
+sys.modules[SPEC.name] = monitor
+SPEC.loader.exec_module(monitor)
+
+
+def row(signifier, date, respondent, endorsed):
+    values = {name: "NA" for name in monitor.EXPECTED_COLUMNS}
+    values.update(
+        {
+            "endorsed": str(endorsed),
+            "signifier": signifier,
+            "observation_date": date.isoformat(),
+            "hashed_respondent_id": respondent,
+            "demographics_status": "available",
+        }
+    )
+    return values
+
+
+class MonitorTests(unittest.TestCase):
+    def make_gzip(self, path, duplicate=False):
+        with gzip.open(path, "wt", encoding="utf-8", newline="") as output:
+            writer = csv.DictWriter(output, fieldnames=monitor.EXPECTED_COLUMNS, lineterminator="\n")
+            writer.writeheader()
+            start = dt.date(2025, 1, 1)
+            for index in range(300):
+                date = start + dt.timedelta(days=index)
+                respondent = f"{index:012x}"
+                writer.writerow(row("rising", date, respondent, int(index >= 150)))
+                writer.writerow(row("falling", date, respondent, int(index < 150)))
+            if duplicate:
+                writer.writerow(row("rising", start, "000000000000", 0))
+
+    def test_valid_dataset_and_opposite_trends(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "sample.csv.gz"
+            self.make_gzip(path)
+            audit = monitor.audit_dataset(
+                path, dt.datetime(2025, 11, 1, tzinfo=dt.timezone.utc)
+            )
+            self.assertTrue(audit.parsed_successfully, audit.errors)
+            self.assertEqual(audit.rows, 600)
+            self.assertEqual(audit.duplicate_keys, 0)
+            rising = monitor.trend_row("rising", audit.signifiers["rising"])
+            falling = monitor.trend_row("falling", audit.signifiers["falling"])
+            self.assertTrue(rising["eligible"])
+            self.assertGreater(rising["annual_change_percentage_points"], 0)
+            self.assertLess(falling["annual_change_percentage_points"], 0)
+
+    def test_duplicate_key_fails_validation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "duplicate.csv.gz"
+            self.make_gzip(path, duplicate=True)
+            audit = monitor.audit_dataset(
+                path, dt.datetime(2025, 11, 1, tzinfo=dt.timezone.utc)
+            )
+            self.assertFalse(audit.parsed_successfully)
+            self.assertEqual(audit.duplicate_keys, 1)
+
+    def test_history_refuses_duplicate_timestamp(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "history.csv"
+            template = {field: "" for field in monitor.HISTORY_FIELDS}
+            template["checked_at_utc"] = "2026-09-16T20:47:07Z"
+            monitor.append_history(path, template, [])
+            existing = monitor.read_history(path)
+            with self.assertRaisesRegex(ValueError, "refusing duplicate"):
+                monitor.append_history(path, template, existing)
+
+    def test_committed_outputs_are_internally_consistent(self):
+        project = Path(__file__).resolve().parents[1]
+        history = monitor.read_history(project / "data/monitoring-history.csv")
+        summary = json.loads((project / "outputs/current-summary.json").read_text())
+        self.assertEqual(history[-1]["checked_at_utc"], summary["checked_at_utc"])
+        self.assertEqual(int(history[-1]["observations"]), summary["dataset"]["observations"])
+        self.assertEqual(history[-1]["dataset_sha256"], summary["source"]["sha256"])
+
+        with (project / "outputs/daily-observation-growth.csv").open(newline="") as source:
+            daily = list(csv.DictReader(source))
+        self.assertEqual(
+            sum(int(item["daily_observations"]) for item in daily),
+            summary["dataset"]["observations"],
+        )
+        self.assertEqual(
+            int(daily[-1]["cumulative_observations"]), summary["dataset"]["observations"]
+        )
+        self.assertEqual(daily[0]["observation_date"], summary["dataset"]["earliest_observation_date"])
+        self.assertEqual(daily[-1]["observation_date"], summary["dataset"]["latest_observation_date"])
+
+        with (project / "outputs/signifier-growth.csv").open(newline="") as source:
+            trends = list(csv.DictReader(source))
+        eligible = [item for item in trends if item["eligible"] == "True"]
+        self.assertEqual(len(trends), summary["dataset"]["signifiers"])
+        self.assertEqual(len(eligible), summary["trend_method"]["eligible_signifiers"])
+        self.assertEqual(
+            max(eligible, key=lambda item: float(item["annual_change_percentage_points"]))["signifier"],
+            summary["fastest_growing"][0]["signifier"],
+        )
+        self.assertEqual(
+            min(eligible, key=lambda item: float(item["annual_change_percentage_points"]))["signifier"],
+            summary["fastest_shrinking"][0]["signifier"],
+        )
+        for name in ("observation-growth.svg", "annual-prevalence-growth-histogram.svg"):
+            root = ET.parse(project / "outputs" / name).getroot()
+            self.assertEqual(root.tag, "{http://www.w3.org/2000/svg}svg")
+
+
+if __name__ == "__main__":
+    unittest.main()

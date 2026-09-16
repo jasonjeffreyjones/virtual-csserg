@@ -42,7 +42,7 @@ Material report revisions now record the clean outgoing commit in a Project vers
 
 ## Manual gates
 
-The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A public probe found all 110 expected files byte-identical. Controlled runner tests witness dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment. Dr. Jones reports the production pages and PDFs look acceptable; keyboard/assistive-technology and substantive review remain human gates.
+The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A public probe found all 110 expected files byte-identical. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Dr. Jones reports the production pages and PDFs look acceptable; keyboard/assistive-technology and substantive review remain human gates.
 
 The dialog canary is complete. All Projects and the template now use one immutable file per iteration, a bounded 20-link landing page, and complete yearly indexes. The five former DIALOG.md files are preserved byte-for-byte with recorded SHA-256 digests; the verifier checks these hashes, record filename/metadata agreement, and unique index coverage. Scholars read the full charter/state/index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Dr. Jones appends feedback to the record he is answering.
 

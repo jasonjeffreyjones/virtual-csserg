@@ -1,3 +1,12 @@
+"""Manual integration tests for run-scholar.sh.
+
+The filename deliberately does not match unittest's default ``test*.py``
+discovery pattern. A live Scholar runner holds the repository-wide iteration
+lock, so recursively launching runner fixtures from its routine post-iteration
+suite would create a false lock failure. Run this module explicitly when the
+runner or its publication boundary changes.
+"""
+
 import os
 from pathlib import Path
 import shutil

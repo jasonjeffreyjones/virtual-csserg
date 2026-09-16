@@ -115,7 +115,9 @@ if [[ $CODEX_STATUS -ne 0 ]]; then
         "Scholar exited with status $CODEX_STATUS or hit a resource limit."
 fi
 
-# The runner, rather than the Scholar's prose, decides whether publication is safe.
+# The runner, rather than the Scholar's prose, decides whether publication is
+# safe. Default unit-test discovery deliberately excludes runner_integration.py;
+# recursively testing the runner here would contend with this process's lock.
 set +e
 {
     git diff --quiet HEAD -- run-scholar.sh &&

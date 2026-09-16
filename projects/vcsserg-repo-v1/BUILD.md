@@ -31,11 +31,17 @@ groups, and repository whitespace:
 ```bash
 python3 python/scholar_roster.py
 python3 -m unittest discover -s projects/vcsserg-repo-v1/tests -v
+python3 projects/vcsserg-repo-v1/tests/runner_integration.py -v
 PYTHONPATH=/tmp/vcsserg-v1-publishing-deps \
   python3 projects/vcsserg-repo-v1/analysis/verify_publication.py
 python3 projects/vcsserg-repo-v1/verify_v1.py
 git diff --check
 ```
+
+Default discovery covers routine unit tests. Run `runner_integration.py`
+explicitly when `run-scholar.sh`, its publication boundary, or the integration
+fixtures change. It is intentionally excluded from a live Scholar iteration
+because that parent process already holds the repository-wide iteration lock.
 
 The publication verifier checks reciprocal local links and fragments, exactly
 one Executive Summary figure, the required Full Report phrase, PDF link

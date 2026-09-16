@@ -28,7 +28,8 @@ completion after that inventory phase, and the September 16 public probe found
 all 110 expected files byte-identical. The successful workflow and deployment
 gate are therefore observed. Isolated runner tests now witness dirty-start and
 status-inspection refusal, prohibited runner edits, plus Scholar and validation
-failures without commit, push, or deployment; rendered usability and
+failures without commit, push, or deployment. They run as a separate
+integration suite rather than recursively inside a live runner; rendered usability and
 substantive review remain manual gates. The superseded-report archive policy is now
 specified and exercised by the v1 release ledger.
 

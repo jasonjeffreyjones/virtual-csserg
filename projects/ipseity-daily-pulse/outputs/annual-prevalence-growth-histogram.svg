@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Estimated annual prevalence change across signifiers</title>
+  <desc id="desc">Histogram of unweighted linear probability slopes for 704 signifiers. Most estimates cluster near zero.</desc>
+  <rect width="960" height="540" fill="#ffffff"/>
+  <style>
+    text { font-family: system-ui, -apple-system, sans-serif; fill: #243128; }
+    .title { font-size: 25px; font-weight: 700; }
+    .subtitle { font-size: 15px; fill: #4e5d51; }
+    .axis { stroke: #66736a; stroke-width: 1; }
+    .grid { stroke: #dde3d8; stroke-width: 1; }
+    .tick { font-size: 13px; fill: #4e5d51; }
+  </style>
+  <text class="title" x="92" y="38">Estimated annual prevalence change across signifiers</text>
+  <text class="subtitle" x="92" y="66">704 eligible signifiers · unweighted linear trends through 2026-09-15 · 2-point bins</text>
+  <line class="grid" x1="92" y1="466.0" x2="925" y2="466.0"/>
+  <text class="tick" text-anchor="end" x="80" y="471.0">0</text>
+  <line class="grid" x1="92" y1="386.4" x2="925" y2="386.4"/>
+  <text class="tick" text-anchor="end" x="80" y="391.4">35</text>
+  <line class="grid" x1="92" y1="306.9" x2="925" y2="306.9"/>
+  <text class="tick" text-anchor="end" x="80" y="311.9">70</text>
+  <line class="grid" x1="92" y1="227.3" x2="925" y2="227.3"/>
+  <text class="tick" text-anchor="end" x="80" y="232.3">105</text>
+  <line class="grid" x1="92" y1="147.7" x2="925" y2="147.7"/>
+  <text class="tick" text-anchor="end" x="80" y="152.7">140</text>
+  <rect x="93.00" y="459.18" width="37.67" height="6.82" fill="#4B6F44"/>
+  <rect x="132.67" y="461.45" width="37.67" height="4.55" fill="#4B6F44"/>
+  <rect x="172.33" y="459.18" width="37.67" height="6.82" fill="#4B6F44"/>
+  <rect x="212.00" y="434.17" width="37.67" height="31.83" fill="#4B6F44"/>
+  <rect x="251.67" y="415.99" width="37.67" height="50.01" fill="#4B6F44"/>
+  <rect x="291.33" y="363.70" width="37.67" height="102.30" fill="#4B6F44"/>
+  <rect x="331.00" y="293.23" width="37.67" height="172.77" fill="#4B6F44"/>
+  <rect x="370.67" y="147.74" width="37.67" height="318.26" fill="#4B6F44"/>
+  <rect x="410.33" y="100.00" width="37.67" height="366.00" fill="#4B6F44"/>
+  <rect x="450.00" y="238.67" width="37.67" height="227.33" fill="#4B6F44"/>
+  <rect x="489.67" y="340.97" width="37.67" height="125.03" fill="#4B6F44"/>
+  <rect x="529.33" y="397.80" width="37.67" height="68.20" fill="#4B6F44"/>
+  <rect x="569.00" y="429.63" width="37.67" height="36.37" fill="#4B6F44"/>
+  <rect x="608.67" y="434.17" width="37.67" height="31.83" fill="#4B6F44"/>
+  <rect x="648.33" y="436.45" width="37.67" height="29.55" fill="#4B6F44"/>
+  <rect x="688.00" y="456.91" width="37.67" height="9.09" fill="#4B6F44"/>
+  <rect x="727.67" y="454.63" width="37.67" height="11.37" fill="#4B6F44"/>
+  <rect x="767.33" y="466.00" width="37.67" height="0.00" fill="#4B6F44"/>
+  <rect x="807.00" y="466.00" width="37.67" height="0.00" fill="#4B6F44"/>
+  <rect x="846.67" y="466.00" width="37.67" height="0.00" fill="#4B6F44"/>
+  <rect x="886.33" y="463.73" width="37.67" height="2.27" fill="#4B6F44"/>
+  <line class="axis" x1="211.0" y1="466" x2="211.0" y2="472"/>
+  <text class="tick" text-anchor="middle" x="211.0" y="493">-10</text>
+  <line class="axis" x1="409.3" y1="466" x2="409.3" y2="472"/>
+  <text class="tick" text-anchor="middle" x="409.3" y="493">+0</text>
+  <line class="axis" x1="607.7" y1="466" x2="607.7" y2="472"/>
+  <text class="tick" text-anchor="middle" x="607.7" y="493">+10</text>
+  <line class="axis" x1="806.0" y1="466" x2="806.0" y2="472"/>
+  <text class="tick" text-anchor="middle" x="806.0" y="493">+20</text>
+  <line x1="409.3" y1="100" x2="409.3" y2="466" stroke="#243128" stroke-width="2"/>
+  <line class="axis" x1="92" y1="100" x2="92" y2="466"/>
+  <line class="axis" x1="92" y1="466" x2="925" y2="466"/>
+  <text class="tick" x="508.5" y="522" text-anchor="middle">Estimated change (percentage points per year)</text>
+  <text class="tick" transform="translate(24 283.0) rotate(-90)" text-anchor="middle">Signifiers</text>
+</svg>
