@@ -80,6 +80,16 @@ Then:
    the rendered outputs before marking publication ready or the Project
    Completed.
 
+When a later iteration materially changes a published claim, method, result,
+interpretation, limitation, or report structure, archive the outgoing report
+set before replacement. Record the clean pre-iteration commit and reason in
+`projects/<project-slug>/REPORT-VERSIONS.md` following
+`projects/vcsserg-repo-v1/REPORT-ARCHIVING.md`. Canonical URLs continue to show
+the current release; the full commit key preserves the superseded Executive
+Summary, Full Report, short PDF, dependencies, sources, and Project record.
+Cosmetic maintenance remains available through ordinary Git history and does
+not require a ledger entry.
+
 Manual copying of `_template` remains a recovery option, but the command is the
 default because it makes validation and no-overwrite behavior consistent.
 

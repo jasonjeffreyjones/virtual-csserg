@@ -1,21 +1,21 @@
 ---
 title: "Virtual CSSERG Version 1.0"
 status: Active
-updated: 2026-09-15T08:16:05Z
+updated: 2026-09-16T08:14:08Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 15, 2026, all seven automated promise groups pass across
-26 HTML pages and six first-party stylesheets. A pre-iteration public probe
-reconfirmed all 109 files in the previous checkout byte-for-byte; the new
-Scholar profile raises the current tree to 110 expected files, so it needs the
-normal deployment and another probe. Version 1.0 is not complete. The
-authenticated remote-inventory phase still needs host-side observation; a
-witnessed Scholar workflow, rendered accessibility/usability, and substantive
-review also remain open.
+Active. On September 16, 2026, all seven automated promise groups pass across
+26 HTML pages and six first-party stylesheets. The September 15 normal Scholar
+run reached completion only after its guarded deployment and authenticated
+inventory phase returned successfully; today's public probe then found all 110
+expected files byte-identical. This closes the deployment gate and observes the
+successful workflow path for that release. Version 1.0 is not complete. A
+witnessed safe workflow failure, rendered accessibility/usability, and
+substantive review remain open.
 
 ## Completed work and current evidence
 
@@ -69,6 +69,12 @@ review also remain open.
   creation, Project pause/resume, and the approved provenance safeguards for
   generated illustrations. `_template` and the root README lead users to the
   process.
+- `REPORT-ARCHIVING.md` now defines a Git-backed policy for material report
+  supersession, correction, and retraction. Canonical URLs remain current while
+  a full commit key preserves the outgoing three-form report, dependencies,
+  sources, and Project record. `REPORT-VERSIONS.md` records the September 15 v1
+  release as the first superseded set, and the verifier confirms all three
+  forms exist at that commit.
 - NFL Team Fandom Identities now records the PI-directed Paused lifecycle state
   in its state, dialog, public summary, Projects listing, homepage, and assigned
   Scholar profile. Its findings, reports, and Aleph's assignment are preserved.
@@ -80,9 +86,9 @@ review also remain open.
 - The standard-library public parity probe compares every expected website file
   byte without credentials. September 14 and September 15 pre-iteration runs
   found all 109 then-expected files identical, improving on the September 13
-  result of 73 identical, 10 different, and 26 unavailable. The current tree
-  adds one profile and awaits deployment. HTTP cannot discover remote-only
-  files.
+  result of 73 identical, 10 different, and 26 unavailable. The September 16
+  run found all 110 expected files identical after the normal deployment. HTTP
+  cannot discover remote-only files by itself.
 - The guarded deployment now follows its deleting transfer with an authenticated
   recursive checksum/inventory dry run and exits nonzero on any residual
   missing, changed, or extra path. Mocked success, detected drift, subprocess
@@ -101,9 +107,11 @@ The checks now include validated roster/assignment data, PI-source biography
 fidelity, exact Project lifecycle status, and footer-link group placement.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
-network probe checks expected bytes but not unexpected remote files; the mocked
-deployment check validates the new inventory phase's commands and fail-closed
-behavior but does not constitute a live run.
+network probe checks expected bytes but not unexpected remote files. For the
+September 15 release, the runner's completion marker establishes that the live
+deployment's fail-closed inventory phase returned without residual paths; the
+September 16 network probe establishes all expected bytes. Project-specific
+publication verifiers continue to cover stronger PDF properties.
 Project-specific publication verifiers for VCSSERG v1 and Predict the Self do
 validate reciprocal report links, one summary figure, phrase count, PDF links,
 both PDF columns, nonempty pages, and the ten-page ceiling.
@@ -130,6 +138,10 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
   and later re-enables the external schedule.
 - Footer links use two semantic groups everywhere: About (PI, CSSERG) and Open
   work (GitHub, license).
+- Canonical report URLs show current evidence. A material supersession records
+  the clean outgoing commit in a Project release ledger; corrections and
+  retractions preserve history and add current notices. Cosmetic maintenance
+  remains recoverable through ordinary Git history.
 - The single append-only `DIALOG.md` remains operative until the approved
   immutable-per-iteration migration can update orientation, template, runner,
   every Project, and verifier together. After migration, Scholars will read the
@@ -138,10 +150,9 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Current problems and manual gates
 
-- Observe the next normal deployment's checksum/inventory dry run complete with
-  no missing, changed, or remote-only paths; then verify all 110 current files
-  with the public byte probe.
-- Witness one complete Scholar workflow, including success and failure paths.
+- Exercise and witness the Scholar workflow's safe failure path, including the
+  abort log and absence of commit, push, or deployment. The successful path is
+  observed for the September 15 release.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive technology. No installed Chromium, Chrome, or Firefox executable is
   available on this host.
@@ -153,7 +164,7 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Resources and limitations
 
-September 15 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 16 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. No Chromium, Chrome, or Firefox executable was found.
 ReportLab/pypdf are not installed in the base Python environment; any PDF build
@@ -167,6 +178,8 @@ No system runtime was installed or replaced in this iteration.
 - `DIALOG-MIGRATION.md`: exact PI trigger, Scholar migration plan, reply
   protocol, and bounded-reading rule for immutable-per-iteration dialog.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
+- `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
+  v1 release ledger.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `scholars.json` and `python/scholar_roster.py`: authoritative operational
   Scholar roster/assignment data and its read-only validator.
@@ -191,7 +204,6 @@ No system runtime was installed or replaced in this iteration.
 
 No blocking PI question. Dr. Jones has two host-side actions: disable the NFL
 schedule to complete that pause, and later apply the runner trigger in
-`DIALOG-MIGRATION.md` when ready for the dialog canary. After this iteration,
-confirm the deployment inventory and 110-file byte parity. Then witness the
-workflow failure path, perform browser/keyboard/assistive-technology and
-substantive review, and define superseded-report archiving.
+`DIALOG-MIGRATION.md` when ready for the dialog canary. Next witness the
+workflow failure path and perform browser/keyboard/assistive-technology and
+substantive review.

@@ -16,7 +16,7 @@ still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 15, 2026 |
+| Documented promise | Evidence or test | Status on September 16, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project scaffold, validated Scholar roster | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, `DIALOG.md`, plus `title`, `status`, `updated`, including `_template` | Automated pass; Predict the Self migration preserves legacy records |
@@ -24,11 +24,11 @@ still not establish the manual gates below.
 | Publication-eligible Projects and Scholars are findable and correctly assigned | `scholars.json`, home, Projects index, Scholar index, profiles, assignment links, PI-authored biographies | Automated pass; Proposed scaffolds remain private |
 | Every publication-eligible Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner wires the documented lifecycle | Syntax and static command/path checks | Automated pass; not executed end to end |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; public expected-file probe | Automated pass; all 109 pre-iteration files matched production, while the changed 110-file tree and remote-inventory phase await observed deployment |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, and all 110 expected files matched production on September 16 |
 
 ## Current automated result
 
-On September 15, 2026, **all seven groups pass**. The final report-format gap
+On September 16, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -49,6 +49,10 @@ publication structure:
   Project assignment. The NFL Project was changed to Paused without altering
   its reports or Aleph's assignment. A new migration runbook specifies the
   remaining dialog coordination rather than treating it as a vague next step.
+- On September 16, the first Git-backed superseded-report ledger recorded the
+  exact outgoing v1 report commit. The operative archive policy now defines
+  material changes, correction/retraction handling, retrieval, and validation
+  without copying stale Quarto trees into the live website.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. The manual gates remain open.
@@ -79,30 +83,35 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 
 ## Manual gates
 
-- Confirm the next normal deployment's authenticated checksum dry run finds no
-  missing, changed, or remote-only paths.
-- Observe one complete successful Scholar workflow, including logging and
-  failure behavior.
+- Exercise and witness the Scholar workflow's safe failure path. The September
+  15 normal run records start and completion; by control flow, completion occurs
+  only after commit, push, deployment, and an empty authenticated inventory
+  check all succeed.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive-technology checks.
 - Review substantive report completeness and research validity. File existence
   and links cannot establish either.
-- Confirm short reports use two columns and remain at or under 10 pages. The
-  generic v1 verifier checks only the PDF signature; project publication tests
-  may enforce stronger PDF properties.
+
+The generic v1 verifier checks only each PDF signature. All three
+Project-specific publication tests separately confirm nonempty pages, two-column
+format, links, and the ten-page ceiling; visual legibility remains part of the
+rendered review.
 
 The September 13 pre-iteration expected-file probe found 73 of 109 production
 files byte-identical, 10 different, and 26 unavailable. After the normal
 automation published that iteration, the September 14 probe found all 109
-expected files byte-identical, with none different or unavailable. This closes
-the public expected-byte check for that checkout; the September 15 pre-iteration
-probe reproduced the 109-of-109 result. The current iteration creates a 110th
-file and changes public pages, so parity must be checked again after deployment.
-Because HTTP cannot discover remote-only files,
-the deployment component now follows its deleting transfer with an authenticated
-checksum dry run and exits nonzero if any missing, changed, or extra path
-remains. That inventory phase is mocked and regression-tested here but needs one
-observed normal deployment before the complete parity gate closes.
+expected files byte-identical, with none different or unavailable. The
+September 15 pre-iteration probe reproduced that 109-of-109 result. That
+iteration created a 110th file and changed public pages. Its runner log records
+an iteration start and completion; inspection of the runner establishes that
+completion is written only after the guarded deployment returns zero, while the
+deployment can return zero only after its authenticated checksum dry run
+reports no residual path. On September 16 the public probe then found all 110
+expected files byte-identical, with none different or unavailable. Together
+these observations close the deployment inventory and expected-byte gate for
+the September 15 release. HTTP alone still cannot discover remote-only files,
+so every new deployment must continue to pass the authenticated inventory
+phase.
 
 ## Other current requirements
 
@@ -122,3 +131,7 @@ observed normal deployment before the complete parity gate closes.
   branding, publication, lifecycle, and update-metadata guidance. A tested
   command creates a personalized no-overwrite scaffold without publishing it;
   the creation guide also documents the review-led Scholar procedure.
+- `REPORT-ARCHIVING.md` keeps canonical URLs current while preserving material
+  supersessions by full public commit key. `REPORT-VERSIONS.md` applies it to
+  the outgoing September 15 v1 release, whose three report forms are verified
+  to exist at the recorded commit.

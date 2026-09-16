@@ -1,6 +1,6 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 15, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 16, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
@@ -18,7 +18,7 @@ The standard-library verifier parses public HTML, resolves local resources and f
 
 ## Automated evidence
 
-Repository guidance passes: the governing files, growth procedure, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and update metadata appropriate to that state. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass publication-eligible Project and rostered-Scholar coverage, PI-biography fidelity, assignment checks, lifecycle status, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
+Repository guidance passes: the governing files, growth and report-archive procedures, and scaffold command exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, and DIALOG.md plus valid title, lifecycle status, and update metadata appropriate to that state. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass publication-eligible Project and rostered-Scholar coverage, PI-biography fidelity, assignment checks, lifecycle status, and metadata-derived update order. Runner wiring and guarded exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass static and mocked checks.
 
 The three-report group now passes. The overall result remains a regression report, not a research-quality score or Version 1 certification.
 
@@ -38,9 +38,11 @@ Scholar creation stays review-led. The PI supplies the name, slug, biography, an
 
 Pausing is now operational: record the PI instruction, set state and public labels to Paused, preserve reports and assignments unless separately changed, and disable the external schedule. NFL Team Fandom Identities is paused under this procedure; its findings remain published.
 
+Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. This report's September 15 predecessor is the first recorded superseded release.
+
 ## Manual gates
 
-September 14 and September 15 pre-iteration public probes found all 109 files in the previous checkout byte-identical. This iteration adds a fourth profile, making 110 expected files, so the changed tree needs normal deployment and another probe. HTTP cannot find remote-only files. Deployment refuses success when an authenticated post-transfer checksum/inventory dry run reports a missing, changed, or extra path; that phase awaits host-side observation. End-to-end automation still requires witnessed success and failure behavior. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology; no local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
+The September 15 runner log records start and completion. Completion occurs only after commit, push, guarded deployment, and an authenticated dry run with no missing, changed, or extra remote path. A September 16 public probe then found all 110 expected files byte-identical. This closes the deployment gate and observes the successful workflow path; the safe failure path still needs a witnessed run. Rendered QA requires representative desktop and phone inspection with keyboard and assistive technology; no local browser executable was available. Finally, structural checks cannot establish research validity or substantive completeness.
 
 The approved dialog redesign now has an operational runbook: Dr. Jones first changes the PI-owned runner prompt and starts one canary; the Scholar then migrates all Projects atomically, preserves legacy bytes, updates guidance/template/tests, and creates bounded indexes. Scholars will read the full charter and state, the 20-entry landing index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Until the runner trigger, the append-only rule remains in force.
 

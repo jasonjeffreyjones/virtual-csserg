@@ -193,6 +193,8 @@ def check_repository_documents():
         "RESEARCHER-ORIENTATION.md",
         "projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md",
         "projects/vcsserg-repo-v1/DIALOG-MIGRATION.md",
+        "projects/vcsserg-repo-v1/REPORT-ARCHIVING.md",
+        "projects/vcsserg-repo-v1/REPORT-VERSIONS.md",
         "python/create_project.py",
         "python/scholar_roster.py",
         "scholars.json",
@@ -211,6 +213,7 @@ def check_repository_documents():
             "python3 python/create_project.py",
             "python3 python/scholar_roster.py",
             "scholars.json",
+            "REPORT-ARCHIVING.md",
         ):
             if expected not in guide:
                 problems.append(f"growth guide missing {expected!r}")
@@ -227,6 +230,42 @@ def check_repository_documents():
         ):
             if expected not in migration:
                 problems.append(f"dialog migration runbook missing {expected!r}")
+
+        archive_policy = (
+            PROJECT_ROOT / "projects/vcsserg-repo-v1/REPORT-ARCHIVING.md"
+        ).read_text(encoding="utf-8")
+        for expected in (
+            "## What is a report release?",
+            "## Archive rule",
+            "## Corrections and retractions",
+            "## Retrieval and validation",
+            "REPORT-VERSIONS.md",
+        ):
+            if expected not in archive_policy:
+                problems.append(f"report archive policy missing {expected!r}")
+
+        release_ledger = (
+            PROJECT_ROOT / "projects/vcsserg-repo-v1/REPORT-VERSIONS.md"
+        ).read_text(encoding="utf-8")
+        archive_keys = set(re.findall(r"\b[0-9a-f]{40}\b", release_ledger))
+        if not archive_keys:
+            problems.append("v1 report ledger has no full archive key")
+        for archive_key in archive_keys:
+            for archived_path in (
+                "website/projects/vcsserg-repo-v1/index.html",
+                "website/projects/vcsserg-repo-v1/report/index.html",
+                "website/projects/vcsserg-repo-v1/short-report.pdf",
+            ):
+                archived = subprocess.run(
+                    ["git", "cat-file", "-e", f"{archive_key}:{archived_path}"],
+                    cwd=PROJECT_ROOT,
+                    capture_output=True,
+                    text=True,
+                )
+                if archived.returncode != 0:
+                    problems.append(
+                        f"archive {archive_key} does not contain {archived_path}"
+                    )
 
         try:
             scaffold_path = PROJECT_ROOT / "python/create_project.py"

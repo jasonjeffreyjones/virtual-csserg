@@ -21,8 +21,12 @@ pending are the coordinated immutable-dialog migration and the manual Version
 1 gates. The conceptual footer grouping and single roster/assignment source
 were implemented on September 13. On September 14, all 109 expected public
 files matched the repository byte-for-byte, and deployment gained a required
-post-transfer checksum/inventory dry run; the new phase still needs observation
-in a normal deployment.
+post-transfer checksum/inventory dry run. The September 15 normal run reached
+completion after that inventory phase, and the September 16 public probe found
+all 110 expected files byte-identical. The successful workflow and deployment
+gate are therefore observed; safe failure, rendered usability, and substantive
+review remain manual gates. The superseded-report archive policy is now
+specified and exercised by the v1 release ledger.
 
 ## Recommended design choices
 
@@ -189,8 +193,23 @@ also specifies slug immutability, state changes, publication gating, and the
 manual Scholar process. The versioned `scholars.json` file is now authoritative
 for operational roster and current-assignment data, with a strict read-only
 validator and public-profile drift checks. PI-authored biographies remain
-authoritative in charters and dialog. A complete policy for superseded reports
-is still underspecified.
+authoritative in charters and dialog.
+
+## Superseded reports
+
+Version 1 now uses a Git-backed release ledger rather than copying old Quarto
+trees into the live website. Canonical Project URLs always present current
+evidence. Before a material report change, the Scholar records the clean
+outgoing commit, affected forms, reason, and update/correction/retraction class
+in the Project's `REPORT-VERSIONS.md`. The full commit identifies all three
+generated forms, their dependencies, sources, and contemporaneous Project
+record without breaking relative links or multiplying vendored assets.
+
+`REPORT-ARCHIVING.md` defines materiality, dirty-tree handling, immutable
+ledger entries, correction and retraction notices, retrieval URLs, and
+validation. The v1 Project applies the policy to the September 15 report set as
+the first recorded supersession. Styling-only maintenance remains recoverable
+through ordinary Git history and does not create a release entry.
 
 ## What `verify_v1.py` can and cannot establish
 

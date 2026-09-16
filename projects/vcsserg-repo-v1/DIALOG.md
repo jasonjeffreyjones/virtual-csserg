@@ -735,3 +735,70 @@ Below are log entries from Scholars. This is an append-only file.
   unassigned until the PI supplies a Project.
 - Ending work time: 2026-09-15 08:16:05 UTC.
 - Time spent: 863 seconds (14 minutes 23 seconds).
+
+## 2026-09-16 — Bee Boring Vanilla — Deployment evidence and report history
+
+- Starting work time: 2026-09-16 08:01:04 UTC (preflight server time).
+- Scope: Re-test the September 15 release in production, determine what the
+  completed normal workflow establishes, specify the remaining
+  superseded-report archive policy, and synchronize the v1 evidence and all
+  report forms.
+- Context and resources: Read repository/researcher guidance, my complete
+  Scholar directory, the charter/state/full dialog, current audit,
+  recommendations, dialog-migration and growth guides, build/design records,
+  report sources, verifier, deployment component, runner, and relevant public
+  pages. Used the supplied 2-CPU, 3.7-GiB RAM, 4-GiB swap, and 65-GiB-free host
+  conservatively. No agents, credentials, `.env`, runner edit, manual
+  deployment, or replacement runtime was used.
+- Production and workflow evidence: Before editing, the public parity probe
+  found all 110 expected website files byte-identical, with none different or
+  unavailable. The September 15 local runner log records both iteration start
+  and completion. Inspection of the runner and deployment control flow shows
+  that completion is written only after commit, push, guarded transfer, and a
+  successful authenticated checksum/inventory dry run with no residual path.
+  Together these observations close the expected-byte and remote-inventory
+  gate and witness the successful workflow path for that release. Public HTTP
+  still cannot inventory unexpected paths independently, so the authenticated
+  check remains required after every deployment.
+- Superseded-report policy: Added `REPORT-ARCHIVING.md`. Canonical URLs always
+  show current evidence; before a material change, a Project ledger records the
+  clean outgoing 40-character Git commit, scope, reason, and
+  update/correction/retraction class. This preserves all three reports,
+  dependencies, sources, and contemporaneous Project memory without copying
+  old Quarto trees into the live website. The policy specifies dirty-tree
+  handling, immutable entries, notices, retrieval, and validation.
+- First archive record: Added `REPORT-VERSIONS.md` and recorded the exact
+  pre-iteration commit for the September 15 v1 report set. The verifier now
+  requires both archive documents and uses read-only `git cat-file` checks to
+  confirm that every distinct ledger key contains the archived Executive
+  Summary, Full Report entry page, and short PDF.
+- Publication and handoff: Updated the audit, recommendations, growth guide,
+  current state, homepage, Projects index, Executive Summary, Full Report, and
+  short report. Re-rendered and safely published the Quarto book and rebuilt
+  the two-page PDF. The current manual gates are now the safe workflow failure
+  path, rendered keyboard/assistive-technology review, and substantive review;
+  report archiving and the successful deployment path are no longer open.
+- Validation: All 12 v1 unit tests pass. All seven promise groups pass across
+  five Project/template memory directories, 26 HTML pages, six first-party
+  stylesheets, three publication-eligible report sets, runner wiring, guarded
+  deployment, and the new archive-key evidence. The VCSSERG v1, Predict the
+  Self, and NFL publication verifiers pass. Quarto rendered cleanly; the v1 PDF
+  verifier confirms reciprocal links, two columns, nonempty pages, and the
+  ten-page ceiling. Ghostscript rasterization and page-by-page inspection found
+  both PDF pages readable without clipping or overlap. Python compilation,
+  runner shell syntax, and `git diff --check` pass.
+- Problems and limitations: No Chromium, Chrome, or Firefox executable is
+  installed, so graphical HTML, keyboard, and assistive-technology review
+  remains open. A safe runner failure still needs to be witnessed; mocked
+  process failures do not replace that observation. Research-validity and
+  substantive-completeness review also remain human gates. The runner log does
+  not capture deployment stdout, so the inventory conclusion rests on the
+  completion marker and inspected fail-closed control flow rather than a copied
+  success message.
+- PI actions and next steps: Disable the external NFL schedule if not already
+  done. When ready, apply the runner trigger in `DIALOG-MIGRATION.md` and launch
+  the Bee v1 canary. Separately witness the safe workflow failure path and
+  conduct browser/keyboard/assistive-technology and substantive review.
+- PI question: None blocking.
+- Ending work time: 2026-09-16 08:14:08 UTC.
+- Time spent: 784 seconds (13 minutes 4 seconds).
