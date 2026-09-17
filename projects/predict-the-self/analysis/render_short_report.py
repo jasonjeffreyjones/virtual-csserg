@@ -9,7 +9,15 @@ from pypdf import PdfReader
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
-from reportlab.platypus import BaseDocTemplate, Frame, Image, PageTemplate, Paragraph, Spacer
+from reportlab.platypus import (
+    BalancedColumns,
+    BaseDocTemplate,
+    Frame,
+    Image,
+    PageTemplate,
+    Paragraph,
+    Spacer,
+)
 
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -33,7 +41,6 @@ def main() -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     width, height = 612, 792
     margin, gap = 42, 20
-    column = (width - 2 * margin - gap) / 2
     document = BaseDocTemplate(
         str(output),
         pagesize=(width, height),
@@ -43,16 +50,16 @@ def main() -> int:
     )
     frames = [
         Frame(
-            margin + index * (column + gap),
+            margin,
             45,
-            column,
+            width - 2 * margin,
             height - 95,
+            id="body",
             leftPadding=0,
             rightPadding=0,
             topPadding=0,
             bottomPadding=0,
         )
-        for index in range(2)
     ]
 
     def footer(canvas, doc):
@@ -109,7 +116,19 @@ def main() -> int:
             style, block = styles["Heading2"], block[3:]
         story.append(Paragraph(inline(block).replace("\n", "<br/>"), style))
 
-    document.build(story)
+    document.build(
+        [
+            BalancedColumns(
+                story,
+                nCols=2,
+                leftPadding=0,
+                innerPadding=gap,
+                rightPadding=0,
+                topPadding=0,
+                bottomPadding=0,
+            )
+        ]
+    )
     pages = PdfReader(output).pages
     if not 1 <= len(pages) <= 10:
         raise RuntimeError(f"short report has {len(pages)} pages; expected 1-10")

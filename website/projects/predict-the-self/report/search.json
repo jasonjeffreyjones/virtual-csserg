@@ -14,7 +14,7 @@
     "href": "index.html#current-finding",
     "title": "Predict the Self",
     "section": "Current finding",
-    "text": "Current finding\nThe first Predict the Self study asks whether a later Twenty Statements Test response can be forecast from an earlier response by the same person. Its deterministic stable-signifier projection is ready as an 81-case test submission and passes the challenge’s format validator. The private answers remain unavailable, so this report makes no test-performance claim.\nOn 50 public development cases, the projection improves three of six text agreement measures over repeating the earlier response verbatim, worsens two, and ties one. It lowers word-count and source-similarity error but raises line-count error. Most importantly, its mean similarity to the source is 0.903898, while observed follow-ups average 0.225683. Selecting supposedly enduring words remains far beyond an adequate account of how people rewrite their self-descriptions.",
+    "text": "Current finding\nThe first Predict the Self study asks whether a later Twenty Statements Test response can be forecast from an earlier response by the same person. Its deterministic stable-signifier projection is ready as an 81-case test submission and passes the challenge’s format validator. The private answers remain unavailable, so this report makes no test-performance claim.\nOn 50 public development cases, the projection improves three of six text agreement measures over repeating the earlier response verbatim, worsens two, and ties one. Paired case-bootstrap intervals span zero for every nonzero agreement difference. Word-count and source-similarity error improve more consistently, while line-count error worsens. Most importantly, an average 73.2% of distinct follow-up token types are absent from the same person’s earlier response. Selecting supposedly enduring words remains far beyond an adequate account of how people rewrite their self-descriptions.",
     "crumbs": [
       "Forecasting expressed identity"
     ]
@@ -24,7 +24,7 @@
     "href": "index.html#how-to-read-this-report",
     "title": "Predict the Self",
     "section": "How to read this report",
-    "text": "How to read this report\nThe evidence, method, and development results chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and extractive method, reports the complete development scorecard, and links every public reproducibility artifact.\nThe report distinguishes three claims that should not be collapsed:\n\nSubmission validity: all 81 required IDs have nonblank predictions in the required order.\nPublic development evidence: the method has a mixed scorecard relative to the repeat-2024 baseline and was selected using those same public cases.\nPrivate test performance: unknown until the organizer evaluates the frozen artifact; no result is inferred from validation or development data.\n\nThis Full Report is a two-chapter Quarto HTML book. Chapter count is an editorial choice, not a Virtual CSSERG requirement.",
+    "text": "How to read this report\nThe evidence, method, and development results chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and extractive method, reports the complete development scorecard, quantifies paired case uncertainty and lexical novelty, and links every public reproducibility artifact.\nThe report distinguishes three claims that should not be collapsed:\n\nSubmission validity: all 81 required IDs have nonblank predictions in the required order.\nPublic development evidence: the method has a mixed scorecard relative to the repeat-2024 baseline and was selected using those same public cases.\nPrivate test performance: unknown until the organizer evaluates the frozen artifact; no result is inferred from validation or development data.\n\nThis Full Report is a two-chapter Quarto HTML book. Chapter count is an editorial choice, not a Virtual CSSERG requirement.",
     "crumbs": [
       "Forecasting expressed identity"
     ]
@@ -34,7 +34,27 @@
     "href": "report.html",
     "title": "1  Predict the Self",
     "section": "",
-    "text": "2 Findings at a glance\nVirtual CSSERG\nExecutive Summary · Short two-column report · report landing page",
+    "text": "2 Abstract\nVirtual CSSERG\nExecutive Summary · Short two-column report · report landing page\nAn 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#research-question",
+    "href": "report.html#research-question",
+    "title": "1  Predict the Self",
+    "section": "4.1 Research question",
+    "text": "4.1 Research question\nThe larger project asks how predictable human lives are. Its first tractable task is Dr. Jason Jeffrey Jones’ Predict Future Selves challenge: predict a later self-authored self-description from an earlier self-authored self-description.\nThis is an ipseological prediction task. A Twenty Statements Test response is personally expressed identity: text an individual provides to describe themself. Words and phrases may act as identity signifiers. The target is a later expression of identity—not a latent “true self” and not a complete life outcome.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#benchmark",
+    "href": "report.html#benchmark",
+    "title": "1  Predict the Self",
+    "section": "4.2 Benchmark and provenance",
+    "text": "4.2 Benchmark and provenance\nThe benchmark contains 281 Prolific participants with approved, complete Twenty Statements Test responses in the 2024 study and its longitudinal follow-up. Follow-up responses were recorded 424 to 750 days later (median 433). The deterministic split contains 150 training, 50 development, and 81 test cases. Training and development responses are paired; test follow-ups and follow-up demographics are private.\nThe project retrieved the public repository on 2026-08-30 and detached the checkout at commit 9b6a766712583fec8d3182957260b1123fbfa146 before prediction. The four input hashes and the hashes of the governing documentation, evaluator, and validator are recorded in BENCHMARK_PROVENANCE.md.\nThe benchmark’s own warnings govern interpretation: the sample is small and selected; platform recruitment and longitudinal attrition limit generalization; and agreement with one observed follow-up does not establish that a prediction was the only plausible future.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
     ]
@@ -55,6 +75,86 @@
     "title": "1  Predict the Self",
     "section": "5.2 Model selection",
     "text": "5.2 Model selection\nPublic development data were used for model selection, as the challenge allows. Fixed extraction fractions and the training-only length regression were compared; the regression-length rule was frozen before the test artifact was generated. The development scorecard is therefore a model-selection result, not an untouched confirmatory estimate.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#post-hoc-development-diagnostics",
+    "href": "report.html#post-hoc-development-diagnostics",
+    "title": "1  Predict the Self",
+    "section": "5.3 Post hoc development diagnostics",
+    "text": "5.3 Post hoc development diagnostics\nAfter freezing the model and predictions, this iteration added two descriptive diagnostics. First, every scorecard comparison was decomposed into 50 paired case differences. A deterministic percentile bootstrap resampled cases in pairs 20,000 times (seed 20260917) to show how the mean effect changes with development-case composition. These intervals do not warrant population generalization, and the analysis was not preregistered.\nSecond, tokenized 2024 and follow-up responses were compared case by case. Unique-token novelty is the share of follow-up token types absent from the earlier response. Occurrence unavailability additionally respects how many times each token appears in the source: a strictly extractive method cannot copy a token more often than it occurs there. Three deliberately unattainable oracles use each observed follow-up to select the best source token set, bag of words, or source-order subsequence. They describe extractive ceilings, not prospective prediction performance.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#aggregate-scorecard",
+    "href": "report.html#aggregate-scorecard",
+    "title": "1  Predict the Self",
+    "section": "6.1 Aggregate scorecard",
+    "text": "6.1 Aggregate scorecard\nThe authoritative shared evaluator reports fifteen measures in three groups. The table reports every measure; arrows indicate the evaluator’s direction where one exists.\n\n\n\n\n\n\n\n\n\n\nGroup\nMetric\nStable projection\nRepeat 2024\nDirection\n\n\n\n\nAgreement\nNormalized exact-match rate\n0.000000\n0.000000\nHigher\n\n\nAgreement\nNormalized edit similarity\n0.298061\n0.291966\nHigher\n\n\nAgreement\nToken Jaccard similarity\n0.142768\n0.141930\nHigher\n\n\nAgreement\nToken-overlap F1\n0.307444\n0.312202\nHigher\n\n\nAgreement\nROUGE-L F1\n0.227552\n0.225683\nHigher\n\n\nAgreement\nCharacter n-gram F1\n0.292293\n0.296534\nHigher\n\n\nForm\nWord-count MAE\n41.640000\n56.680000\nLower\n\n\nForm\nLine-count MAE\n9.760000\n6.800000\nLower\n\n\nForm\nMean predicted word count\n77.320000\n108.040000\nDescriptive\n\n\nForm\nMean reference word count\n94.760000\n94.760000\nDescriptive\n\n\nChange\nPrediction repeat-2024 rate\n0.280000\n1.000000\nDescriptive\n\n\nChange\nObserved repeat-2024 rate\n0.000000\n0.000000\nDescriptive\n\n\nChange\nSource-similarity MAE\n0.678215\n0.774317\nLower\n\n\nChange\nMean prediction-to-source similarity\n0.903898\n1.000000\nDescriptive\n\n\nChange\nMean observed follow-up-to-source similarity\n0.225683\n0.225683\nDescriptive\n\n\n\nThe projection improves three of six agreement measures, worsens two, and ties on exact match. Its clearest gains concern form and amount of change: word-count MAE falls by 15.04 words, and source-similarity MAE falls by 0.096102. But the mean predicted source similarity remains 0.678215 above the observed mean. Extracting supposedly enduring signifiers does not come close to reproducing how radically people rewrite their self-descriptions.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#paired-pattern",
+    "href": "report.html#paired-pattern",
+    "title": "1  Predict the Self",
+    "section": "6.2 Paired development-case pattern",
+    "text": "6.2 Paired development-case pattern\nPositive effects favor stable-signifier projection. For agreement measures, the effect is projection minus repeat-2024; for errors, it is repeat-2024 error minus projection error. Exact match is omitted because all 50 cases tie at zero. A win, tie, or loss is evaluated within a person before averaging.\n\n\n\n\n\n\n\n\n\nMetric\nMean effect\nPaired case-bootstrap 95% interval\nWin / tie / loss\n\n\n\n\nNormalized edit similarity\n+0.006095\n−0.001701 to +0.013890\n24 / 14 / 12\n\n\nToken Jaccard similarity\n+0.000838\n−0.002383 to +0.004097\n16 / 20 / 14\n\n\nToken-overlap F1\n−0.004759\n−0.012300 to +0.002429\n13 / 20 / 17\n\n\nROUGE-L F1\n+0.001869\n−0.002268 to +0.005755\n19 / 20 / 11\n\n\nCharacter n-gram F1\n−0.004241\n−0.012240 to +0.003618\n16 / 14 / 20\n\n\nWord-count error reduction\n+15.040000\n+1.180000 to +32.360000\n20 / 20 / 10\n\n\nLine-count error reduction\n−2.960000\n−5.540000 to −0.420000\n15 / 12 / 23\n\n\nSource-similarity error reduction\n+0.096102\n+0.066064 to +0.129348\n30 / 20 / 0\n\n\n\nThe table changes the emphasis of the aggregate scorecard. None of the small agreement differences has an interval that excludes zero. In contrast, the projection’s lower word-count and source-similarity errors persist across the paired case resamples, while its line-count error is consistently worse. The source-similarity result is directional but inadequate in magnitude: even after improvement, the projection still remains much too close to the past.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#extractive-limits",
+    "href": "report.html#extractive-limits",
+    "title": "1  Predict the Self",
+    "section": "6.3 Lexical novelty and extractive ceilings",
+    "text": "6.3 Lexical novelty and extractive ceilings\nThe observed follow-ups contain substantial new lexical material. On an average case, 73.1727% of distinct follow-up token types are absent from the earlier response (95% case-bootstrap interval: 69.7982%–76.5607%). When token frequencies are respected, 65.0621% of follow-up token occurrences cannot be copied from the source without reusing tokens beyond their source counts (59.2663%–70.6149%). Conversely, only 24.9892% of distinct source token types recur at follow-up (22.0060%–28.0466%).\nEven an oracle with access to the observed future is constrained. Its mean extractive ceilings are 0.268273 for unique-token Jaccard, 0.484206 for bag-of-words F1, and 0.374081 for source-order subsequence ROUGE-L F1. The actual projection reaches 0.142768, 0.307444, and 0.227552 on those measures. These comparisons reveal two failures at once: the current extractor does not reach the retrospective extractive ceiling, and no extractor can generate the many identity signifiers expressed only at follow-up.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#submission",
+    "href": "report.html#submission",
+    "title": "1  Predict the Self",
+    "section": "6.4 Frozen test submission",
+    "text": "6.4 Frozen test submission\nThe method generated one nonblank prediction for every test ID in the required order. The pinned official validator returned VALID: 81 predictions. The frozen CSV has SHA-256:\na463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3\nThe organizer must run the private test evaluator. Until that happens, the only empirical performance reported here is public-development performance.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#reproducibility",
+    "href": "report.html#reproducibility",
+    "title": "1  Predict the Self",
+    "section": "7.1 Reproducibility",
+    "text": "7.1 Reproducibility\nThe complete open materials are:\n\nanalysis/analyze_dev_diagnostics.py — hash-guarded paired bootstrap and extractive-limit analysis;\nanalysis/stable_signifier_projection.py — standard-library generator;\nresults/stable_signifier_dev_diagnostics.json — complete machine-readable post hoc diagnostic results;\nresults/stable_signifier_dev_predictions.csv — all 50 public development predictions;\nresults/stable_signifier_dev_scorecard.json — complete machine-readable scorecard;\nsubmissions/aleph_initial_alpha_submission.csv — frozen 81-case test artifact;\nsubmissions/aleph_initial_alpha_method.md — submission-ready method card.\n\nThe generator uses Python 3.9.23 and only the standard library. The challenge’s 17 public tests passed before generation. Regenerating the development and test artifacts reproduced their hashes exactly.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#sources",
+    "href": "report.html#sources",
+    "title": "1  Predict the Self",
+    "section": "7.2 Sources",
+    "text": "7.2 Sources\n\nJones, J. J. (2023). Ipseology—A new science of the self.\nJones, J. J. (2024). Predicting the self with generative AI [Preprint]. SocArXiv. https://doi.org/10.31235/osf.io/eh9sk\nJones, J. J. (2026). Building the ipseome: Large, free, open, human identity data [Preprint]. arXiv.\nJones, J. J. (2026). You can predict future selves with AI (or without AI) [Data set and benchmark]. GitHub.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
+    ]
+  },
+  {
+    "objectID": "report.html#limitations",
+    "href": "report.html#limitations",
+    "title": "1  Predict the Self",
+    "section": "7.3 Limitations and next step",
+    "text": "7.3 Limitations and next step\nAn extractive method cannot predict genuinely new identities, experiences, or reframing. Token recurrence is not equivalent to identity-signifier endurance, and common wording can make a signifier look stable. The line splitter also turns some prose sentences into separate output lines, worsening line-count error. Finally, public-development-guided selection can overfit a 50-case set.\nThe paired bootstrap treats development cases as the resampling unit, but the benchmark is a selected longitudinal cohort rather than a probability sample. Its intervals describe sensitivity to the composition of these 50 cases, not uncertainty for people in general. The lexical oracles use observed follow-ups and are deliberately unattainable; they must not be read as test predictions or achievable prospective scores.\nThe immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. A later iteration can preregister a generative or other non-extractive method that targets genuinely new signifiers, without reusing test feedback for tuning, and apply the same paired diagnostics to its development results.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Predict the Self</span>"
     ]

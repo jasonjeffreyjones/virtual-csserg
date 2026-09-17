@@ -8,9 +8,9 @@ Aleph Initial Alpha · Virtual CSSERG · September 2026
 
 The first Predict the Self study forecasts a later Twenty Statements Test response from an earlier response by the same person. An interpretable stable-signifier projection is frozen for all 81 private-test cases and passes the challenge's official format validator. It does not yet have a private test score.
 
-On 50 public development cases, the projection improves normalized edit similarity (0.298061 versus 0.291966), token Jaccard (0.142768 versus 0.141930), and ROUGE-L F1 (0.227552 versus 0.225683) over repeating the earlier response verbatim. It worsens token-overlap F1 (0.307444 versus 0.312202) and character n-gram F1 (0.292293 versus 0.296534), and exact match remains zero for both. The benchmark defines no composite score, so these results do not support an overall-winner claim.
+On 50 public development cases, the projection improves normalized edit similarity (0.298061 versus 0.291966), token Jaccard (0.142768 versus 0.141930), and ROUGE-L F1 (0.227552 versus 0.225683) over repeating the earlier response verbatim. It worsens token-overlap F1 (0.307444 versus 0.312202) and character n-gram F1 (0.292293 versus 0.296534), and exact match remains zero for both. Paired case-bootstrap intervals span zero for all five nonzero agreement differences. The benchmark defines no composite score, so these results do not support an overall-winner claim.
 
-The most important result is a failure of continuity modeling. Mean prediction-to-source ROUGE-L is 0.903898, while mean observed follow-up-to-source ROUGE-L is 0.225683. Even an extraction rule designed to favor enduring language expects much more textual stability than participants display.
+The most important result is a failure of continuity modeling. Mean prediction-to-source ROUGE-L is 0.903898, while mean observed follow-up-to-source ROUGE-L is 0.225683. An average 73.1727% of distinct follow-up token types are absent from the same person's earlier response. Even an extraction rule designed to favor enduring language expects much more textual stability than participants display and cannot generate most newly expressed vocabulary.
 
 ## Question and benchmark
 
@@ -28,21 +28,25 @@ Finally, a training-only ordinary least squares regression predicts follow-up wo
 
 Public development data were used to choose between fixed extraction fractions and regression-predicted length, as the challenge permits. The displayed scorecard is consequently a model-selection result rather than an untouched confirmation set.
 
+After predictions were frozen, a post hoc diagnostic resampled the 50 development cases in pairs 20,000 times with fixed seed 20260917. Its percentile intervals describe sensitivity to development-case composition, not generalization to a population. Separate lexical diagnostics measured future vocabulary unavailable in the source and three unattainable oracle extractive ceilings that use the observed future.
+
 ## Complete result pattern
 
-The projection improves three of six text-agreement measures, worsens two, and ties exact match. Its word-count mean absolute error falls from 56.68 to 41.64 words, and source-similarity error falls from 0.774317 to 0.678215. Its line-count error rises from 6.80 to 9.76 lines. These mixed directions are why no single headline score summarizes the method.
+The projection improves three of six text-agreement measures, worsens two, and ties exact match. Its word-count mean absolute error falls from 56.68 to 41.64 words, a +15.04 error reduction with paired case-bootstrap interval +1.18 to +32.36. Source-similarity error falls from 0.774317 to 0.678215; its +0.096102 reduction has interval +0.066064 to +0.129348. Line-count error rises from 6.80 to 9.76; its −2.96 error reduction has interval −5.54 to −0.42. These mixed directions are why no single headline score summarizes the method.
+
+Across cases, 73.1727% of distinct future token types are new relative to the source (case-bootstrap interval 69.7982%–76.5607%), and 65.0621% of future token occurrences are unavailable when source counts are respected (59.2663%–70.6149%). Even oracles that inspect the follow-up reach mean ceilings of only 0.268273 unique-token Jaccard, 0.484206 bag-of-words F1, and 0.374081 source-order subsequence ROUGE-L F1. These are retrospective limits, not achievable prospective results.
 
 The submission contains one nonblank prediction for every required test ID in order. Its SHA-256 is a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3. Only the organizer can run the private evaluator. Validation establishes artifact shape, not predictive performance.
 
 ## Interpretation and limits
 
-Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. The response splitter can also turn prose into too many lines. Repeated tuning on 50 development cases would risk overfitting.
+Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. The response splitter can also turn prose into too many lines. Repeated tuning on 50 development cases would risk overfitting, and the post hoc bootstrap cannot repair model-selection reuse or the cohort's nonprobability sampling.
 
 The next research step is to submit the frozen CSV and method card, publish the organizer's complete private scorecard unchanged, and preregister development-data use before comparing a non-extractive or generative method.
 
 ## Reproducibility and references
 
-The public repository contains the deterministic standard-library generator, 50 development predictions, the complete machine-readable development scorecard, the frozen 81-case test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
+The public repository contains the deterministic standard-library generator, hash-guarded diagnostic script, 50 development predictions, complete machine-readable scorecard and diagnostics, frozen 81-case test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
 
 Jones, J. J. (2023). <i>Ipseology—A new science of the self.</i> https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/
 

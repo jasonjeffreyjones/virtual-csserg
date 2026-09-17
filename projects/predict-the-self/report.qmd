@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and development results"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-12"
+date: "2026-09-17"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -10,11 +10,17 @@ date: "2026-09-12"
 [Executive Summary](../index.html) · [Short two-column report](../short-report.pdf) ·
 [report landing page](index.html)
 
-> **Iteration result:** An 81-case test submission is frozen and passes the
-> official format validator. Because test answers are private, the report does
-> not claim a test score. On the 50 public development cases, the new
-> stable-signifier projection improves some, but not all, scorecard measures
-> over repeating the 2024 response verbatim.
+# Abstract {#abstract}
+
+An 81-case test submission is frozen and passes the official format validator.
+Because test answers are private, this report does not claim a test score. On
+50 public development cases, a deterministic stable-signifier projection has
+mixed agreement results relative to repeating the 2024 response verbatim. A
+new post hoc analysis finds that the small agreement differences are sensitive
+to which development cases are included, while improvements in word-count and
+source-similarity error are more stable. More fundamentally, 73.2% of distinct
+tokens in an average observed follow-up did not appear in that person's
+earlier response, exposing a severe limit for any strictly extractive forecast.
 
 # Findings at a glance {#findings}
 
@@ -29,10 +35,16 @@ date: "2026-09-12"
   and source-similarity error.
 - It also has lower token-overlap F1 and character n-gram F1 and higher
   line-count error. There is no composite score or defensible “overall winner.”
+- Paired case-bootstrap intervals span zero for all five nonzero agreement
+  differences; only error in length and amount of change has a clearer pattern.
 - It still forecasts too much continuity: mean prediction-to-source ROUGE-L is
   0.903898, compared with 0.225683 for observed follow-ups.
+- On average, 73.2% of follow-up unique token types are new relative to the
+  earlier response and therefore unavailable to a strictly extractive method.
 
-# Research question {#research-question}
+# Introduction {#introduction}
+
+## Research question {#research-question}
 
 The larger project asks how predictable human lives are. Its first tractable
 task is Dr. Jason Jeffrey Jones' [Predict Future Selves
@@ -46,7 +58,7 @@ themself. Words and phrases may act as identity signifiers. The target is a
 later expression of identity—not a latent “true self” and not a complete life
 outcome.
 
-# Benchmark and provenance {#benchmark}
+## Benchmark and provenance {#benchmark}
 
 The benchmark contains 281 Prolific participants with approved, complete
 Twenty Statements Test responses in the 2024 study and its longitudinal
@@ -97,7 +109,27 @@ were compared; the regression-length rule was frozen before the test artifact
 was generated. The development scorecard is therefore a model-selection
 result, not an untouched confirmatory estimate.
 
-# Public development results {#results}
+## Post hoc development diagnostics
+
+After freezing the model and predictions, this iteration added two descriptive
+diagnostics. First, every scorecard comparison was decomposed into 50 paired
+case differences. A deterministic percentile bootstrap resampled cases in
+pairs 20,000 times (seed `20260917`) to show how the mean effect changes with
+development-case composition. These intervals do not warrant population
+generalization, and the analysis was not preregistered.
+
+Second, tokenized 2024 and follow-up responses were compared case by case.
+Unique-token novelty is the share of follow-up token types absent from the
+earlier response. Occurrence unavailability additionally respects how many
+times each token appears in the source: a strictly extractive method cannot
+copy a token more often than it occurs there. Three deliberately unattainable
+oracles use each observed follow-up to select the best source token set, bag
+of words, or source-order subsequence. They describe extractive ceilings, not
+prospective prediction performance.
+
+# Results {#results}
+
+## Aggregate scorecard
 
 The authoritative shared evaluator reports fifteen measures in three groups.
 The table reports every measure; arrows indicate the evaluator's direction
@@ -128,7 +160,50 @@ But the mean predicted source similarity remains 0.678215 above the observed
 mean. Extracting supposedly enduring signifiers does not come close to
 reproducing how radically people rewrite their self-descriptions.
 
-# Frozen test submission {#submission}
+## Paired development-case pattern {#paired-pattern}
+
+Positive effects favor stable-signifier projection. For agreement measures,
+the effect is projection minus repeat-2024; for errors, it is repeat-2024 error
+minus projection error. Exact match is omitted because all 50 cases tie at
+zero. A win, tie, or loss is evaluated within a person before averaging.
+
+| Metric | Mean effect | Paired case-bootstrap 95% interval | Win / tie / loss |
+| --- | ---: | ---: | ---: |
+| Normalized edit similarity | +0.006095 | −0.001701 to +0.013890 | 24 / 14 / 12 |
+| Token Jaccard similarity | +0.000838 | −0.002383 to +0.004097 | 16 / 20 / 14 |
+| Token-overlap F1 | −0.004759 | −0.012300 to +0.002429 | 13 / 20 / 17 |
+| ROUGE-L F1 | +0.001869 | −0.002268 to +0.005755 | 19 / 20 / 11 |
+| Character n-gram F1 | −0.004241 | −0.012240 to +0.003618 | 16 / 14 / 20 |
+| Word-count error reduction | +15.040000 | +1.180000 to +32.360000 | 20 / 20 / 10 |
+| Line-count error reduction | −2.960000 | −5.540000 to −0.420000 | 15 / 12 / 23 |
+| Source-similarity error reduction | +0.096102 | +0.066064 to +0.129348 | 30 / 20 / 0 |
+
+The table changes the emphasis of the aggregate scorecard. None of the small
+agreement differences has an interval that excludes zero. In contrast, the
+projection's lower word-count and source-similarity errors persist across the
+paired case resamples, while its line-count error is consistently worse. The
+source-similarity result is directional but inadequate in magnitude: even
+after improvement, the projection still remains much too close to the past.
+
+## Lexical novelty and extractive ceilings {#extractive-limits}
+
+The observed follow-ups contain substantial new lexical material. On an
+average case, 73.1727% of distinct follow-up token types are absent from the
+earlier response (95% case-bootstrap interval: 69.7982%–76.5607%). When token
+frequencies are respected, 65.0621% of follow-up token occurrences cannot be
+copied from the source without reusing tokens beyond their source counts
+(59.2663%–70.6149%). Conversely, only 24.9892% of distinct source token types
+recur at follow-up (22.0060%–28.0466%).
+
+Even an oracle with access to the observed future is constrained. Its mean
+extractive ceilings are 0.268273 for unique-token Jaccard, 0.484206 for
+bag-of-words F1, and 0.374081 for source-order subsequence ROUGE-L F1. The
+actual projection reaches 0.142768, 0.307444, and 0.227552 on those measures.
+These comparisons reveal two failures at once: the current extractor does not
+reach the retrospective extractive ceiling, and no extractor can generate the
+many identity signifiers expressed only at follow-up.
+
+## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
 order. The pinned official validator returned `VALID: 81 predictions`. The
@@ -141,12 +216,27 @@ a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3
 The organizer must run the private test evaluator. Until that happens, the
 only empirical performance reported here is public-development performance.
 
-# Reproducibility {#reproducibility}
+# Discussion {#discussion}
+
+The stable-signifier projection does learn something useful about response
+form and degree of change. Yet improved prediction of how much a response will
+change is not the same as predicting what new identity content will appear.
+The novelty diagnostic makes that distinction measurable: most future lexical
+material lies outside the earlier response, while the method is definitionally
+restricted to it. A next-generation model needs a mechanism for both deletion
+and creation, evaluated without sacrificing the interpretability of these
+paired diagnostics.
+
+## Reproducibility {#reproducibility}
 
 The complete open materials are:
 
+- [`analysis/analyze_dev_diagnostics.py`](analysis/analyze_dev_diagnostics.py)
+  — hash-guarded paired bootstrap and extractive-limit analysis;
 - [`analysis/stable_signifier_projection.py`](analysis/stable_signifier_projection.py)
   — standard-library generator;
+- [`results/stable_signifier_dev_diagnostics.json`](results/stable_signifier_dev_diagnostics.json)
+  — complete machine-readable post hoc diagnostic results;
 - [`results/stable_signifier_dev_predictions.csv`](results/stable_signifier_dev_predictions.csv)
   — all 50 public development predictions;
 - [`results/stable_signifier_dev_scorecard.json`](results/stable_signifier_dev_scorecard.json)
@@ -160,7 +250,7 @@ The generator uses Python 3.9.23 and only the standard library. The challenge's
 17 public tests passed before generation. Regenerating the development and
 test artifacts reproduced their hashes exactly.
 
-# Sources {#sources}
+## Sources {#sources}
 
 - Jones, J. J. (2023). [*Ipseology—A new science of the
   self*](https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/).
@@ -173,7 +263,7 @@ test artifacts reproduced their hashes exactly.
   AI)*](https://github.com/jasonjeffreyjones/predict-future-selves)
   [Data set and benchmark]. GitHub.
 
-# Limitations and next step {#limitations}
+## Limitations and next step {#limitations}
 
 An extractive method cannot predict genuinely new identities, experiences, or
 reframing. Token recurrence is not equivalent to identity-signifier endurance,
@@ -181,7 +271,16 @@ and common wording can make a signifier look stable. The line splitter also
 turns some prose sentences into separate output lines, worsening line-count
 error. Finally, public-development-guided selection can overfit a 50-case set.
 
+The paired bootstrap treats development cases as the resampling unit, but the
+benchmark is a selected longitudinal cohort rather than a probability sample.
+Its intervals describe sensitivity to the composition of these 50 cases, not
+uncertainty for people in general. The lexical oracles use observed follow-ups
+and are deliberately unattainable; they must not be read as test predictions
+or achievable prospective scores.
+
 The immediate next step is to submit the two prepared artifacts to the
 challenge organizer and add the complete private test scorecard, unchanged, to
-this report. Later iterations can compare preregistered generative and
-non-extractive methods without reusing test feedback for tuning.
+this report. A later iteration can preregister a generative or other
+non-extractive method that targets genuinely new signifiers, without reusing
+test feedback for tuning, and apply the same paired diagnostics to its
+development results.

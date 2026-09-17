@@ -7,7 +7,7 @@
   <title>Predict the Self — Evidence brief</title>
   <link rel="icon" href="../../images/favicon.ico" sizes="any">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../assets/styles.css?v=20260912">
+  <link rel="stylesheet" href="../../assets/styles.css?v=20260917">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -39,28 +39,29 @@
     <figure class="forecast-figure" aria-labelledby="forecast-caption">
       <div class="continuity-panel">
         <div>
-          <p class="section-number">Continuity diagnostic / ROUGE-L</p>
+          <p class="section-number">Continuity and novelty diagnostics</p>
           <h2>Forecasts stay too close to the past</h2>
-          <p>Similarity to each person&rsquo;s earlier response, on a 0–1 scale.</p>
+          <p>Source similarity uses ROUGE-L; novelty is the share of future unique token types absent from the source. Both use a 0–1 scale.</p>
         </div>
-        <div class="continuity-bars" aria-label="Mean prediction-to-source similarity is 0.903898; mean observed follow-up-to-source similarity is 0.225683.">
+        <div class="continuity-bars" aria-label="Mean prediction-to-source similarity is 0.903898; mean observed follow-up-to-source similarity is 0.225683; mean future unique-token novelty is 0.731727.">
           <div><span>Projection</span><span class="continuity-track" aria-hidden="true"><span class="projection-bar"></span></span><strong>0.903898</strong></div>
           <div><span>Observed follow-up</span><span class="continuity-track" aria-hidden="true"><span class="observed-bar"></span></span><strong>0.225683</strong></div>
+          <div><span>Future token novelty</span><span class="continuity-track" aria-hidden="true"><span class="novelty-bar"></span></span><strong>0.731727</strong></div>
         </div>
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Development agreement comparison" tabindex="0">
         <table class="scorecard-table">
-          <thead><tr><th scope="col">Agreement metric</th><th scope="col">Projection</th><th scope="col">Repeat 2024</th><th scope="col">Difference</th></tr></thead>
+          <thead><tr><th scope="col">Agreement metric</th><th scope="col">Projection</th><th scope="col">Repeat 2024</th><th scope="col">Difference</th><th scope="col">Paired case-bootstrap 95% interval</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Edit similarity</th><td>0.298061</td><td>0.291966</td><td class="metric-better">+0.006095</td></tr>
-            <tr><th scope="row">Token Jaccard</th><td>0.142768</td><td>0.141930</td><td class="metric-better">+0.000838</td></tr>
-            <tr><th scope="row">ROUGE-L F1</th><td>0.227552</td><td>0.225683</td><td class="metric-better">+0.001869</td></tr>
-            <tr><th scope="row">Token-overlap F1</th><td>0.307444</td><td>0.312202</td><td class="metric-worse">−0.004758</td></tr>
-            <tr><th scope="row">Character n-gram F1</th><td>0.292293</td><td>0.296534</td><td class="metric-worse">−0.004241</td></tr>
+            <tr><th scope="row">Edit similarity</th><td>0.298061</td><td>0.291966</td><td class="metric-better">+0.006095</td><td>−0.001701 to +0.013890</td></tr>
+            <tr><th scope="row">Token Jaccard</th><td>0.142768</td><td>0.141930</td><td class="metric-better">+0.000838</td><td>−0.002383 to +0.004097</td></tr>
+            <tr><th scope="row">ROUGE-L F1</th><td>0.227552</td><td>0.225683</td><td class="metric-better">+0.001869</td><td>−0.002268 to +0.005755</td></tr>
+            <tr><th scope="row">Token-overlap F1</th><td>0.307444</td><td>0.312202</td><td class="metric-worse">−0.004759</td><td>−0.012300 to +0.002429</td></tr>
+            <tr><th scope="row">Character n-gram F1</th><td>0.292293</td><td>0.296534</td><td class="metric-worse">−0.004241</td><td>−0.012240 to +0.003618</td></tr>
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Complete directional pattern for nonzero text-agreement differences and the principal continuity diagnostic on 50 public development cases. Development data informed model selection; the benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. Continuity, lexical novelty, and the complete directional pattern for nonzero text-agreement differences on 50 public development cases. Every agreement interval spans zero. Development data informed model selection; the post hoc intervals describe case-composition sensitivity, not population generalization; the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -79,10 +80,10 @@
           <p><strong>The extractive method learns stable-looking language.</strong> Training-only retention estimates rank source units, while a training-only regression controls forecast length. <a href="report/report.html#method">Review the method</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Development gains are small and metric-dependent.</strong> Three agreement measures improve, two worsen, and exact match ties; word-count error falls while line-count error rises. <a href="report/report.html#results">See all 15 measures</a>.</p>
+          <p><strong>Agreement differences are small and case-sensitive.</strong> Three measures improve, two worsen, and exact match ties, but every nonzero agreement interval spans zero. <a href="report/report.html#paired-pattern">Inspect paired results</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Predicted identities remain much too stable.</strong> Projection-to-source similarity is 0.903898 versus 0.225683 for real follow-ups, exposing the method&rsquo;s central failure. <a href="report/report.html#limitations">Read the interpretation</a>.</p>
+          <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Private test performance is still unknown.</strong> Only the organizer can score the frozen artifact; validation and development results cannot substitute for that evaluation. <a href="report/report.html#submission">Check the claim boundary</a>.</p>

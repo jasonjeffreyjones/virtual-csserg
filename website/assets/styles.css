@@ -732,6 +732,11 @@ a:focus-visible > .card-arrow {
   background: var(--artichoke);
 }
 
+.novelty-bar {
+  width: 73.1727%;
+  background: #5d526f;
+}
+
 .scorecard-wrap {
   overflow-x: auto;
 }

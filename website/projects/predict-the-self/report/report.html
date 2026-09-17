@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aleph Initial Alpha, Virtual CSSERG">
-<meta name="dcterms.date" content="2026-09-12">
+<meta name="dcterms.date" content="2026-09-17">
 
 <title>1&nbsp; Predict the Self – Predict the Self</title>
 <style>
@@ -138,19 +138,32 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
 
   <ul>
-  <li><a href="#findings" id="toc-findings" class="nav-link active" data-scroll-target="#findings"><span class="header-section-number">2</span> Findings at a glance</a></li>
-  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question"><span class="header-section-number">3</span> Research question</a></li>
-  <li><a href="#benchmark" id="toc-benchmark" class="nav-link" data-scroll-target="#benchmark"><span class="header-section-number">4</span> Benchmark and provenance</a></li>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract"><span class="header-section-number">2</span> Abstract</a></li>
+  <li><a href="#findings" id="toc-findings" class="nav-link" data-scroll-target="#findings"><span class="header-section-number">3</span> Findings at a glance</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">4</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#research-question" id="toc-research-question" class="nav-link" data-scroll-target="#research-question"><span class="header-section-number">4.1</span> Research question</a></li>
+  <li><a href="#benchmark" id="toc-benchmark" class="nav-link" data-scroll-target="#benchmark"><span class="header-section-number">4.2</span> Benchmark and provenance</a></li>
+  </ul></li>
   <li><a href="#method" id="toc-method" class="nav-link" data-scroll-target="#method"><span class="header-section-number">5</span> Method</a>
   <ul class="collapse">
   <li><a href="#stable-signifier-projection" id="toc-stable-signifier-projection" class="nav-link" data-scroll-target="#stable-signifier-projection"><span class="header-section-number">5.1</span> Stable-signifier projection</a></li>
   <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">5.2</span> Model selection</a></li>
+  <li><a href="#post-hoc-development-diagnostics" id="toc-post-hoc-development-diagnostics" class="nav-link" data-scroll-target="#post-hoc-development-diagnostics"><span class="header-section-number">5.3</span> Post hoc development diagnostics</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">6</span> Public development results</a></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">7</span> Frozen test submission</a></li>
-  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">8</span> Reproducibility</a></li>
-  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources"><span class="header-section-number">9</span> Sources</a></li>
-  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations"><span class="header-section-number">10</span> Limitations and next step</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">6</span> Results</a>
+  <ul class="collapse">
+  <li><a href="#aggregate-scorecard" id="toc-aggregate-scorecard" class="nav-link" data-scroll-target="#aggregate-scorecard"><span class="header-section-number">6.1</span> Aggregate scorecard</a></li>
+  <li><a href="#paired-pattern" id="toc-paired-pattern" class="nav-link" data-scroll-target="#paired-pattern"><span class="header-section-number">6.2</span> Paired development-case pattern</a></li>
+  <li><a href="#extractive-limits" id="toc-extractive-limits" class="nav-link" data-scroll-target="#extractive-limits"><span class="header-section-number">6.3</span> Lexical novelty and extractive ceilings</a></li>
+  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.4</span> Frozen test submission</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">7</span> Discussion</a>
+  <ul class="collapse">
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility"><span class="header-section-number">7.1</span> Reproducibility</a></li>
+  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources"><span class="header-section-number">7.2</span> Sources</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations"><span class="header-section-number">7.3</span> Limitations and next step</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -179,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 12, 2026</p>
+      <p class="date">September 17, 2026</p>
     </div>
   </div>
 
@@ -193,29 +206,35 @@ ul.task-list li input[type="checkbox"] {
 
 <p><a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a></p>
 <p><a href="../index.html">Executive Summary</a> · <a href="../short-report.pdf">Short two-column report</a> · <a href="index.html">report landing page</a></p>
-<blockquote class="blockquote">
-<p><strong>Iteration result:</strong> An 81-case test submission is frozen and passes the official format validator. Because test answers are private, the report does not claim a test score. On the 50 public development cases, the new stable-signifier projection improves some, but not all, scorecard measures over repeating the 2024 response verbatim.</p>
-</blockquote>
-<section id="findings" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Findings at a glance</h1>
+<section id="abstract" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Abstract</h1>
+<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast.</p>
+</section>
+<section id="findings" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Findings at a glance</h1>
 <ul>
 <li>The benchmark is now pinned to commit <a href="https://github.com/jasonjeffreyjones/predict-future-selves/tree/9b6a766712583fec8d3182957260b1123fbfa146"><code>9b6a766</code></a>, and every governing input has a recorded SHA-256 checksum.</li>
 <li>The deterministic method learns which source tokens recur in later self-description and extracts high-persistence response units to a training-predicted length.</li>
 <li>Relative to repeat-2024 on development data, it has higher normalized edit similarity, token Jaccard similarity, and ROUGE-L F1, and lower word-count and source-similarity error.</li>
 <li>It also has lower token-overlap F1 and character n-gram F1 and higher line-count error. There is no composite score or defensible “overall winner.”</li>
+<li>Paired case-bootstrap intervals span zero for all five nonzero agreement differences; only error in length and amount of change has a clearer pattern.</li>
 <li>It still forecasts too much continuity: mean prediction-to-source ROUGE-L is 0.903898, compared with 0.225683 for observed follow-ups.</li>
+<li>On average, 73.2% of follow-up unique token types are new relative to the earlier response and therefore unavailable to a strictly extractive method.</li>
 </ul>
 </section>
-<section id="research-question" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Research question</h1>
+<section id="introduction" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Introduction</h1>
+<section id="research-question" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="research-question"><span class="header-section-number">4.1</span> Research question</h2>
 <p>The larger project asks how predictable human lives are. Its first tractable task is Dr.&nbsp;Jason Jeffrey Jones’ <a href="https://github.com/jasonjeffreyjones/predict-future-selves">Predict Future Selves challenge</a>: predict a later self-authored self-description from an earlier self-authored self-description.</p>
 <p>This is an ipseological prediction task. A Twenty Statements Test response is <em>personally expressed identity</em>: text an individual provides to describe themself. Words and phrases may act as identity signifiers. The target is a later expression of identity—not a latent “true self” and not a complete life outcome.</p>
 </section>
-<section id="benchmark" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Benchmark and provenance</h1>
+<section id="benchmark" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="benchmark"><span class="header-section-number">4.2</span> Benchmark and provenance</h2>
 <p>The benchmark contains 281 Prolific participants with approved, complete Twenty Statements Test responses in the 2024 study and its longitudinal follow-up. Follow-up responses were recorded 424 to 750 days later (median 433). The deterministic split contains 150 training, 50 development, and 81 test cases. Training and development responses are paired; test follow-ups and follow-up demographics are private.</p>
 <p>The project retrieved the public repository on 2026-08-30 and detached the checkout at commit <code>9b6a766712583fec8d3182957260b1123fbfa146</code> before prediction. The four input hashes and the hashes of the governing documentation, evaluator, and validator are recorded in <a href="BENCHMARK_PROVENANCE.md"><code>BENCHMARK_PROVENANCE.md</code></a>.</p>
 <p>The benchmark’s own warnings govern interpretation: the sample is small and selected; platform recruitment and longitudinal attrition limit generalization; and agreement with one observed follow-up does not establish that a prediction was the only plausible future.</p>
+</section>
 </section>
 <section id="method" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Method</h1>
@@ -235,9 +254,16 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="5.2" class="anchored" data-anchor-id="model-selection"><span class="header-section-number">5.2</span> Model selection</h2>
 <p>Public development data were used for model selection, as the challenge allows. Fixed extraction fractions and the training-only length regression were compared; the regression-length rule was frozen before the test artifact was generated. The development scorecard is therefore a model-selection result, not an untouched confirmatory estimate.</p>
 </section>
+<section id="post-hoc-development-diagnostics" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="post-hoc-development-diagnostics"><span class="header-section-number">5.3</span> Post hoc development diagnostics</h2>
+<p>After freezing the model and predictions, this iteration added two descriptive diagnostics. First, every scorecard comparison was decomposed into 50 paired case differences. A deterministic percentile bootstrap resampled cases in pairs 20,000 times (seed <code>20260917</code>) to show how the mean effect changes with development-case composition. These intervals do not warrant population generalization, and the analysis was not preregistered.</p>
+<p>Second, tokenized 2024 and follow-up responses were compared case by case. Unique-token novelty is the share of follow-up token types absent from the earlier response. Occurrence unavailability additionally respects how many times each token appears in the source: a strictly extractive method cannot copy a token more often than it occurs there. Three deliberately unattainable oracles use each observed follow-up to select the best source token set, bag of words, or source-order subsequence. They describe extractive ceilings, not prospective prediction performance.</p>
+</section>
 </section>
 <section id="results" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Public development results</h1>
+<h1 data-number="6"><span class="header-section-number">6</span> Results</h1>
+<section id="aggregate-scorecard" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="aggregate-scorecard"><span class="header-section-number">6.1</span> Aggregate scorecard</h2>
 <p>The authoritative shared evaluator reports fifteen measures in three groups. The table reports every measure; arrows indicate the evaluator’s direction where one exists.</p>
 <table class="caption-top table">
 <colgroup>
@@ -366,17 +392,99 @@ ul.task-list li input[type="checkbox"] {
 </table>
 <p>The projection improves three of six agreement measures, worsens two, and ties on exact match. Its clearest gains concern form and amount of change: word-count MAE falls by 15.04 words, and source-similarity MAE falls by 0.096102. But the mean predicted source similarity remains 0.678215 above the observed mean. Extracting supposedly enduring signifiers does not come close to reproducing how radically people rewrite their self-descriptions.</p>
 </section>
-<section id="submission" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Frozen test submission</h1>
+<section id="paired-pattern" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="paired-pattern"><span class="header-section-number">6.2</span> Paired development-case pattern</h2>
+<p>Positive effects favor stable-signifier projection. For agreement measures, the effect is projection minus repeat-2024; for errors, it is repeat-2024 error minus projection error. Exact match is omitted because all 50 cases tie at zero. A win, tie, or loss is evaluated within a person before averaging.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th style="text-align: right;">Mean effect</th>
+<th style="text-align: right;">Paired case-bootstrap 95% interval</th>
+<th style="text-align: right;">Win / tie / loss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Normalized edit similarity</td>
+<td style="text-align: right;">+0.006095</td>
+<td style="text-align: right;">−0.001701 to +0.013890</td>
+<td style="text-align: right;">24 / 14 / 12</td>
+</tr>
+<tr class="even">
+<td>Token Jaccard similarity</td>
+<td style="text-align: right;">+0.000838</td>
+<td style="text-align: right;">−0.002383 to +0.004097</td>
+<td style="text-align: right;">16 / 20 / 14</td>
+</tr>
+<tr class="odd">
+<td>Token-overlap F1</td>
+<td style="text-align: right;">−0.004759</td>
+<td style="text-align: right;">−0.012300 to +0.002429</td>
+<td style="text-align: right;">13 / 20 / 17</td>
+</tr>
+<tr class="even">
+<td>ROUGE-L F1</td>
+<td style="text-align: right;">+0.001869</td>
+<td style="text-align: right;">−0.002268 to +0.005755</td>
+<td style="text-align: right;">19 / 20 / 11</td>
+</tr>
+<tr class="odd">
+<td>Character n-gram F1</td>
+<td style="text-align: right;">−0.004241</td>
+<td style="text-align: right;">−0.012240 to +0.003618</td>
+<td style="text-align: right;">16 / 14 / 20</td>
+</tr>
+<tr class="even">
+<td>Word-count error reduction</td>
+<td style="text-align: right;">+15.040000</td>
+<td style="text-align: right;">+1.180000 to +32.360000</td>
+<td style="text-align: right;">20 / 20 / 10</td>
+</tr>
+<tr class="odd">
+<td>Line-count error reduction</td>
+<td style="text-align: right;">−2.960000</td>
+<td style="text-align: right;">−5.540000 to −0.420000</td>
+<td style="text-align: right;">15 / 12 / 23</td>
+</tr>
+<tr class="even">
+<td>Source-similarity error reduction</td>
+<td style="text-align: right;">+0.096102</td>
+<td style="text-align: right;">+0.066064 to +0.129348</td>
+<td style="text-align: right;">30 / 20 / 0</td>
+</tr>
+</tbody>
+</table>
+<p>The table changes the emphasis of the aggregate scorecard. None of the small agreement differences has an interval that excludes zero. In contrast, the projection’s lower word-count and source-similarity errors persist across the paired case resamples, while its line-count error is consistently worse. The source-similarity result is directional but inadequate in magnitude: even after improvement, the projection still remains much too close to the past.</p>
+</section>
+<section id="extractive-limits" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="extractive-limits"><span class="header-section-number">6.3</span> Lexical novelty and extractive ceilings</h2>
+<p>The observed follow-ups contain substantial new lexical material. On an average case, 73.1727% of distinct follow-up token types are absent from the earlier response (95% case-bootstrap interval: 69.7982%–76.5607%). When token frequencies are respected, 65.0621% of follow-up token occurrences cannot be copied from the source without reusing tokens beyond their source counts (59.2663%–70.6149%). Conversely, only 24.9892% of distinct source token types recur at follow-up (22.0060%–28.0466%).</p>
+<p>Even an oracle with access to the observed future is constrained. Its mean extractive ceilings are 0.268273 for unique-token Jaccard, 0.484206 for bag-of-words F1, and 0.374081 for source-order subsequence ROUGE-L F1. The actual projection reaches 0.142768, 0.307444, and 0.227552 on those measures. These comparisons reveal two failures at once: the current extractor does not reach the retrospective extractive ceiling, and no extractor can generate the many identity signifiers expressed only at follow-up.</p>
+</section>
+<section id="submission" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.4</span> Frozen test submission</h2>
 <p>The method generated one nonblank prediction for every test ID in the required order. The pinned official validator returned <code>VALID: 81 predictions</code>. The frozen CSV has SHA-256:</p>
 <pre class="text"><code>a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3</code></pre>
 <p>The organizer must run the private test evaluator. Until that happens, the only empirical performance reported here is public-development performance.</p>
 </section>
-<section id="reproducibility" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Reproducibility</h1>
+</section>
+<section id="discussion" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Discussion</h1>
+<p>The stable-signifier projection does learn something useful about response form and degree of change. Yet improved prediction of how much a response will change is not the same as predicting what new identity content will appear. The novelty diagnostic makes that distinction measurable: most future lexical material lies outside the earlier response, while the method is definitionally restricted to it. A next-generation model needs a mechanism for both deletion and creation, evaluated without sacrificing the interpretability of these paired diagnostics.</p>
+<section id="reproducibility" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="reproducibility"><span class="header-section-number">7.1</span> Reproducibility</h2>
 <p>The complete open materials are:</p>
 <ul>
+<li><a href="analysis/analyze_dev_diagnostics.py"><code>analysis/analyze_dev_diagnostics.py</code></a> — hash-guarded paired bootstrap and extractive-limit analysis;</li>
 <li><a href="analysis/stable_signifier_projection.py"><code>analysis/stable_signifier_projection.py</code></a> — standard-library generator;</li>
+<li><a href="results/stable_signifier_dev_diagnostics.json"><code>results/stable_signifier_dev_diagnostics.json</code></a> — complete machine-readable post hoc diagnostic results;</li>
 <li><a href="results/stable_signifier_dev_predictions.csv"><code>results/stable_signifier_dev_predictions.csv</code></a> — all 50 public development predictions;</li>
 <li><a href="results/stable_signifier_dev_scorecard.json"><code>results/stable_signifier_dev_scorecard.json</code></a> — complete machine-readable scorecard;</li>
 <li><a href="submissions/aleph_initial_alpha_submission.csv"><code>submissions/aleph_initial_alpha_submission.csv</code></a> — frozen 81-case test artifact;</li>
@@ -384,8 +492,8 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p>The generator uses Python 3.9.23 and only the standard library. The challenge’s 17 public tests passed before generation. Regenerating the development and test artifacts reproduced their hashes exactly.</p>
 </section>
-<section id="sources" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Sources</h1>
+<section id="sources" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sources"><span class="header-section-number">7.2</span> Sources</h2>
 <ul>
 <li>Jones, J. J. (2023). <a href="https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/"><em>Ipseology—A new science of the self</em></a>.</li>
 <li>Jones, J. J. (2024). <a href="https://doi.org/10.31235/osf.io/eh9sk"><em>Predicting the self with generative AI</em></a> [Preprint]. SocArXiv. https://doi.org/10.31235/osf.io/eh9sk</li>
@@ -393,12 +501,14 @@ ul.task-list li input[type="checkbox"] {
 <li>Jones, J. J. (2026). <a href="https://github.com/jasonjeffreyjones/predict-future-selves"><em>You can predict future selves with AI (or without AI)</em></a> [Data set and benchmark]. GitHub.</li>
 </ul>
 </section>
-<section id="limitations" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Limitations and next step</h1>
+<section id="limitations" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="limitations"><span class="header-section-number">7.3</span> Limitations and next step</h2>
 <p>An extractive method cannot predict genuinely new identities, experiences, or reframing. Token recurrence is not equivalent to identity-signifier endurance, and common wording can make a signifier look stable. The line splitter also turns some prose sentences into separate output lines, worsening line-count error. Finally, public-development-guided selection can overfit a 50-case set.</p>
-<p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. Later iterations can compare preregistered generative and non-extractive methods without reusing test feedback for tuning.</p>
+<p>The paired bootstrap treats development cases as the resampling unit, but the benchmark is a selected longitudinal cohort rather than a probability sample. Its intervals describe sensitivity to the composition of these 50 cases, not uncertainty for people in general. The lexical oracles use observed follow-ups and are deliberately unattainable; they must not be read as test predictions or achievable prospective scores.</p>
+<p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. A later iteration can preregister a generative or other non-extractive method that targets genuinely new signifiers, without reusing test feedback for tuning, and apply the same paired diagnostics to its development results.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

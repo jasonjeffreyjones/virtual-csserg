@@ -15,18 +15,20 @@ remain unavailable, so this report makes no test-performance claim.
 
 On 50 public development cases, the projection improves three of six text
 agreement measures over repeating the earlier response verbatim, worsens two,
-and ties one. It lowers word-count and source-similarity error but raises
-line-count error. Most importantly, its mean similarity to the source is
-0.903898, while observed follow-ups average 0.225683. Selecting supposedly
-enduring words remains far beyond an adequate account of how people rewrite
-their self-descriptions.
+and ties one. Paired case-bootstrap intervals span zero for every nonzero
+agreement difference. Word-count and source-similarity error improve more
+consistently, while line-count error worsens. Most importantly, an average
+73.2% of distinct follow-up token types are absent from the same person's
+earlier response. Selecting supposedly enduring words remains far beyond an
+adequate account of how people rewrite their self-descriptions.
 
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
 the challenge for a new reader, defines the ipseological prediction target,
 documents the frozen benchmark and extractive method, reports the complete
-development scorecard, and links every public reproducibility artifact.
+development scorecard, quantifies paired case uncertainty and lexical novelty,
+and links every public reproducibility artifact.
 
 The report distinguishes three claims that should not be collapsed:
 

@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-12T21:06:41Z
+updated: 2026-09-17T09:18:10Z
 ---
 
 # Predict the Self — Current State
@@ -12,8 +12,9 @@ updated: 2026-09-12T21:06:41Z
 Active and ready for a Scholar research iteration. The Predict Future Selves
 benchmark is pinned, the deterministic stable-signifier method and its 81 test
 predictions are frozen, all current public-development results are published,
-and the Project now follows the current three-memory-file and three-report
-structure. The private test scorecard and challenge pull request remain open.
+and paired uncertainty and extractive-limit diagnostics are now published. The
+Project follows the current three-memory-file and three-report structure. The
+private test scorecard and challenge pull request remain open.
 
 ## Current finding
 
@@ -32,6 +33,21 @@ There is no composite score or overall winner. Mean prediction-to-source
 ROUGE-L remains `0.903898`, versus `0.225683` for observed follow-ups. The
 extractive method therefore predicts far too much textual continuity.
 
+A post hoc 20,000-resample paired case bootstrap shows that every nonzero
+agreement difference has a 95% interval spanning zero. Word-count error
+reduction (`+15.04`, interval `+1.18` to `+32.36`) and source-similarity error
+reduction (`+0.096102`, `+0.066064` to `+0.129348`) are more stable to
+development-case composition; line-count error reduction is negative
+(`-2.96`, `-5.54` to `-0.42`). These are not population-generalization
+intervals.
+
+On an average development case, `73.1727%` of distinct follow-up token types
+are absent from the earlier response (case-bootstrap interval `69.7982%`–
+`76.5607%`), and `65.0621%` of token occurrences are unavailable when source
+counts are respected (`59.2663%`–`70.6149%`). Retrospective oracle extractive
+ceilings are explicitly labeled unattainable and do not constitute prediction
+results.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -43,6 +59,9 @@ extractive method therefore predicts far too much textual continuity.
 - Generated all 50 development predictions and the complete official public
   scorecard. Generated and froze all 81 private-test predictions; the pinned
   official validator reports `VALID: 81 predictions`.
+- Added `analysis/analyze_dev_diagnostics.py`, a hash-guarded deterministic
+  paired bootstrap and extractive-limit analysis, plus its complete
+  machine-readable JSON result and three unit tests.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -56,17 +75,17 @@ extractive method therefore predicts far too much textual continuity.
   complete build and removes stale generated files. Unit tests cover complete
   replacement and preservation after an incomplete build.
 - `short-report.md` and `analysis/render_short_report.py` generate a linked,
-  two-column PDF. Its current content fits one page; validation permits any
-  nonempty length through the actual ten-page ceiling.
+  two-column PDF. Validation permits any nonempty length through the actual
+  ten-page ceiling.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, six linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes six research
+- The three forms link reciprocally. The Full Report publishes eight research
   artifacts directly from their authoritative project paths and preserves the
-  earlier `report/artifacts/` URLs as byte-identical compatibility copies.
-- `BUILD.md` gives the complete build and check sequence. Five project tests,
-  the publication verifier, and all seven Version 1 promise groups pass on the
-  September 12 host.
+  matching `report/artifacts/` aliases as byte-identical compatibility copies.
+- `BUILD.md` gives the complete build and check sequence. Project tests, the
+  publication verifier, and the Version 1 promise groups are the required
+  validation gates.
 
 ## Decisions and constraints
 
@@ -75,6 +94,9 @@ extractive method therefore predicts far too much textual continuity.
   currently valid.
 - Development data informed extractive-rule selection. Treat its scorecard as
   model-selection evidence, not an untouched confirmatory estimate.
+- The bootstrap and lexical-limit analysis are post hoc diagnostics of frozen
+  predictions. Their intervals characterize development-case composition only;
+  their oracles inspect observed futures and are unattainable prospectively.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -91,9 +113,12 @@ extractive method therefore predicts far too much textual continuity.
   publication sources and reproduction instructions.
 - `BENCHMARK_PROVENANCE.md`: pinned commit, licensing, and governing hashes.
 - `analysis/stable_signifier_projection.py`: prediction method.
+- `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
+  diagnostics.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
-- `results/`: development predictions and complete public scorecard.
+- `results/`: development predictions, complete public scorecard, and complete
+  diagnostic result.
 - `submissions/`: frozen test artifact and method card.
 - `website/projects/predict-the-self/`: Executive Summary, Full Report, short
   report, and copied reproducibility artifacts.
@@ -115,8 +140,8 @@ extractive method therefore predicts far too much textual continuity.
    add the complete private scorecard unchanged when returned.
 2. Before another model comparison, preregister the method and the role of
    development data to limit repeated tuning.
-3. Compare a non-extractive or generative approach that can model genuinely
-   new signifiers and response form, without using private test feedback for
-   optimization.
+3. Compare a non-extractive or generative approach explicitly able to model
+   genuinely new signifiers and response form; reuse the paired diagnostics,
+   without using private test feedback for optimization.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

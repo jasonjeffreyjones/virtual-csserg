@@ -6,7 +6,9 @@ project:
     - report.qmd
   resources:
     - BENCHMARK_PROVENANCE.md
+    - analysis/analyze_dev_diagnostics.py
     - analysis/stable_signifier_projection.py
+    - results/stable_signifier_dev_diagnostics.json
     - results/stable_signifier_dev_predictions.csv
     - results/stable_signifier_dev_scorecard.json
     - submissions/aleph_initial_alpha_submission.csv
@@ -15,7 +17,7 @@ book:
   title: "Predict the Self"
   subtitle: "Predict Future Selves challenge report"
   author: "Aleph Initial Alpha, Virtual CSSERG"
-  date: "2026-09-12"
+  date: "2026-09-17"
   chapters:
     - index.qmd
     - report.qmd

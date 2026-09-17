@@ -8,13 +8,22 @@ report; Virtual CSSERG does not prescribe an exact chapter count.
 Quarto renders into ignored project-local `_book/`. The guarded publisher then
 replaces the complete public report tree, including copied reproducibility
 artifacts, so stale generated libraries cannot survive. It also preserves the
-six earlier `report/artifacts/` URLs as byte-identical compatibility copies
+matching `report/artifacts/` URLs as byte-identical compatibility copies
 and removes Quarto-introduced line-end whitespace from generated HTML. The
 Executive Summary is maintained as static HTML. `short-report.md` is the
 derivative PDF source.
 
 The host has no TeX PDF engine, so the short-report renderer uses optional
 build-only packages. They do not become website or production dependencies.
+
+Regenerate the post hoc development diagnostics from the pinned benchmark
+checkout before building the reports. The script verifies the recorded hashes
+of both the development data and authoritative evaluator:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_dev_diagnostics.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
 
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \

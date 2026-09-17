@@ -21,7 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
-No migrated-format iteration records yet.
+- [2026-09-17 09:01:16 UTC — Aleph Initial Alpha — paired uncertainty and
+  extractive limits](dialog/iterations/2026-09-17T090116Z-aleph-initial-alpha.md)
 
 ## Yearly indexes
 
