@@ -44,6 +44,27 @@ replay. The script refuses to append a duplicate check timestamp.
 The signifier trend is an unweighted linear probability model for each
 signifier (`endorsed ~ observation_date`), annualized to percentage points per
 year. Eligibility requires at least 300 responses on 30 distinct dates across
-180 days. Ordinary model-based 95% intervals are included to expose sampling
-uncertainty, but they do not address repeated respondents, changing sample
-composition, population weights, or multiple-comparison selection.
+180 days. The output retains ordinary model-based intervals for auditability,
+but reader-facing inference uses CR1 sandwich standard errors clustered by
+hashed respondent. The cluster calculation is based on respondent-level
+sufficient statistics, so repeat answers to a signifier contribute one cluster
+score rather than being treated as independent.
+
+Two adjusted probabilities expose sensitivity to searching across all eligible
+signifiers. Benjamini–Hochberg q-values provide a false-discovery-rate screen;
+Bonferroni-adjusted p-values provide a more conservative benchmark that does
+not require independent signifier tests. Neither adjustment corrects changing
+sample composition, calendar structure, population nonrepresentativeness, or
+model misspecification. Point-estimate leaders remain monitoring leads rather
+than estimates of change among US adults.
+
+## Statistical references
+
+Liang, K.-Y., & Zeger, S. L. (1986). Longitudinal data analysis using
+generalized linear models. *Biometrika, 73*(1), 13–22.
+[https://doi.org/10.1093/biomet/73.1.13](https://doi.org/10.1093/biomet/73.1.13).
+
+Benjamini, Y., & Hochberg, Y. (1995). Controlling the false discovery rate: A
+practical and powerful approach to multiple testing. *Journal of the Royal
+Statistical Society: Series B (Methodological), 57*(1), 289–300.
+[https://doi.org/10.1111/j.2517-6161.1995.tb02031.x](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x).

@@ -40,7 +40,7 @@ class MonitorTests(unittest.TestCase):
             start = dt.date(2025, 1, 1)
             for index in range(300):
                 date = start + dt.timedelta(days=index)
-                respondent = f"{index:012x}"
+                respondent = f"{index % 30:012x}"
                 writer.writerow(row("rising", date, respondent, int(index >= 150)))
                 writer.writerow(row("falling", date, respondent, int(index < 150)))
             if duplicate:
@@ -61,6 +61,17 @@ class MonitorTests(unittest.TestCase):
             self.assertTrue(rising["eligible"])
             self.assertGreater(rising["annual_change_percentage_points"], 0)
             self.assertLess(falling["annual_change_percentage_points"], 0)
+            trends = [rising, falling]
+            monitor.add_robust_inference(trends, audit.signifiers)
+            self.assertEqual(rising["respondent_clusters"], 30)
+            self.assertEqual(rising["max_responses_per_respondent"], 10)
+            self.assertGreater(rising["annual_change_cluster_se"], 0)
+            self.assertLessEqual(rising["benjamini_hochberg_q_value"], 1)
+            self.assertLessEqual(rising["bonferroni_adjusted_p_value"], 1)
+
+    def test_benjamini_hochberg_is_monotone_in_rank(self):
+        adjusted = monitor.benjamini_hochberg([0.01, 0.04, 0.03])
+        self.assertEqual([round(value, 3) for value in adjusted], [0.03, 0.04, 0.04])
 
     def test_duplicate_key_fails_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -108,12 +119,33 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(len(trends), summary["dataset"]["signifiers"])
         self.assertEqual(len(eligible), summary["trend_method"]["eligible_signifiers"])
         self.assertEqual(
+            sum(int(item["respondent_clusters"]) for item in trends),
+            summary["trend_method"]["respondent_signifier_clusters"],
+        )
+        self.assertEqual(
+            sum(item["fdr_05"] == "True" for item in eligible),
+            summary["trend_method"]["fdr_05_discoveries"],
+        )
+        self.assertEqual(
+            sum(item["bonferroni_05"] == "True" for item in eligible),
+            summary["trend_method"]["bonferroni_05_discoveries"],
+        )
+        self.assertEqual(
             max(eligible, key=lambda item: float(item["annual_change_percentage_points"]))["signifier"],
             summary["fastest_growing"][0]["signifier"],
         )
         self.assertEqual(
             min(eligible, key=lambda item: float(item["annual_change_percentage_points"]))["signifier"],
             summary["fastest_shrinking"][0]["signifier"],
+        )
+        growth_row = next(
+            item
+            for item in eligible
+            if item["signifier"] == summary["fastest_growing"][0]["signifier"]
+        )
+        self.assertEqual(
+            round(float(growth_row["benjamini_hochberg_q_value"]), 6),
+            summary["fastest_growing"][0]["benjamini_hochberg_q_value"],
         )
         for name in ("observation-growth.svg", "annual-prevalence-growth-histogram.svg"):
             root = ET.parse(project / "outputs" / name).getroot()

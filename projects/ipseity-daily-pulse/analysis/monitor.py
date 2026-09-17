@@ -88,8 +88,12 @@ class SignifierStats:
     earliest: dt.date | None = None
     latest: dt.date | None = None
     dates: set[int] = field(default_factory=set)
+    # respondent -> [n, sum_x, sum_y, sum_x2, sum_xy].  These sufficient
+    # statistics permit respondent-clustered inference without retaining every
+    # response row in memory.
+    respondent_sums: dict[str, list[int]] = field(default_factory=dict)
 
-    def add(self, date: dt.date, endorsed: int) -> None:
+    def add(self, date: dt.date, endorsed: int, respondent: str) -> None:
         # A recent fixed epoch avoids cancellation between very large, nearly
         # equal floating-point quantities in the centered sums.
         x = date.toordinal() - TREND_EPOCH_ORDINAL
@@ -101,6 +105,15 @@ class SignifierStats:
         self.earliest = date if self.earliest is None else min(self.earliest, date)
         self.latest = date if self.latest is None else max(self.latest, date)
         self.dates.add(x)
+        cluster = self.respondent_sums.get(respondent)
+        if cluster is None:
+            cluster = [0, 0, 0, 0, 0]
+            self.respondent_sums[respondent] = cluster
+        cluster[0] += 1
+        cluster[1] += x
+        cluster[2] += endorsed
+        cluster[3] += x * x
+        cluster[4] += x * endorsed
 
 
 @dataclass
@@ -220,7 +233,9 @@ def audit_dataset(path: Path, checked_at: dt.datetime) -> DatasetAudit:
                     observation_date if audit.earliest is None else min(audit.earliest, observation_date)
                 )
                 audit.latest = observation_date if audit.latest is None else max(audit.latest, observation_date)
-                audit.signifiers.setdefault(signifier, SignifierStats()).add(observation_date, endorsed)
+                audit.signifiers.setdefault(signifier, SignifierStats()).add(
+                    observation_date, endorsed, respondent
+                )
     except (gzip.BadGzipFile, EOFError, UnicodeDecodeError, csv.Error, OSError) as exc:
         audit.errors.append(f"could not parse gzip CSV: {type(exc).__name__}: {exc}")
         return audit
@@ -248,6 +263,8 @@ def trend_row(signifier: str, stats: SignifierStats) -> dict[str, object]:
         reasons.append(f"span shorter than {MIN_TREND_SPAN_DAYS} days")
     if date_count < MIN_TREND_DATES:
         reasons.append(f"fewer than {MIN_TREND_DATES} dates")
+    if len(stats.respondent_sums) < 2:
+        reasons.append("fewer than 2 respondent clusters")
     centered_x2 = stats.sum_x2 - stats.sum_x * stats.sum_x / n
     centered_xy = stats.sum_xy - stats.sum_x * stats.yes_count / n
     if centered_x2 <= 0:
@@ -271,12 +288,93 @@ def trend_row(signifier: str, stats: SignifierStats) -> dict[str, object]:
         "latest_observation_date": stats.latest.isoformat(),
         "span_days": span_days,
         "observation_dates": date_count,
+        "respondent_clusters": len(stats.respondent_sums),
+        "max_responses_per_respondent": max(cluster[0] for cluster in stats.respondent_sums.values()),
         "eligible": eligible,
         "exclusion_reason": "; ".join(reasons),
         "annual_change_percentage_points": annual_pp if eligible else None,
         "annual_change_ci95_lower": ci_low if eligible else None,
         "annual_change_ci95_upper": ci_high if eligible else None,
     }
+
+
+def benjamini_hochberg(p_values: list[float]) -> list[float]:
+    """Return monotone Benjamini-Hochberg adjusted p-values in input order."""
+    adjusted = [math.nan] * len(p_values)
+    ranked = sorted(enumerate(p_values), key=lambda item: item[1])
+    running = 1.0
+    for rank in range(len(ranked), 0, -1):
+        index, p_value = ranked[rank - 1]
+        running = min(running, p_value * len(ranked) / rank)
+        adjusted[index] = running
+    return adjusted
+
+
+def add_robust_inference(
+    trends: list[dict[str, object]], signifiers: dict[str, SignifierStats]
+) -> None:
+    """Add respondent-clustered CR1 inference and multiplicity sensitivity.
+
+    Point estimates remain the unweighted linear probability slopes.  The
+    sandwich variance groups score contributions by hashed respondent and uses
+    the common G/(G-1) * (N-1)/(N-K) finite-sample correction with K=2.
+    """
+    tested_rows: list[dict[str, object]] = []
+    p_values: list[float] = []
+    for row in trends:
+        stats = signifiers[str(row["signifier"])]
+        row.update(
+            {
+                "annual_change_cluster_se": None,
+                "annual_change_cluster_ci95_lower": None,
+                "annual_change_cluster_ci95_upper": None,
+                "cluster_robust_p_value": None,
+                "benjamini_hochberg_q_value": None,
+                "bonferroni_adjusted_p_value": None,
+                "fdr_05": False,
+                "bonferroni_05": False,
+            }
+        )
+        if not row["eligible"]:
+            continue
+        n = stats.observations
+        clusters = len(stats.respondent_sums)
+        centered_x2 = stats.sum_x2 - stats.sum_x * stats.sum_x / n
+        if clusters <= 1 or n <= 2 or centered_x2 <= 0:
+            continue
+        x_bar = stats.sum_x / n
+        y_bar = stats.yes_count / n
+        slope = (stats.sum_xy - stats.sum_x * stats.yes_count / n) / centered_x2
+        meat = 0.0
+        for cluster_n, sum_x, sum_y, sum_x2, sum_xy in stats.respondent_sums.values():
+            sum_z = sum_x - cluster_n * x_bar
+            sum_zy = sum_xy - x_bar * sum_y
+            sum_z2 = sum_x2 - 2 * x_bar * sum_x + cluster_n * x_bar * x_bar
+            slope_score = sum_zy - y_bar * sum_z - slope * sum_z2
+            meat += slope_score * slope_score
+        correction = clusters / (clusters - 1) * (n - 1) / (n - 2)
+        slope_se = math.sqrt(max(0.0, correction * meat / (centered_x2 * centered_x2)))
+        annual_se = slope_se * DAYS_PER_YEAR * 100
+        annual_change = float(row["annual_change_percentage_points"])
+        if annual_se == 0:
+            p_value = 0.0 if annual_change != 0 else 1.0
+        else:
+            p_value = math.erfc(abs(annual_change / annual_se) / math.sqrt(2))
+        row["annual_change_cluster_se"] = annual_se
+        row["annual_change_cluster_ci95_lower"] = annual_change - 1.96 * annual_se
+        row["annual_change_cluster_ci95_upper"] = annual_change + 1.96 * annual_se
+        row["cluster_robust_p_value"] = p_value
+        tested_rows.append(row)
+        p_values.append(p_value)
+
+    q_values = benjamini_hochberg(p_values)
+    tests = len(tested_rows)
+    for row, q_value, p_value in zip(tested_rows, q_values, p_values):
+        bonferroni = min(1.0, p_value * tests)
+        row["benjamini_hochberg_q_value"] = q_value
+        row["bonferroni_adjusted_p_value"] = bonferroni
+        row["fdr_05"] = q_value <= 0.05
+        row["bonferroni_05"] = bonferroni <= 0.05
 
 
 def write_csv(path: Path, fieldnames: list[str], rows: Iterable[dict[str, object]]) -> None:
@@ -416,9 +514,12 @@ def compact_trend(row: dict[str, object]) -> dict[str, object]:
     return {
         "signifier": row["signifier"],
         "annual_change_percentage_points": round(float(row["annual_change_percentage_points"]), 3),
-        "ci95_lower": round(float(row["annual_change_ci95_lower"]), 3),
-        "ci95_upper": round(float(row["annual_change_ci95_upper"]), 3),
+        "cluster_ci95_lower": round(float(row["annual_change_cluster_ci95_lower"]), 3),
+        "cluster_ci95_upper": round(float(row["annual_change_cluster_ci95_upper"]), 3),
+        "benjamini_hochberg_q_value": round(float(row["benjamini_hochberg_q_value"]), 6),
+        "bonferroni_adjusted_p_value": round(float(row["bonferroni_adjusted_p_value"]), 6),
         "observations": row["observations"],
+        "respondent_clusters": row["respondent_clusters"],
         "prevalence_percent": round(float(row["prevalence_percent"]), 3),
     }
 
@@ -429,18 +530,32 @@ def findings_markdown(audit: DatasetAudit, checked_at: dt.datetime, trends: list
     quartiles = statistics.quantiles(estimates, n=4, method="inclusive")
     growing = sorted(eligible, key=lambda row: float(row["annual_change_percentage_points"]), reverse=True)[:5]
     shrinking = sorted(eligible, key=lambda row: float(row["annual_change_percentage_points"]))[:5]
+    fdr_discoveries = sum(bool(row["fdr_05"]) for row in eligible)
+    bonferroni_discoveries = sum(bool(row["bonferroni_05"]) for row in eligible)
+    respondent_signifier_clusters = sum(len(stats.respondent_sums) for stats in audit.signifiers.values())
+    max_cluster_size = max(
+        cluster[0]
+        for stats in audit.signifiers.values()
+        for cluster in stats.respondent_sums.values()
+    )
+
+    def probability(value: object) -> str:
+        numeric = float(value)
+        return "<0.001" if numeric < 0.001 else f"{numeric:.3f}"
 
     def table(rows: list[dict[str, object]]) -> str:
         lines = [
-            "| Signifier | Annual change (pp) | Approx. 95% CI | Responses | Overall yes |",
-            "|---|---:|---:|---:|---:|",
+            "| Signifier | Annual change (pp) | Clustered 95% CI | BH q | Bonferroni p | Responses |",
+            "|---|---:|---:|---:|---:|---:|",
         ]
         for row in rows:
             lines.append(
                 f"| {str(row['signifier']).replace('|', '&#124;')} | "
                 f"{float(row['annual_change_percentage_points']):+.1f} | "
-                f"[{float(row['annual_change_ci95_lower']):+.1f}, {float(row['annual_change_ci95_upper']):+.1f}] | "
-                f"{int(row['observations']):,} | {float(row['prevalence_percent']):.1f}% |"
+                f"[{float(row['annual_change_cluster_ci95_lower']):+.1f}, {float(row['annual_change_cluster_ci95_upper']):+.1f}] | "
+                f"{probability(row['benjamini_hochberg_q_value'])} | "
+                f"{probability(row['bonferroni_adjusted_p_value'])} | "
+                f"{int(row['observations']):,} |"
             )
         return "\n".join(lines)
 
@@ -457,8 +572,8 @@ gzip parsed as UTF-8 CSV with the documented schema and contained
 **{audit.latest}**, spanning **{len(audit.respondents):,} hashed respondents**
 and **{len(audit.signifiers):,} signifiers**. No malformed rows or duplicate
 respondent/date/signifier keys were detected. The newest observation was
-{(checked_at.date() - audit.latest).days} day behind the check date, so this
-first check records no anomaly.
+{(checked_at.date() - audit.latest).days} day behind the check date, and this
+check records no anomaly.
 
 ![Cumulative observations over time](outputs/observation-growth.svg)
 
@@ -480,6 +595,14 @@ percentage points per year**; the middle half runs from {quartiles[0]:+.1f} to
 
 ![Histogram of estimated annual prevalence growth](outputs/annual-prevalence-growth-histogram.svg)
 
+Uncertainty now uses a respondent-clustered sandwich estimator, so repeat
+answers by the same hashed respondent are not treated as independent. The file
+contains **{respondent_signifier_clusters:,} respondent–signifier clusters**;
+the largest has {max_cluster_size} responses. Across {len(eligible)} eligible
+trend tests, **{fdr_discoveries}** have Benjamini–Hochberg q-values at or below
+0.05, and **{bonferroni_discoveries}** meet the more conservative Bonferroni
+0.05 threshold.
+
 ### Fastest estimated growth
 
 {table(growing)}
@@ -492,11 +615,13 @@ The largest point estimate is **{growing[0]['signifier']}** at
 {float(growing[0]['annual_change_percentage_points']):.1f} percentage points
 per year; the most negative is **{shrinking[0]['signifier']}** at
 {float(shrinking[0]['annual_change_percentage_points']):.1f} points per year.
-The intervals are ordinary model-based intervals. They do not adjust for
-repeated respondents, changing sample composition, or selecting extremes from
-{len(eligible)} simultaneous estimates. The rankings are therefore leads for
-continued monitoring, not evidence that the underlying US adult population
-changed at those rates.
+The intervals account for dependence within hashed respondents but not changing
+sample composition, calendar structure, or model misspecification. The
+Benjamini–Hochberg screen follows the original independent-test procedure;
+correlation among signifier tests makes the Bonferroni column an important
+conservative sensitivity check. Point-estimate rankings selected from
+{len(eligible)} tests remain monitoring leads, not evidence that the underlying
+US adult population changed at those rates.
 
 Full machine-readable estimates, eligibility flags, and interval bounds are in
 `outputs/signifier-growth.csv`; the daily and cumulative counts are in
@@ -509,6 +634,15 @@ Jones, J. (2026). *Ipseity Daily Data* [Data set]. Zenodo.
 The analysis used the newer canonical file served directly by the
 [Ipseity Daily download page]({MAIN_URL}download.html) at the check time;
 SHA-256 `{audit.sha256}`.
+
+Liang, K.-Y., & Zeger, S. L. (1986). Longitudinal data analysis using
+generalized linear models. *Biometrika, 73*(1), 13–22.
+[https://doi.org/10.1093/biomet/73.1.13](https://doi.org/10.1093/biomet/73.1.13).
+
+Benjamini, Y., & Hochberg, Y. (1995). Controlling the false discovery rate: A
+practical and powerful approach to multiple testing. *Journal of the Royal
+Statistical Society: Series B (Methodological), 57*(1), 289–300.
+[https://doi.org/10.1111/j.2517-6161.1995.tb02031.x](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x).
 """
 
 
@@ -612,6 +746,7 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         daily_rows,
     )
     trends = [trend_row(signifier, stats) for signifier, stats in sorted(audit.signifiers.items())]
+    add_robust_inference(trends, audit.signifiers)
     write_csv(
         output_dir / "signifier-growth.csv",
         list(trends[0]),
@@ -641,11 +776,18 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         },
         "trend_method": {
             "model": "unweighted OLS linear probability model: endorsed ~ observation_date",
+            "uncertainty": "CR1 sandwich standard errors clustered by hashed respondent",
+            "multiplicity": "Benjamini-Hochberg and Bonferroni adjustments across eligible signifiers",
             "annualization_days": DAYS_PER_YEAR,
             "minimum_observations": MIN_TREND_OBSERVATIONS,
             "minimum_span_days": MIN_TREND_SPAN_DAYS,
             "minimum_distinct_dates": MIN_TREND_DATES,
             "eligible_signifiers": len(eligible),
+            "respondent_signifier_clusters": sum(
+                len(stats.respondent_sums) for stats in audit.signifiers.values()
+            ),
+            "fdr_05_discoveries": sum(bool(row["fdr_05"]) for row in eligible),
+            "bonferroni_05_discoveries": sum(bool(row["bonferroni_05"]) for row in eligible),
         },
         "fastest_growing": [compact_trend(row) for row in growing],
         "fastest_shrinking": [compact_trend(row) for row in shrinking],

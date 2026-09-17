@@ -1,9 +1,9 @@
 {
-  "checked_at_utc": "2026-09-16T20:47:07Z",
+  "checked_at_utc": "2026-09-17T10:02:27Z",
   "source": {
     "url": "https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/files/ipseity.csv.gz",
-    "bytes": 4960643,
-    "sha256": "b0b5cae9027284acaa28905c22a0ed8fb1357a434c931d31e747687d7fd1fa27"
+    "bytes": 4972317,
+    "sha256": "2f683b69af5152bb89223f432a4dbf6fea10f2ac99e19053cf35cbd74c473232"
   },
   "validation": {
     "parsed_successfully": true,
@@ -11,182 +11,247 @@
     "errors": []
   },
   "dataset": {
-    "observations": 699835,
+    "observations": 701503,
     "earliest_observation_date": "2025-07-08",
-    "latest_observation_date": "2026-09-15",
-    "unique_respondents": 4979,
+    "latest_observation_date": "2026-09-16",
+    "unique_respondents": 4987,
     "signifiers": 707
   },
   "trend_method": {
     "model": "unweighted OLS linear probability model: endorsed ~ observation_date",
+    "uncertainty": "CR1 sandwich standard errors clustered by hashed respondent",
+    "multiplicity": "Benjamini-Hochberg and Bonferroni adjustments across eligible signifiers",
     "annualization_days": 365.2425,
     "minimum_observations": 300,
     "minimum_span_days": 180,
     "minimum_distinct_dates": 30,
-    "eligible_signifiers": 704
+    "eligible_signifiers": 704,
+    "respondent_signifier_clusters": 528734,
+    "fdr_05_discoveries": 0,
+    "bonferroni_05_discoveries": 0
   },
   "fastest_growing": [
     {
       "signifier": "beautiful",
-      "annual_change_percentage_points": 24.405,
-      "ci95_lower": 11.124,
-      "ci95_upper": 37.687,
-      "observations": 445,
-      "prevalence_percent": 41.573
+      "annual_change_percentage_points": 24.92,
+      "cluster_ci95_lower": 11.214,
+      "cluster_ci95_upper": 38.627,
+      "benjamini_hochberg_q_value": 0.156915,
+      "bonferroni_adjusted_p_value": 0.257589,
+      "observations": 446,
+      "respondent_clusters": 409,
+      "prevalence_percent": 41.704
     },
     {
       "signifier": "romance fan",
-      "annual_change_percentage_points": 17.93,
-      "ci95_lower": 5.241,
-      "ci95_upper": 30.618,
-      "observations": 456,
-      "prevalence_percent": 37.5
-    },
-    {
-      "signifier": "exhausted",
-      "annual_change_percentage_points": 17.872,
-      "ci95_lower": 4.773,
-      "ci95_upper": 30.97,
-      "observations": 420,
-      "prevalence_percent": 41.19
+      "annual_change_percentage_points": 17.955,
+      "cluster_ci95_lower": 5.076,
+      "cluster_ci95_upper": 30.834,
+      "benjamini_hochberg_q_value": 0.31608,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 458,
+      "respondent_clusters": 410,
+      "prevalence_percent": 37.555
     },
     {
       "signifier": "pretty",
       "annual_change_percentage_points": 17.589,
-      "ci95_lower": 3.247,
-      "ci95_upper": 31.931,
+      "cluster_ci95_lower": 3.243,
+      "cluster_ci95_upper": 31.935,
+      "benjamini_hochberg_q_value": 0.394681,
+      "bonferroni_adjusted_p_value": 1.0,
       "observations": 416,
+      "respondent_clusters": 382,
       "prevalence_percent": 41.587
     },
     {
-      "signifier": "COVID survivor",
-      "annual_change_percentage_points": 17.392,
-      "ci95_lower": 2.523,
-      "ci95_upper": 32.26,
-      "observations": 387,
-      "prevalence_percent": 49.096
+      "signifier": "amateur artist",
+      "annual_change_percentage_points": 17.458,
+      "cluster_ci95_lower": 4.975,
+      "cluster_ci95_upper": 29.942,
+      "benjamini_hochberg_q_value": 0.31608,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 418,
+      "respondent_clusters": 382,
+      "prevalence_percent": 26.077
     },
     {
-      "signifier": "amateur artist",
-      "annual_change_percentage_points": 17.11,
-      "ci95_lower": 4.594,
-      "ci95_upper": 29.627,
-      "observations": 416,
-      "prevalence_percent": 25.962
+      "signifier": "COVID survivor",
+      "annual_change_percentage_points": 17.116,
+      "cluster_ci95_lower": 2.176,
+      "cluster_ci95_upper": 32.056,
+      "benjamini_hochberg_q_value": 0.483804,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 389,
+      "respondent_clusters": 356,
+      "prevalence_percent": 49.1
+    },
+    {
+      "signifier": "exhausted",
+      "annual_change_percentage_points": 16.754,
+      "cluster_ci95_lower": 3.893,
+      "cluster_ci95_upper": 29.615,
+      "benjamini_hochberg_q_value": 0.341425,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 422,
+      "respondent_clusters": 393,
+      "prevalence_percent": 40.995
     },
     {
       "signifier": "overthinker",
-      "annual_change_percentage_points": 15.699,
-      "ci95_lower": 2.902,
-      "ci95_upper": 28.496,
-      "observations": 404,
-      "prevalence_percent": 69.307
-    },
-    {
-      "signifier": "iPhone user",
-      "annual_change_percentage_points": 14.887,
-      "ci95_lower": 1.152,
-      "ci95_upper": 28.622,
-      "observations": 432,
-      "prevalence_percent": 59.722
-    },
-    {
-      "signifier": "Disney fan",
-      "annual_change_percentage_points": 14.645,
-      "ci95_lower": 1.692,
-      "ci95_upper": 27.599,
-      "observations": 424,
-      "prevalence_percent": 46.934
+      "annual_change_percentage_points": 15.956,
+      "cluster_ci95_lower": 2.79,
+      "cluster_ci95_upper": 29.122,
+      "benjamini_hochberg_q_value": 0.411526,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 405,
+      "respondent_clusters": 371,
+      "prevalence_percent": 69.383
     },
     {
       "signifier": "she/her",
       "annual_change_percentage_points": 14.098,
-      "ci95_lower": 0.13,
-      "ci95_upper": 28.066,
+      "cluster_ci95_lower": 0.023,
+      "cluster_ci95_upper": 28.173,
+      "benjamini_hochberg_q_value": 0.587964,
+      "bonferroni_adjusted_p_value": 1.0,
       "observations": 421,
+      "respondent_clusters": 396,
       "prevalence_percent": 54.394
+    },
+    {
+      "signifier": "iPhone user",
+      "annual_change_percentage_points": 14.085,
+      "cluster_ci95_lower": 0.397,
+      "cluster_ci95_upper": 27.773,
+      "benjamini_hochberg_q_value": 0.559449,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 433,
+      "respondent_clusters": 404,
+      "prevalence_percent": 59.584
+    },
+    {
+      "signifier": "Disney fan",
+      "annual_change_percentage_points": 14.056,
+      "cluster_ci95_lower": 1.034,
+      "cluster_ci95_upper": 27.078,
+      "benjamini_hochberg_q_value": 0.550115,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 425,
+      "respondent_clusters": 397,
+      "prevalence_percent": 46.824
     }
   ],
   "fastest_shrinking": [
     {
-      "signifier": "star wars fan",
-      "annual_change_percentage_points": -15.487,
-      "ci95_lower": -28.842,
-      "ci95_upper": -2.133,
-      "observations": 417,
-      "prevalence_percent": 37.89
+      "signifier": "social conservative",
+      "annual_change_percentage_points": -15.666,
+      "cluster_ci95_lower": -27.607,
+      "cluster_ci95_upper": -3.724,
+      "benjamini_hochberg_q_value": 0.341425,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 424,
+      "respondent_clusters": 398,
+      "prevalence_percent": 25.472
     },
     {
-      "signifier": "social conservative",
-      "annual_change_percentage_points": -15.27,
-      "ci95_lower": -27.516,
-      "ci95_upper": -3.024,
-      "observations": 422,
-      "prevalence_percent": 25.592
+      "signifier": "star wars fan",
+      "annual_change_percentage_points": -14.506,
+      "cluster_ci95_lower": -27.844,
+      "cluster_ci95_upper": -1.169,
+      "benjamini_hochberg_q_value": 0.545805,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 421,
+      "respondent_clusters": 393,
+      "prevalence_percent": 38.005
     },
     {
       "signifier": "nba fan",
       "annual_change_percentage_points": -14.266,
-      "ci95_lower": -27.637,
-      "ci95_upper": -0.895,
+      "cluster_ci95_lower": -27.69,
+      "cluster_ci95_upper": -0.843,
+      "benjamini_hochberg_q_value": 0.55397,
+      "bonferroni_adjusted_p_value": 1.0,
       "observations": 405,
+      "respondent_clusters": 383,
       "prevalence_percent": 31.852
     },
     {
       "signifier": "2a supporter",
       "annual_change_percentage_points": -12.232,
-      "ci95_lower": -25.237,
-      "ci95_upper": 0.773,
+      "cluster_ci95_lower": -25.669,
+      "cluster_ci95_upper": 1.205,
+      "benjamini_hochberg_q_value": 0.654529,
+      "bonferroni_adjusted_p_value": 1.0,
       "observations": 377,
+      "respondent_clusters": 342,
       "prevalence_percent": 24.668
     },
     {
       "signifier": "planner",
       "annual_change_percentage_points": -12.222,
-      "ci95_lower": -24.414,
-      "ci95_upper": -0.03,
+      "cluster_ci95_lower": -24.361,
+      "cluster_ci95_upper": -0.083,
+      "benjamini_hochberg_q_value": 0.587964,
+      "bonferroni_adjusted_p_value": 1.0,
       "observations": 407,
+      "respondent_clusters": 378,
       "prevalence_percent": 71.99
     },
     {
       "signifier": "states' rights advocate",
       "annual_change_percentage_points": -11.131,
-      "ci95_lower": -24.082,
-      "ci95_upper": 1.819,
+      "cluster_ci95_lower": -24.589,
+      "cluster_ci95_upper": 2.326,
+      "benjamini_hochberg_q_value": 0.719643,
+      "bonferroni_adjusted_p_value": 1.0,
       "observations": 399,
+      "respondent_clusters": 371,
       "prevalence_percent": 28.822
     },
     {
       "signifier": "Reddit user",
-      "annual_change_percentage_points": -11.117,
-      "ci95_lower": -24.187,
-      "ci95_upper": 1.952,
-      "observations": 395,
-      "prevalence_percent": 70.38
+      "annual_change_percentage_points": -10.641,
+      "cluster_ci95_lower": -23.69,
+      "cluster_ci95_upper": 2.408,
+      "benjamini_hochberg_q_value": 0.719643,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 396,
+      "respondent_clusters": 376,
+      "prevalence_percent": 70.455
     },
     {
       "signifier": "data nerd",
-      "annual_change_percentage_points": -10.846,
-      "ci95_lower": -23.367,
-      "ci95_upper": 1.675,
-      "observations": 427,
-      "prevalence_percent": 30.679
+      "annual_change_percentage_points": -9.975,
+      "cluster_ci95_lower": -22.561,
+      "cluster_ci95_upper": 2.611,
+      "benjamini_hochberg_q_value": 0.749679,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 428,
+      "respondent_clusters": 398,
+      "prevalence_percent": 30.841
     },
     {
-      "signifier": "team player",
-      "annual_change_percentage_points": -9.747,
-      "ci95_lower": -21.964,
-      "ci95_upper": 2.471,
-      "observations": 418,
-      "prevalence_percent": 75.12
+      "signifier": "YouTube user",
+      "annual_change_percentage_points": -9.933,
+      "cluster_ci95_lower": -18.235,
+      "cluster_ci95_upper": -1.632,
+      "benjamini_hochberg_q_value": 0.418206,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 419,
+      "respondent_clusters": 390,
+      "prevalence_percent": 90.453
     },
     {
-      "signifier": "bitcoin trader",
-      "annual_change_percentage_points": -9.467,
-      "ci95_lower": -18.23,
-      "ci95_upper": -0.703,
-      "observations": 432,
-      "prevalence_percent": 12.037
+      "signifier": "old",
+      "annual_change_percentage_points": -9.809,
+      "cluster_ci95_lower": -17.305,
+      "cluster_ci95_upper": -2.314,
+      "benjamini_hochberg_q_value": 0.341425,
+      "bonferroni_adjusted_p_value": 1.0,
+      "observations": 1224,
+      "respondent_clusters": 1035,
+      "prevalence_percent": 27.369
     }
   ]
 }

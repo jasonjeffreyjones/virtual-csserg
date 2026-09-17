@@ -1,18 +1,18 @@
 # Current monitoring and prevalence findings
 
-Current through the monitoring check at **2026-09-16T20:47:07Z**. This file is
+Current through the monitoring check at **2026-09-17T10:02:27Z**. This file is
 replaced when the analysis is refreshed; it is not an archive.
 
 ## Monitor
 
 The Ipseity Daily homepage and canonical microdata both returned HTTP 200. The
 gzip parsed as UTF-8 CSV with the documented schema and contained
-**699,835 observations** from **2025-07-08** through
-**2026-09-15**, spanning **4,979 hashed respondents**
+**701,503 observations** from **2025-07-08** through
+**2026-09-16**, spanning **4,987 hashed respondents**
 and **707 signifiers**. No malformed rows or duplicate
 respondent/date/signifier keys were detected. The newest observation was
-1 day behind the check date, so this
-first check records no anomaly.
+1 day behind the check date, and this
+check records no anomaly.
 
 ![Cumulative observations over time](outputs/observation-growth.svg)
 
@@ -34,35 +34,45 @@ percentage points per year**; the middle half runs from -1.7 to
 
 ![Histogram of estimated annual prevalence growth](outputs/annual-prevalence-growth-histogram.svg)
 
+Uncertainty now uses a respondent-clustered sandwich estimator, so repeat
+answers by the same hashed respondent are not treated as independent. The file
+contains **528,734 respondent–signifier clusters**;
+the largest has 49 responses. Across 704 eligible
+trend tests, **0** have Benjamini–Hochberg q-values at or below
+0.05, and **0** meet the more conservative Bonferroni
+0.05 threshold.
+
 ### Fastest estimated growth
 
-| Signifier | Annual change (pp) | Approx. 95% CI | Responses | Overall yes |
-|---|---:|---:|---:|---:|
-| beautiful | +24.4 | [+11.1, +37.7] | 445 | 41.6% |
-| romance fan | +17.9 | [+5.2, +30.6] | 456 | 37.5% |
-| exhausted | +17.9 | [+4.8, +31.0] | 420 | 41.2% |
-| pretty | +17.6 | [+3.2, +31.9] | 416 | 41.6% |
-| COVID survivor | +17.4 | [+2.5, +32.3] | 387 | 49.1% |
+| Signifier | Annual change (pp) | Clustered 95% CI | BH q | Bonferroni p | Responses |
+|---|---:|---:|---:|---:|---:|
+| beautiful | +24.9 | [+11.2, +38.6] | 0.157 | 0.258 | 446 |
+| romance fan | +18.0 | [+5.1, +30.8] | 0.316 | 1.000 | 458 |
+| pretty | +17.6 | [+3.2, +31.9] | 0.395 | 1.000 | 416 |
+| amateur artist | +17.5 | [+5.0, +29.9] | 0.316 | 1.000 | 418 |
+| COVID survivor | +17.1 | [+2.2, +32.1] | 0.484 | 1.000 | 389 |
 
 ### Fastest estimated shrinkage
 
-| Signifier | Annual change (pp) | Approx. 95% CI | Responses | Overall yes |
-|---|---:|---:|---:|---:|
-| star wars fan | -15.5 | [-28.8, -2.1] | 417 | 37.9% |
-| social conservative | -15.3 | [-27.5, -3.0] | 422 | 25.6% |
-| nba fan | -14.3 | [-27.6, -0.9] | 405 | 31.9% |
-| 2a supporter | -12.2 | [-25.2, +0.8] | 377 | 24.7% |
-| planner | -12.2 | [-24.4, -0.0] | 407 | 72.0% |
+| Signifier | Annual change (pp) | Clustered 95% CI | BH q | Bonferroni p | Responses |
+|---|---:|---:|---:|---:|---:|
+| social conservative | -15.7 | [-27.6, -3.7] | 0.341 | 1.000 | 424 |
+| star wars fan | -14.5 | [-27.8, -1.2] | 0.546 | 1.000 | 421 |
+| nba fan | -14.3 | [-27.7, -0.8] | 0.554 | 1.000 | 405 |
+| 2a supporter | -12.2 | [-25.7, +1.2] | 0.655 | 1.000 | 377 |
+| planner | -12.2 | [-24.4, -0.1] | 0.588 | 1.000 | 407 |
 
 The largest point estimate is **beautiful** at
-24.4 percentage points
-per year; the most negative is **star wars fan** at
--15.5 points per year.
-The intervals are ordinary model-based intervals. They do not adjust for
-repeated respondents, changing sample composition, or selecting extremes from
-704 simultaneous estimates. The rankings are therefore leads for
-continued monitoring, not evidence that the underlying US adult population
-changed at those rates.
+24.9 percentage points
+per year; the most negative is **social conservative** at
+-15.7 points per year.
+The intervals account for dependence within hashed respondents but not changing
+sample composition, calendar structure, or model misspecification. The
+Benjamini–Hochberg screen follows the original independent-test procedure;
+correlation among signifier tests makes the Bonferroni column an important
+conservative sensitivity check. Point-estimate rankings selected from
+704 tests remain monitoring leads, not evidence that the underlying
+US adult population changed at those rates.
 
 Full machine-readable estimates, eligibility flags, and interval bounds are in
 `outputs/signifier-growth.csv`; the daily and cumulative counts are in
@@ -74,4 +84,13 @@ Jones, J. (2026). *Ipseity Daily Data* [Data set]. Zenodo.
 [https://doi.org/10.5281/zenodo.22636514](https://doi.org/10.5281/zenodo.22636514).
 The analysis used the newer canonical file served directly by the
 [Ipseity Daily download page](https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/download.html) at the check time;
-SHA-256 `b0b5cae9027284acaa28905c22a0ed8fb1357a434c931d31e747687d7fd1fa27`.
+SHA-256 `2f683b69af5152bb89223f432a4dbf6fea10f2ac99e19053cf35cbd74c473232`.
+
+Liang, K.-Y., & Zeger, S. L. (1986). Longitudinal data analysis using
+generalized linear models. *Biometrika, 73*(1), 13–22.
+[https://doi.org/10.1093/biomet/73.1.13](https://doi.org/10.1093/biomet/73.1.13).
+
+Benjamini, Y., & Hochberg, Y. (1995). Controlling the false discovery rate: A
+practical and powerful approach to multiple testing. *Journal of the Royal
+Statistical Society: Series B (Methodological), 57*(1), 289–300.
+[https://doi.org/10.1111/j.2517-6161.1995.tb02031.x](https://doi.org/10.1111/j.2517-6161.1995.tb02031.x).
