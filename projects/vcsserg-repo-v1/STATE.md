@@ -2,17 +2,19 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-16T21:16:54Z
+updated: 2026-09-17T08:11:02Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 16, 2026, all seven automated promise groups pass across
-26 HTML pages and six first-party stylesheets. The September 15 normal Scholar
+Active. On September 17, 2026, all seven automated promise groups pass across
+26 HTML pages and six first-party stylesheets. The static-site group now
+requires a bypass mechanism and an explicit `alt` decision for every image,
+with negative fixtures for both regressions. The September 15 normal Scholar
 run reached completion only after its guarded deployment and authenticated
-inventory phase returned successfully; today's public probe then found all 110
+inventory phase returned successfully; the September 16 public probe then found all 110
 expected files byte-identical. This closes the deployment gate and observes the
 successful workflow path for that release. The PI-triggered canary also
 completed the coordinated immutable-dialog migration across `_template` and
@@ -70,6 +72,14 @@ complete; keyboard/assistive-technology and substantive review remain open.
   GitHub and CC BY 4.0 under **Open work**. The system is synchronized across
   direct HTML, all three Quarto footer sources/generated reports, and archived
   design pages; the verifier rejects missing groups and misplaced links.
+- Every public HTML page now exposes a bypass link, and every image has an
+  explicit `alt` attribute (including empty alternatives for decorative
+  images). The four generated Quarto pages use a source-controlled link that
+  moves to the start of the live document and targets the report's `main`;
+  the two NFL report figures now retain detailed alternatives after rendering.
+  Two negative-fixture tests reject missing/late bypass links and missing
+  image alternatives. These static checks do not replace rendered keyboard or
+  assistive-technology review.
 - The Full Report publisher replaces a complete generated tree so stale Quarto
   libraries cannot survive; two unit tests cover replacement and preservation
   of the current public tree when a build is incomplete.
@@ -82,8 +92,9 @@ complete; keyboard/assistive-technology and substantive review remain open.
   supersession, correction, and retraction. Canonical URLs remain current while
   a full commit key preserves the outgoing three-form report, dependencies,
   sources, and Project record. `REPORT-VERSIONS.md` records the September 15 v1
-  release and the September 16 pre-canary report set; the verifier confirms all
-  three forms exist at both commits.
+  release, the September 16 pre-canary report set, and the September 16
+  pre-accessibility-contract report set; the verifier confirms all three forms
+  exist at each recorded commit.
 - NFL Team Fandom Identities records the PI-directed Paused lifecycle state in
   its state, dialog, public summary, Projects listing, and homepage. Its
   findings and reports remain Published; the PI confirms no Scholar schedules
@@ -126,7 +137,8 @@ All seven groups pass across 26 HTML pages and six first-party stylesheets.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
-indexes, and legacy-dialog digests.
+indexes, legacy-dialog digests, bypass mechanisms, and explicit image
+alternatives.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -180,12 +192,12 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 
 ## Resources and limitations
 
-September 16 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 17 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. No Chromium, Chrome, or Firefox executable was found.
 ReportLab/pypdf are not installed in the base Python environment; any PDF build
-uses the documented temporary build-only packages, not production dependencies.
-No system runtime was installed or replaced in this iteration.
+uses the existing documented temporary build-only packages, not production
+dependencies. No package or replacement runtime was installed in this iteration.
 
 ## Important files
 
@@ -225,4 +237,4 @@ No system runtime was installed or replaced in this iteration.
 
 No blocking PI question. Controlled runner failure paths now pass without
 commit, push, or deployment, and the PI confirms no schedules are enabled.
-Next complete keyboard/assistive-technology and substantive review.
+Next complete rendered keyboard/assistive-technology and substantive review.

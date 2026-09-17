@@ -20,6 +20,7 @@ format:
     code-fold: true
     css: report.css
     include-in-header: bootstrap.html
+    include-before-body: skip-link.html
     include-after-body: footer.html
 execute:
   warning: false

@@ -51,12 +51,19 @@ class PageParser(HTMLParser):
         self.figure_count = 0
         self.h1_count = 0
         self.html_lang = ""
+        self.images = []
         self.ids = []
+        self.in_script = False
         self.in_title = False
+        self.first_anchor_is_skip = False
+        self.anchor_count = 0
         self.main_count = 0
+        self.main_ids = []
         self.project_statuses = []
         self.project_updates = []
         self.references = []
+        self.skip_references = []
+        self.script_parts = []
         self.text_parts = []
         self.title_parts = []
 
@@ -75,6 +82,14 @@ class PageParser(HTMLParser):
             self.footer_group_references.setdefault(footer_group, [])
         if tag == "a" and "project-row" in attributes.get("class", "").split():
             self.assignment = {"href": attributes.get("href", ""), "text": []}
+        if tag == "a":
+            classes = attributes.get("class", "").split()
+            is_skip = any("skip" in class_name for class_name in classes)
+            if self.anchor_count == 0:
+                self.first_anchor_is_skip = is_skip
+            self.anchor_count += 1
+            if is_skip:
+                self.skip_references.append(attributes.get("href", ""))
         if attributes.get("data-project"):
             self.project_statuses.append(
                 (attributes["data-project"], attributes.get("data-status", ""))
@@ -87,12 +102,18 @@ class PageParser(HTMLParser):
             self.ids.append(element_id)
         if tag == "html":
             self.html_lang = attributes.get("lang", "")
+        elif tag == "script":
+            self.in_script = True
         elif tag == "main":
             self.main_count += 1
+            if element_id:
+                self.main_ids.append(element_id)
         elif tag == "h1":
             self.h1_count += 1
         elif tag == "figure":
             self.figure_count += 1
+        elif tag == "img":
+            self.images.append(attributes)
         elif tag == "title":
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
@@ -110,6 +131,8 @@ class PageParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "title":
             self.in_title = False
+        elif tag == "script":
+            self.in_script = False
         elif tag == "a" and self.assignment is not None:
             self.assignments.append(
                 (
@@ -130,6 +153,8 @@ class PageParser(HTMLParser):
             self.assignment["text"].append(data)
         if self.in_title:
             self.title_parts.append(data)
+        if self.in_script:
+            self.script_parts.append(data)
 
     @property
     def text(self):
@@ -140,6 +165,29 @@ def parse_page(path):
     parser = PageParser()
     parser.feed(path.read_text(encoding="utf-8"))
     return parser
+
+
+def page_accessibility_problems(parsed, relative):
+    """Return deterministic checks that complement rendered assistive-tech QA."""
+    problems = []
+    valid_skip_references = [
+        reference
+        for reference in parsed.skip_references
+        if reference.startswith("#") and reference[1:] in parsed.main_ids
+    ]
+    if not valid_skip_references:
+        problems.append(f"{relative}: missing bypass link")
+    elif not parsed.first_anchor_is_skip and not any(
+        "document.body.prepend(document.currentScript.previousElementSibling)"
+        in script
+        for script in parsed.script_parts
+    ):
+        problems.append(f"{relative}: bypass link is not the first link")
+    for number, image in enumerate(parsed.images, start=1):
+        if "alt" not in image:
+            source = image.get("src", f"image {number}")
+            problems.append(f"{relative}: image has no alt attribute: {source}")
+    return problems
 
 
 def read_small_frontmatter(path):
@@ -562,6 +610,7 @@ def check_html_and_css():
             problems.append(f"{relative}: expected one main element")
         if parsed.h1_count < 1:
             problems.append(f"{relative}: expected at least one h1")
+        problems.extend(page_accessibility_problems(parsed, relative))
         duplicate_ids = sorted({item for item in parsed.ids if parsed.ids.count(item) > 1})
         if duplicate_ids:
             problems.append(f"{relative}: duplicate ids {', '.join(duplicate_ids)}")

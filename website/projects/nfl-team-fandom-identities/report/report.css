@@ -10,6 +10,23 @@ body {
   background: var(--paper);
 }
 
+.report-skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2000;
+  padding: 0.65rem 0.9rem;
+  color: white;
+  background: var(--forest);
+  border-radius: 0.25rem;
+  transform: translateY(-200%);
+}
+
+.report-skip:focus {
+  color: white;
+  transform: translateY(0);
+}
+
 a {
   color: var(--artichoke);
 }

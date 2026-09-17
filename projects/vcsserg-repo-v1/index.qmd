@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 16, 2026. The validated
+All seven automated promise groups pass on September 17, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -25,8 +25,10 @@ a September 16 public probe then found all 110 expected files byte-identical.
 This closes the deployment gate for that release and observes the successful
 workflow path. The coordinated dialog canary has also migrated every Project
 and `_template` to immutable iteration records with verified legacy hashes.
-Controlled tests now witness fail-closed Scholar and validation errors; rendered
-accessibility and substantive review remain manual gates.
+Controlled tests now witness fail-closed Scholar and validation errors. Static
+checks also require a bypass link and an explicit `alt` decision for every
+image; rendered keyboard/assistive-technology and substantive review remain
+manual gates.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -90,7 +92,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have basic semantics, branding, complete footer links, Bootstrap, and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have basic semantics, bypass links, explicit image alternatives, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -99,7 +101,10 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 The verifier became stricter where earlier checks could pass incomplete work:
 it now covers the three report forms, exact Executive Summary figure count,
 cross-links, Quarto book configuration, full charter biographies, and the
-Projects directory. It also became narrower where old rules created false
+Projects directory. The September 17 check adds negative fixtures for absent
+or late bypass links and missing image `alt` attributes; all four Quarto report
+pages now supply a source-controlled link that moves to the start of the live
+document and targets the report's main content. It also became narrower where old rules created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
 
@@ -157,8 +162,9 @@ commit key in a Project ledger. Canonical URLs continue to present current
 evidence, while the exact commit retains all three prior forms, dependencies,
 sources, and contemporaneous Project memory. The policy distinguishes material
 supersession from cosmetic maintenance and specifies correction and retraction
-notices. The ledger preserves both the September 15 release and the September
-16 pre-canary report set;
+notices. The ledger preserves the September 15 release, the September 16
+pre-canary report set, and the September 16 report set before the
+static-accessibility contract expanded;
 see the [archive policy](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-ARCHIVING.md)
 and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md).
 
@@ -188,8 +194,10 @@ reports may use up to ten pages. The three forms link to one another.
 
 Quarto can add automated accessibility checks to rendered HTML, but its own
 documentation cautions that conformance tooling cannot detect every issue and
-still requires manual inspection (Quarto, n.d.-b). Version 1 therefore keeps
-rendered accessibility as a manual gate.
+still requires manual inspection (Quarto, n.d.-b). Version 1 now rejects
+missing bypass links and image `alt` attributes across all public HTML. Those
+deterministic checks narrow the gap; rendered focus behavior, keyboard order,
+and assistive-technology output remain a manual gate.
 
 ## Manual gates and limitations {#manual-gates}
 

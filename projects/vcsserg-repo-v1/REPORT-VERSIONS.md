@@ -6,6 +6,25 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 16, 2026 at 21:16 UTC
+
+- **Superseded:** September 17, 2026
+- **Archive key:**
+  [`026c1d4511fbd99789c8252c552e72f90a799b5a`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/026c1d4511fbd99789c8252c552e72f90a799b5a)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the static-accessibility regression contract was expanded.
+- **Reason:** The outgoing reports accurately described accessibility as a
+  manual gate, but the generic verifier did not yet reject missing bypass
+  links or image `alt` attributes. The next release adds those deterministic
+  checks, source-controlled skip links for every Quarto Full Report page, and
+  explicit alternatives for the two NFL report figures while retaining
+  rendered keyboard and assistive-technology review as a manual gate.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/026c1d4511fbd99789c8252c552e72f90a799b5a/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/026c1d4511fbd99789c8252c552e72f90a799b5a/projects/vcsserg-repo-v1)
+
 ### Updated through September 16, 2026 at 14:57 UTC
 
 - **Superseded:** September 16, 2026

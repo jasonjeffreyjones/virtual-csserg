@@ -1,6 +1,6 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 16, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 17, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
@@ -18,7 +18,7 @@ The standard-library verifier parses public HTML, resolves local resources and f
 
 ## Automated evidence
 
-Repository guidance passes: the governing files, growth, migration, report-archive procedures, and tested creation commands exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, a bounded DIALOG.md, immutable iteration/year indexes, verified legacy hashes where applicable, and independent lifecycle/publication metadata. Static HTML/CSS passes structural, branding, local-link, Bootstrap, and footer checks. Public catalogs pass Published-Project and rostered-Scholar coverage, canonical-biography fidelity, lifecycle status, and metadata-derived update order. Runner guards and exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass.
+Repository guidance passes: the governing files, growth, migration, report-archive procedures, and tested creation commands exist. Project memory passes: every Project and the template have PROJECT.md, STATE.md, a bounded DIALOG.md, immutable iteration/year indexes, verified legacy hashes where applicable, and independent lifecycle/publication metadata. Static HTML/CSS passes structural, bypass-link, explicit-image-alternative, branding, local-link, Bootstrap, and footer checks. Public catalogs pass Published-Project and rostered-Scholar coverage, canonical-biography fidelity, lifecycle status, and metadata-derived update order. Runner guards and exact-mirror deployment, including its post-transfer checksum/inventory dry run, pass.
 
 The three-report group now passes. The overall result remains a regression report, not a research-quality score or Version 1 certification.
 
@@ -38,11 +38,11 @@ Scholar identity stays PI-authored while `create_scholar.py` performs the mechan
 
 Pausing is operational: record the PI instruction, set state and public labels to Paused, preserve reports unless retracted, and stop invocations. The runner rejects non-Active Projects. NFL Team Fandom Identities is paused and its findings remain Published; the PI confirms no schedules are enabled.
 
-Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. The ledger preserves both the September 15 release and the September 16 pre-canary report set.
+Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. The ledger preserves the September 15 release, the September 16 pre-canary report set, and the September 16 report set before the static-accessibility contract expanded.
 
 ## Manual gates
 
-The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A public probe found all 110 expected files byte-identical. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Dr. Jones reports the production pages and PDFs look acceptable; keyboard/assistive-technology and substantive review remain human gates.
+The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A public probe found all 110 expected files byte-identical. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Every public HTML page now has a bypass mechanism and an explicit `alt` decision for every image, with negative fixtures guarding both requirements. Dr. Jones reports the production pages and PDFs look acceptable; rendered keyboard/assistive-technology and substantive review remain human gates.
 
 The dialog canary is complete. All Projects and the template now use one immutable file per iteration, a bounded 20-link landing page, and complete yearly indexes. The five former DIALOG.md files are preserved byte-for-byte with recorded SHA-256 digests; the verifier checks these hashes, record filename/metadata agreement, and unique index coverage. Scholars read the full charter/state/index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Dr. Jones appends feedback to the record he is answering.
 

@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-17 08:01:08 UTC — Bee Boring Vanilla — Static accessibility regression contract](dialog/iterations/2026-09-17T080108Z-b-boring-vanilla.md)
 - [2026-09-16 14:44:25 UTC — Bee Boring Vanilla — Immutable-dialog migration canary](dialog/iterations/2026-09-16T144425Z-b-boring-vanilla.md)
 
 ## Yearly indexes

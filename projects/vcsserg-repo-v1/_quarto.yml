@@ -7,7 +7,7 @@ book:
   title: "Virtual CSSERG Version 1.0"
   subtitle: "Does the virtual lab work as documented?"
   author: "Bee Boring Vanilla"
-  date: "2026-09-16"
+  date: "2026-09-17"
   chapters:
     - index.qmd
 format:
@@ -17,6 +17,7 @@ format:
     number-sections: true
     css: report.css
     include-in-header: bootstrap.html
+    include-before-body: skip-link.html
     include-after-body: footer.html
 execute:
   warning: false

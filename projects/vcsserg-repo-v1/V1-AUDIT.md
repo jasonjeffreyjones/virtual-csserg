@@ -16,11 +16,11 @@ still not establish the manual gates below.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 16, 2026 |
+| Documented promise | Evidence or test | Status on September 17, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded and locally connected | First-party HTML/CSS semantics, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets |
+| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, bypass links, explicit image alternatives, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
@@ -28,7 +28,7 @@ still not establish the manual gates below.
 
 ## Current automated result
 
-On September 16, 2026, **all seven groups pass**. The final report-format gap
+On September 17, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -57,6 +57,12 @@ publication structure:
   agreement, bounded newest-first links, complete yearly indexes, and each
   recorded legacy SHA-256 digest. The ledger preserves the clean pre-canary
   report commit as a second superseded release.
+- On September 17, the static-site group gained negative fixtures for missing
+  or late bypass links and missing image `alt` attributes. All four generated
+  Quarto report pages now insert a source-controlled skip link at the start of
+  the live document, and both NFL Full Report figures carry explicit
+  alternatives. This is deterministic coverage, not a rendered accessibility
+  certification.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. The manual gates remain open.
@@ -72,6 +78,8 @@ one H1 on a multi-level Quarto book page.
 The current verifier:
 
 - adds a dedicated three-format report group;
+- requires every page to expose a bypass link and every image to carry an
+  explicit `alt` attribute, with negative fixtures for both regressions;
 - checks the Executive Summary figure count, report cross-links, Quarto source,
   PDF signature, and the required “far beyond” phrase;
 - checks the Projects index and exact normalized charter biographies;

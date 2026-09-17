@@ -23,7 +23,7 @@ benefit of fandom or measure happiness with a multi-item psychological scale.
 The observation window is **July 8, 2025–August 27, 2026**, not the retrieval
 date of September 11, 2026.
 
-![Happy endorsement among 316 Browns-fan and 7,919 explicit non-fan respondent-days. The prevalence ratio is 1.087 with a respondent-cluster bootstrap 95% interval of 1.007–1.160.](../images/happy-prevalence.png)
+![Happy endorsement among 316 Browns-fan and 7,919 explicit non-fan respondent-days. The prevalence ratio is 1.087 with a respondent-cluster bootstrap 95% interval of 1.007–1.160.](../images/happy-prevalence.png){fig-alt="Bar chart showing happy endorsement of 83.23 percent among 316 Browns-fan respondent-days and 76.55 percent among 7,919 explicit non-fan respondent-days. The prevalence ratio is 1.087 with a respondent-cluster bootstrap 95 percent interval of 1.007 to 1.160."}
 
 ## Research question and estimand {#estimand}
 
@@ -134,7 +134,7 @@ m <- primary$temporal_sensitivity$by_month
 knitr::kable(m[, c("month", "fandom_yes_n", "fandom_no_n", "prevalence_ratio")], digits = 3)
 ```
 
-![Monthly prevalence ratios with point size proportional to Browns-fan respondent-day counts.](../images/monthly-prevalence-ratio.png)
+![Monthly prevalence ratios with point size proportional to Browns-fan respondent-day counts.](../images/monthly-prevalence-ratio.png){fig-alt="Line chart of fourteen monthly happy prevalence ratios from July 2025 through August 2026. Ratios range from 0.963 to 1.209 around the pooled estimate of 1.087; point size represents Browns-fan respondent-day counts."}
 
 Twelve of fourteen monthly ratios exceed 1, with a range of 0.963–1.209.
 Each month contains only 15–29 fan respondent-days; the endpoints are partial
