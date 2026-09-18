@@ -12,12 +12,19 @@ ROOT = PROJECT.parents[1]
 SOURCE = PROJECT / "_book"
 PUBLIC = ROOT / "website/projects/predict-the-self/report"
 COMPATIBILITY_ARTIFACTS = {
+    "ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md": "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
     "BENCHMARK_PROVENANCE.md": "artifacts/BENCHMARK_PROVENANCE.md",
     "analysis/analyze_dev_diagnostics.py": "artifacts/analyze_dev_diagnostics.py",
+    "analysis/analyze_trajectory_retrieval.py": "artifacts/analyze_trajectory_retrieval.py",
     "analysis/stable_signifier_projection.py": "artifacts/stable_signifier_projection.py",
+    "analysis/trajectory_retrieval.py": "artifacts/trajectory_retrieval.py",
     "results/stable_signifier_dev_diagnostics.json": "artifacts/stable_signifier_dev_diagnostics.json",
     "results/stable_signifier_dev_predictions.csv": "artifacts/stable_signifier_dev_predictions.csv",
     "results/stable_signifier_dev_scorecard.json": "artifacts/stable_signifier_dev_scorecard.json",
+    "results/trajectory_retrieval_dev_analysis.json": "artifacts/trajectory_retrieval_dev_analysis.json",
+    "results/trajectory_retrieval_dev_audit.csv": "artifacts/trajectory_retrieval_dev_audit.csv",
+    "results/trajectory_retrieval_dev_predictions.csv": "artifacts/trajectory_retrieval_dev_predictions.csv",
+    "results/trajectory_retrieval_dev_scorecard.json": "artifacts/trajectory_retrieval_dev_scorecard.json",
     "submissions/aleph_initial_alpha_submission.csv": "artifacts/aleph_initial_alpha_submission.csv",
     "submissions/aleph_initial_alpha_method.md": "artifacts/aleph_initial_alpha_method.md",
 }

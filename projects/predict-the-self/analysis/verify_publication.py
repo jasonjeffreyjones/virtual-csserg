@@ -92,24 +92,38 @@ def main() -> int:
     assert short_path.resolve() in local_targets(landing_path, landing)
 
     expected_artifacts = {
+        PUBLIC / "report/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
         PUBLIC / "report/BENCHMARK_PROVENANCE.md",
         PUBLIC / "report/analysis/analyze_dev_diagnostics.py",
+        PUBLIC / "report/analysis/analyze_trajectory_retrieval.py",
         PUBLIC / "report/analysis/stable_signifier_projection.py",
+        PUBLIC / "report/analysis/trajectory_retrieval.py",
         PUBLIC / "report/results/stable_signifier_dev_diagnostics.json",
         PUBLIC / "report/results/stable_signifier_dev_predictions.csv",
         PUBLIC / "report/results/stable_signifier_dev_scorecard.json",
+        PUBLIC / "report/results/trajectory_retrieval_dev_analysis.json",
+        PUBLIC / "report/results/trajectory_retrieval_dev_audit.csv",
+        PUBLIC / "report/results/trajectory_retrieval_dev_predictions.csv",
+        PUBLIC / "report/results/trajectory_retrieval_dev_scorecard.json",
         PUBLIC / "report/submissions/aleph_initial_alpha_submission.csv",
         PUBLIC / "report/submissions/aleph_initial_alpha_method.md",
     }
     evidence_targets = local_targets(evidence_path, evidence)
     assert expected_artifacts <= evidence_targets, "Full Report omits public artifacts"
     for source, legacy in (
+        ("ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md", "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md"),
         ("BENCHMARK_PROVENANCE.md", "artifacts/BENCHMARK_PROVENANCE.md"),
         ("analysis/analyze_dev_diagnostics.py", "artifacts/analyze_dev_diagnostics.py"),
+        ("analysis/analyze_trajectory_retrieval.py", "artifacts/analyze_trajectory_retrieval.py"),
         ("analysis/stable_signifier_projection.py", "artifacts/stable_signifier_projection.py"),
+        ("analysis/trajectory_retrieval.py", "artifacts/trajectory_retrieval.py"),
         ("results/stable_signifier_dev_diagnostics.json", "artifacts/stable_signifier_dev_diagnostics.json"),
         ("results/stable_signifier_dev_predictions.csv", "artifacts/stable_signifier_dev_predictions.csv"),
         ("results/stable_signifier_dev_scorecard.json", "artifacts/stable_signifier_dev_scorecard.json"),
+        ("results/trajectory_retrieval_dev_analysis.json", "artifacts/trajectory_retrieval_dev_analysis.json"),
+        ("results/trajectory_retrieval_dev_audit.csv", "artifacts/trajectory_retrieval_dev_audit.csv"),
+        ("results/trajectory_retrieval_dev_predictions.csv", "artifacts/trajectory_retrieval_dev_predictions.csv"),
+        ("results/trajectory_retrieval_dev_scorecard.json", "artifacts/trajectory_retrieval_dev_scorecard.json"),
         ("submissions/aleph_initial_alpha_submission.csv", "artifacts/aleph_initial_alpha_submission.csv"),
         ("submissions/aleph_initial_alpha_method.md", "artifacts/aleph_initial_alpha_method.md"),
     ):

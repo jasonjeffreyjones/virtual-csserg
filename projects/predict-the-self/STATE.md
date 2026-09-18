@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-17T09:18:10Z
+updated: 2026-09-18T09:20:24Z
 ---
 
 # Predict the Self — Current State
@@ -12,9 +12,11 @@ updated: 2026-09-17T09:18:10Z
 Active and ready for a Scholar research iteration. The Predict Future Selves
 benchmark is pinned, the deterministic stable-signifier method and its 81 test
 predictions are frozen, all current public-development results are published,
-and paired uncertainty and extractive-limit diagnostics are now published. The
-Project follows the current three-memory-file and three-report structure. The
-private test scorecard and challenge pull request remain open.
+and paired uncertainty and extractive-limit diagnostics are published. A
+locked development-only matched-trajectory baseline now separates forecasting
+the volume of identity-language change from forecasting its person-specific
+content. The Project follows the current three-memory-file and three-report
+structure. The private test scorecard and challenge pull request remain open.
 
 ## Current finding
 
@@ -48,6 +50,16 @@ counts are respected (`59.2663%`–`70.6149%`). Retrospective oracle extractive
 ceilings are explicitly labeled unattainable and do not constitute prediction
 results.
 
+The exploratory trajectory-retrieval baseline matches each development case
+to one training source with text-plus-demographic TF-IDF and copies that
+neighbor's public follow-up. It predicts mean unique-token novelty of
+`0.801727`, near the observed `0.731727`, and lowers source-similarity MAE to
+`0.136074`. But it recovers the wrong novel content: mean novel-type precision
+is `0.070466`, recall is `0.085362`, and F1 is `0.067109`. Its token-overlap F1
+is `0.194693` versus `0.307444` for stable projection; all other non-exact
+agreement metrics are also lower. Matching how much the language changes is
+not matching how this person's expressed identity changes.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -62,6 +74,15 @@ results.
 - Added `analysis/analyze_dev_diagnostics.py`, a hash-guarded deterministic
   paired bootstrap and extractive-limit analysis, plus its complete
   machine-readable JSON result and three unit tests.
+- Locked `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md` before generating new
+  development predictions (SHA-256
+  `86b2ddfe775773e1964beeefbac5479d88f6c46cd3385bf3a992fc7ae64e9c83`).
+  The lock explicitly is not a preregistration because development labels had
+  already been inspected.
+- Added a deterministic standard-library trajectory-retrieval generator,
+  development match audit, all 50 predictions, complete official scorecard,
+  paired comparison, novelty-content diagnostics, and four unit tests. No
+  retrieval test submission was generated.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -80,7 +101,7 @@ results.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, six linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes eight research
+- The three forms link reciprocally. The Full Report publishes fifteen research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -97,6 +118,13 @@ results.
 - The bootstrap and lexical-limit analysis are post hoc diagnostics of frozen
   predictions. Their intervals characterize development-case composition only;
   their oracles inspect observed futures and are unattainable prospectively.
+- The retrieval method and evaluation were locked before generation in this
+  iteration, but its development comparison remains exploratory because those
+  labels were examined earlier. It transfers another participant's public
+  follow-up rather than making a factual statement about the focal person.
+- Retrieval predictions adapt CC BY-NC-SA 4.0 benchmark data. They are
+  published for audit, not submitted for private-test evaluation. The original
+  stable test artifact remains unchanged.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -112,13 +140,17 @@ results.
 - `BUILD.md`, `_quarto.yml`, `index.qmd`, `report.qmd`, `short-report.md`:
   publication sources and reproduction instructions.
 - `BENCHMARK_PROVENANCE.md`: pinned commit, licensing, and governing hashes.
+- `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`: fixed exploratory comparison plan.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
+- `analysis/trajectory_retrieval.py` and
+  `analysis/analyze_trajectory_retrieval.py`: development-only retrieval and
+  locked paired/novelty analysis.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
-- `results/`: development predictions, complete public scorecard, and complete
-  diagnostic result.
+- `results/`: both development prediction sets, complete scorecards, retrieval
+  audit, and complete diagnostic results.
 - `submissions/`: frozen test artifact and method card.
 - `website/projects/predict-the-self/`: Executive Summary, Full Report, short
   report, and copied reproducibility artifacts.
@@ -139,9 +171,11 @@ results.
 1. Submit exactly the frozen CSV and method card to the challenge organizer;
    add the complete private scorecard unchanged when returned.
 2. Before another model comparison, preregister the method and the role of
-   development data to limit repeated tuning.
-3. Compare a non-extractive or generative approach explicitly able to model
-   genuinely new signifiers and response form; reuse the paired diagnostics,
-   without using private test feedback for optimization.
+   development data to limit repeated tuning; preferably reserve new evidence
+   or use training-only nested evaluation because development labels are now
+   heavily reused.
+3. Compare a synthesizing approach able to condition genuinely new signifiers
+   on the individual rather than copying a neighbor; reuse the quantity-versus-
+   content diagnostics without private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

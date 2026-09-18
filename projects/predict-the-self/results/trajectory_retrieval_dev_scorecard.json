@@ -1,0 +1,97 @@
+{
+  "cases": 50,
+  "predictions": "/home/ubuntu/virtual-csserg/projects/predict-the-self/results/trajectory_retrieval_dev_predictions.csv",
+  "references": "/tmp/predict-future-selves-20260918/data/dev.csv",
+  "metrics": {
+    "normalized_exact_match_rate": {
+      "value": 0.0,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Fraction of predictions exactly matching the reference after case and whitespace normalization."
+    },
+    "normalized_edit_similarity": {
+      "value": 0.25336,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Character-level Levenshtein similarity after case and whitespace normalization."
+    },
+    "token_jaccard_similarity": {
+      "value": 0.080427,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average Jaccard similarity over unique prediction and reference tokens."
+    },
+    "token_overlap_f1": {
+      "value": 0.194693,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average bag-of-words token overlap F1 against the reference."
+    },
+    "rouge_l_f1": {
+      "value": 0.150924,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average longest-common-subsequence token F1 against the reference."
+    },
+    "character_ngram_f1": {
+      "value": 0.21266,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average character 1- through 6-gram overlap F1 against the reference."
+    },
+    "word_count_mae": {
+      "value": 59.64,
+      "group": "Form",
+      "direction": "lower",
+      "description": "Mean absolute error in response word count."
+    },
+    "line_count_mae": {
+      "value": 8.34,
+      "group": "Form",
+      "direction": "lower",
+      "description": "Mean absolute error in nonblank response-line count."
+    },
+    "prediction_word_count_mean": {
+      "value": 99.28,
+      "group": "Form",
+      "direction": "descriptive",
+      "description": "Mean predicted response word count."
+    },
+    "reference_word_count_mean": {
+      "value": 94.76,
+      "group": "Form",
+      "direction": "descriptive",
+      "description": "Mean reference response word count."
+    },
+    "prediction_repeat_2024_rate": {
+      "value": 0.0,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Fraction of predictions that repeat the 2024 response after normalization."
+    },
+    "observed_repeat_2024_rate": {
+      "value": 0.0,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Fraction of reference responses that repeat the 2024 response after normalization."
+    },
+    "source_similarity_mae": {
+      "value": 0.136074,
+      "group": "Change",
+      "direction": "lower",
+      "description": "Mean absolute error between predicted and observed ROUGE-L similarity to the 2024 response."
+    },
+    "prediction_source_similarity_mean": {
+      "value": 0.175191,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Mean ROUGE-L similarity between predictions and 2024 responses."
+    },
+    "observed_source_similarity_mean": {
+      "value": 0.225683,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Mean ROUGE-L similarity between follow-up and 2024 responses."
+    }
+  }
+}

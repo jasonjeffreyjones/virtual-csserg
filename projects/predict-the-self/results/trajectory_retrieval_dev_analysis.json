@@ -1,0 +1,468 @@
+{
+  "schema_version": 1,
+  "analysis": "locked_exploratory_trajectory_retrieval_comparison",
+  "cases": 50,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "development_sha256": "afe74265475f1897161f54ac91395ded74d839e43236e8f4d189d91f9b40651a",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "stable_prediction_sha256": "0b43ad574543cb128fa51470432467a34998c675b945665bb44141d6e04bca39",
+    "retrieval_prediction_sha256": "f061d6658bb89359cee12313d426225d1ace601a01e51a8751662570b4345d60",
+    "analysis_plan_sha256": "86b2ddfe775773e1964beeefbac5479d88f6c46cd3385bf3a992fc7ae64e9c83"
+  },
+  "bootstrap": {
+    "unit": "paired development case",
+    "resamples": 20000,
+    "seed": 20260918,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to development-case composition; it is not a population-generalization interval."
+  },
+  "trajectory_retrieval_scorecard": {
+    "normalized_exact_match_rate": {
+      "value": 0.0,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Fraction of predictions exactly matching the reference after case and whitespace normalization."
+    },
+    "normalized_edit_similarity": {
+      "value": 0.25336,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Character-level Levenshtein similarity after case and whitespace normalization."
+    },
+    "token_jaccard_similarity": {
+      "value": 0.080427,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average Jaccard similarity over unique prediction and reference tokens."
+    },
+    "token_overlap_f1": {
+      "value": 0.194693,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average bag-of-words token overlap F1 against the reference."
+    },
+    "rouge_l_f1": {
+      "value": 0.150924,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average longest-common-subsequence token F1 against the reference."
+    },
+    "character_ngram_f1": {
+      "value": 0.21266,
+      "group": "Agreement",
+      "direction": "higher",
+      "description": "Macro-average character 1- through 6-gram overlap F1 against the reference."
+    },
+    "word_count_mae": {
+      "value": 59.64,
+      "group": "Form",
+      "direction": "lower",
+      "description": "Mean absolute error in response word count."
+    },
+    "line_count_mae": {
+      "value": 8.34,
+      "group": "Form",
+      "direction": "lower",
+      "description": "Mean absolute error in nonblank response-line count."
+    },
+    "prediction_word_count_mean": {
+      "value": 99.28,
+      "group": "Form",
+      "direction": "descriptive",
+      "description": "Mean predicted response word count."
+    },
+    "reference_word_count_mean": {
+      "value": 94.76,
+      "group": "Form",
+      "direction": "descriptive",
+      "description": "Mean reference response word count."
+    },
+    "prediction_repeat_2024_rate": {
+      "value": 0.0,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Fraction of predictions that repeat the 2024 response after normalization."
+    },
+    "observed_repeat_2024_rate": {
+      "value": 0.0,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Fraction of reference responses that repeat the 2024 response after normalization."
+    },
+    "source_similarity_mae": {
+      "value": 0.136074,
+      "group": "Change",
+      "direction": "lower",
+      "description": "Mean absolute error between predicted and observed ROUGE-L similarity to the 2024 response."
+    },
+    "prediction_source_similarity_mean": {
+      "value": 0.175191,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Mean ROUGE-L similarity between predictions and 2024 responses."
+    },
+    "observed_source_similarity_mean": {
+      "value": 0.225683,
+      "group": "Change",
+      "direction": "descriptive",
+      "description": "Mean ROUGE-L similarity between follow-up and 2024 responses."
+    }
+  },
+  "paired_comparisons": {
+    "trajectory_retrieval_vs_stable_projection": {
+      "normalized_exact_match_rate": {
+        "trajectory_retrieval_mean": 0.0,
+        "stable_projection_mean": 0.0,
+        "effect_definition": "trajectory_retrieval_minus_stable_projection",
+        "mean_effect_positive_favors_trajectory_retrieval": 0.0,
+        "paired_case_bootstrap_95_ci_low": 0.0,
+        "paired_case_bootstrap_95_ci_high": 0.0,
+        "trajectory_retrieval_case_wins": 0,
+        "case_ties": 50,
+        "trajectory_retrieval_case_losses": 0
+      },
+      "normalized_edit_similarity": {
+        "trajectory_retrieval_mean": 0.25336,
+        "stable_projection_mean": 0.298061,
+        "effect_definition": "trajectory_retrieval_minus_stable_projection",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.044701,
+        "paired_case_bootstrap_95_ci_low": -0.072824,
+        "paired_case_bootstrap_95_ci_high": -0.018705,
+        "trajectory_retrieval_case_wins": 20,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 30
+      },
+      "token_jaccard_similarity": {
+        "trajectory_retrieval_mean": 0.080427,
+        "stable_projection_mean": 0.142768,
+        "effect_definition": "trajectory_retrieval_minus_stable_projection",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.062342,
+        "paired_case_bootstrap_95_ci_low": -0.081759,
+        "paired_case_bootstrap_95_ci_high": -0.043776,
+        "trajectory_retrieval_case_wins": 10,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 40
+      },
+      "token_overlap_f1": {
+        "trajectory_retrieval_mean": 0.194693,
+        "stable_projection_mean": 0.307444,
+        "effect_definition": "trajectory_retrieval_minus_stable_projection",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.112751,
+        "paired_case_bootstrap_95_ci_low": -0.170815,
+        "paired_case_bootstrap_95_ci_high": -0.058175,
+        "trajectory_retrieval_case_wins": 12,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 38
+      },
+      "rouge_l_f1": {
+        "trajectory_retrieval_mean": 0.150924,
+        "stable_projection_mean": 0.227552,
+        "effect_definition": "trajectory_retrieval_minus_stable_projection",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.076628,
+        "paired_case_bootstrap_95_ci_low": -0.126464,
+        "paired_case_bootstrap_95_ci_high": -0.030063,
+        "trajectory_retrieval_case_wins": 14,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 36
+      },
+      "character_ngram_f1": {
+        "trajectory_retrieval_mean": 0.21266,
+        "stable_projection_mean": 0.292293,
+        "effect_definition": "trajectory_retrieval_minus_stable_projection",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.079633,
+        "paired_case_bootstrap_95_ci_low": -0.112019,
+        "paired_case_bootstrap_95_ci_high": -0.049794,
+        "trajectory_retrieval_case_wins": 15,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 35
+      },
+      "word_count_mae": {
+        "trajectory_retrieval_mean": 59.64,
+        "stable_projection_mean": 41.64,
+        "effect_definition": "stable_projection_error_minus_trajectory_retrieval_error",
+        "mean_effect_positive_favors_trajectory_retrieval": -18.0,
+        "paired_case_bootstrap_95_ci_low": -30.1205,
+        "paired_case_bootstrap_95_ci_high": -6.16,
+        "trajectory_retrieval_case_wins": 18,
+        "case_ties": 1,
+        "trajectory_retrieval_case_losses": 31
+      },
+      "line_count_mae": {
+        "trajectory_retrieval_mean": 8.34,
+        "stable_projection_mean": 9.76,
+        "effect_definition": "stable_projection_error_minus_trajectory_retrieval_error",
+        "mean_effect_positive_favors_trajectory_retrieval": 1.42,
+        "paired_case_bootstrap_95_ci_low": -1.86,
+        "paired_case_bootstrap_95_ci_high": 4.64,
+        "trajectory_retrieval_case_wins": 26,
+        "case_ties": 5,
+        "trajectory_retrieval_case_losses": 19
+      },
+      "source_similarity_mae": {
+        "trajectory_retrieval_mean": 0.136074,
+        "stable_projection_mean": 0.678215,
+        "effect_definition": "stable_projection_error_minus_trajectory_retrieval_error",
+        "mean_effect_positive_favors_trajectory_retrieval": 0.542141,
+        "paired_case_bootstrap_95_ci_low": 0.463332,
+        "paired_case_bootstrap_95_ci_high": 0.616781,
+        "trajectory_retrieval_case_wins": 48,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 2
+      }
+    },
+    "trajectory_retrieval_vs_repeat_2024": {
+      "normalized_exact_match_rate": {
+        "trajectory_retrieval_mean": 0.0,
+        "repeat_2024_mean": 0.0,
+        "effect_definition": "trajectory_retrieval_minus_repeat_2024",
+        "mean_effect_positive_favors_trajectory_retrieval": 0.0,
+        "paired_case_bootstrap_95_ci_low": 0.0,
+        "paired_case_bootstrap_95_ci_high": 0.0,
+        "trajectory_retrieval_case_wins": 0,
+        "case_ties": 50,
+        "trajectory_retrieval_case_losses": 0
+      },
+      "normalized_edit_similarity": {
+        "trajectory_retrieval_mean": 0.25336,
+        "repeat_2024_mean": 0.291966,
+        "effect_definition": "trajectory_retrieval_minus_repeat_2024",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.038606,
+        "paired_case_bootstrap_95_ci_low": -0.067934,
+        "paired_case_bootstrap_95_ci_high": -0.011835,
+        "trajectory_retrieval_case_wins": 20,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 30
+      },
+      "token_jaccard_similarity": {
+        "trajectory_retrieval_mean": 0.080427,
+        "repeat_2024_mean": 0.14193,
+        "effect_definition": "trajectory_retrieval_minus_repeat_2024",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.061503,
+        "paired_case_bootstrap_95_ci_low": -0.080922,
+        "paired_case_bootstrap_95_ci_high": -0.042877,
+        "trajectory_retrieval_case_wins": 9,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 41
+      },
+      "token_overlap_f1": {
+        "trajectory_retrieval_mean": 0.194693,
+        "repeat_2024_mean": 0.312202,
+        "effect_definition": "trajectory_retrieval_minus_repeat_2024",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.11751,
+        "paired_case_bootstrap_95_ci_low": -0.175842,
+        "paired_case_bootstrap_95_ci_high": -0.062268,
+        "trajectory_retrieval_case_wins": 11,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 39
+      },
+      "rouge_l_f1": {
+        "trajectory_retrieval_mean": 0.150924,
+        "repeat_2024_mean": 0.225683,
+        "effect_definition": "trajectory_retrieval_minus_repeat_2024",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.074759,
+        "paired_case_bootstrap_95_ci_low": -0.124186,
+        "paired_case_bootstrap_95_ci_high": -0.028407,
+        "trajectory_retrieval_case_wins": 13,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 37
+      },
+      "character_ngram_f1": {
+        "trajectory_retrieval_mean": 0.21266,
+        "repeat_2024_mean": 0.296534,
+        "effect_definition": "trajectory_retrieval_minus_repeat_2024",
+        "mean_effect_positive_favors_trajectory_retrieval": -0.083873,
+        "paired_case_bootstrap_95_ci_low": -0.118106,
+        "paired_case_bootstrap_95_ci_high": -0.052377,
+        "trajectory_retrieval_case_wins": 12,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 38
+      },
+      "word_count_mae": {
+        "trajectory_retrieval_mean": 59.64,
+        "repeat_2024_mean": 56.68,
+        "effect_definition": "repeat_2024_error_minus_trajectory_retrieval_error",
+        "mean_effect_positive_favors_trajectory_retrieval": -2.96,
+        "paired_case_bootstrap_95_ci_low": -19.3,
+        "paired_case_bootstrap_95_ci_high": 14.6605,
+        "trajectory_retrieval_case_wins": 21,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 29
+      },
+      "line_count_mae": {
+        "trajectory_retrieval_mean": 8.34,
+        "repeat_2024_mean": 6.8,
+        "effect_definition": "repeat_2024_error_minus_trajectory_retrieval_error",
+        "mean_effect_positive_favors_trajectory_retrieval": -1.54,
+        "paired_case_bootstrap_95_ci_low": -4.44,
+        "paired_case_bootstrap_95_ci_high": 1.34,
+        "trajectory_retrieval_case_wins": 13,
+        "case_ties": 19,
+        "trajectory_retrieval_case_losses": 18
+      },
+      "source_similarity_mae": {
+        "trajectory_retrieval_mean": 0.136074,
+        "repeat_2024_mean": 0.774317,
+        "effect_definition": "repeat_2024_error_minus_trajectory_retrieval_error",
+        "mean_effect_positive_favors_trajectory_retrieval": 0.638243,
+        "paired_case_bootstrap_95_ci_low": 0.559132,
+        "paired_case_bootstrap_95_ci_high": 0.709179,
+        "trajectory_retrieval_case_wins": 48,
+        "case_ties": 0,
+        "trajectory_retrieval_case_losses": 2
+      }
+    }
+  },
+  "novelty_diagnostics": {
+    "observed_follow_up": {
+      "unique_token_novelty": {
+        "mean": 0.731727,
+        "median": 0.739048,
+        "case_bootstrap_95_ci_low": 0.69803,
+        "case_bootstrap_95_ci_high": 0.765127,
+        "minimum": 0.48,
+        "maximum": 0.956522
+      },
+      "token_occurrence_novelty": {
+        "mean": 0.650621,
+        "median": 0.651845,
+        "case_bootstrap_95_ci_low": 0.592847,
+        "case_bootstrap_95_ci_high": 0.706832,
+        "minimum": 0.202247,
+        "maximum": 0.969697
+      }
+    },
+    "trajectory_retrieval": {
+      "unique_token_novelty": {
+        "mean": 0.801727,
+        "median": 0.815595,
+        "case_bootstrap_95_ci_low": 0.762444,
+        "case_bootstrap_95_ci_high": 0.836333,
+        "minimum": 0.25,
+        "maximum": 1.0
+      },
+      "token_occurrence_novelty": {
+        "mean": 0.727677,
+        "median": 0.751543,
+        "case_bootstrap_95_ci_low": 0.676739,
+        "case_bootstrap_95_ci_high": 0.776396,
+        "minimum": 0.25,
+        "maximum": 1.0
+      },
+      "unique_token_novelty_mae": 0.139032,
+      "novel_type_precision": {
+        "mean": 0.070466,
+        "median": 0.04878,
+        "case_bootstrap_95_ci_low": 0.052133,
+        "case_bootstrap_95_ci_high": 0.090859,
+        "minimum": 0.0,
+        "maximum": 0.333333
+      },
+      "novel_type_recall": {
+        "mean": 0.085362,
+        "median": 0.068421,
+        "case_bootstrap_95_ci_low": 0.065937,
+        "case_bootstrap_95_ci_high": 0.106057,
+        "minimum": 0.0,
+        "maximum": 0.285714
+      },
+      "novel_type_f1": {
+        "mean": 0.067109,
+        "median": 0.063494,
+        "case_bootstrap_95_ci_low": 0.052917,
+        "case_bootstrap_95_ci_high": 0.082272,
+        "minimum": 0.0,
+        "maximum": 0.202247
+      }
+    },
+    "stable_projection": {
+      "unique_token_novelty": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "token_occurrence_novelty": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "unique_token_novelty_mae": 0.731727,
+      "novel_type_precision": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "novel_type_recall": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "novel_type_f1": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      }
+    },
+    "repeat_2024": {
+      "unique_token_novelty": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "token_occurrence_novelty": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "unique_token_novelty_mae": 0.731727,
+      "novel_type_precision": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "novel_type_recall": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      },
+      "novel_type_f1": {
+        "mean": 0.0,
+        "median": 0.0,
+        "case_bootstrap_95_ci_low": 0.0,
+        "case_bootstrap_95_ci_high": 0.0,
+        "minimum": 0.0,
+        "maximum": 0.0
+      }
+    }
+  },
+  "claim_boundary": "Development labels were examined in prior iterations. This locked comparison is exploratory and is not a private-test result."
+}

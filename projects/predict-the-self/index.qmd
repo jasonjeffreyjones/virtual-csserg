@@ -19,23 +19,32 @@ and ties one. Paired case-bootstrap intervals span zero for every nonzero
 agreement difference. Word-count and source-similarity error improve more
 consistently, while line-count error worsens. Most importantly, an average
 73.2% of distinct follow-up token types are absent from the same person's
-earlier response. Selecting supposedly enduring words remains far beyond an
-adequate account of how people rewrite their self-descriptions.
+earlier response.
+
+A new locked exploratory comparison asks whether borrowing the complete
+follow-up of the most similar training participant can supply that missing
+novelty. The retrieval forecast nearly matches the amount of change: 80.2% of
+its unique token types are new to the focal person's source, versus 73.2% in
+the observed follow-up. Yet only 7.0% of its introduced token types are correct
+on an average case, and every non-exact agreement metric is lower than for the
+stable projection. Predicting that language will change remains far beyond
+predicting which new identity signifiers this person will express.
 
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
 the challenge for a new reader, defines the ipseological prediction target,
-documents the frozen benchmark and extractive method, reports the complete
-development scorecard, quantifies paired case uncertainty and lexical novelty,
-and links every public reproducibility artifact.
+documents the frozen benchmark and two transparent methods, reports the
+complete development scorecard, quantifies paired case uncertainty and lexical
+novelty, and links every public reproducibility artifact.
 
 The report distinguishes three claims that should not be collapsed:
 
 1. **Submission validity:** all 81 required IDs have nonblank predictions in
    the required order.
-2. **Public development evidence:** the method has a mixed scorecard relative
-   to the repeat-2024 baseline and was selected using those same public cases.
+2. **Public development evidence:** the stable method has a mixed scorecard
+   relative to repeat-2024; retrieval is exploratory because development
+   labels were already known despite its within-iteration analysis lock.
 3. **Private test performance:** unknown until the organizer evaluates the
    frozen artifact; no result is inferred from validation or development data.
 

@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and development results"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-17"
+date: "2026-09-18"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -21,6 +21,11 @@ to which development cases are included, while improvements in word-count and
 source-similarity error are more stable. More fundamentally, 73.2% of distinct
 tokens in an average observed follow-up did not appear in that person's
 earlier response, exposing a severe limit for any strictly extractive forecast.
+A locked exploratory baseline retrieves the complete follow-up of the most
+similar training participant. It approximates how much new vocabulary will
+appear but not which vocabulary: predicted unique-token novelty is 80.2%
+versus 73.2% observed, while mean novel-token precision is 7.0%, recall is
+8.5%, and agreement is lower than both continuity baselines.
 
 # Findings at a glance {#findings}
 
@@ -41,6 +46,9 @@ earlier response, exposing a severe limit for any strictly extractive forecast.
   0.903898, compared with 0.225683 for observed follow-ups.
 - On average, 73.2% of follow-up unique token types are new relative to the
   earlier response and therefore unavailable to a strictly extractive method.
+- Matched-trajectory retrieval approximates the volume of lexical novelty and
+  reduces source-similarity error, but its retrieved new signifiers rarely
+  match the focal person's observed new signifiers.
 
 # Introduction {#introduction}
 
@@ -127,6 +135,41 @@ oracles use each observed follow-up to select the best source token set, bag
 of words, or source-order subsequence. They describe extractive ceilings, not
 prospective prediction performance.
 
+## Locked matched-trajectory retrieval
+
+A second method was locked before its predictions were generated in this
+iteration. This is a prospective analysis lock, not a preregistration: the
+development labels and aggregate stable-projection results were examined in
+earlier work, so the comparison remains exploratory. The complete plan was
+fixed at SHA-256
+`86b2ddfe775773e1964beeefbac5479d88f6c46cd3385bf3a992fc7ae64e9c83`.
+
+Four one-nearest-neighbor variants were first compared by leave-one-out
+prediction among the 150 training pairs. TF-IDF cosine over text plus 2024
+demographics had the highest training token-overlap F1 (`0.1925`) and was
+selected by that declared lexical criterion. For each development query, the
+locked method:
+
+1. represents case-folded response tokens and field-qualified, nonblank 2024
+   demographic values with smoothed TF-IDF weights;
+2. selects the training source with greatest cosine similarity, breaking ties
+   by training-file order; and
+3. uses that neighbor's observed follow-up verbatim as the prediction.
+
+The baseline is non-extractive with respect to the focal person's earlier
+response, but it retrieves rather than synthesizes. It deliberately tests
+whether a prior person's trajectory supplies the right kind and amount of new
+content. It generated development predictions only and did not create or alter
+a test submission. The copied training text is public benchmark data licensed
+CC BY-NC-SA 4.0 and is presented only as an auditable baseline, not as a
+factual description of the focal participant.
+
+The same complete scorecard is reported below. Directional metrics were also
+compared within person using 20,000 paired case-bootstrap resamples (seed
+`20260918`). Additional diagnostics compare predicted and observed novelty and
+measure precision, recall, and F1 for predicted novel token types. As above,
+the intervals describe development-case composition rather than a population.
+
 # Results {#results}
 
 ## Aggregate scorecard
@@ -135,23 +178,23 @@ The authoritative shared evaluator reports fifteen measures in three groups.
 The table reports every measure; arrows indicate the evaluator's direction
 where one exists.
 
-| Group | Metric | Stable projection | Repeat 2024 | Direction |
-| --- | --- | ---: | ---: | --- |
-| Agreement | Normalized exact-match rate | 0.000000 | 0.000000 | Higher |
-| Agreement | Normalized edit similarity | 0.298061 | 0.291966 | Higher |
-| Agreement | Token Jaccard similarity | 0.142768 | 0.141930 | Higher |
-| Agreement | Token-overlap F1 | 0.307444 | 0.312202 | Higher |
-| Agreement | ROUGE-L F1 | 0.227552 | 0.225683 | Higher |
-| Agreement | Character n-gram F1 | 0.292293 | 0.296534 | Higher |
-| Form | Word-count MAE | 41.640000 | 56.680000 | Lower |
-| Form | Line-count MAE | 9.760000 | 6.800000 | Lower |
-| Form | Mean predicted word count | 77.320000 | 108.040000 | Descriptive |
-| Form | Mean reference word count | 94.760000 | 94.760000 | Descriptive |
-| Change | Prediction repeat-2024 rate | 0.280000 | 1.000000 | Descriptive |
-| Change | Observed repeat-2024 rate | 0.000000 | 0.000000 | Descriptive |
-| Change | Source-similarity MAE | 0.678215 | 0.774317 | Lower |
-| Change | Mean prediction-to-source similarity | 0.903898 | 1.000000 | Descriptive |
-| Change | Mean observed follow-up-to-source similarity | 0.225683 | 0.225683 | Descriptive |
+| Group | Metric | Stable projection | Trajectory retrieval | Repeat 2024 | Direction |
+| --- | --- | ---: | ---: | ---: | --- |
+| Agreement | Normalized exact-match rate | 0.000000 | 0.000000 | 0.000000 | Higher |
+| Agreement | Normalized edit similarity | 0.298061 | 0.253360 | 0.291966 | Higher |
+| Agreement | Token Jaccard similarity | 0.142768 | 0.080427 | 0.141930 | Higher |
+| Agreement | Token-overlap F1 | 0.307444 | 0.194693 | 0.312202 | Higher |
+| Agreement | ROUGE-L F1 | 0.227552 | 0.150924 | 0.225683 | Higher |
+| Agreement | Character n-gram F1 | 0.292293 | 0.212660 | 0.296534 | Higher |
+| Form | Word-count MAE | 41.640000 | 59.640000 | 56.680000 | Lower |
+| Form | Line-count MAE | 9.760000 | 8.340000 | 6.800000 | Lower |
+| Form | Mean predicted word count | 77.320000 | 99.280000 | 108.040000 | Descriptive |
+| Form | Mean reference word count | 94.760000 | 94.760000 | 94.760000 | Descriptive |
+| Change | Prediction repeat-2024 rate | 0.280000 | 0.000000 | 1.000000 | Descriptive |
+| Change | Observed repeat-2024 rate | 0.000000 | 0.000000 | 0.000000 | Descriptive |
+| Change | Source-similarity MAE | 0.678215 | 0.136074 | 0.774317 | Lower |
+| Change | Mean prediction-to-source similarity | 0.903898 | 0.175191 | 1.000000 | Descriptive |
+| Change | Mean observed follow-up-to-source similarity | 0.225683 | 0.225683 | 0.225683 | Descriptive |
 
 The projection improves three of six agreement measures, worsens two, and ties
 on exact match. Its clearest gains concern form and amount of change:
@@ -159,6 +202,13 @@ word-count MAE falls by 15.04 words, and source-similarity MAE falls by 0.096102
 But the mean predicted source similarity remains 0.678215 above the observed
 mean. Extracting supposedly enduring signifiers does not come close to
 reproducing how radically people rewrite their self-descriptions.
+
+Trajectory retrieval creates the opposite pattern. Its mean source similarity
+(`0.175191`) is close to the observed `0.225683`, so source-similarity MAE falls
+to `0.136074`. But every non-exact agreement metric is lower than both
+continuity baselines. Generating a plausibly different response is therefore
+not equivalent to predicting the content of the focal person's future
+self-description.
 
 ## Paired development-case pattern {#paired-pattern}
 
@@ -203,6 +253,39 @@ These comparisons reveal two failures at once: the current extractor does not
 reach the retrospective extractive ceiling, and no extractor can generate the
 many identity signifiers expressed only at follow-up.
 
+## Retrieval predicts novelty volume, not novel content {#trajectory-retrieval}
+
+Positive paired effects favor trajectory retrieval. For errors, the effect is
+stable-projection error minus retrieval error. Retrieval loses agreement and
+word-count accuracy, modestly improves line-count error with an interval that
+spans zero, and dramatically improves source-similarity error.
+
+| Metric | Retrieval | Stable projection | Paired effect | Paired case-bootstrap 95% interval |
+| --- | ---: | ---: | ---: | ---: |
+| Normalized exact match | 0.000000 | 0.000000 | 0.000000 | 0.000000 to 0.000000 |
+| Normalized edit similarity | 0.253360 | 0.298061 | −0.044701 | −0.072824 to −0.018705 |
+| Token Jaccard similarity | 0.080427 | 0.142768 | −0.062342 | −0.081759 to −0.043776 |
+| Token-overlap F1 | 0.194693 | 0.307444 | −0.112751 | −0.170815 to −0.058175 |
+| ROUGE-L F1 | 0.150924 | 0.227552 | −0.076628 | −0.126464 to −0.030063 |
+| Character n-gram F1 | 0.212660 | 0.292293 | −0.079633 | −0.112019 to −0.049794 |
+| Word-count MAE | 59.640000 | 41.640000 | −18.000000 | −30.120500 to −6.160000 |
+| Line-count MAE | 8.340000 | 9.760000 | +1.420000 | −1.860000 to +4.640000 |
+| Source-similarity MAE | 0.136074 | 0.678215 | +0.542141 | +0.463332 to +0.616781 |
+
+The locked novelty criterion tells the same story more precisely. Retrieval's
+mean predicted unique-token novelty (`0.801727`) is much closer to the observed
+mean (`0.731727`) than either stable projection or repeat-2024 (`0` for both),
+so it passes the plan's novelty-volume criterion. Its case-level novelty MAE is
+`0.139032`. Occurrence novelty is also close in aggregate (`0.727677` predicted
+versus `0.650621` observed).
+
+However, novelty volume is not novel-content recovery. Among token types that
+retrieval introduces beyond the focal source, mean precision against the
+observed new token types is only `0.070466` (case-bootstrap interval
+`0.052133`–`0.090859`), recall is `0.085362` (`0.065937`–`0.106057`), and F1 is
+`0.067109` (`0.052917`–`0.082272`). Retrieval knows that a future response will
+look different, but mostly borrows the wrong person's differences.
+
 ## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
@@ -227,28 +310,50 @@ restricted to it. A next-generation model needs a mechanism for both deletion
 and creation, evaluated without sacrificing the interpretability of these
 paired diagnostics.
 
+Matched-trajectory retrieval sharpens this inference. It supplies deletion and
+creation in approximately the observed proportions, but the transferred novel
+content is rarely person-correct. The problem is not merely calibrating how
+different the next self-description will be. A useful forecast must condition
+new signifiers on the individual without collapsing back into verbatim
+continuity.
+
 ## Reproducibility {#reproducibility}
 
 The complete open materials are:
 
+- [`ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`](ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md)
+  — pre-prediction method and evaluation lock;
 - [`analysis/analyze_dev_diagnostics.py`](analysis/analyze_dev_diagnostics.py)
   — hash-guarded paired bootstrap and extractive-limit analysis;
+- [`analysis/analyze_trajectory_retrieval.py`](analysis/analyze_trajectory_retrieval.py)
+  — complete paired and novelty comparison under the lock;
 - [`analysis/stable_signifier_projection.py`](analysis/stable_signifier_projection.py)
   — standard-library generator;
+- [`analysis/trajectory_retrieval.py`](analysis/trajectory_retrieval.py)
+  — standard-library matched-trajectory generator;
 - [`results/stable_signifier_dev_diagnostics.json`](results/stable_signifier_dev_diagnostics.json)
   — complete machine-readable post hoc diagnostic results;
 - [`results/stable_signifier_dev_predictions.csv`](results/stable_signifier_dev_predictions.csv)
   — all 50 public development predictions;
 - [`results/stable_signifier_dev_scorecard.json`](results/stable_signifier_dev_scorecard.json)
   — complete machine-readable scorecard;
+- [`results/trajectory_retrieval_dev_analysis.json`](results/trajectory_retrieval_dev_analysis.json)
+  — complete locked paired comparison and novelty diagnostics;
+- [`results/trajectory_retrieval_dev_audit.csv`](results/trajectory_retrieval_dev_audit.csv)
+  — development-to-training match IDs and cosine similarities;
+- [`results/trajectory_retrieval_dev_predictions.csv`](results/trajectory_retrieval_dev_predictions.csv)
+  — all 50 retrieved development forecasts;
+- [`results/trajectory_retrieval_dev_scorecard.json`](results/trajectory_retrieval_dev_scorecard.json)
+  — complete official retrieval scorecard;
 - [`submissions/aleph_initial_alpha_submission.csv`](submissions/aleph_initial_alpha_submission.csv)
   — frozen 81-case test artifact;
 - [`submissions/aleph_initial_alpha_method.md`](submissions/aleph_initial_alpha_method.md)
   — submission-ready method card.
 
-The generator uses Python 3.9.23 and only the standard library. The challenge's
-17 public tests passed before generation. Regenerating the development and
-test artifacts reproduced their hashes exactly.
+Both generators use only the Python standard library. The challenge's 17
+public tests passed before the stable artifact was generated. Regenerating the
+stable development and test artifacts reproduced their hashes exactly; the
+retrieval pipeline separately hash-guards its inputs and fixed analysis plan.
 
 ## Sources {#sources}
 
@@ -271,6 +376,12 @@ and common wording can make a signifier look stable. The line splitter also
 turns some prose sentences into separate output lines, worsening line-count
 error. Finally, public-development-guided selection can overfit a 50-case set.
 
+Trajectory retrieval adds different limitations. It transfers another
+participant's public response rather than generating a person-specific future,
+and demographic similarity does not establish that identity change follows
+demographic categories. Its within-iteration lock reduces new analytic
+flexibility but cannot make previously inspected development data unseen.
+
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.
 Its intervals describe sensitivity to the composition of these 50 cases, not
@@ -280,7 +391,7 @@ or achievable prospective scores.
 
 The immediate next step is to submit the two prepared artifacts to the
 challenge organizer and add the complete private test scorecard, unchanged, to
-this report. A later iteration can preregister a generative or other
-non-extractive method that targets genuinely new signifiers, without reusing
-test feedback for tuning, and apply the same paired diagnostics to its
-development results.
+this report. A later method should synthesize rather than copy novel content,
+lock its design before any additional development comparison, avoid private
+test feedback for tuning, and apply the same quantity-versus-content
+diagnostics.

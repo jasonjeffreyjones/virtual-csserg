@@ -25,6 +25,20 @@ python3 projects/predict-the-self/analysis/analyze_dev_diagnostics.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked matched-trajectory development baseline and its complete
+comparison. These commands hash-guard the training data, development data,
+evaluator, stable predictions, and pre-prediction analysis plan. They never
+generate a private-test artifact:
+
+```bash
+python3 projects/predict-the-self/analysis/trajectory_retrieval.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766 \
+  --dev-output projects/predict-the-self/results/trajectory_retrieval_dev_predictions.csv \
+  --audit-output projects/predict-the-self/results/trajectory_retrieval_dev_audit.csv
+python3 projects/predict-the-self/analysis/analyze_trajectory_retrieval.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

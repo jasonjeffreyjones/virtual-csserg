@@ -7,7 +7,7 @@
   <title>Predict the Self — Evidence brief</title>
   <link rel="icon" href="../../images/favicon.ico" sizes="any">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../assets/styles.css?v=20260917">
+  <link rel="stylesheet" href="../../assets/styles.css?v=20260918">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -40,28 +40,30 @@
       <div class="continuity-panel">
         <div>
           <p class="section-number">Continuity and novelty diagnostics</p>
-          <h2>Forecasts stay too close to the past</h2>
-          <p>Source similarity uses ROUGE-L; novelty is the share of future unique token types absent from the source. Both use a 0–1 scale.</p>
+          <h2>Change is easier than the person&rsquo;s change</h2>
+          <p>Source similarity uses ROUGE-L; novelty is the share of predicted or observed unique token types absent from the focal source. All use a 0–1 scale.</p>
         </div>
-        <div class="continuity-bars" aria-label="Mean prediction-to-source similarity is 0.903898; mean observed follow-up-to-source similarity is 0.225683; mean future unique-token novelty is 0.731727.">
-          <div><span>Projection</span><span class="continuity-track" aria-hidden="true"><span class="projection-bar"></span></span><strong>0.903898</strong></div>
-          <div><span>Observed follow-up</span><span class="continuity-track" aria-hidden="true"><span class="observed-bar"></span></span><strong>0.225683</strong></div>
-          <div><span>Future token novelty</span><span class="continuity-track" aria-hidden="true"><span class="novelty-bar"></span></span><strong>0.731727</strong></div>
+        <div class="continuity-bars" aria-label="Mean stable-projection source similarity is 0.903898; retrieval source similarity is 0.175191; observed follow-up source similarity is 0.225683; retrieval unique-token novelty is 0.801727; observed unique-token novelty is 0.731727.">
+          <div><span>Stable similarity</span><span class="continuity-track" aria-hidden="true"><span class="projection-bar"></span></span><strong>0.903898</strong></div>
+          <div><span>Retrieval similarity</span><span class="continuity-track" aria-hidden="true"><span class="retrieval-similarity-bar"></span></span><strong>0.175191</strong></div>
+          <div><span>Observed similarity</span><span class="continuity-track" aria-hidden="true"><span class="observed-bar"></span></span><strong>0.225683</strong></div>
+          <div><span>Retrieval novelty</span><span class="continuity-track" aria-hidden="true"><span class="retrieval-novelty-bar"></span></span><strong>0.801727</strong></div>
+          <div><span>Observed novelty</span><span class="continuity-track" aria-hidden="true"><span class="novelty-bar"></span></span><strong>0.731727</strong></div>
         </div>
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Development agreement comparison" tabindex="0">
         <table class="scorecard-table">
-          <thead><tr><th scope="col">Agreement metric</th><th scope="col">Projection</th><th scope="col">Repeat 2024</th><th scope="col">Difference</th><th scope="col">Paired case-bootstrap 95% interval</th></tr></thead>
+          <thead><tr><th scope="col">Agreement metric</th><th scope="col">Stable projection</th><th scope="col">Trajectory retrieval</th><th scope="col">Repeat 2024</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Edit similarity</th><td>0.298061</td><td>0.291966</td><td class="metric-better">+0.006095</td><td>−0.001701 to +0.013890</td></tr>
-            <tr><th scope="row">Token Jaccard</th><td>0.142768</td><td>0.141930</td><td class="metric-better">+0.000838</td><td>−0.002383 to +0.004097</td></tr>
-            <tr><th scope="row">ROUGE-L F1</th><td>0.227552</td><td>0.225683</td><td class="metric-better">+0.001869</td><td>−0.002268 to +0.005755</td></tr>
-            <tr><th scope="row">Token-overlap F1</th><td>0.307444</td><td>0.312202</td><td class="metric-worse">−0.004759</td><td>−0.012300 to +0.002429</td></tr>
-            <tr><th scope="row">Character n-gram F1</th><td>0.292293</td><td>0.296534</td><td class="metric-worse">−0.004241</td><td>−0.012240 to +0.003618</td></tr>
+            <tr><th scope="row">Edit similarity</th><td>0.298061</td><td class="metric-worse">0.253360</td><td>0.291966</td></tr>
+            <tr><th scope="row">Token Jaccard</th><td>0.142768</td><td class="metric-worse">0.080427</td><td>0.141930</td></tr>
+            <tr><th scope="row">Token-overlap F1</th><td>0.307444</td><td class="metric-worse">0.194693</td><td>0.312202</td></tr>
+            <tr><th scope="row">ROUGE-L F1</th><td>0.227552</td><td class="metric-worse">0.150924</td><td>0.225683</td></tr>
+            <tr><th scope="row">Character n-gram F1</th><td>0.292293</td><td class="metric-worse">0.212660</td><td>0.296534</td></tr>
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Continuity, lexical novelty, and the complete directional pattern for nonzero text-agreement differences on 50 public development cases. Every agreement interval spans zero. Development data informed model selection; the post hoc intervals describe case-composition sensitivity, not population generalization; the benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. Continuity, lexical novelty, and text agreement on 50 public development cases. Retrieval approximates observed change volume, but every non-exact agreement score is lower than both continuity baselines; its mean novel-token precision is 0.070466. The retrieval comparison was locked before generation but remains exploratory because development labels were previously known. The benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -80,7 +82,7 @@
           <p><strong>The extractive method learns stable-looking language.</strong> Training-only retention estimates rank source units, while a training-only regression controls forecast length. <a href="report/report.html#method">Review the method</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Agreement differences are small and case-sensitive.</strong> Three measures improve, two worsen, and exact match ties, but every nonzero agreement interval spans zero. <a href="report/report.html#paired-pattern">Inspect paired results</a>.</p>
+          <p><strong>Retrieval predicts change volume, not person-specific content.</strong> Its novelty rate is near the observed rate, but introduced token precision is 7.0% and all non-exact agreement measures fall. <a href="report/report.html#trajectory-retrieval">Compare the forecasts</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>

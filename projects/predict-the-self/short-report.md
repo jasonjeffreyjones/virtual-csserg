@@ -12,6 +12,8 @@ On 50 public development cases, the projection improves normalized edit similari
 
 The most important result is a failure of continuity modeling. Mean prediction-to-source ROUGE-L is 0.903898, while mean observed follow-up-to-source ROUGE-L is 0.225683. An average 73.1727% of distinct follow-up token types are absent from the same person's earlier response. Even an extraction rule designed to favor enduring language expects much more textual stability than participants display and cannot generate most newly expressed vocabulary.
 
+A locked exploratory retrieval baseline supplies new language by borrowing the complete follow-up of the most similar training participant. It nearly matches the volume of change: 80.1727% of its unique token types are new to the focal source, versus 73.1727% observed. But only 7.0466% of its introduced token types are correct on an average case; novel-token recall is 8.5362% and F1 is 6.7109%. Predicting that language will change is much easier than predicting which new identity signifiers this person will express.
+
 ## Question and benchmark
 
 The larger project asks how predictable human lives are. Its first tractable task is Dr. Jason Jeffrey Jones' Predict Future Selves challenge: predict later personally expressed identity from an earlier self-description. The target is an individual's later expression of identity, not a latent true self or a complete life outcome.
@@ -30,23 +32,31 @@ Public development data were used to choose between fixed extraction fractions a
 
 After predictions were frozen, a post hoc diagnostic resampled the 50 development cases in pairs 20,000 times with fixed seed 20260917. Its percentile intervals describe sensitivity to development-case composition, not generalization to a population. Separate lexical diagnostics measured future vocabulary unavailable in the source and three unattainable oracle extractive ceilings that use the observed future.
 
+## Matched-trajectory retrieval
+
+Before generating a second set of development predictions, the Project locked one deterministic method and analysis plan. Four one-nearest-neighbor rules were compared only by leave-one-out training prediction; text-plus-demographic TF-IDF retrieval had the highest training token-overlap F1 and was selected by that declared criterion. Each development case was matched to the most similar 2024 training case, then assigned that neighbor's public follow-up verbatim. The method generated no test submission.
+
+This is an analysis lock, not a preregistration: development labels had been inspected in prior iterations. The paired comparison is exploratory. It uses 20,000 case-bootstrap resamples with seed 20260918 and reports the complete shared scorecard without a composite.
+
 ## Complete result pattern
 
 The projection improves three of six text-agreement measures, worsens two, and ties exact match. Its word-count mean absolute error falls from 56.68 to 41.64 words, a +15.04 error reduction with paired case-bootstrap interval +1.18 to +32.36. Source-similarity error falls from 0.774317 to 0.678215; its +0.096102 reduction has interval +0.066064 to +0.129348. Line-count error rises from 6.80 to 9.76; its −2.96 error reduction has interval −5.54 to −0.42. These mixed directions are why no single headline score summarizes the method.
 
 Across cases, 73.1727% of distinct future token types are new relative to the source (case-bootstrap interval 69.7982%–76.5607%), and 65.0621% of future token occurrences are unavailable when source counts are respected (59.2663%–70.6149%). Even oracles that inspect the follow-up reach mean ceilings of only 0.268273 unique-token Jaccard, 0.484206 bag-of-words F1, and 0.374081 source-order subsequence ROUGE-L F1. These are retrospective limits, not achievable prospective results.
 
+Retrieval's mean prediction-to-source similarity is 0.175191, close to the observed 0.225683, and source-similarity MAE falls to 0.136074. But agreement falls sharply: token-overlap F1 is 0.194693, compared with 0.307444 for stable projection and 0.312202 for repeat-2024; retrieval's paired difference from stable projection is −0.112751 (interval −0.170815 to −0.058175). All other non-exact agreement measures are also lower. Retrieval calibrates the amount of novelty while mostly transferring the wrong person's novel content.
+
 The submission contains one nonblank prediction for every required test ID in order. Its SHA-256 is a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3. Only the organizer can run the private evaluator. Validation establishes artifact shape, not predictive performance.
 
 ## Interpretation and limits
 
-Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. The response splitter can also turn prose into too many lines. Repeated tuning on 50 development cases would risk overfitting, and the post hoc bootstrap cannot repair model-selection reuse or the cohort's nonprobability sampling.
+Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. Repeated tuning on 50 development cases would risk overfitting, and neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
 
-The next research step is to submit the frozen CSV and method card, publish the organizer's complete private scorecard unchanged, and preregister development-data use before comparing a non-extractive or generative method.
+The next research step is to submit the frozen CSV and method card and publish the organizer's complete private scorecard unchanged. A later method should synthesize rather than copy new signifiers, lock its design before another development comparison, and avoid private test feedback for tuning.
 
 ## Reproducibility and references
 
-The public repository contains the deterministic standard-library generator, hash-guarded diagnostic script, 50 development predictions, complete machine-readable scorecard and diagnostics, frozen 81-case test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
+The public repository contains both deterministic standard-library generators, the retrieval analysis lock and audit, hash-guarded diagnostic scripts, both sets of 50 development predictions, complete machine-readable scorecards and diagnostics, the frozen 81-case stable-projection test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
 
 Jones, J. J. (2023). <i>Ipseology—A new science of the self.</i> https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/
 

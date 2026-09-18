@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aleph Initial Alpha, Virtual CSSERG">
-<meta name="dcterms.date" content="2026-09-17">
+<meta name="dcterms.date" content="2026-09-18">
 
 <title>Predict the Self</title>
 <style>
@@ -171,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 17, 2026</p>
+      <p class="date">September 18, 2026</p>
     </div>
   </div>
 
@@ -190,15 +190,16 @@ ul.task-list li input[type="checkbox"] {
 <section id="current-finding" class="level2">
 <h2 class="anchored" data-anchor-id="current-finding">Current finding</h2>
 <p>The first Predict the Self study asks whether a later Twenty Statements Test response can be forecast from an earlier response by the same person. Its deterministic stable-signifier projection is ready as an 81-case test submission and passes the challenge’s format validator. The private answers remain unavailable, so this report makes no test-performance claim.</p>
-<p>On 50 public development cases, the projection improves three of six text agreement measures over repeating the earlier response verbatim, worsens two, and ties one. Paired case-bootstrap intervals span zero for every nonzero agreement difference. Word-count and source-similarity error improve more consistently, while line-count error worsens. Most importantly, an average 73.2% of distinct follow-up token types are absent from the same person’s earlier response. Selecting supposedly enduring words remains far beyond an adequate account of how people rewrite their self-descriptions.</p>
+<p>On 50 public development cases, the projection improves three of six text agreement measures over repeating the earlier response verbatim, worsens two, and ties one. Paired case-bootstrap intervals span zero for every nonzero agreement difference. Word-count and source-similarity error improve more consistently, while line-count error worsens. Most importantly, an average 73.2% of distinct follow-up token types are absent from the same person’s earlier response.</p>
+<p>A new locked exploratory comparison asks whether borrowing the complete follow-up of the most similar training participant can supply that missing novelty. The retrieval forecast nearly matches the amount of change: 80.2% of its unique token types are new to the focal person’s source, versus 73.2% in the observed follow-up. Yet only 7.0% of its introduced token types are correct on an average case, and every non-exact agreement metric is lower than for the stable projection. Predicting that language will change remains far beyond predicting which new identity signifiers this person will express.</p>
 </section>
 <section id="how-to-read-this-report" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-read-this-report">How to read this report</h2>
-<p>The <a href="report.html">evidence, method, and development results</a> chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and extractive method, reports the complete development scorecard, quantifies paired case uncertainty and lexical novelty, and links every public reproducibility artifact.</p>
+<p>The <a href="report.html">evidence, method, and development results</a> chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and two transparent methods, reports the complete development scorecard, quantifies paired case uncertainty and lexical novelty, and links every public reproducibility artifact.</p>
 <p>The report distinguishes three claims that should not be collapsed:</p>
 <ol type="1">
 <li><strong>Submission validity:</strong> all 81 required IDs have nonblank predictions in the required order.</li>
-<li><strong>Public development evidence:</strong> the method has a mixed scorecard relative to the repeat-2024 baseline and was selected using those same public cases.</li>
+<li><strong>Public development evidence:</strong> the stable method has a mixed scorecard relative to repeat-2024; retrieval is exploratory because development labels were already known despite its within-iteration analysis lock.</li>
 <li><strong>Private test performance:</strong> unknown until the organizer evaluates the frozen artifact; no result is inferred from validation or development data.</li>
 </ol>
 <p>This Full Report is a two-chapter Quarto HTML book. Chapter count is an editorial choice, not a Virtual CSSERG requirement.</p>

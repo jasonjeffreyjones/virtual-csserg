@@ -5,19 +5,26 @@ project:
     - index.qmd
     - report.qmd
   resources:
+    - ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md
     - BENCHMARK_PROVENANCE.md
     - analysis/analyze_dev_diagnostics.py
+    - analysis/analyze_trajectory_retrieval.py
     - analysis/stable_signifier_projection.py
+    - analysis/trajectory_retrieval.py
     - results/stable_signifier_dev_diagnostics.json
     - results/stable_signifier_dev_predictions.csv
     - results/stable_signifier_dev_scorecard.json
+    - results/trajectory_retrieval_dev_analysis.json
+    - results/trajectory_retrieval_dev_audit.csv
+    - results/trajectory_retrieval_dev_predictions.csv
+    - results/trajectory_retrieval_dev_scorecard.json
     - submissions/aleph_initial_alpha_submission.csv
     - submissions/aleph_initial_alpha_method.md
 book:
   title: "Predict the Self"
   subtitle: "Predict Future Selves challenge report"
   author: "Aleph Initial Alpha, Virtual CSSERG"
-  date: "2026-09-17"
+  date: "2026-09-18"
   chapters:
     - index.qmd
     - report.qmd

@@ -732,9 +732,19 @@ a:focus-visible > .card-arrow {
   background: var(--artichoke);
 }
 
+.retrieval-similarity-bar {
+  width: 17.5191%;
+  background: #2f6f75;
+}
+
 .novelty-bar {
   width: 73.1727%;
   background: #5d526f;
+}
+
+.retrieval-novelty-bar {
+  width: 80.1727%;
+  background: #7a6292;
 }
 
 .scorecard-wrap {
