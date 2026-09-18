@@ -19,7 +19,7 @@ The VCSSERG v1 Full Report is now a Quarto HTML book, with a linked two-column
 short PDF and evidence-brief Executive Summary. Predict the Self now uses the
 same three-form system, closing the final automated promise-group gap. The
 coordinated immutable-dialog migration was completed across every Project and
-the template on September 16. The manual Version 1 gates remain. The conceptual
+the template on September 16. One manual Version 1 gate remains. The conceptual
 footer grouping and a single identity/biography source
 were implemented and later hardened with command-driven Scholar creation. On September 14, all 109 expected public
 files matched the repository byte-for-byte, and deployment gained a required
@@ -29,9 +29,12 @@ all 110 expected files byte-identical. The successful workflow and deployment
 gate are therefore observed. Isolated runner tests now witness dirty-start and
 status-inspection refusal, prohibited runner edits, plus Scholar and validation
 failures without commit, push, or deployment. They run as a separate
-integration suite rather than recursively inside a live runner; rendered usability and
-substantive review remain manual gates. The superseded-report archive policy is now
-specified and exercised by the v1 release ledger.
+integration suite rather than recursively inside a live runner. A September 18
+claim-to-evidence review closes the substantive report gate and documents its
+internal-review boundary; rendered keyboard and assistive-technology usability
+remains the sole manual gate. The superseded-report archive policy is now
+specified and exercised by the v1 release ledger, including the clean
+September 17 outgoing report preserved before substantive review.
 
 ## Recommended design choices
 

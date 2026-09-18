@@ -2,14 +2,14 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-17T08:11:02Z
+updated: 2026-09-18T08:09:41Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 17, 2026, all seven automated promise groups pass across
+Active. On September 18, 2026, all seven automated promise groups pass across
 26 HTML pages and six first-party stylesheets. The static-site group now
 requires a bypass mechanism and an explicit `alt` decision for every image,
 with negative fixtures for both regressions. The September 15 normal Scholar
@@ -20,7 +20,9 @@ successful workflow path for that release. The PI-triggered canary also
 completed the coordinated immutable-dialog migration across `_template` and
 all four Projects. Controlled runner tests now witness dirty-start refusal plus
 Scholar and validation failures without commit, push, or deployment. Version 1.0 is not
-complete; keyboard/assistive-technology and substantive review remain open.
+complete: a September 18 claim-to-evidence review closes the substantive report
+gate, while rendered desktop/phone keyboard and assistive-technology review
+remains open.
 
 ## Completed work and current evidence
 
@@ -51,6 +53,13 @@ complete; keyboard/assistive-technology and substantive review remain open.
   exactly one dense promise-map figure and five Full Report-linked findings.
   Neither one chapter nor one page is a requirement; Full Report structure is
   content-driven and the short PDF has a ten-page ceiling.
+- `SUBSTANTIVE-REVIEW.md` maps every charter deliverable and material v1 report
+  claim family to current or historical evidence. The internal review found no
+  unsupported material claim, explicitly excludes other Projects' empirical
+  validity and independent peer review, and leaves rendered accessibility
+  open. It also found that the outgoing state timestamp preceded its iteration
+  finish by 2 minutes 46 seconds; this iteration restores the documented exact
+  finish-time convention in both state and public catalog.
 - Predict the Self now conforms to the same current publication system. It has
   a two-chapter Quarto book, guarded complete-tree publisher, one-figure
   evidence brief, linked short PDF, build guide, five tests, and a project
@@ -92,9 +101,9 @@ complete; keyboard/assistive-technology and substantive review remain open.
   supersession, correction, and retraction. Canonical URLs remain current while
   a full commit key preserves the outgoing three-form report, dependencies,
   sources, and Project record. `REPORT-VERSIONS.md` records the September 15 v1
-  release, the September 16 pre-canary report set, and the September 16
-  pre-accessibility-contract report set; the verifier confirms all three forms
-  exist at each recorded commit.
+  release, two September 16 report sets, and the September 17 outgoing report
+  before substantive review; the verifier confirms all three forms exist at
+  each recorded commit.
 - NFL Team Fandom Identities records the PI-directed Paused lifecycle state in
   its state, dialog, public summary, Projects listing, and homepage. Its
   findings and reports remain Published; the PI confirms no Scholar schedules
@@ -107,8 +116,10 @@ complete; keyboard/assistive-technology and substantive review remain open.
   byte without credentials. September 14 and September 15 pre-iteration runs
   found all 109 then-expected files identical, improving on the September 13
   result of 73 identical, 10 different, and 26 unavailable. The September 16
-  run found all 110 expected files identical after the normal deployment. HTTP
-  cannot discover remote-only files by itself.
+  run found all 110 expected files identical after the normal deployment. The
+  September 18 pre-change probe found all 114 incoming files byte-identical.
+  HTTP cannot discover remote-only files by itself, and the current result does
+  not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
   tree, validates the identity and Active Project, and independently runs the
   roster, registry, routine v1 tests, verifier, whitespace, and syntax gates
@@ -133,7 +144,8 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups pass across 26 HTML pages and six first-party stylesheets.
+All seven groups pass across 26 HTML pages and six first-party stylesheets on
+September 18.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
@@ -149,6 +161,9 @@ publication verifiers continue to cover stronger PDF properties.
 Project-specific publication verifiers for VCSSERG v1 and Predict the Self do
 validate reciprocal report links, one summary figure, phrase count, PDF links,
 both PDF columns, nonempty pages, and the ten-page ceiling.
+The verifier also enforces state-to-catalog timestamp agreement but cannot
+infer whether a human correctly classified an iteration as substantive; the
+September 18 review found and corrected one such timestamp decision.
 
 ## Decisions currently in force
 
@@ -187,12 +202,12 @@ both PDF columns, nonempty pages, and the ten-page ceiling.
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive technology. No installed Chromium, Chrome, or Firefox executable is
   available on this host.
-- Dr. Jones reported that the production pages and PDFs look acceptable. A
-  keyboard/assistive-technology pass and substantive report review remain.
+- Dr. Jones reported that the production pages and PDFs look acceptable. The
+  keyboard/assistive-technology pass remains the sole open manual gate.
 
 ## Resources and limitations
 
-September 17 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 18 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. No Chromium, Chrome, or Firefox executable was found.
 ReportLab/pypdf are not installed in the base Python environment; any PDF build
@@ -202,6 +217,8 @@ dependencies. No package or replacement runtime was installed in this iteration.
 ## Important files
 
 - `V1-AUDIT.md`: current promise/evidence matrix and manual gates.
+- `SUBSTANTIVE-REVIEW.md`: charter coverage, material claim-to-evidence matrix,
+  review boundaries, the timestamp correction, and reproduction evidence.
 - `V1-RECOMMENDATIONS.md`: approved design/governance decisions and rollout.
 - `DIALOG-MIGRATION.md`: exact PI trigger, Scholar migration plan, reply
   protocol, legacy hashes, completion evidence, and bounded-reading rule.
@@ -237,4 +254,4 @@ dependencies. No package or replacement runtime was installed in this iteration.
 
 No blocking PI question. Controlled runner failure paths now pass without
 commit, push, or deployment, and the PI confirms no schedules are enabled.
-Next complete rendered keyboard/assistive-technology and substantive review.
+Next complete rendered desktop/phone keyboard and assistive-technology review.

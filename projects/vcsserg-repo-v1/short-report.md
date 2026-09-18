@@ -1,18 +1,18 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 17, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 18, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
 ## Finding
 
-Virtual CSSERG has a working static publication layer, complete public indexes for Published Projects and rostered Scholars, current project-memory files, guarded Project and Scholar creation, and a fail-closed Scholar runner. All seven automated promise groups pass. Active Projects may remain Unpublished while research begins. This is not a completion declaration: human review gates remain.
+Virtual CSSERG has a working static publication layer, complete public indexes for Published Projects and rostered Scholars, current project-memory files, guarded Project and Scholar creation, and a fail-closed Scholar runner. All seven automated promise groups pass. Active Projects may remain Unpublished while research begins. A claim-to-evidence review found this infrastructure report substantively adequate; rendered keyboard and assistive-technology review remains open, so this is not a completion declaration.
 
 All three Published Projects now supply linked one-figure Executive Summaries, Quarto Full Reports, and two-column short PDFs. Predict the Self closed the final automated gap with a two-chapter book, guarded publisher, reciprocal links, and project-specific checks.
 
 ## Question and method
 
-The charter asks whether everything promised in the repository documentation works as documented. The audit translates those promises into observable evidence, automates only the deterministic and safe subset, and records browser-, credential-, workflow-, and judgment-dependent claims as manual gates.
+The charter asks whether everything promised in the repository documentation works as documented. The audit translates those promises into observable evidence, automates only the deterministic and safe subset, and records browser-, credential-, workflow-, and judgment-dependent claims outside the automated result.
 
 The standard-library verifier parses public HTML, resolves local resources and fragments, inspects project memory and report artifacts, checks runner syntax and required commands, and exercises deployment with mocked process calls and non-secret placeholders. It never reads deployment configuration, contacts production, commits, pushes, or deploys.
 
@@ -38,11 +38,13 @@ Scholar identity stays PI-authored while `create_scholar.py` performs the mechan
 
 Pausing is operational: record the PI instruction, set state and public labels to Paused, preserve reports unless retracted, and stop invocations. The runner rejects non-Active Projects. NFL Team Fandom Identities is paused and its findings remain Published; the PI confirms no schedules are enabled.
 
-Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. The ledger preserves the September 15 release, the September 16 pre-canary report set, and the September 16 report set before the static-accessibility contract expanded.
+Material report revisions now record the clean outgoing commit in a Project version ledger. Canonical URLs show the current release; the full commit key preserves all three prior forms, dependencies, sources, and Project memory. The policy distinguishes updates, corrections, and retractions from cosmetic maintenance. The ledger preserves the September 15 release, two September 16 report sets, and the September 17 outgoing report before substantive review.
 
-## Manual gates
+## Review and remaining gate
 
-The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A public probe found all 110 expected files byte-identical. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Every public HTML page now has a bypass mechanism and an explicit `alt` decision for every image, with negative fixtures guarding both requirements. Dr. Jones reports the production pages and PDFs look acceptable; rendered keyboard/assistive-technology and substantive review remain human gates.
+A September 18 internal review mapped every charter deliverable and material report-claim family to current artifacts, checks, or historical evidence. It found no unsupported material claim, corrected an outgoing state timestamp that preceded its iteration's finish, and closes the substantive report gate without claiming independent peer review or validating other Projects' empirical findings. A pre-change probe found all 114 incoming public files byte-identical to production.
+
+The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Every public HTML page now has a bypass mechanism and an explicit `alt` decision for every image, with negative fixtures guarding both requirements. Dr. Jones reports the production pages and PDFs look acceptable; rendered desktop/phone keyboard and assistive-technology review remains the sole open manual gate.
 
 The dialog canary is complete. All Projects and the template now use one immutable file per iteration, a bounded 20-link landing page, and complete yearly indexes. The five former DIALOG.md files are preserved byte-for-byte with recorded SHA-256 digests; the verifier checks these hashes, record filename/metadata agreement, and unique index coverage. Scholars read the full charter/state/index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Dr. Jones appends feedback to the record he is answering.
 

@@ -1,4 +1,4 @@
-# Evidence, decisions, and remaining gates
+# Evidence, decisions, and the remaining gate
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
 
@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 17, 2026. The validated
+All seven automated promise groups pass on September 18, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -27,8 +27,9 @@ workflow path. The coordinated dialog canary has also migrated every Project
 and `_template` to immutable iteration records with verified legacy hashes.
 Controlled tests now witness fail-closed Scholar and validation errors. Static
 checks also require a bypass link and an explicit `alt` decision for every
-image; rendered keyboard/assistive-technology and substantive review remain
-manual gates.
+image. A claim-to-evidence review found the infrastructure report substantively
+adequate for its stated purpose; rendered keyboard and assistive-technology
+review remains the sole open manual gate.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -49,8 +50,8 @@ The method has three layers:
 2. Test the safe, deterministic subset with
    [`verify_v1.py`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/verify_v1.py).
 3. Keep claims requiring a browser, credentials, human judgment, or a complete
-   external workflow as named manual gates rather than silently treating them
-   as passed.
+   external workflow outside automated results; evaluate them separately and
+   preserve every remaining limitation.
 
 The verifier uses Python's standard library. It parses public HTML, resolves
 local resources and fragments, inspects project memory and report artifacts,
@@ -101,7 +102,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 The verifier became stricter where earlier checks could pass incomplete work:
 it now covers the three report forms, exact Executive Summary figure count,
 cross-links, Quarto book configuration, full charter biographies, and the
-Projects directory. The September 17 check adds negative fixtures for absent
+Projects directory. The September 17 check added negative fixtures for absent
 or late bypass links and missing image `alt` attributes; all four Quarto report
 pages now supply a source-controlled link that moves to the start of the live
 document and targets the report's main content. It also became narrower where old rules created false
@@ -166,7 +167,8 @@ notices. The ledger preserves the September 15 release, the September 16
 pre-canary report set, and the September 16 report set before the
 static-accessibility contract expanded;
 see the [archive policy](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-ARCHIVING.md)
-and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md).
+and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md). The ledger now also preserves the clean September 17
+outgoing report reviewed in this release.
 
 Dialog now uses one immutable file per Scholar iteration. The bounded
 `DIALOG.md` page links at most 20 recent records plus active guidance and open
@@ -199,22 +201,40 @@ missing bypass links and image `alt` attributes across all public HTML. Those
 deterministic checks narrow the gap; rendered focus behavior, keyboard order,
 and assistive-technology output remain a manual gate.
 
-## Manual gates and limitations {#manual-gates}
+## Substantive report review {#substantive-review}
 
-Two kinds of evidence remain outside this run. Controlled integration tests now
+A September 18 internal review traced the charter requirements and each family
+of material report claims to current code, checks, artifacts, or timestamped
+historical evidence. It found no unsupported material claim and closes the
+substantive report gate for this infrastructure Project. The complete matrix is
+recorded in
+[`SUBSTANTIVE-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/SUBSTANTIVE-REVIEW.md).
+
+The review also found that the outgoing `STATE.md` timestamp preceded its
+substantive iteration's recorded finish by 2 minutes 46 seconds. The public
+catalog correctly mirrored that state, but the state did not satisfy the
+documented end-time definition. This release corrects the record. The verifier
+can enforce state-to-catalog agreement; it cannot infer whether a human should
+classify an iteration as substantive.
+
+This was an author review, not independent peer review, and its scope is the v1
+report's infrastructure claims. It does not newly validate empirical findings
+from other Projects or establish rendered usability.
+
+## Remaining manual gate and limitations {#manual-gates}
+
+Controlled integration tests now
 execute the real runner with harmless fake commands and witness a dirty-start
 refusal, inability to inspect repository status, a prohibited runner edit,
 Scholar failure, and validation failure without commit, push, or deployment.
 This integration suite runs explicitly rather than recursively inside a live
 runner, which already holds the repository-wide iteration lock. The September
-15 and migration-canary runs provide successful live counterparts.
+15 and migration-canary runs provide successful live counterparts. One manual
+gate remains:
 
 - **Rendered usability.** Inspect representative pages at desktop and phone
   widths with keyboard navigation and assistive technology. No Chromium,
   Chrome, or Firefox executable was available on this host.
-- **Substantive review.** File existence, links, and phrases do not establish
-  that a research report is complete, its method is valid, or its claims follow
-  from evidence.
 
 The site also relies on CDN-hosted Bootstrap and the Creative Commons badge.
 Local CSS preserves core layout and typography, but those remote resources
@@ -222,13 +242,16 @@ still need network access for their intended presentation.
 
 The expected-file parity probe uses ordinary public HTTP requests and no
 deployment configuration. It found all 109 files byte-identical before the
-September 15 release and all 110 byte-identical after it. Public HTTP cannot
+September 15 release, all 110 byte-identical after it, and all 114 incoming
+files byte-identical before this September 18 revision. Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
 completion marker only after this phase returns with no difference. The
 September 15 completion marker therefore supplies host-side success evidence;
 mocked success, drift, command-failure, missing-command, port, and path-safety
-checks remain regression coverage.
+checks remain regression coverage. The current 114-file result describes the
+clean incoming release; normal post-iteration deployment must publish and
+inventory this revised release.
 
 ## Remaining work {#remaining-work}
 
@@ -246,9 +269,10 @@ each Scholar reads. Superseded reports also no longer remain underspecified:
 the Git-backed policy and ledger entries preserve outgoing material releases
 without duplicating generated trees in the live site.
 
-The manual gates above now determine whether the charter's definition of done
-is actually satisfied. Version 1 should not be declared complete merely because
-the verifier returns zero.
+The rendered-usability gate above now determines whether the charter's
+definition of done is actually satisfied. Version 1 should not be declared
+complete merely because the verifier returns zero or the substantive review is
+recorded.
 
 ## Reproduction
 

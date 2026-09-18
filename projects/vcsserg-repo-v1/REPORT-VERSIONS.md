@@ -6,6 +6,24 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 17, 2026 at 08:13 UTC
+
+- **Superseded:** September 18, 2026
+- **Archive key:**
+  [`89300ad85ba12163ac8a7401005fccc48e35102c`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/89300ad85ba12163ac8a7401005fccc48e35102c)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the documented substantive claim review.
+- **Reason:** The outgoing reports accurately kept both substantive and
+  rendered-accessibility review open. The next release traces the v1 report's
+  material claims to current or historical evidence, records the review's
+  scope and limitations, refreshes incoming-release production parity, and
+  closes only the substantive report gate.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/89300ad85ba12163ac8a7401005fccc48e35102c/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/89300ad85ba12163ac8a7401005fccc48e35102c/projects/vcsserg-repo-v1)
+
 ### Updated through September 16, 2026 at 21:16 UTC
 
 - **Superseded:** September 17, 2026

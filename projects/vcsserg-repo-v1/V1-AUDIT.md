@@ -11,12 +11,12 @@ python3 projects/vcsserg-repo-v1/verify_v1.py
 ```
 
 The verifier does not read `.env`, contact remote systems, create commits, or
-deploy. It returns nonzero while an automated group fails. A passing run would
-still not establish the manual gates below.
+deploy. It returns nonzero while an automated group fails. A passing run still
+does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 17, 2026 |
+| Documented promise | Evidence or test | Status on September 18, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
@@ -24,11 +24,11 @@ still not establish the manual gates below.
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, and all 110 expected files matched production on September 16 |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, and all 114 incoming files matched before the September 18 revision |
 
 ## Current automated result
 
-On September 17, 2026, **all seven groups pass**. The final report-format gap
+On September 18, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -63,9 +63,15 @@ publication structure:
   the live document, and both NFL Full Report figures carry explicit
   alternatives. This is deterministic coverage, not a rendered accessibility
   certification.
+- On September 18, `SUBSTANTIVE-REVIEW.md` traced the charter and each material
+  v1 report-claim family to current or historical evidence. The internal review
+  found no unsupported material claim, corrected a state timestamp that
+  preceded its iteration finish, and leaves rendered accessibility as the sole
+  open manual gate.
 
 This is a count of automated promise groups, not a Version 1 completion
-declaration or a measure of research quality. The manual gates remain open.
+declaration or a measure of research quality. Rendered keyboard and
+assistive-technology review remains open.
 
 ## Verifier validity
 
@@ -93,12 +99,17 @@ These changes make the automated claims narrower and more valid. The script is
 still a **promise regression report**, not a Version 1 completion oracle. See
 `V1-RECOMMENDATIONS.md` for the full assessment.
 
-## Manual gates
+## Manual review
 
 - Inspect the selected layouts at desktop and phone widths with keyboard and
   assistive-technology checks.
-- Review substantive report completeness and research validity. File existence
-  and links cannot establish either.
+
+The substantive report review is complete. On September 18, a documented
+internal review mapped the charter and material report claims to current or
+historical evidence and found no unsupported material claim. It corrected a
+state timestamp that preceded its iteration finish and explicitly limits the
+finding to this infrastructure report—not the empirical validity of other
+Projects or independent peer review. See `SUBSTANTIVE-REVIEW.md`.
 
 The generic v1 verifier checks only each PDF signature. All three
 Project-specific publication tests separately confirm nonempty pages, two-column
@@ -119,7 +130,9 @@ expected files byte-identical, with none different or unavailable. Together
 these observations close the deployment inventory and expected-byte gate for
 the September 15 release. HTTP alone still cannot discover remote-only files,
 so every new deployment must continue to pass the authenticated inventory
-phase.
+phase. Before this September 18 material revision, a new public probe found all
+114 incoming files byte-identical; normal automation must still deploy and
+inventory the revised release.
 
 ## Other current requirements
 
