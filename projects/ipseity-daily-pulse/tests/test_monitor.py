@@ -73,6 +73,27 @@ class MonitorTests(unittest.TestCase):
         adjusted = monitor.benjamini_hochberg([0.01, 0.04, 0.03])
         self.assertEqual([round(value, 3) for value in adjusted], [0.03, 0.04, 0.04])
 
+    def test_composition_adjustment_removes_constructed_sex_mix_trend(self):
+        rows = []
+        stats = monitor.SignifierStats()
+        start = dt.date(2025, 1, 1)
+        for day_index in range(200):
+            date = start + dt.timedelta(days=day_index)
+            male_slots = min(9, day_index // 20)
+            for slot in range(10):
+                male = slot < male_slots
+                respondent = f"{day_index * 10 + slot:012x}"
+                record = row("composition", date, respondent, int(male))
+                record.update({"age": "35", "sex": "Male" if male else "Female"})
+                rows.append(record)
+                stats.add(date, int(male), respondent)
+        unadjusted = monitor.trend_row("composition", stats)
+        adjusted = monitor.fit_adjusted_trend(rows)
+        self.assertGreater(unadjusted["annual_change_percentage_points"], 0)
+        self.assertAlmostEqual(
+            adjusted["adjusted_annual_change_percentage_points"], 0.0, places=7
+        )
+
     def test_duplicate_key_fails_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "duplicate.csv.gz"
@@ -147,7 +168,22 @@ class MonitorTests(unittest.TestCase):
             round(float(growth_row["benjamini_hochberg_q_value"]), 6),
             summary["fastest_growing"][0]["benjamini_hochberg_q_value"],
         )
-        for name in ("observation-growth.svg", "annual-prevalence-growth-histogram.svg"):
+        with (project / "outputs/leader-adjusted-sensitivity.csv").open(newline="") as source:
+            sensitivity = list(csv.DictReader(source))
+        self.assertEqual(len(sensitivity), summary["leader_sensitivity"]["selected_signifiers"])
+        self.assertEqual(
+            sum(item["same_direction"] == "True" for item in sensitivity),
+            summary["leader_sensitivity"]["same_direction"],
+        )
+        self.assertEqual(
+            sensitivity[0]["signifier"],
+            summary["leader_sensitivity"]["results"][0]["signifier"],
+        )
+        for name in (
+            "observation-growth.svg",
+            "annual-prevalence-growth-histogram.svg",
+            "leader-adjustment-sensitivity.svg",
+        ):
             root = ET.parse(project / "outputs" / name).getroot()
             self.assertEqual(root.tag, "{http://www.w3.org/2000/svg}svg")
 

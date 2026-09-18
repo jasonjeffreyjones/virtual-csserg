@@ -74,8 +74,10 @@ HISTORY_FIELDS = [
 MIN_TREND_OBSERVATIONS = 300
 MIN_TREND_SPAN_DAYS = 180
 MIN_TREND_DATES = 30
+LEADER_SENSITIVITY_PER_TAIL = 10
 DAYS_PER_YEAR = 365.2425
 TREND_EPOCH_ORDINAL = dt.date(2020, 1, 1).toordinal()
+COMPOSITION_FIELDS = ["demographics_status", "sex", "ethnicity", "student", "employment"]
 
 
 @dataclass
@@ -377,6 +379,213 @@ def add_robust_inference(
         row["bonferroni_05"] = bonferroni <= 0.05
 
 
+def independent_column_indexes(matrix: list[list[float]]) -> list[int]:
+    """Select linearly independent columns using modified Gram-Schmidt."""
+    if not matrix:
+        return []
+    selected: list[int] = []
+    basis: list[list[float]] = []
+    for column_index in range(len(matrix[0])):
+        column = [row[column_index] for row in matrix]
+        original_norm = math.sqrt(sum(value * value for value in column))
+        residual = column[:]
+        # Reorthogonalization makes the small rank check more stable when time
+        # and seasonal indicators are strongly associated.
+        for _ in range(2):
+            for vector in basis:
+                projection = sum(value * axis for value, axis in zip(residual, vector))
+                for index, axis in enumerate(vector):
+                    residual[index] -= projection * axis
+        residual_norm = math.sqrt(sum(value * value for value in residual))
+        if residual_norm <= 1e-9 * max(1.0, original_norm):
+            continue
+        selected.append(column_index)
+        basis.append([value / residual_norm for value in residual])
+    return selected
+
+
+def invert_matrix(matrix: list[list[float]]) -> list[list[float]]:
+    """Invert a small dense matrix with partial-pivoted Gauss-Jordan steps."""
+    size = len(matrix)
+    augmented = [
+        row[:] + [1.0 if row_index == column_index else 0.0 for column_index in range(size)]
+        for row_index, row in enumerate(matrix)
+    ]
+    scale = max(abs(value) for row in matrix for value in row)
+    for column in range(size):
+        pivot = max(range(column, size), key=lambda index: abs(augmented[index][column]))
+        if abs(augmented[pivot][column]) <= max(1.0, scale) * 1e-12:
+            raise ValueError("adjusted model matrix is singular")
+        augmented[column], augmented[pivot] = augmented[pivot], augmented[column]
+        pivot_value = augmented[column][column]
+        augmented[column] = [value / pivot_value for value in augmented[column]]
+        for row_index in range(size):
+            if row_index == column:
+                continue
+            factor = augmented[row_index][column]
+            if factor == 0:
+                continue
+            augmented[row_index] = [
+                value - factor * pivot_value
+                for value, pivot_value in zip(augmented[row_index], augmented[column])
+            ]
+    return [row[size:] for row in augmented]
+
+
+def adjusted_design(rows: list[dict[str, str]]) -> tuple[list[list[float]], list[str]]:
+    """Build the composition-and-calendar sensitivity design matrix."""
+    ordinals = [dt.date.fromisoformat(row["observation_date"]).toordinal() for row in rows]
+    mean_ordinal = statistics.mean(ordinals)
+    parsed_ages = [int(row["age"]) if row["age"].isdigit() else None for row in rows]
+    known_ages = [age for age in parsed_ages if age is not None]
+    mean_age = statistics.mean(known_ages) if known_ages else 0.0
+
+    calendar_values = {
+        "weekday": [str(dt.date.fromisoformat(row["observation_date"]).weekday()) for row in rows],
+        "month_of_year": [row["observation_date"][5:7] for row in rows],
+    }
+    category_values = {
+        field: [row[field] for row in rows]
+        for field in COMPOSITION_FIELDS
+    }
+    names = ["intercept", "time_years", "age_decades", "age_missing"]
+    specifications: list[tuple[str, list[str], str]] = []
+    for field, values in {**calendar_values, **category_values}.items():
+        counts = Counter(values)
+        if field in calendar_values:
+            levels = sorted(counts)
+        else:
+            levels = sorted(counts, key=lambda value: (-counts[value], value))
+        if not levels:
+            continue
+        baseline = levels[0]
+        for level in levels[1:]:
+            names.append(f"{field}={level}")
+            specifications.append((field, values, level))
+
+    matrix = []
+    for index, ordinal in enumerate(ordinals):
+        age = parsed_ages[index]
+        features = [
+            1.0,
+            (ordinal - mean_ordinal) / DAYS_PER_YEAR,
+            0.0 if age is None else (age - mean_age) / 10,
+            float(age is None),
+        ]
+        features.extend(float(values[index] == level) for _, values, level in specifications)
+        matrix.append(features)
+    return matrix, names
+
+
+def fit_adjusted_trend(rows: list[dict[str, str]]) -> dict[str, object]:
+    """Fit one adjusted linear-probability trend with clustered uncertainty."""
+    full_matrix, full_names = adjusted_design(rows)
+    selected = independent_column_indexes(full_matrix)
+    if 1 not in selected:
+        raise ValueError("adjusted model could not identify the time trend")
+    matrix = [[row[index] for index in selected] for row in full_matrix]
+    names = [full_names[index] for index in selected]
+    outcomes = [float(row["endorsed"]) for row in rows]
+    terms = len(names)
+    cross_product = [[0.0] * terms for _ in range(terms)]
+    cross_outcome = [0.0] * terms
+    for features, outcome in zip(matrix, outcomes):
+        for left in range(terms):
+            cross_outcome[left] += features[left] * outcome
+            for right in range(left, terms):
+                cross_product[left][right] += features[left] * features[right]
+    for left in range(terms):
+        for right in range(left):
+            cross_product[left][right] = cross_product[right][left]
+    inverse = invert_matrix(cross_product)
+    coefficients = [
+        sum(inverse[row][column] * cross_outcome[column] for column in range(terms))
+        for row in range(terms)
+    ]
+    residuals = [
+        outcome - sum(coefficient * feature for coefficient, feature in zip(coefficients, features))
+        for features, outcome in zip(matrix, outcomes)
+    ]
+    cluster_scores: dict[str, list[float]] = {}
+    for source_row, features, residual in zip(rows, matrix, residuals):
+        score = cluster_scores.setdefault(source_row["hashed_respondent_id"], [0.0] * terms)
+        for index, feature in enumerate(features):
+            score[index] += feature * residual
+    clusters = len(cluster_scores)
+    observations = len(rows)
+    if clusters <= 1 or observations <= terms:
+        raise ValueError("adjusted model lacks residual degrees of freedom or respondent clusters")
+    time_index = names.index("time_years")
+    inverse_time_column = [inverse[index][time_index] for index in range(terms)]
+    slope_variance = sum(
+        sum(weight * value for weight, value in zip(inverse_time_column, score)) ** 2
+        for score in cluster_scores.values()
+    )
+    correction = clusters / (clusters - 1) * (observations - 1) / (observations - terms)
+    slope_se = math.sqrt(max(0.0, correction * slope_variance))
+    annual_change = coefficients[time_index] * 100
+    annual_se = slope_se * 100
+    p_value = (
+        math.erfc(abs(annual_change / annual_se) / math.sqrt(2))
+        if annual_se > 0
+        else (0.0 if annual_change else 1.0)
+    )
+    return {
+        "adjusted_annual_change_percentage_points": annual_change,
+        "adjusted_annual_change_cluster_se": annual_se,
+        "adjusted_cluster_ci95_lower": annual_change - 1.96 * annual_se,
+        "adjusted_cluster_ci95_upper": annual_change + 1.96 * annual_se,
+        "adjusted_cluster_p_value": p_value,
+        "observations": observations,
+        "respondent_clusters": clusters,
+        "model_terms": terms,
+        "dropped_collinear_terms": len(full_names) - terms,
+    }
+
+
+def adjusted_leader_sensitivity(
+    path: Path, trends: list[dict[str, object]]
+) -> list[dict[str, object]]:
+    """Refit the two unadjusted leader tails with composition/calendar controls."""
+    eligible = [row for row in trends if row["eligible"]]
+    growing = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"]), reverse=True
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    shrinking = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"])
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    selections = [
+        ("positive", rank, row) for rank, row in enumerate(growing, start=1)
+    ] + [("negative", rank, row) for rank, row in enumerate(shrinking, start=1)]
+    wanted = {str(row["signifier"]) for _, _, row in selections}
+    observations: dict[str, list[dict[str, str]]] = {signifier: [] for signifier in wanted}
+    with gzip.open(path, "rt", encoding="utf-8", newline="") as source:
+        for row in csv.DictReader(source):
+            if row["signifier"] in observations:
+                observations[row["signifier"]].append(row)
+
+    results = []
+    for tail, rank, trend in selections:
+        signifier = str(trend["signifier"])
+        fitted = fit_adjusted_trend(observations[signifier])
+        unadjusted = float(trend["annual_change_percentage_points"])
+        adjusted = float(fitted["adjusted_annual_change_percentage_points"])
+        results.append(
+            {
+                "unadjusted_tail": tail,
+                "unadjusted_tail_rank": rank,
+                "signifier": signifier,
+                "unadjusted_annual_change_percentage_points": unadjusted,
+                "unadjusted_cluster_ci95_lower": trend["annual_change_cluster_ci95_lower"],
+                "unadjusted_cluster_ci95_upper": trend["annual_change_cluster_ci95_upper"],
+                **fitted,
+                "adjustment_shift_percentage_points": adjusted - unadjusted,
+                "same_direction": (adjusted >= 0) == (unadjusted >= 0),
+            }
+        )
+    return results
+
+
 def write_csv(path: Path, fieldnames: list[str], rows: Iterable[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as output:
@@ -510,6 +719,77 @@ def trend_histogram_svg(trends: list[dict[str, object]], latest: dt.date) -> str
     )
 
 
+def leader_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
+    """Compare unadjusted and adjusted slopes for the displayed leader set."""
+    displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
+    width, height = 960, 660
+    left, right, top, bottom = 235, 38, 125, 66
+    plot_w, plot_h = width - left - right, height - top - bottom
+    values = [
+        float(row[field])
+        for row in displayed
+        for field in (
+            "unadjusted_annual_change_percentage_points",
+            "adjusted_cluster_ci95_lower",
+            "adjusted_cluster_ci95_upper",
+        )
+    ]
+    lower = math.floor(min(values) / 10) * 10
+    upper = math.ceil(max(values) / 10) * 10
+
+    def px(value: float) -> float:
+        return left + (value - lower) / (upper - lower) * plot_w
+
+    def py(index: int) -> float:
+        return top + (index + 0.5) * plot_h / len(displayed)
+
+    parts = [
+        f'  <text class="title" x="{left}" y="38">Leader slopes before and after adjustment</text>',
+        f'  <text class="subtitle" x="{left}" y="66">Selected unadjusted extremes · age, composition, weekday, and month sensitivity</text>',
+        f'  <circle cx="{left}" cy="92" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+        f'  <text class="tick" x="{left + 12}" y="97">Unadjusted</text>',
+        f'  <circle cx="{left + 112}" cy="92" r="5" fill="#4B6F44"/>',
+        f'  <text class="tick" x="{left + 124}" y="97">Adjusted; line is clustered 95% interval</text>',
+    ]
+    for value in range(lower, upper + 1, 10):
+        x = px(value)
+        parts.append(
+            f'  <line class="grid" x1="{x:.1f}" y1="{top}" x2="{x:.1f}" y2="{top + plot_h}"/>'
+        )
+        parts.append(
+            f'  <text class="tick" text-anchor="middle" x="{x:.1f}" y="{top + plot_h + 26}">{value:+d}</text>'
+        )
+    zero_x = px(0)
+    parts.append(
+        f'  <line x1="{zero_x:.1f}" y1="{top}" x2="{zero_x:.1f}" y2="{top + plot_h}" stroke="#243128" stroke-width="2"/>'
+    )
+    for index, row in enumerate(displayed):
+        y = py(index)
+        unadjusted = float(row["unadjusted_annual_change_percentage_points"])
+        adjusted = float(row["adjusted_annual_change_percentage_points"])
+        ci_low = float(row["adjusted_cluster_ci95_lower"])
+        ci_high = float(row["adjusted_cluster_ci95_upper"])
+        parts.extend(
+            [
+                f'  <text class="tick" text-anchor="end" x="{left - 12}" y="{y + 5:.1f}">{html.escape(str(row["signifier"]))}</text>',
+                f'  <line x1="{px(unadjusted):.1f}" y1="{y:.1f}" x2="{px(adjusted):.1f}" y2="{y:.1f}" stroke="#aeb9b0" stroke-width="3"/>',
+                f'  <line x1="{px(ci_low):.1f}" y1="{y:.1f}" x2="{px(ci_high):.1f}" y2="{y:.1f}" stroke="#4B6F44" stroke-width="2"/>',
+                f'  <circle cx="{px(unadjusted):.1f}" cy="{y:.1f}" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+                f'  <circle cx="{px(adjusted):.1f}" cy="{y:.1f}" r="5" fill="#4B6F44"/>',
+            ]
+        )
+    parts.append(
+        f'  <text class="tick" text-anchor="middle" x="{left + plot_w / 2:.1f}" y="{height - 16}">Estimated change (percentage points per year)</text>'
+    )
+    return svg_frame(
+        "Leader slopes before and after adjustment",
+        "Dumbbell plot comparing unadjusted and composition-and-calendar-adjusted annual prevalence slopes for the five most positive and five most negative unadjusted leaders. Adjusted estimates include clustered 95 percent intervals.",
+        "\n".join(parts),
+        width,
+        height,
+    )
+
+
 def compact_trend(row: dict[str, object]) -> dict[str, object]:
     return {
         "signifier": row["signifier"],
@@ -524,7 +804,36 @@ def compact_trend(row: dict[str, object]) -> dict[str, object]:
     }
 
 
-def findings_markdown(audit: DatasetAudit, checked_at: dt.datetime, trends: list[dict[str, object]]) -> str:
+def compact_sensitivity(row: dict[str, object]) -> dict[str, object]:
+    return {
+        "unadjusted_tail": row["unadjusted_tail"],
+        "unadjusted_tail_rank": row["unadjusted_tail_rank"],
+        "signifier": row["signifier"],
+        "unadjusted_annual_change_percentage_points": round(
+            float(row["unadjusted_annual_change_percentage_points"]), 3
+        ),
+        "adjusted_annual_change_percentage_points": round(
+            float(row["adjusted_annual_change_percentage_points"]), 3
+        ),
+        "adjusted_cluster_ci95_lower": round(float(row["adjusted_cluster_ci95_lower"]), 3),
+        "adjusted_cluster_ci95_upper": round(float(row["adjusted_cluster_ci95_upper"]), 3),
+        "adjustment_shift_percentage_points": round(
+            float(row["adjustment_shift_percentage_points"]), 3
+        ),
+        "same_direction": row["same_direction"],
+        "observations": row["observations"],
+        "respondent_clusters": row["respondent_clusters"],
+        "model_terms": row["model_terms"],
+        "dropped_collinear_terms": row["dropped_collinear_terms"],
+    }
+
+
+def findings_markdown(
+    audit: DatasetAudit,
+    checked_at: dt.datetime,
+    trends: list[dict[str, object]],
+    sensitivity: list[dict[str, object]],
+) -> str:
     eligible = [row for row in trends if row["eligible"]]
     estimates = sorted(float(row["annual_change_percentage_points"]) for row in eligible)
     quartiles = statistics.quantiles(estimates, n=4, method="inclusive")
@@ -537,6 +846,13 @@ def findings_markdown(audit: DatasetAudit, checked_at: dt.datetime, trends: list
         cluster[0]
         for stats in audit.signifiers.values()
         for cluster in stats.respondent_sums.values()
+    )
+    same_direction = sum(bool(row["same_direction"]) for row in sensitivity)
+    median_absolute_shift = statistics.median(
+        abs(float(row["adjustment_shift_percentage_points"])) for row in sensitivity
+    )
+    largest_shift = max(
+        sensitivity, key=lambda row: abs(float(row["adjustment_shift_percentage_points"]))
     )
 
     def probability(value: object) -> str:
@@ -556,6 +872,26 @@ def findings_markdown(audit: DatasetAudit, checked_at: dt.datetime, trends: list
                 f"{probability(row['benjamini_hochberg_q_value'])} | "
                 f"{probability(row['bonferroni_adjusted_p_value'])} | "
                 f"{int(row['observations']):,} |"
+            )
+        return "\n".join(lines)
+
+    def sensitivity_table(rows: list[dict[str, object]]) -> str:
+        displayed = [
+            row
+            for row in rows
+            if int(row["unadjusted_tail_rank"]) <= 5
+        ]
+        lines = [
+            "| Signifier | Unadjusted (pp/year) | Adjusted (pp/year) | Adjusted clustered 95% CI |",
+            "|---|---:|---:|---:|",
+        ]
+        for row in displayed:
+            lines.append(
+                f"| {str(row['signifier']).replace('|', '&#124;')} | "
+                f"{float(row['unadjusted_annual_change_percentage_points']):+.1f} | "
+                f"{float(row['adjusted_annual_change_percentage_points']):+.1f} | "
+                f"[{float(row['adjusted_cluster_ci95_lower']):+.1f}, "
+                f"{float(row['adjusted_cluster_ci95_upper']):+.1f}] |"
             )
         return "\n".join(lines)
 
@@ -623,9 +959,30 @@ conservative sensitivity check. Point-estimate rankings selected from
 {len(eligible)} tests remain monitoring leads, not evidence that the underlying
 US adult population changed at those rates.
 
+## Composition and calendar sensitivity
+
+As a targeted robustness check, the ten most positive and ten most negative
+unadjusted slopes were refit with respondent-clustered uncertainty after
+adjusting for linear age, missing age, demographics availability, sex,
+ethnicity, student status, employment, weekday, and month of year. **{same_direction}
+of {len(sensitivity)}** leaders retained their original direction. The median
+absolute slope shift was **{median_absolute_shift:.1f} percentage points per
+year**. The largest shift was for **{largest_shift['signifier']}**, from
+{float(largest_shift['unadjusted_annual_change_percentage_points']):+.1f} to
+{float(largest_shift['adjusted_annual_change_percentage_points']):+.1f} points.
+
+![Unadjusted and adjusted leader slopes](outputs/leader-adjustment-sensitivity.svg)
+
+{sensitivity_table(sensitivity)}
+
+This selected-leader sensitivity is diagnostic, not a new discovery screen.
+It cannot correct unobserved composition, nonrepresentative recruitment,
+functional-form error, or selection of extremes from the full set of tests.
+
 Full machine-readable estimates, eligibility flags, and interval bounds are in
-`outputs/signifier-growth.csv`; the daily and cumulative counts are in
-`outputs/daily-observation-growth.csv`.
+`outputs/signifier-growth.csv`; adjusted leader checks are in
+`outputs/leader-adjusted-sensitivity.csv`; the daily and cumulative counts are
+in `outputs/daily-observation-growth.csv`.
 
 ## Source
 
@@ -752,6 +1109,15 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         list(trends[0]),
         trends,
     )
+    sensitivity = adjusted_leader_sensitivity(audit.path, trends)
+    write_csv(
+        output_dir / "leader-adjusted-sensitivity.csv",
+        list(sensitivity[0]),
+        sensitivity,
+    )
+    (output_dir / "leader-adjustment-sensitivity.svg").write_text(
+        leader_sensitivity_svg(sensitivity), encoding="utf-8"
+    )
     (output_dir / "observation-growth.svg").write_text(observation_growth_svg(audit), encoding="utf-8")
     (output_dir / "annual-prevalence-growth-histogram.svg").write_text(
         trend_histogram_svg(trends, audit.latest), encoding="utf-8"
@@ -791,11 +1157,35 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         },
         "fastest_growing": [compact_trend(row) for row in growing],
         "fastest_shrinking": [compact_trend(row) for row in shrinking],
+        "leader_sensitivity": {
+            "selection": (
+                f"top {LEADER_SENSITIVITY_PER_TAIL} positive and top "
+                f"{LEADER_SENSITIVITY_PER_TAIL} negative unadjusted slopes"
+            ),
+            "model": (
+                "unweighted OLS linear probability trend adjusted for linear age, missing age, "
+                "demographics status, sex, ethnicity, student status, employment, weekday, "
+                "and month of year"
+            ),
+            "uncertainty": "CR1 sandwich standard errors clustered by hashed respondent",
+            "selected_signifiers": len(sensitivity),
+            "same_direction": sum(bool(row["same_direction"]) for row in sensitivity),
+            "median_absolute_slope_shift_percentage_points": round(
+                statistics.median(
+                    abs(float(row["adjustment_shift_percentage_points"]))
+                    for row in sensitivity
+                ),
+                3,
+            ),
+            "results": [compact_sensitivity(row) for row in sensitivity],
+        },
     }
     (output_dir / "current-summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
-    (PROJECT / "CURRENT-FINDINGS.md").write_text(findings_markdown(audit, checked_at, trends), encoding="utf-8")
+    (PROJECT / "CURRENT-FINDINGS.md").write_text(
+        findings_markdown(audit, checked_at, trends, sensitivity), encoding="utf-8"
+    )
 
 
 def parse_args() -> argparse.Namespace:

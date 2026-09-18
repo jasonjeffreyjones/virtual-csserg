@@ -38,6 +38,10 @@ replay. The script refuses to append a duplicate check timestamp.
 - `outputs/signifier-growth.csv` and
   `outputs/annual-prevalence-growth-histogram.svg` contain the current
   signifier-level trend estimates.
+- `outputs/leader-adjusted-sensitivity.csv` refits the ten most positive and
+  ten most negative unadjusted slopes with observed composition and calendar
+  controls; `outputs/leader-adjustment-sensitivity.svg` compares the displayed
+  leaders before and after that adjustment.
 - `CURRENT-FINDINGS.md` is the reader-facing current summary and is replaced on
   refresh.
 
@@ -57,6 +61,16 @@ not require independent signifier tests. Neither adjustment corrects changing
 sample composition, calendar structure, population nonrepresentativeness, or
 model misspecification. Point-estimate leaders remain monitoring leads rather
 than estimates of change among US adults.
+
+The leader sensitivity uses a second pass over the validated gzip. For the 20
+signifiers selected by their unadjusted slopes, it refits the linear
+probability model with linear age, an age-missing indicator, demographics
+status, sex, ethnicity, student status, employment, weekday, and
+month-of-year indicators. Collinear indicators are deterministically omitted,
+and uncertainty remains CR1-clustered by hashed respondent. This targeted
+diagnostic tests whether the displayed extremes are fragile to observed
+composition and seasonality; because the signifiers were selected as extremes,
+its intervals are not a new multiple-testing or discovery procedure.
 
 ## Statistical references
 

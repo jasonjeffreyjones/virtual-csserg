@@ -18,6 +18,7 @@ here. The Scholar prepares the evidence and copy; Dr. Jones approves or posts
 it. That division respects the charter's prohibition on altering Ipseity Daily
 and avoids implying that an iteration has authority over an external account.
 
-## Current draft
+## Current drafts
 
+- [2026-09-18 — Apparent identity trends soften after adjustment](2026-09-18-apparent-trends-soften-after-adjustment.md)
 - [2026-09-16 — Nearly 700,000 answers](2026-09-16-nearly-700k-observations.md)
