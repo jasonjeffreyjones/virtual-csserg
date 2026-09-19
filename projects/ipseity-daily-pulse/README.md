@@ -25,5 +25,8 @@ at most once per UTC day unless a suspected problem warrants confirmation:
 python3 projects/ipseity-daily-pulse/analysis/monitor.py
 ```
 
+Current outputs include pooled trends, composition-and-calendar sensitivity,
+and a repeat-respondent fixed-effect sensitivity for the raw trend leaders.
+
 Publication remains `Unpublished`; no empty report shell exists under
 `website/projects/`.

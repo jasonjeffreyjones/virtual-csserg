@@ -42,6 +42,10 @@ replay. The script refuses to append a duplicate check timestamp.
   ten most negative unadjusted slopes with observed composition and calendar
   controls; `outputs/leader-adjustment-sensitivity.svg` compares the displayed
   leaders before and after that adjustment.
+- `outputs/leader-within-respondent-sensitivity.csv` refits those leader tails
+  with respondent fixed effects;
+  `outputs/leader-within-respondent-sensitivity.svg` compares the displayed
+  pooled and within-respondent slopes.
 - `CURRENT-FINDINGS.md` is the reader-facing current summary and is replaced on
   refresh.
 
@@ -71,6 +75,21 @@ and uncertainty remains CR1-clustered by hashed respondent. This targeted
 diagnostic tests whether the displayed extremes are fragile to observed
 composition and seasonality; because the signifiers were selected as extremes,
 its intervals are not a new multiple-testing or discovery procedure.
+
+The within-respondent sensitivity uses the respondent–signifier sufficient
+statistics retained during validation. It demeans response and date within
+each hashed respondent and estimates a fixed-effect linear probability slope
+from people who answered the same signifier on multiple dates. CR1 uncertainty
+is clustered by respondent and its finite-sample correction counts the absorbed
+respondent effects. Respondents observed only once do not identify the within
+slope. This removes stable between-person differences, but changing the sample
+to repeat respondents means the pooled-to-within difference is not a literal
+turnover decomposition. The targeted estimates remain vulnerable to selective
+retention, time-varying confounding, functional-form error, and selection of
+the pooled extremes. The output also counts repeat respondents who changed
+endorsement. When none did, the observed within slope is mechanically zero and
+its degenerate sandwich interval should not be interpreted as population-level
+precision.
 
 ## Statistical references
 

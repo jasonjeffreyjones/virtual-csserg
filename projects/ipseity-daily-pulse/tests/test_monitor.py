@@ -94,6 +94,25 @@ class MonitorTests(unittest.TestCase):
             adjusted["adjusted_annual_change_percentage_points"], 0.0, places=7
         )
 
+    def test_within_respondent_trend_removes_turnover_only_change(self):
+        stats = monitor.SignifierStats()
+        start = dt.date(2025, 1, 1)
+        for respondent_index, (offset, endorsed) in enumerate(
+            ((0, 0), (2, 0), (200, 1), (202, 1))
+        ):
+            respondent = f"{respondent_index:012x}"
+            for day in range(75):
+                stats.add(start + dt.timedelta(days=offset + day), endorsed, respondent)
+        pooled = monitor.trend_row("turnover", stats)
+        within = monitor.fit_within_respondent_trend(stats)
+        self.assertGreater(pooled["annual_change_percentage_points"], 0)
+        self.assertAlmostEqual(within["within_annual_change_percentage_points"], 0.0)
+        self.assertEqual(within["repeat_respondents"], 4)
+        self.assertEqual(within["within_observations"], 300)
+        self.assertEqual(within["within_residual_degrees_of_freedom"], 295)
+        self.assertEqual(within["endorsement_switchers"], 0)
+        self.assertTrue(within["zero_within_outcome_variation"])
+
     def test_duplicate_key_fails_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "duplicate.csv.gz"
@@ -179,10 +198,27 @@ class MonitorTests(unittest.TestCase):
             sensitivity[0]["signifier"],
             summary["leader_sensitivity"]["results"][0]["signifier"],
         )
+        with (project / "outputs/leader-within-respondent-sensitivity.csv").open(
+            newline=""
+        ) as source:
+            within_sensitivity = list(csv.DictReader(source))
+        self.assertEqual(
+            len(within_sensitivity),
+            summary["within_respondent_sensitivity"]["selected_signifiers"],
+        )
+        self.assertEqual(
+            sum(item["same_direction"] == "True" for item in within_sensitivity),
+            summary["within_respondent_sensitivity"]["same_direction"],
+        )
+        self.assertEqual(
+            within_sensitivity[0]["signifier"],
+            summary["within_respondent_sensitivity"]["results"][0]["signifier"],
+        )
         for name in (
             "observation-growth.svg",
             "annual-prevalence-growth-histogram.svg",
             "leader-adjustment-sensitivity.svg",
+            "leader-within-respondent-sensitivity.svg",
         ):
             root = ET.parse(project / "outputs" / name).getroot()
             self.assertEqual(root.tag, "{http://www.w3.org/2000/svg}svg")

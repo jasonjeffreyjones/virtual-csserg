@@ -586,6 +586,101 @@ def adjusted_leader_sensitivity(
     return results
 
 
+def fit_within_respondent_trend(stats: SignifierStats) -> dict[str, object]:
+    """Fit a respondent-fixed-effect trend from cluster sufficient statistics.
+
+    Respondents observed only once have zero within-person variation and do not
+    identify this estimate. The CR1 correction counts the absorbed respondent
+    effects when calculating residual degrees of freedom.
+    """
+    components = []
+    for cluster_n, sum_x, sum_y, sum_x2, sum_xy in stats.respondent_sums.values():
+        within_x2 = sum_x2 - sum_x * sum_x / cluster_n
+        if within_x2 <= 0:
+            continue
+        within_xy = sum_xy - sum_x * sum_y / cluster_n
+        within_y2 = sum_y - sum_y * sum_y / cluster_n
+        components.append((cluster_n, within_x2, within_xy, within_y2))
+    repeat_respondents = len(components)
+    observations = sum(component[0] for component in components)
+    residual_degrees_of_freedom = observations - repeat_respondents - 1
+    if repeat_respondents <= 1 or residual_degrees_of_freedom <= 0:
+        raise ValueError("within-respondent model lacks repeat clusters or residual degrees of freedom")
+    within_x2 = sum(component[1] for component in components)
+    if within_x2 <= 0:
+        raise ValueError("within-respondent model has no date variation")
+    slope = sum(component[2] for component in components) / within_x2
+    meat = sum(
+        (component_xy - slope * component_x2) ** 2
+        for _, component_x2, component_xy, _ in components
+    )
+    correction = (
+        repeat_respondents
+        / (repeat_respondents - 1)
+        * (observations - 1)
+        / residual_degrees_of_freedom
+    )
+    slope_se = math.sqrt(max(0.0, correction * meat / (within_x2 * within_x2)))
+    annual_change = slope * DAYS_PER_YEAR * 100
+    annual_se = slope_se * DAYS_PER_YEAR * 100
+    p_value = (
+        math.erfc(abs(annual_change / annual_se) / math.sqrt(2))
+        if annual_se > 0
+        else (0.0 if annual_change else 1.0)
+    )
+    return {
+        "within_annual_change_percentage_points": annual_change,
+        "within_annual_change_cluster_se": annual_se,
+        "within_cluster_ci95_lower": annual_change - 1.96 * annual_se,
+        "within_cluster_ci95_upper": annual_change + 1.96 * annual_se,
+        "within_cluster_p_value": p_value,
+        "within_observations": observations,
+        "repeat_respondents": repeat_respondents,
+        "endorsement_switchers": sum(component[3] > 0 for component in components),
+        "zero_within_outcome_variation": not any(component[3] > 0 for component in components),
+        "single_observation_respondents_excluded": len(stats.respondent_sums)
+        - repeat_respondents,
+        "within_residual_degrees_of_freedom": residual_degrees_of_freedom,
+    }
+
+
+def within_respondent_leader_sensitivity(
+    trends: list[dict[str, object]], signifiers: dict[str, SignifierStats]
+) -> list[dict[str, object]]:
+    """Refit the two unadjusted leader tails with respondent fixed effects."""
+    eligible = [row for row in trends if row["eligible"]]
+    growing = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"]), reverse=True
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    shrinking = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"])
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    selections = [
+        ("positive", rank, row) for rank, row in enumerate(growing, start=1)
+    ] + [("negative", rank, row) for rank, row in enumerate(shrinking, start=1)]
+
+    results = []
+    for tail, rank, trend in selections:
+        signifier = str(trend["signifier"])
+        fitted = fit_within_respondent_trend(signifiers[signifier])
+        unadjusted = float(trend["annual_change_percentage_points"])
+        within = float(fitted["within_annual_change_percentage_points"])
+        results.append(
+            {
+                "unadjusted_tail": tail,
+                "unadjusted_tail_rank": rank,
+                "signifier": signifier,
+                "unadjusted_annual_change_percentage_points": unadjusted,
+                "unadjusted_cluster_ci95_lower": trend["annual_change_cluster_ci95_lower"],
+                "unadjusted_cluster_ci95_upper": trend["annual_change_cluster_ci95_upper"],
+                **fitted,
+                "within_shift_percentage_points": within - unadjusted,
+                "same_direction": (within >= 0) == (unadjusted >= 0),
+            }
+        )
+    return results
+
+
 def write_csv(path: Path, fieldnames: list[str], rows: Iterable[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as output:
@@ -790,6 +885,84 @@ def leader_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     )
 
 
+def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
+    """Compare pooled and respondent-fixed-effect slopes for displayed leaders."""
+    displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
+    width, height = 960, 660
+    left, right, top, bottom = 235, 38, 125, 66
+    plot_w, plot_h = width - left - right, height - top - bottom
+    values = [
+        float(row[field])
+        for row in displayed
+        for field in (
+            "unadjusted_annual_change_percentage_points",
+            "within_cluster_ci95_lower",
+            "within_cluster_ci95_upper",
+        )
+    ]
+    lower = math.floor(min(values) / 10) * 10
+    upper = math.ceil(max(values) / 10) * 10
+
+    def px(value: float) -> float:
+        return left + (value - lower) / (upper - lower) * plot_w
+
+    def py(index: int) -> float:
+        return top + (index + 0.5) * plot_h / len(displayed)
+
+    parts = [
+        f'  <text class="title" x="{left}" y="38">Pooled and within-respondent leader slopes</text>',
+        f'  <text class="subtitle" x="{left}" y="66">Selected pooled extremes · fixed effects use repeat respondents only</text>',
+        f'  <circle cx="{left}" cy="92" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+        f'  <text class="tick" x="{left + 12}" y="97">Pooled</text>',
+        f'  <circle cx="{left + 86}" cy="92" r="5" fill="#4B6F44"/>',
+        f'  <text class="tick" x="{left + 98}" y="97">Within respondent; line is clustered 95% interval</text>',
+    ]
+    for value in range(lower, upper + 1, 10):
+        x = px(value)
+        parts.append(
+            f'  <line class="grid" x1="{x:.1f}" y1="{top}" x2="{x:.1f}" y2="{top + plot_h}"/>'
+        )
+        parts.append(
+            f'  <text class="tick" text-anchor="middle" x="{x:.1f}" y="{top + plot_h + 26}">{value:+d}</text>'
+        )
+    zero_x = px(0)
+    parts.append(
+        f'  <line x1="{zero_x:.1f}" y1="{top}" x2="{zero_x:.1f}" y2="{top + plot_h}" stroke="#243128" stroke-width="2"/>'
+    )
+    for index, row in enumerate(displayed):
+        y = py(index)
+        unadjusted = float(row["unadjusted_annual_change_percentage_points"])
+        within = float(row["within_annual_change_percentage_points"])
+        ci_low = float(row["within_cluster_ci95_lower"])
+        ci_high = float(row["within_cluster_ci95_upper"])
+        parts.extend(
+            [
+                f'  <text class="tick" text-anchor="end" x="{left - 12}" y="{y + 5:.1f}">{html.escape(str(row["signifier"]))}</text>',
+                f'  <line x1="{px(unadjusted):.1f}" y1="{y:.1f}" x2="{px(within):.1f}" y2="{y:.1f}" stroke="#aeb9b0" stroke-width="3"/>',
+            ]
+        )
+        if not row["zero_within_outcome_variation"]:
+            parts.append(
+                f'  <line x1="{px(ci_low):.1f}" y1="{y:.1f}" x2="{px(ci_high):.1f}" y2="{y:.1f}" stroke="#4B6F44" stroke-width="2"/>'
+            )
+        parts.extend(
+            [
+                f'  <circle cx="{px(unadjusted):.1f}" cy="{y:.1f}" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+                f'  <circle cx="{px(within):.1f}" cy="{y:.1f}" r="5" fill="#4B6F44"/>',
+            ]
+        )
+    parts.append(
+        f'  <text class="tick" text-anchor="middle" x="{left + plot_w / 2:.1f}" y="{height - 16}">Estimated change (percentage points per year)</text>'
+    )
+    return svg_frame(
+        "Pooled and within-respondent leader slopes",
+        "Dumbbell plot comparing pooled and respondent-fixed-effect annual prevalence slopes for the five most positive and five most negative pooled leaders. Within-respondent estimates use repeat respondents and include respondent-clustered 95 percent intervals where at least one repeat respondent changed endorsement.",
+        "\n".join(parts),
+        width,
+        height,
+    )
+
+
 def compact_trend(row: dict[str, object]) -> dict[str, object]:
     return {
         "signifier": row["signifier"],
@@ -828,11 +1001,42 @@ def compact_sensitivity(row: dict[str, object]) -> dict[str, object]:
     }
 
 
+def compact_within_sensitivity(row: dict[str, object]) -> dict[str, object]:
+    return {
+        "unadjusted_tail": row["unadjusted_tail"],
+        "unadjusted_tail_rank": row["unadjusted_tail_rank"],
+        "signifier": row["signifier"],
+        "unadjusted_annual_change_percentage_points": round(
+            float(row["unadjusted_annual_change_percentage_points"]), 3
+        ),
+        "within_annual_change_percentage_points": round(
+            float(row["within_annual_change_percentage_points"]), 3
+        ),
+        "within_cluster_ci95_lower": round(float(row["within_cluster_ci95_lower"]), 3),
+        "within_cluster_ci95_upper": round(float(row["within_cluster_ci95_upper"]), 3),
+        "within_shift_percentage_points": round(
+            float(row["within_shift_percentage_points"]), 3
+        ),
+        "same_direction": row["same_direction"],
+        "within_observations": row["within_observations"],
+        "repeat_respondents": row["repeat_respondents"],
+        "endorsement_switchers": row["endorsement_switchers"],
+        "zero_within_outcome_variation": row["zero_within_outcome_variation"],
+        "single_observation_respondents_excluded": row[
+            "single_observation_respondents_excluded"
+        ],
+        "within_residual_degrees_of_freedom": row[
+            "within_residual_degrees_of_freedom"
+        ],
+    }
+
+
 def findings_markdown(
     audit: DatasetAudit,
     checked_at: dt.datetime,
     trends: list[dict[str, object]],
     sensitivity: list[dict[str, object]],
+    within_sensitivity: list[dict[str, object]],
 ) -> str:
     eligible = [row for row in trends if row["eligible"]]
     estimates = sorted(float(row["annual_change_percentage_points"]) for row in eligible)
@@ -853,6 +1057,19 @@ def findings_markdown(
     )
     largest_shift = max(
         sensitivity, key=lambda row: abs(float(row["adjustment_shift_percentage_points"]))
+    )
+    within_same_direction = sum(bool(row["same_direction"]) for row in within_sensitivity)
+    median_within_absolute_shift = statistics.median(
+        abs(float(row["within_shift_percentage_points"])) for row in within_sensitivity
+    )
+    largest_within_shift = max(
+        within_sensitivity, key=lambda row: abs(float(row["within_shift_percentage_points"]))
+    )
+    median_repeat_respondents = statistics.median(
+        int(row["repeat_respondents"]) for row in within_sensitivity
+    )
+    no_within_switches = sum(
+        bool(row["zero_within_outcome_variation"]) for row in within_sensitivity
     )
 
     def probability(value: object) -> str:
@@ -892,6 +1109,33 @@ def findings_markdown(
                 f"{float(row['adjusted_annual_change_percentage_points']):+.1f} | "
                 f"[{float(row['adjusted_cluster_ci95_lower']):+.1f}, "
                 f"{float(row['adjusted_cluster_ci95_upper']):+.1f}] |"
+            )
+        return "\n".join(lines)
+
+    def within_sensitivity_table(rows: list[dict[str, object]]) -> str:
+        displayed = [
+            row
+            for row in rows
+            if int(row["unadjusted_tail_rank"]) <= 5
+        ]
+        lines = [
+            "| Signifier | Pooled (pp/year) | Within respondent (pp/year) | Within clustered 95% CI | Repeat respondents |",
+            "|---|---:|---:|---:|---:|",
+        ]
+        for row in displayed:
+            if row["zero_within_outcome_variation"]:
+                interval = "No endorsement switches"
+            else:
+                interval = (
+                    f"[{float(row['within_cluster_ci95_lower']):+.1f}, "
+                    f"{float(row['within_cluster_ci95_upper']):+.1f}]"
+                )
+            lines.append(
+                f"| {str(row['signifier']).replace('|', '&#124;')} | "
+                f"{float(row['unadjusted_annual_change_percentage_points']):+.1f} | "
+                f"{float(row['within_annual_change_percentage_points']):+.1f} | "
+                f"{interval} | "
+                f"{int(row['repeat_respondents']):,} |"
             )
         return "\n".join(lines)
 
@@ -979,10 +1223,37 @@ This selected-leader sensitivity is diagnostic, not a new discovery screen.
 It cannot correct unobserved composition, nonrepresentative recruitment,
 functional-form error, or selection of extremes from the full set of tests.
 
+## Within-respondent sensitivity
+
+A second targeted check absorbs a fixed effect for each hashed respondent and
+therefore estimates change only from people who answered the same signifier on
+multiple dates. **{within_same_direction} of {len(within_sensitivity)}** pooled
+leaders retained their direction. The median absolute pooled-to-within shift
+was **{median_within_absolute_shift:.1f} percentage points per year**, and the
+median selected signifier had **{median_repeat_respondents:,.0f} repeat
+respondents**. The largest shift was for **{largest_within_shift['signifier']}**,
+from {float(largest_within_shift['unadjusted_annual_change_percentage_points']):+.1f}
+to {float(largest_within_shift['within_annual_change_percentage_points']):+.1f}
+points. For **{no_within_switches}** selected signifiers, no repeat respondent
+changed endorsement; their zero within slopes are mechanical descriptions and
+clustered intervals are not displayed.
+
+![Pooled and within-respondent leader slopes](outputs/leader-within-respondent-sensitivity.svg)
+
+{within_sensitivity_table(within_sensitivity)}
+
+This comparison removes stable differences between respondents, but it is not
+a literal decomposition of the pooled trend into turnover and individual
+change. The fixed-effect estimate uses only repeat respondents, so it also
+changes the analytic sample; it remains vulnerable to selective retention,
+time-varying confounding, functional-form error, and selection of the pooled
+extremes. Its intervals are diagnostic rather than a discovery test.
+
 Full machine-readable estimates, eligibility flags, and interval bounds are in
 `outputs/signifier-growth.csv`; adjusted leader checks are in
-`outputs/leader-adjusted-sensitivity.csv`; the daily and cumulative counts are
-in `outputs/daily-observation-growth.csv`.
+`outputs/leader-adjusted-sensitivity.csv`; within-respondent checks are in
+`outputs/leader-within-respondent-sensitivity.csv`; the daily and cumulative
+counts are in `outputs/daily-observation-growth.csv`.
 
 ## Source
 
@@ -1115,8 +1386,17 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         list(sensitivity[0]),
         sensitivity,
     )
+    within_sensitivity = within_respondent_leader_sensitivity(trends, audit.signifiers)
+    write_csv(
+        output_dir / "leader-within-respondent-sensitivity.csv",
+        list(within_sensitivity[0]),
+        within_sensitivity,
+    )
     (output_dir / "leader-adjustment-sensitivity.svg").write_text(
         leader_sensitivity_svg(sensitivity), encoding="utf-8"
+    )
+    (output_dir / "leader-within-respondent-sensitivity.svg").write_text(
+        within_respondent_sensitivity_svg(within_sensitivity), encoding="utf-8"
     )
     (output_dir / "observation-growth.svg").write_text(observation_growth_svg(audit), encoding="utf-8")
     (output_dir / "annual-prevalence-growth-histogram.svg").write_text(
@@ -1179,12 +1459,40 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
             ),
             "results": [compact_sensitivity(row) for row in sensitivity],
         },
+        "within_respondent_sensitivity": {
+            "selection": (
+                f"top {LEADER_SENSITIVITY_PER_TAIL} positive and top "
+                f"{LEADER_SENSITIVITY_PER_TAIL} negative pooled slopes"
+            ),
+            "model": (
+                "unweighted respondent-fixed-effect linear probability trend; "
+                "identified by repeat responses to the same signifier"
+            ),
+            "uncertainty": (
+                "CR1 sandwich standard errors clustered by hashed respondent, "
+                "counting absorbed respondent effects in residual degrees of freedom"
+            ),
+            "selected_signifiers": len(within_sensitivity),
+            "same_direction": sum(bool(row["same_direction"]) for row in within_sensitivity),
+            "median_absolute_slope_shift_percentage_points": round(
+                statistics.median(
+                    abs(float(row["within_shift_percentage_points"]))
+                    for row in within_sensitivity
+                ),
+                3,
+            ),
+            "median_repeat_respondents": statistics.median(
+                int(row["repeat_respondents"]) for row in within_sensitivity
+            ),
+            "results": [compact_within_sensitivity(row) for row in within_sensitivity],
+        },
     }
     (output_dir / "current-summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     (PROJECT / "CURRENT-FINDINGS.md").write_text(
-        findings_markdown(audit, checked_at, trends, sensitivity), encoding="utf-8"
+        findings_markdown(audit, checked_at, trends, sensitivity, within_sensitivity),
+        encoding="utf-8",
     )
 
 
