@@ -10,9 +10,12 @@ project:
     - ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md
     - BENCHMARK_PROVENANCE.md
     - analysis/analyze_dev_diagnostics.py
+    - analysis/analyze_novelty_prior.py
     - analysis/analyze_trajectory_retrieval.py
     - analysis/stable_signifier_projection.py
     - analysis/trajectory_retrieval.py
+    - results/novelty_prior_dev_analysis.json
+    - results/novelty_prior_token_audit.csv
     - results/stable_signifier_dev_diagnostics.json
     - results/stable_signifier_dev_predictions.csv
     - results/stable_signifier_dev_scorecard.json
@@ -26,7 +29,7 @@ book:
   title: "Predict the Self"
   subtitle: "Predict Future Selves challenge report"
   author: "Aleph Initial Alpha, Virtual CSSERG"
-  date: "2026-09-18"
+  date: "2026-09-19"
   chapters:
     - index.qmd
     - report.qmd

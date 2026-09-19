@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "analysis": "post_hoc_volume_matched_marginal_novelty_prior",
+  "cases": 50,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "development_sha256": "afe74265475f1897161f54ac91395ded74d839e43236e8f4d189d91f9b40651a",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "retrieval_prediction_sha256": "f061d6658bb89359cee12313d426225d1ace601a01e51a8751662570b4345d60"
+  },
+  "diagnostic_control": {
+    "description": "For each case, rank token types by the number of training documents in which they were added, exclude tokens already present in the focal source, and select exactly as many types as trajectory retrieval introduced.",
+    "mean_novel_token_budget": 46.94,
+    "minimum_novel_token_budget": 1,
+    "maximum_novel_token_budget": 114,
+    "all_case_budgets_equal": true,
+    "warning": "The marginal prior borrows retrieval's per-case token budget. It is a volume-matched token-set diagnostic, not a standalone full-text forecast."
+  },
+  "bootstrap": {
+    "unit": "paired development case",
+    "resamples": 20000,
+    "seed": 20260919,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to development-case composition; it is not a population-generalization interval."
+  },
+  "novel_token_recovery": {
+    "marginal_prior": {
+      "precision": {
+        "mean": 0.176545,
+        "median": 0.142023,
+        "case_bootstrap_95_ci_low": 0.132638,
+        "case_bootstrap_95_ci_high": 0.229176,
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "recall": {
+        "mean": 0.172611,
+        "median": 0.171053,
+        "case_bootstrap_95_ci_low": 0.140554,
+        "case_bootstrap_95_ci_high": 0.206421,
+        "minimum": 0.0,
+        "maximum": 0.52381
+      },
+      "f1": {
+        "mean": 0.142637,
+        "median": 0.152285,
+        "case_bootstrap_95_ci_low": 0.118535,
+        "case_bootstrap_95_ci_high": 0.16768,
+        "minimum": 0.0,
+        "maximum": 0.382022
+      }
+    },
+    "trajectory_retrieval": {
+      "precision": {
+        "mean": 0.070466,
+        "median": 0.04878,
+        "case_bootstrap_95_ci_low": 0.052323,
+        "case_bootstrap_95_ci_high": 0.090967,
+        "minimum": 0.0,
+        "maximum": 0.333333
+      },
+      "recall": {
+        "mean": 0.085362,
+        "median": 0.068421,
+        "case_bootstrap_95_ci_low": 0.065642,
+        "case_bootstrap_95_ci_high": 0.106058,
+        "minimum": 0.0,
+        "maximum": 0.285714
+      },
+      "f1": {
+        "mean": 0.067109,
+        "median": 0.063494,
+        "case_bootstrap_95_ci_low": 0.052785,
+        "case_bootstrap_95_ci_high": 0.082286,
+        "minimum": 0.0,
+        "maximum": 0.202247
+      }
+    }
+  },
+  "paired_comparisons": {
+    "precision": {
+      "marginal_prior_mean": 0.176545,
+      "trajectory_retrieval_mean": 0.070466,
+      "effect_definition": "marginal_prior_minus_trajectory_retrieval",
+      "mean_effect_positive_favors_marginal_prior": 0.106079,
+      "paired_case_bootstrap_95_ci_low": 0.068782,
+      "paired_case_bootstrap_95_ci_high": 0.154891,
+      "marginal_prior_case_wins": 40,
+      "case_ties": 6,
+      "marginal_prior_case_losses": 4
+    },
+    "recall": {
+      "marginal_prior_mean": 0.172611,
+      "trajectory_retrieval_mean": 0.085362,
+      "effect_definition": "marginal_prior_minus_trajectory_retrieval",
+      "mean_effect_positive_favors_marginal_prior": 0.087249,
+      "paired_case_bootstrap_95_ci_low": 0.06221,
+      "paired_case_bootstrap_95_ci_high": 0.113649,
+      "marginal_prior_case_wins": 40,
+      "case_ties": 6,
+      "marginal_prior_case_losses": 4
+    },
+    "f1": {
+      "marginal_prior_mean": 0.142637,
+      "trajectory_retrieval_mean": 0.067109,
+      "effect_definition": "marginal_prior_minus_trajectory_retrieval",
+      "mean_effect_positive_favors_marginal_prior": 0.075528,
+      "paired_case_bootstrap_95_ci_low": 0.055927,
+      "paired_case_bootstrap_95_ci_high": 0.09499,
+      "marginal_prior_case_wins": 40,
+      "case_ties": 6,
+      "marginal_prior_case_losses": 4
+    }
+  },
+  "interpretation_limits": "The evaluator's lexical tokens include function words and other language that may not be identity signifiers. Development labels were already inspected, so this comparison is post hoc and not a private-test result."
+}

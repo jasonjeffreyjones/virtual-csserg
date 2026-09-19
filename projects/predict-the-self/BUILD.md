@@ -41,6 +41,15 @@ python3 projects/predict-the-self/analysis/analyze_trajectory_retrieval.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the post hoc volume-matched marginal-addition diagnostic. It
+hash-guards the training and development data, evaluator, and frozen retrieval
+predictions. It writes the complete machine-readable result and token audit:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_novelty_prior.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

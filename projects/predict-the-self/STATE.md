@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-18T09:20:24Z
+updated: 2026-09-19T09:10:46Z
 ---
 
 # Predict the Self — Current State
@@ -15,8 +15,10 @@ predictions are frozen, all current public-development results are published,
 and paired uncertainty and extractive-limit diagnostics are published. A
 locked development-only matched-trajectory baseline now separates forecasting
 the volume of identity-language change from forecasting its person-specific
-content. The Project follows the current three-memory-file and three-report
-structure. The private test scorecard and challenge pull request remain open.
+content. A post hoc volume-matched marginal-addition control now shows that
+retrieval does not beat common training-set additions on novel-token recovery.
+The Project follows the current three-memory-file and three-report structure.
+The private test scorecard and challenge pull request remain open.
 
 ## Current finding
 
@@ -60,6 +62,16 @@ is `0.194693` versus `0.307444` for stable projection; all other non-exact
 agreement metrics are also lower. Matching how much the language changes is
 not matching how this person's expressed identity changes.
 
+At exactly the same case-level novel-token prediction volume (mean `46.94`
+types), a training-only marginal-addition prior outperforms trajectory
+retrieval. Mean precision is `0.176545` versus `0.070466`, recall is `0.172611`
+versus `0.085362`, and F1 is `0.142637` versus `0.067109`. The paired
+marginal-minus-retrieval F1 difference is `+0.075528` with a case-bootstrap
+interval of `+0.055927` to `+0.094990`; the prior wins 40 cases, ties 6, and
+loses 4. This post hoc token-set control is not a coherent full-text forecast,
+but retrieval has not demonstrated person-specific lexical advantage over
+common additions.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -83,6 +95,10 @@ not matching how this person's expressed identity changes.
   development match audit, all 50 predictions, complete official scorecard,
   paired comparison, novelty-content diagnostics, and four unit tests. No
   retrieval test submission was generated.
+- Added a hash-guarded deterministic marginal-addition diagnostic, complete
+  machine-readable result, 2,770-row token audit, and four unit tests. It gives
+  the prior and retrieval identical novel-token budgets case by case and
+  reports paired precision, recall, and F1 comparisons.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -101,7 +117,7 @@ not matching how this person's expressed identity changes.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, six linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes fifteen research
+- The three forms link reciprocally. The Full Report publishes eighteen research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -125,6 +141,10 @@ not matching how this person's expressed identity changes.
 - Retrieval predictions adapt CC BY-NC-SA 4.0 benchmark data. They are
   published for audit, not submitted for private-test evaluation. The original
   stable test artifact remains unchanged.
+- The marginal-addition comparison is post hoc and diagnostic. It borrows
+  retrieval's case-level token budget, predicts token sets rather than full
+  text, and includes function words that need not be identity signifiers. The
+  token audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -147,6 +167,9 @@ not matching how this person's expressed identity changes.
 - `analysis/trajectory_retrieval.py` and
   `analysis/analyze_trajectory_retrieval.py`: development-only retrieval and
   locked paired/novelty analysis.
+- `analysis/analyze_novelty_prior.py`: post hoc volume-matched marginal-
+  addition control; `results/novelty_prior_dev_analysis.json` and
+  `results/novelty_prior_token_audit.csv` are its complete outputs.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -175,7 +198,7 @@ not matching how this person's expressed identity changes.
    or use training-only nested evaluation because development labels are now
    heavily reused.
 3. Compare a synthesizing approach able to condition genuinely new signifiers
-   on the individual rather than copying a neighbor; reuse the quantity-versus-
-   content diagnostics without private test feedback.
+   on the individual rather than copying a neighbor; require it to beat the
+   volume-matched marginal-addition prior without private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

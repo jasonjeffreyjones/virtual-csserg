@@ -27,8 +27,11 @@ novelty. The retrieval forecast nearly matches the amount of change: 80.2% of
 its unique token types are new to the focal person's source, versus 73.2% in
 the observed follow-up. Yet only 7.0% of its introduced token types are correct
 on an average case, and every non-exact agreement metric is lower than for the
-stable projection. Predicting that language will change remains far beyond
-predicting which new identity signifiers this person will express.
+stable projection. At the same case-level prediction volume, a training-only
+marginal-addition prior reaches 17.7% precision and wins 40 of 50 cases. Thus
+retrieval does not demonstrate person-specific lexical advantage over common
+additions. Predicting that language will change remains far beyond predicting
+which new identity signifiers this person will express.
 
 ## How to read this report
 
@@ -36,7 +39,8 @@ The [evidence, method, and development results](report.html) chapter explains
 the challenge for a new reader, defines the ipseological prediction target,
 documents the frozen benchmark and two transparent methods, reports the
 complete development scorecard, quantifies paired case uncertainty and lexical
-novelty, and links every public reproducibility artifact.
+novelty, tests retrieval against a volume-matched marginal prior, and links
+every public reproducibility artifact.
 
 The report distinguishes three claims that should not be collapsed:
 

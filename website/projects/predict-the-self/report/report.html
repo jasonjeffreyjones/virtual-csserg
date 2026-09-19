@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aleph Initial Alpha, Virtual CSSERG">
-<meta name="dcterms.date" content="2026-09-18">
+<meta name="dcterms.date" content="2026-09-19">
 
 <title>1&nbsp; Predict the Self – Predict the Self</title>
 <style>
@@ -152,6 +152,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#model-selection" id="toc-model-selection" class="nav-link" data-scroll-target="#model-selection"><span class="header-section-number">5.2</span> Model selection</a></li>
   <li><a href="#post-hoc-development-diagnostics" id="toc-post-hoc-development-diagnostics" class="nav-link" data-scroll-target="#post-hoc-development-diagnostics"><span class="header-section-number">5.3</span> Post hoc development diagnostics</a></li>
   <li><a href="#locked-matched-trajectory-retrieval" id="toc-locked-matched-trajectory-retrieval" class="nav-link" data-scroll-target="#locked-matched-trajectory-retrieval"><span class="header-section-number">5.4</span> Locked matched-trajectory retrieval</a></li>
+  <li><a href="#post-hoc-volume-matched-novelty-control" id="toc-post-hoc-volume-matched-novelty-control" class="nav-link" data-scroll-target="#post-hoc-volume-matched-novelty-control"><span class="header-section-number">5.5</span> Post hoc volume-matched novelty control</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">6</span> Results</a>
   <ul class="collapse">
@@ -159,7 +160,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#paired-pattern" id="toc-paired-pattern" class="nav-link" data-scroll-target="#paired-pattern"><span class="header-section-number">6.2</span> Paired development-case pattern</a></li>
   <li><a href="#extractive-limits" id="toc-extractive-limits" class="nav-link" data-scroll-target="#extractive-limits"><span class="header-section-number">6.3</span> Lexical novelty and extractive ceilings</a></li>
   <li><a href="#trajectory-retrieval" id="toc-trajectory-retrieval" class="nav-link" data-scroll-target="#trajectory-retrieval"><span class="header-section-number">6.4</span> Retrieval predicts novelty volume, not novel content</a></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.5</span> Frozen test submission</a></li>
+  <li><a href="#novelty-prior" id="toc-novelty-prior" class="nav-link" data-scroll-target="#novelty-prior"><span class="header-section-number">6.5</span> Person matching does not beat common additions</a></li>
+  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.6</span> Frozen test submission</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">7</span> Discussion</a>
   <ul class="collapse">
@@ -194,7 +196,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 18, 2026</p>
+      <p class="date">September 19, 2026</p>
     </div>
   </div>
 
@@ -210,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="../index.html">Executive Summary</a> · <a href="../short-report.pdf">Short two-column report</a> · <a href="index.html">report landing page</a></p>
 <section id="abstract" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Abstract</h1>
-<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast. A locked exploratory baseline retrieves the complete follow-up of the most similar training participant. It approximates how much new vocabulary will appear but not which vocabulary: predicted unique-token novelty is 80.2% versus 73.2% observed, while mean novel-token precision is 7.0%, recall is 8.5%, and agreement is lower than both continuity baselines.</p>
+<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast. A locked exploratory baseline retrieves the complete follow-up of the most similar training participant. It approximates how much new vocabulary will appear but not which vocabulary: predicted unique-token novelty is 80.2% versus 73.2% observed, while mean novel-token precision is 7.0%, recall is 8.5%, and agreement is lower than both continuity baselines. A post hoc volume-matched control sharpens the result: simply choosing the most frequent training-set additions reaches 17.7% precision and 14.3% F1, versus 7.0% and 6.7% for person-matched retrieval.</p>
 </section>
 <section id="findings" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Findings at a glance</h1>
@@ -223,6 +225,7 @@ ul.task-list li input[type="checkbox"] {
 <li>It still forecasts too much continuity: mean prediction-to-source ROUGE-L is 0.903898, compared with 0.225683 for observed follow-ups.</li>
 <li>On average, 73.2% of follow-up unique token types are new relative to the earlier response and therefore unavailable to a strictly extractive method.</li>
 <li>Matched-trajectory retrieval approximates the volume of lexical novelty and reduces source-similarity error, but its retrieved new signifiers rarely match the focal person’s observed new signifiers.</li>
+<li>At identical case-level novelty volume, a marginal prior based only on common training additions recovers more observed new token types than person-matched retrieval on 40 of 50 development cases.</li>
 </ul>
 </section>
 <section id="introduction" class="level1" data-number="4">
@@ -259,12 +262,12 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="post-hoc-development-diagnostics" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="post-hoc-development-diagnostics"><span class="header-section-number">5.3</span> Post hoc development diagnostics</h2>
-<p>After freezing the model and predictions, this iteration added two descriptive diagnostics. First, every scorecard comparison was decomposed into 50 paired case differences. A deterministic percentile bootstrap resampled cases in pairs 20,000 times (seed <code>20260917</code>) to show how the mean effect changes with development-case composition. These intervals do not warrant population generalization, and the analysis was not preregistered.</p>
+<p>After freezing the model and predictions, later work added two descriptive diagnostics. First, every scorecard comparison was decomposed into 50 paired case differences. A deterministic percentile bootstrap resampled cases in pairs 20,000 times (seed <code>20260917</code>) to show how the mean effect changes with development-case composition. These intervals do not warrant population generalization, and the analysis was not preregistered.</p>
 <p>Second, tokenized 2024 and follow-up responses were compared case by case. Unique-token novelty is the share of follow-up token types absent from the earlier response. Occurrence unavailability additionally respects how many times each token appears in the source: a strictly extractive method cannot copy a token more often than it occurs there. Three deliberately unattainable oracles use each observed follow-up to select the best source token set, bag of words, or source-order subsequence. They describe extractive ceilings, not prospective prediction performance.</p>
 </section>
 <section id="locked-matched-trajectory-retrieval" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="locked-matched-trajectory-retrieval"><span class="header-section-number">5.4</span> Locked matched-trajectory retrieval</h2>
-<p>A second method was locked before its predictions were generated in this iteration. This is a prospective analysis lock, not a preregistration: the development labels and aggregate stable-projection results were examined in earlier work, so the comparison remains exploratory. The complete plan was fixed at SHA-256 <code>86b2ddfe775773e1964beeefbac5479d88f6c46cd3385bf3a992fc7ae64e9c83</code>.</p>
+<p>A second method was locked before its predictions were generated. This is a prospective analysis lock, not a preregistration: the development labels and aggregate stable-projection results were examined in earlier work, so the comparison remains exploratory. The complete plan was fixed at SHA-256 <code>86b2ddfe775773e1964beeefbac5479d88f6c46cd3385bf3a992fc7ae64e9c83</code>.</p>
 <p>Four one-nearest-neighbor variants were first compared by leave-one-out prediction among the 150 training pairs. TF-IDF cosine over text plus 2024 demographics had the highest training token-overlap F1 (<code>0.1925</code>) and was selected by that declared lexical criterion. For each development query, the locked method:</p>
 <ol type="1">
 <li>represents case-folded response tokens and field-qualified, nonblank 2024 demographic values with smoothed TF-IDF weights;</li>
@@ -273,6 +276,11 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>The baseline is non-extractive with respect to the focal person’s earlier response, but it retrieves rather than synthesizes. It deliberately tests whether a prior person’s trajectory supplies the right kind and amount of new content. It generated development predictions only and did not create or alter a test submission. The copied training text is public benchmark data licensed CC BY-NC-SA 4.0 and is presented only as an auditable baseline, not as a factual description of the focal participant.</p>
 <p>The same complete scorecard is reported below. Directional metrics were also compared within person using 20,000 paired case-bootstrap resamples (seed <code>20260918</code>). Additional diagnostics compare predicted and observed novelty and measure precision, recall, and F1 for predicted novel token types. As above, the intervals describe development-case composition rather than a population.</p>
+</section>
+<section id="post-hoc-volume-matched-novelty-control" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="post-hoc-volume-matched-novelty-control"><span class="header-section-number">5.5</span> Post hoc volume-matched novelty control</h2>
+<p>The retrieval method introduces many token types, creating more opportunities for chance overlap with the observed follow-up. A new diagnostic therefore holds this opportunity constant case by case. It counts, among the 150 training pairs, how many people add each token type between waves. For each development source, it excludes tokens already present and chooses the most frequently added remaining types, breaking frequency ties alphabetically. The number chosen is exactly the number of novel types emitted by retrieval for that case.</p>
+<p>This marginal-addition prior uses no development response to construct its ranking, and it has the same novel-token budget as retrieval on every case. However, it borrows that budget from retrieval and produces only a token set, not a coherent response. It is therefore a diagnostic control rather than a standalone challenge forecast. The comparison was devised after development labels had already been inspected and is explicitly post hoc. Lexical tokens also include function words and other language that need not be semantic identity signifiers.</p>
 </section>
 </section>
 <section id="results" class="level1" data-number="6">
@@ -590,8 +598,55 @@ ul.task-list li input[type="checkbox"] {
 <p>The locked novelty criterion tells the same story more precisely. Retrieval’s mean predicted unique-token novelty (<code>0.801727</code>) is much closer to the observed mean (<code>0.731727</code>) than either stable projection or repeat-2024 (<code>0</code> for both), so it passes the plan’s novelty-volume criterion. Its case-level novelty MAE is <code>0.139032</code>. Occurrence novelty is also close in aggregate (<code>0.727677</code> predicted versus <code>0.650621</code> observed).</p>
 <p>However, novelty volume is not novel-content recovery. Among token types that retrieval introduces beyond the focal source, mean precision against the observed new token types is only <code>0.070466</code> (case-bootstrap interval <code>0.052133</code>–<code>0.090859</code>), recall is <code>0.085362</code> (<code>0.065937</code>–<code>0.106057</code>), and F1 is <code>0.067109</code> (<code>0.052917</code>–<code>0.082272</code>). Retrieval knows that a future response will look different, but mostly borrows the wrong person’s differences.</p>
 </section>
-<section id="submission" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.5</span> Frozen test submission</h2>
+<section id="novelty-prior" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="novelty-prior"><span class="header-section-number">6.5</span> Person matching does not beat common additions</h2>
+<p>The volume-matched marginal prior predicts a mean 46.94 novel token types per case, exactly equal to retrieval by construction. Despite lacking any person-matching rule, it recovers more of the observed novel vocabulary:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Novel-type measure</th>
+<th style="text-align: right;">Marginal prior</th>
+<th style="text-align: right;">Trajectory retrieval</th>
+<th style="text-align: right;">Paired difference</th>
+<th style="text-align: right;">Paired case-bootstrap 95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Precision</td>
+<td style="text-align: right;">0.176545</td>
+<td style="text-align: right;">0.070466</td>
+<td style="text-align: right;">+0.106079</td>
+<td style="text-align: right;">+0.068782 to +0.154891</td>
+</tr>
+<tr class="even">
+<td>Recall</td>
+<td style="text-align: right;">0.172611</td>
+<td style="text-align: right;">0.085362</td>
+<td style="text-align: right;">+0.087249</td>
+<td style="text-align: right;">+0.062210 to +0.113649</td>
+</tr>
+<tr class="odd">
+<td>F1</td>
+<td style="text-align: right;">0.142637</td>
+<td style="text-align: right;">0.067109</td>
+<td style="text-align: right;">+0.075528</td>
+<td style="text-align: right;">+0.055927 to +0.094990</td>
+</tr>
+</tbody>
+</table>
+<p>Positive differences favor the marginal prior. It wins 40 cases, ties 6, and loses 4 on each measure. The common additions include syntactic vocabulary such as <em>an</em>, <em>in</em>, <em>my</em>, <em>is</em>, and <em>who</em>, but also more content-bearing words such as <em>friend</em>, <em>lover</em>, <em>kind</em>, <em>creative</em>, and <em>life</em>. This means the earlier retrieval F1 cannot be read as evidence that matching text and demographics identified person-specific new signifiers. At matched volume, a coarse cohort-level base rate is substantially stronger.</p>
+<p>The result does not establish that novel identity content is inherently unpredictable. It establishes a stricter baseline for future work: an individualized novelty model should beat common training additions at a comparable prediction volume before its gains are attributed to person-level conditioning.</p>
+</section>
+<section id="submission" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.6</span> Frozen test submission</h2>
 <p>The method generated one nonblank prediction for every test ID in the required order. The pinned official validator returned <code>VALID: 81 predictions</code>. The frozen CSV has SHA-256:</p>
 <pre class="text"><code>a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3</code></pre>
 <p>The organizer must run the private test evaluator. Until that happens, the only empirical performance reported here is public-development performance.</p>
@@ -601,16 +656,20 @@ ul.task-list li input[type="checkbox"] {
 <h1 data-number="7"><span class="header-section-number">7</span> Discussion</h1>
 <p>The stable-signifier projection does learn something useful about response form and degree of change. Yet improved prediction of how much a response will change is not the same as predicting what new identity content will appear. The novelty diagnostic makes that distinction measurable: most future lexical material lies outside the earlier response, while the method is definitionally restricted to it. A next-generation model needs a mechanism for both deletion and creation, evaluated without sacrificing the interpretability of these paired diagnostics.</p>
 <p>Matched-trajectory retrieval sharpens this inference. It supplies deletion and creation in approximately the observed proportions, but the transferred novel content is rarely person-correct. The problem is not merely calibrating how different the next self-description will be. A useful forecast must condition new signifiers on the individual without collapsing back into verbatim continuity.</p>
+<p>The marginal control tightens that conclusion. Retrieval not only recovers little new vocabulary; it recovers less than a person-agnostic training prior given the same number of guesses. The diagnostic also disciplines the language of the report: token recovery is not automatically signifier recovery, because many high-base-rate additions are connective or generic words. Future person-specific models need to demonstrate value beyond both continuity and marginal lexical prevalence.</p>
 <section id="reproducibility" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="reproducibility"><span class="header-section-number">7.1</span> Reproducibility</h2>
 <p>The complete open materials are:</p>
 <ul>
 <li><a href="ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md"><code>ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md</code></a> — pre-prediction method and evaluation lock;</li>
 <li><a href="analysis/analyze_dev_diagnostics.py"><code>analysis/analyze_dev_diagnostics.py</code></a> — hash-guarded paired bootstrap and extractive-limit analysis;</li>
+<li><a href="analysis/analyze_novelty_prior.py"><code>analysis/analyze_novelty_prior.py</code></a> — volume-matched marginal-addition diagnostic;</li>
 <li><a href="analysis/analyze_trajectory_retrieval.py"><code>analysis/analyze_trajectory_retrieval.py</code></a> — complete paired and novelty comparison under the lock;</li>
 <li><a href="analysis/stable_signifier_projection.py"><code>analysis/stable_signifier_projection.py</code></a> — standard-library generator;</li>
 <li><a href="analysis/trajectory_retrieval.py"><code>analysis/trajectory_retrieval.py</code></a> — standard-library matched-trajectory generator;</li>
 <li><a href="results/stable_signifier_dev_diagnostics.json"><code>results/stable_signifier_dev_diagnostics.json</code></a> — complete machine-readable post hoc diagnostic results;</li>
+<li><a href="results/novelty_prior_dev_analysis.json"><code>results/novelty_prior_dev_analysis.json</code></a> — complete marginal-prior comparison and paired uncertainty;</li>
+<li><a href="results/novelty_prior_token_audit.csv"><code>results/novelty_prior_token_audit.csv</code></a> — token ranks, frequencies, prediction counts, and correct-recovery counts;</li>
 <li><a href="results/stable_signifier_dev_predictions.csv"><code>results/stable_signifier_dev_predictions.csv</code></a> — all 50 public development predictions;</li>
 <li><a href="results/stable_signifier_dev_scorecard.json"><code>results/stable_signifier_dev_scorecard.json</code></a> — complete machine-readable scorecard;</li>
 <li><a href="results/trajectory_retrieval_dev_analysis.json"><code>results/trajectory_retrieval_dev_analysis.json</code></a> — complete locked paired comparison and novelty diagnostics;</li>
@@ -635,8 +694,9 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="7.3" class="anchored" data-anchor-id="limitations"><span class="header-section-number">7.3</span> Limitations and next step</h2>
 <p>An extractive method cannot predict genuinely new identities, experiences, or reframing. Token recurrence is not equivalent to identity-signifier endurance, and common wording can make a signifier look stable. The line splitter also turns some prose sentences into separate output lines, worsening line-count error. Finally, public-development-guided selection can overfit a 50-case set.</p>
 <p>Trajectory retrieval adds different limitations. It transfers another participant’s public response rather than generating a person-specific future, and demographic similarity does not establish that identity change follows demographic categories. Its within-iteration lock reduces new analytic flexibility but cannot make previously inspected development data unseen.</p>
+<p>The marginal-addition control is post hoc and deliberately narrow. It uses retrieval’s case-level novel-token count, so it is not an independent full-text forecast; it isolates content choice after holding opportunity volume equal. Its ranking is estimated from only 150 training pairs, and its lexical units include function words that are not necessarily identity signifiers. The derived token audit adapts the benchmark data and remains governed by the benchmark’s CC BY-NC-SA 4.0 license.</p>
 <p>The paired bootstrap treats development cases as the resampling unit, but the benchmark is a selected longitudinal cohort rather than a probability sample. Its intervals describe sensitivity to the composition of these 50 cases, not uncertainty for people in general. The lexical oracles use observed follow-ups and are deliberately unattainable; they must not be read as test predictions or achievable prospective scores.</p>
-<p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. A later method should synthesize rather than copy novel content, lock its design before any additional development comparison, avoid private test feedback for tuning, and apply the same quantity-versus-content diagnostics.</p>
+<p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. A later method should synthesize rather than copy novel content, lock its design before any additional development comparison, avoid private test feedback for tuning, and beat the volume-matched marginal-addition prior before claiming person-specific novel-content prediction.</p>
 
 
 </section>

@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and development results"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-18"
+date: "2026-09-19"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -25,7 +25,10 @@ A locked exploratory baseline retrieves the complete follow-up of the most
 similar training participant. It approximates how much new vocabulary will
 appear but not which vocabulary: predicted unique-token novelty is 80.2%
 versus 73.2% observed, while mean novel-token precision is 7.0%, recall is
-8.5%, and agreement is lower than both continuity baselines.
+8.5%, and agreement is lower than both continuity baselines. A post hoc
+volume-matched control sharpens the result: simply choosing the most frequent
+training-set additions reaches 17.7% precision and 14.3% F1, versus 7.0% and
+6.7% for person-matched retrieval.
 
 # Findings at a glance {#findings}
 
@@ -49,6 +52,9 @@ versus 73.2% observed, while mean novel-token precision is 7.0%, recall is
 - Matched-trajectory retrieval approximates the volume of lexical novelty and
   reduces source-similarity error, but its retrieved new signifiers rarely
   match the focal person's observed new signifiers.
+- At identical case-level novelty volume, a marginal prior based only on common
+  training additions recovers more observed new token types than person-matched
+  retrieval on 40 of 50 development cases.
 
 # Introduction {#introduction}
 
@@ -119,7 +125,7 @@ result, not an untouched confirmatory estimate.
 
 ## Post hoc development diagnostics
 
-After freezing the model and predictions, this iteration added two descriptive
+After freezing the model and predictions, later work added two descriptive
 diagnostics. First, every scorecard comparison was decomposed into 50 paired
 case differences. A deterministic percentile bootstrap resampled cases in
 pairs 20,000 times (seed `20260917`) to show how the mean effect changes with
@@ -137,8 +143,8 @@ prospective prediction performance.
 
 ## Locked matched-trajectory retrieval
 
-A second method was locked before its predictions were generated in this
-iteration. This is a prospective analysis lock, not a preregistration: the
+A second method was locked before its predictions were generated. This is a
+prospective analysis lock, not a preregistration: the
 development labels and aggregate stable-projection results were examined in
 earlier work, so the comparison remains exploratory. The complete plan was
 fixed at SHA-256
@@ -169,6 +175,26 @@ compared within person using 20,000 paired case-bootstrap resamples (seed
 `20260918`). Additional diagnostics compare predicted and observed novelty and
 measure precision, recall, and F1 for predicted novel token types. As above,
 the intervals describe development-case composition rather than a population.
+
+## Post hoc volume-matched novelty control
+
+The retrieval method introduces many token types, creating more opportunities
+for chance overlap with the observed follow-up. A new diagnostic therefore
+holds this opportunity constant case by case. It counts, among the 150
+training pairs, how many people add each token type between waves. For each
+development source, it excludes tokens already present and chooses the most
+frequently added remaining types, breaking frequency ties alphabetically. The
+number chosen is exactly the number of novel types emitted by retrieval for
+that case.
+
+This marginal-addition prior uses no development response to construct its
+ranking, and it has the same novel-token budget as retrieval on every case.
+However, it borrows that budget from retrieval and produces only a token set,
+not a coherent response. It is therefore a diagnostic control rather than a
+standalone challenge forecast. The comparison was devised after development
+labels had already been inspected and is explicitly post hoc. Lexical tokens
+also include function words and other language that need not be semantic
+identity signifiers.
 
 # Results {#results}
 
@@ -286,6 +312,32 @@ observed new token types is only `0.070466` (case-bootstrap interval
 `0.067109` (`0.052917`–`0.082272`). Retrieval knows that a future response will
 look different, but mostly borrows the wrong person's differences.
 
+## Person matching does not beat common additions {#novelty-prior}
+
+The volume-matched marginal prior predicts a mean 46.94 novel token types per
+case, exactly equal to retrieval by construction. Despite lacking any
+person-matching rule, it recovers more of the observed novel vocabulary:
+
+| Novel-type measure | Marginal prior | Trajectory retrieval | Paired difference | Paired case-bootstrap 95% interval |
+| --- | ---: | ---: | ---: | ---: |
+| Precision | 0.176545 | 0.070466 | +0.106079 | +0.068782 to +0.154891 |
+| Recall | 0.172611 | 0.085362 | +0.087249 | +0.062210 to +0.113649 |
+| F1 | 0.142637 | 0.067109 | +0.075528 | +0.055927 to +0.094990 |
+
+Positive differences favor the marginal prior. It wins 40 cases, ties 6, and
+loses 4 on each measure. The common additions include syntactic vocabulary
+such as *an*, *in*, *my*, *is*, and *who*, but also more content-bearing words
+such as *friend*, *lover*, *kind*, *creative*, and *life*. This means the
+earlier retrieval F1 cannot be read as evidence that matching text and
+demographics identified person-specific new signifiers. At matched volume, a
+coarse cohort-level base rate is substantially stronger.
+
+The result does not establish that novel identity content is inherently
+unpredictable. It establishes a stricter baseline for future work: an
+individualized novelty model should beat common training additions at a
+comparable prediction volume before its gains are attributed to person-level
+conditioning.
+
 ## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
@@ -317,6 +369,14 @@ different the next self-description will be. A useful forecast must condition
 new signifiers on the individual without collapsing back into verbatim
 continuity.
 
+The marginal control tightens that conclusion. Retrieval not only recovers
+little new vocabulary; it recovers less than a person-agnostic training prior
+given the same number of guesses. The diagnostic also disciplines the
+language of the report: token recovery is not automatically signifier
+recovery, because many high-base-rate additions are connective or generic
+words. Future person-specific models need to demonstrate value beyond both
+continuity and marginal lexical prevalence.
+
 ## Reproducibility {#reproducibility}
 
 The complete open materials are:
@@ -325,6 +385,8 @@ The complete open materials are:
   — pre-prediction method and evaluation lock;
 - [`analysis/analyze_dev_diagnostics.py`](analysis/analyze_dev_diagnostics.py)
   — hash-guarded paired bootstrap and extractive-limit analysis;
+- [`analysis/analyze_novelty_prior.py`](analysis/analyze_novelty_prior.py)
+  — volume-matched marginal-addition diagnostic;
 - [`analysis/analyze_trajectory_retrieval.py`](analysis/analyze_trajectory_retrieval.py)
   — complete paired and novelty comparison under the lock;
 - [`analysis/stable_signifier_projection.py`](analysis/stable_signifier_projection.py)
@@ -333,6 +395,10 @@ The complete open materials are:
   — standard-library matched-trajectory generator;
 - [`results/stable_signifier_dev_diagnostics.json`](results/stable_signifier_dev_diagnostics.json)
   — complete machine-readable post hoc diagnostic results;
+- [`results/novelty_prior_dev_analysis.json`](results/novelty_prior_dev_analysis.json)
+  — complete marginal-prior comparison and paired uncertainty;
+- [`results/novelty_prior_token_audit.csv`](results/novelty_prior_token_audit.csv)
+  — token ranks, frequencies, prediction counts, and correct-recovery counts;
 - [`results/stable_signifier_dev_predictions.csv`](results/stable_signifier_dev_predictions.csv)
   — all 50 public development predictions;
 - [`results/stable_signifier_dev_scorecard.json`](results/stable_signifier_dev_scorecard.json)
@@ -382,6 +448,14 @@ and demographic similarity does not establish that identity change follows
 demographic categories. Its within-iteration lock reduces new analytic
 flexibility but cannot make previously inspected development data unseen.
 
+The marginal-addition control is post hoc and deliberately narrow. It uses
+retrieval's case-level novel-token count, so it is not an independent full-text
+forecast; it isolates content choice after holding opportunity volume equal.
+Its ranking is estimated from only 150 training pairs, and its lexical units
+include function words that are not necessarily identity signifiers. The
+derived token audit adapts the benchmark data and remains governed by the
+benchmark's CC BY-NC-SA 4.0 license.
+
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.
 Its intervals describe sensitivity to the composition of these 50 cases, not
@@ -393,5 +467,5 @@ The immediate next step is to submit the two prepared artifacts to the
 challenge organizer and add the complete private test scorecard, unchanged, to
 this report. A later method should synthesize rather than copy novel content,
 lock its design before any additional development comparison, avoid private
-test feedback for tuning, and apply the same quantity-versus-content
-diagnostics.
+test feedback for tuning, and beat the volume-matched marginal-addition prior
+before claiming person-specific novel-content prediction.

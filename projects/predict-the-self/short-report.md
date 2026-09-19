@@ -14,6 +14,8 @@ The most important result is a failure of continuity modeling. Mean prediction-t
 
 A locked exploratory retrieval baseline supplies new language by borrowing the complete follow-up of the most similar training participant. It nearly matches the volume of change: 80.1727% of its unique token types are new to the focal source, versus 73.1727% observed. But only 7.0466% of its introduced token types are correct on an average case; novel-token recall is 8.5362% and F1 is 6.7109%. Predicting that language will change is much easier than predicting which new identity signifiers this person will express.
 
+A post hoc control holds the number of novel guesses identical case by case. A training-only marginal prior that simply ranks common token additions reaches 17.6545% precision and 14.2637% F1, versus retrieval's 7.0466% and 6.7109%; it wins 40 of 50 cases. Person matching has not yet beaten lexical base rates.
+
 ## Question and benchmark
 
 The larger project asks how predictable human lives are. Its first tractable task is Dr. Jason Jeffrey Jones' Predict Future Selves challenge: predict later personally expressed identity from an earlier self-description. The target is an individual's later expression of identity, not a latent true self or a complete life outcome.
@@ -38,6 +40,8 @@ Before generating a second set of development predictions, the Project locked on
 
 This is an analysis lock, not a preregistration: development labels had been inspected in prior iterations. The paired comparison is exploratory. It uses 20,000 case-bootstrap resamples with seed 20260918 and reports the complete shared scorecard without a composite.
 
+A separate post hoc diagnostic ranks token types by how often they were added across the 150 training pairs. For each development source, it excludes already-present tokens and selects exactly as many types as retrieval introduced. This volume-matched prior is a token-set control, not a coherent full-text forecast. Its 20,000 paired resamples use seed 20260919.
+
 ## Complete result pattern
 
 The projection improves three of six text-agreement measures, worsens two, and ties exact match. Its word-count mean absolute error falls from 56.68 to 41.64 words, a +15.04 error reduction with paired case-bootstrap interval +1.18 to +32.36. Source-similarity error falls from 0.774317 to 0.678215; its +0.096102 reduction has interval +0.066064 to +0.129348. Line-count error rises from 6.80 to 9.76; its −2.96 error reduction has interval −5.54 to −0.42. These mixed directions are why no single headline score summarizes the method.
@@ -46,17 +50,19 @@ Across cases, 73.1727% of distinct future token types are new relative to the so
 
 Retrieval's mean prediction-to-source similarity is 0.175191, close to the observed 0.225683, and source-similarity MAE falls to 0.136074. But agreement falls sharply: token-overlap F1 is 0.194693, compared with 0.307444 for stable projection and 0.312202 for repeat-2024; retrieval's paired difference from stable projection is −0.112751 (interval −0.170815 to −0.058175). All other non-exact agreement measures are also lower. Retrieval calibrates the amount of novelty while mostly transferring the wrong person's novel content.
 
+With mean novel-token volume fixed at 46.94 types per case, the marginal prior's precision is 0.176545 versus 0.070466 for retrieval (paired difference +0.106079, interval +0.068782 to +0.154891). Recall is 0.172611 versus 0.085362 (difference +0.087249, interval +0.062210 to +0.113649), and F1 is 0.142637 versus 0.067109 (difference +0.075528, interval +0.055927 to +0.094990). The prior wins 40 cases, ties 6, and loses 4 on every measure.
+
 The submission contains one nonblank prediction for every required test ID in order. Its SHA-256 is a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3. Only the organizer can run the private evaluator. Validation establishes artifact shape, not predictive performance.
 
 ## Interpretation and limits
 
-Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. Repeated tuning on 50 development cases would risk overfitting, and neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
+Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. The marginal control further shows that retrieval's few correct novel tokens are not evidence of person-specific advantage over common additions. Its lexical units include function words, and its borrowed case-level token budget makes it a diagnostic rather than an independent prediction method. Repeated tuning on 50 development cases would risk overfitting, and neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
 
-The next research step is to submit the frozen CSV and method card and publish the organizer's complete private scorecard unchanged. A later method should synthesize rather than copy new signifiers, lock its design before another development comparison, and avoid private test feedback for tuning.
+The next research step is to submit the frozen CSV and method card and publish the organizer's complete private scorecard unchanged. A later method should synthesize rather than copy new signifiers, lock its design before another development comparison, avoid private test feedback for tuning, and beat the volume-matched marginal prior before claiming person-specific novelty prediction.
 
 ## Reproducibility and references
 
-The public repository contains both deterministic standard-library generators, the retrieval analysis lock and audit, hash-guarded diagnostic scripts, both sets of 50 development predictions, complete machine-readable scorecards and diagnostics, the frozen 81-case stable-projection test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
+The public repository contains both deterministic standard-library generators, the retrieval analysis lock and audit, hash-guarded diagnostic scripts, both sets of 50 development predictions, the marginal-prior token audit, complete machine-readable scorecards and diagnostics, the frozen 81-case stable-projection test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
 
 Jones, J. J. (2023). <i>Ipseology—A new science of the self.</i> https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/
 
