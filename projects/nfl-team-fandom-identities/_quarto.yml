@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: ../../website/projects/nfl-team-fandom-identities/report
+  post-render:
+    - python3 ../../python/promote_report_skip_links.py ../../website/projects/nfl-team-fandom-identities/report
   render:
     - index.qmd
 book:

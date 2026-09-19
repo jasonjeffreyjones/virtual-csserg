@@ -5,7 +5,9 @@ claim boundary and `report.qmd` contains the evidence, method, complete public
 development scorecard, artifacts, and references. Two chapters suit this
 report; Virtual CSSERG does not prescribe an exact chapter count.
 
-Quarto renders into ignored project-local `_book/`. The guarded publisher then
+Quarto renders into ignored project-local `_book/`. A standard-library
+post-render command moves the source-controlled bypass link to the beginning of
+each generated body without runtime JavaScript. The guarded publisher then
 replaces the complete public report tree, including copied reproducibility
 artifacts, so stale generated libraries cannot survive. It also preserves the
 matching `report/artifacts/` URLs as byte-identical compatibility copies

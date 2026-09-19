@@ -44,7 +44,7 @@ class StaticAccessibilityTests(unittest.TestCase):
             ["late.html: bypass link is not the first link"],
         )
 
-        relocated = parse(
+        runtime_relocated = parse(
             '<a href="/">Home</a>'
             '<a class="report-skip" href="#main">Skip</a>'
             '<script>document.body.prepend('
@@ -52,7 +52,8 @@ class StaticAccessibilityTests(unittest.TestCase):
             '<main id="main"></main>'
         )
         self.assertEqual(
-            VERIFY.page_accessibility_problems(relocated, "relocated.html"), []
+            VERIFY.page_accessibility_problems(runtime_relocated, "relocated.html"),
+            ["relocated.html: bypass link is not the first link"],
         )
 
         wrong_target = parse(

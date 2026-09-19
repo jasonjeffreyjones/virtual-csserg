@@ -32,9 +32,13 @@ failures without commit, push, or deployment. They run as a separate
 integration suite rather than recursively inside a live runner. A September 18
 claim-to-evidence review closes the substantive report gate and documents its
 internal-review boundary; rendered keyboard and assistive-technology usability
-remains the sole manual gate. The superseded-report archive policy is now
+remains the sole manual gate. On September 19, the generated-report build made
+every bypass link first in static HTML without runtime relocation, and
+`ACCESSIBILITY-REVIEW.md` made the remaining 11-page manual gate reproducible.
+The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
-September 17 outgoing report preserved before substantive review.
+September 17 outgoing report preserved before substantive review and the clean
+September 18 report preserved before static bypass-link promotion.
 
 ## Recommended design choices
 

@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 18, 2026 at 08:09 UTC
+
+- **Superseded:** September 19, 2026
+- **Archive key:**
+  [`188e26853d9f9fa94ea9285d906f1a2ee72d2640`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/188e26853d9f9fa94ea9285d906f1a2ee72d2640)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before bypass-link publication was made independent of runtime
+  JavaScript.
+- **Reason:** The outgoing reports accurately described a source-controlled
+  bypass link that runtime JavaScript moved before Quarto navigation. A
+  text-browser review exposed the weaker no-script order. The next release
+  makes the link first in generated HTML through a tested post-render step and
+  defines the evidence needed to close rendered review while keeping that gate
+  open.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/188e26853d9f9fa94ea9285d906f1a2ee72d2640/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/188e26853d9f9fa94ea9285d906f1a2ee72d2640/projects/vcsserg-repo-v1)
+
 ### Updated through September 17, 2026 at 08:13 UTC
 
 - **Superseded:** September 18, 2026

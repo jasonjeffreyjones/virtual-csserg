@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _book
+  post-render:
+    - python3 ../../python/promote_report_skip_links.py _book
   render:
     - index.qmd
     - report.qmd

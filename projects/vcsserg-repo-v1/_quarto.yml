@@ -1,13 +1,15 @@
 project:
   type: book
   output-dir: _book
+  post-render:
+    - python3 ../../python/promote_report_skip_links.py _book
   render:
     - index.qmd
 book:
   title: "Virtual CSSERG Version 1.0"
   subtitle: "Does the virtual lab work as documented?"
   author: "Bee Boring Vanilla"
-  date: "2026-09-18"
+  date: "2026-09-19"
   chapters:
     - index.qmd
 format:

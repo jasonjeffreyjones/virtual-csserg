@@ -2,17 +2,19 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-18T08:09:41Z
+updated: 2026-09-19T08:21:29Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 18, 2026, all seven automated promise groups pass across
+Active. On September 19, 2026, all seven automated promise groups pass across
 26 HTML pages and six first-party stylesheets. The static-site group now
-requires a bypass mechanism and an explicit `alt` decision for every image,
-with negative fixtures for both regressions. The September 15 normal Scholar
+requires a first-anchor bypass mechanism and an explicit `alt` decision for
+every image, with negative fixtures for both regressions. A tested post-render
+normalizer makes the bypass link first in all four generated Quarto pages
+without runtime JavaScript. The September 15 normal Scholar
 run reached completion only after its guarded deployment and authenticated
 inventory phase returned successfully; the September 16 public probe then found all 110
 expected files byte-identical. This closes the deployment gate and observes the
@@ -22,7 +24,7 @@ all four Projects. Controlled runner tests now witness dirty-start refusal plus
 Scholar and validation failures without commit, push, or deployment. Version 1.0 is not
 complete: a September 18 claim-to-evidence review closes the substantive report
 gate, while rendered desktop/phone keyboard and assistive-technology review
-remains open.
+remains open under the explicit `ACCESSIBILITY-REVIEW.md` protocol.
 
 ## Completed work and current evidence
 
@@ -81,14 +83,22 @@ remains open.
   GitHub and CC BY 4.0 under **Open work**. The system is synchronized across
   direct HTML, all three Quarto footer sources/generated reports, and archived
   design pages; the verifier rejects missing groups and misplaced links.
-- Every public HTML page now exposes a bypass link, and every image has an
+- Every public HTML page now exposes a first-anchor bypass link, and every image has an
   explicit `alt` attribute (including empty alternatives for decorative
-  images). The four generated Quarto pages use a source-controlled link that
-  moves to the start of the live document and targets the report's `main`;
-  the two NFL report figures now retain detailed alternatives after rendering.
-  Two negative-fixture tests reject missing/late bypass links and missing
-  image alternatives. These static checks do not replace rendered keyboard or
-  assistive-technology review.
+  images). The four generated Quarto pages use a source-controlled link and a
+  standard-library post-render normalizer that preflights the whole output tree,
+  moves the link before repeated navigation, validates its `main` target, and
+  refuses duplicates before writing. Three focused normalizer tests cover
+  promotion, idempotence, and failure without partial mutation; the verifier no
+  longer accepts runtime JavaScript relocation. The two NFL report figures
+  retain detailed alternatives after rendering. These static checks do not
+  replace rendered keyboard or assistive-technology review.
+- `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 11 production pages,
+  desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
+  checks, environment record, and passing rule. A supplemental `w3m` 0.5.3 pass
+  returned zero at 40 and 120 columns for every selected page and showed “Skip
+  to content” first. It is linearized text evidence, not a graphical-browser or
+  screen-reader pass.
 - The Full Report publisher replaces a complete generated tree so stale Quarto
   libraries cannot survive; two unit tests cover replacement and preservation
   of the current public tree when a build is incomplete.
@@ -101,9 +111,10 @@ remains open.
   supersession, correction, and retraction. Canonical URLs remain current while
   a full commit key preserves the outgoing three-form report, dependencies,
   sources, and Project record. `REPORT-VERSIONS.md` records the September 15 v1
-  release, two September 16 report sets, and the September 17 outgoing report
-  before substantive review; the verifier confirms all three forms exist at
-  each recorded commit.
+  release, two September 16 report sets, the September 17 outgoing report before
+  substantive review, and the September 18 outgoing report before static
+  bypass-link promotion; the verifier confirms all three forms exist at each
+  recorded commit.
 - NFL Team Fandom Identities records the PI-directed Paused lifecycle state in
   its state, dialog, public summary, Projects listing, and homepage. Its
   findings and reports remain Published; the PI confirms no Scholar schedules
@@ -117,8 +128,9 @@ remains open.
   found all 109 then-expected files identical, improving on the September 13
   result of 73 identical, 10 different, and 26 unavailable. The September 16
   run found all 110 expected files identical after the normal deployment. The
-  September 18 pre-change probe found all 114 incoming files byte-identical.
-  HTTP cannot discover remote-only files by itself, and the current result does
+  September 18 pre-change probe found all 114 incoming files byte-identical, and
+  the September 19 pre-change probe found all 128 incoming files byte-identical.
+  HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
   tree, validates the identity and Active Project, and independently runs the
@@ -144,13 +156,13 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups pass across 26 HTML pages and six first-party stylesheets on
-September 18.
+All seven groups and all 29 routine tests pass across 26 HTML pages and six
+first-party stylesheets on September 19.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
-indexes, legacy-dialog digests, bypass mechanisms, and explicit image
-alternatives.
+indexes, legacy-dialog digests, first-anchor bypass mechanisms, and explicit
+image alternatives. Three tests cover the build-time Quarto bypass normalizer.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -199,17 +211,19 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Current problems and manual gates
 
-- Inspect the selected layouts at desktop and phone widths with keyboard and
-  assistive technology. No installed Chromium, Chrome, or Firefox executable is
-  available on this host.
+- Follow `ACCESSIBILITY-REVIEW.md` on a browser-equipped host: inspect all 11
+  selected production pages at desktop and phone widths with keyboard and a
+  recorded screen-reader pairing. No installed Chromium, Chrome, or Firefox
+  executable or supported screen-reader/browser pairing is available on this host.
 - Dr. Jones reported that the production pages and PDFs look acceptable. The
   keyboard/assistive-technology pass remains the sole open manual gate.
 
 ## Resources and limitations
 
-September 18 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 19 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
-rsync 3.2.7 are available. No Chromium, Chrome, or Firefox executable was found.
+rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
+Firefox executable or supported screen-reader/browser pairing was found.
 ReportLab/pypdf are not installed in the base Python environment; any PDF build
 uses the existing documented temporary build-only packages, not production
 dependencies. No package or replacement runtime was installed in this iteration.
@@ -217,6 +231,8 @@ dependencies. No package or replacement runtime was installed in this iteration.
 ## Important files
 
 - `V1-AUDIT.md`: current promise/evidence matrix and manual gates.
+- `ACCESSIBILITY-REVIEW.md`: selected-page matrix, environment record,
+  keyboard/reflow/screen-reader procedure, and passing rule for the open gate.
 - `SUBSTANTIVE-REVIEW.md`: charter coverage, material claim-to-evidence matrix,
   review boundaries, the timestamp correction, and reproduction evidence.
 - `V1-RECOMMENDATIONS.md`: approved design/governance decisions and rollout.
@@ -228,6 +244,8 @@ dependencies. No package or replacement runtime was installed in this iteration.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
   v1 release ledger.
 - `verify_v1.py`: non-destructive promise regression suite.
+- `python/promote_report_skip_links.py`: tested, preflight-first Quarto
+  post-render normalizer that makes bypass links first in static HTML.
 - `scholars.json`, `scholars/`, `python/create_scholar.py`, and
   `python/scholar_roster.py`: identity data, canonical biographies, guarded
   creation, and read-only validation.
@@ -254,4 +272,6 @@ dependencies. No package or replacement runtime was installed in this iteration.
 
 No blocking PI question. Controlled runner failure paths now pass without
 commit, push, or deployment, and the PI confirms no schedules are enabled.
-Next complete rendered desktop/phone keyboard and assistive-technology review.
+Next execute `ACCESSIBILITY-REVIEW.md` on a browser/screen-reader-equipped host,
+record the environment and per-page results, repair and retest any failure, and
+then assess the charter and PI authority before changing lifecycle state.

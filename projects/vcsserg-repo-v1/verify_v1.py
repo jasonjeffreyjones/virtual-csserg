@@ -53,7 +53,6 @@ class PageParser(HTMLParser):
         self.html_lang = ""
         self.images = []
         self.ids = []
-        self.in_script = False
         self.in_title = False
         self.first_anchor_is_skip = False
         self.anchor_count = 0
@@ -63,7 +62,6 @@ class PageParser(HTMLParser):
         self.project_updates = []
         self.references = []
         self.skip_references = []
-        self.script_parts = []
         self.text_parts = []
         self.title_parts = []
 
@@ -102,8 +100,6 @@ class PageParser(HTMLParser):
             self.ids.append(element_id)
         if tag == "html":
             self.html_lang = attributes.get("lang", "")
-        elif tag == "script":
-            self.in_script = True
         elif tag == "main":
             self.main_count += 1
             if element_id:
@@ -131,8 +127,6 @@ class PageParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "title":
             self.in_title = False
-        elif tag == "script":
-            self.in_script = False
         elif tag == "a" and self.assignment is not None:
             self.assignments.append(
                 (
@@ -153,8 +147,6 @@ class PageParser(HTMLParser):
             self.assignment["text"].append(data)
         if self.in_title:
             self.title_parts.append(data)
-        if self.in_script:
-            self.script_parts.append(data)
 
     @property
     def text(self):
@@ -177,11 +169,7 @@ def page_accessibility_problems(parsed, relative):
     ]
     if not valid_skip_references:
         problems.append(f"{relative}: missing bypass link")
-    elif not parsed.first_anchor_is_skip and not any(
-        "document.body.prepend(document.currentScript.previousElementSibling)"
-        in script
-        for script in parsed.script_parts
-    ):
+    elif not parsed.first_anchor_is_skip:
         problems.append(f"{relative}: bypass link is not the first link")
     for number, image in enumerate(parsed.images, start=1):
         if "alt" not in image:
@@ -871,6 +859,9 @@ def check_public_catalogs():
 def check_report_formats():
     """Check automatable parts of the three-format publication contract."""
     problems = []
+    normalizer = PROJECT_ROOT / "python/promote_report_skip_links.py"
+    if not normalizer.is_file():
+        problems.append("missing generated-report bypass normalizer")
     projects = sorted(
         path for path in (PROJECT_ROOT / "projects").iterdir()
         if path.is_dir()
@@ -926,8 +917,22 @@ def check_report_formats():
             if short_report.is_file() and short_report.resolve() not in targets:
                 problems.append(f"{slug}: Full Report does not link the short report")
 
-        if not (project / "_quarto.yml").is_file():
+        quarto_config = project / "_quarto.yml"
+        if not quarto_config.is_file():
             problems.append(f"{slug}: missing Quarto book configuration")
+        elif "../../python/promote_report_skip_links.py" not in quarto_config.read_text(
+            encoding="utf-8"
+        ):
+            problems.append(f"{slug}: Quarto build omits bypass-link normalizer")
+        skip_fragment = project / "skip-link.html"
+        if not skip_fragment.is_file():
+            problems.append(f"{slug}: missing source-controlled bypass link")
+        else:
+            skip_source = skip_fragment.read_text(encoding="utf-8")
+            if "report-skip" not in skip_source:
+                problems.append(f"{slug}: bypass fragment omits report-skip link")
+            if "document.body.prepend" in skip_source:
+                problems.append(f"{slug}: bypass fragment uses runtime relocation")
         if not list(project.glob("*.qmd")):
             problems.append(f"{slug}: missing Quarto source")
 

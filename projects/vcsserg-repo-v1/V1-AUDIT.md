@@ -16,19 +16,19 @@ does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 18, 2026 |
+| Documented promise | Evidence or test | Status on September 19, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, bypass links, explicit image alternatives, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, explicit image alternatives, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets; generated-report bypass order no longer depends on runtime JavaScript; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, and all 114 incoming files matched before the September 18 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, and 128 matched before the September 19 revision |
 
 ## Current automated result
 
-On September 18, 2026, **all seven groups pass**. The final report-format gap
+On September 19, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -59,8 +59,8 @@ publication structure:
   report commit as a second superseded release.
 - On September 17, the static-site group gained negative fixtures for missing
   or late bypass links and missing image `alt` attributes. All four generated
-  Quarto report pages now insert a source-controlled skip link at the start of
-  the live document, and both NFL Full Report figures carry explicit
+  Quarto report pages now use a source-controlled, runtime-relocated skip link
+  at the start of the live document, and both NFL Full Report figures carry explicit
   alternatives. This is deterministic coverage, not a rendered accessibility
   certification.
 - On September 18, `SUBSTANTIVE-REVIEW.md` traced the charter and each material
@@ -68,6 +68,12 @@ publication structure:
   found no unsupported material claim, corrected a state timestamp that
   preceded its iteration finish, and leaves rendered accessibility as the sole
   open manual gate.
+- On September 19, a text-browser review showed that Quarto report bypass links
+  followed repeated navigation without JavaScript. All three report builds now
+  use a tested, preflight-first post-render normalizer that makes the bypass link
+  the first anchor in all four generated pages. The verifier rejects runtime
+  relocation as a substitute, and `ACCESSIBILITY-REVIEW.md` defines the 11-page
+  environment, procedure, evidence record, and passing rule for the open gate.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -84,8 +90,9 @@ one H1 on a multi-level Quarto book page.
 The current verifier:
 
 - adds a dedicated three-format report group;
-- requires every page to expose a bypass link and every image to carry an
-  explicit `alt` attribute, with negative fixtures for both regressions;
+- requires every page to expose a first-anchor bypass link and every image to
+  carry an explicit `alt` attribute, with negative fixtures for both
+  regressions;
 - checks the Executive Summary figure count, report cross-links, Quarto source,
   PDF signature, and the required “far beyond” phrase;
 - checks the Projects index and exact normalized charter biographies;
@@ -101,8 +108,8 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 
 ## Manual review
 
-- Inspect the selected layouts at desktop and phone widths with keyboard and
-  assistive-technology checks.
+- Execute `ACCESSIBILITY-REVIEW.md` across its 11 selected production pages at
+  desktop and phone widths with keyboard and a recorded screen-reader pairing.
 
 The substantive report review is complete. On September 18, a documented
 internal review mapped the charter and material report claims to current or
@@ -130,9 +137,10 @@ expected files byte-identical, with none different or unavailable. Together
 these observations close the deployment inventory and expected-byte gate for
 the September 15 release. HTTP alone still cannot discover remote-only files,
 so every new deployment must continue to pass the authenticated inventory
-phase. Before this September 18 material revision, a new public probe found all
-114 incoming files byte-identical; normal automation must still deploy and
-inventory the revised release.
+phase. Before the September 18 material revision, a new public probe found all
+114 incoming files byte-identical. Before the September 19 revision, another
+probe found all 128 incoming files byte-identical; normal automation must still
+deploy and inventory the revised release.
 
 ## Other current requirements
 
