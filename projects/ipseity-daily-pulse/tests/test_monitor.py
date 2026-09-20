@@ -103,15 +103,29 @@ class MonitorTests(unittest.TestCase):
             respondent = f"{respondent_index:012x}"
             for day in range(75):
                 stats.add(start + dt.timedelta(days=offset + day), endorsed, respondent)
+        for singleton_index in range(40):
+            stats.add(
+                start + dt.timedelta(days=210 + singleton_index),
+                0,
+                f"{100 + singleton_index:012x}",
+            )
         pooled = monitor.trend_row("turnover", stats)
+        repeat_pooled = monitor.fit_repeat_respondent_pooled_trend(stats)
         within = monitor.fit_within_respondent_trend(stats)
         self.assertGreater(pooled["annual_change_percentage_points"], 0)
+        self.assertGreater(
+            repeat_pooled["repeat_pooled_annual_change_percentage_points"],
+            pooled["annual_change_percentage_points"],
+        )
+        self.assertEqual(repeat_pooled["repeat_pooled_respondents"], 4)
+        self.assertEqual(repeat_pooled["repeat_pooled_observations"], 300)
         self.assertAlmostEqual(within["within_annual_change_percentage_points"], 0.0)
         self.assertEqual(within["repeat_respondents"], 4)
         self.assertEqual(within["within_observations"], 300)
         self.assertEqual(within["within_residual_degrees_of_freedom"], 295)
         self.assertEqual(within["endorsement_switchers"], 0)
         self.assertTrue(within["zero_within_outcome_variation"])
+        self.assertEqual(within["single_observation_respondents_excluded"], 40)
 
     def test_duplicate_key_fails_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -211,9 +225,41 @@ class MonitorTests(unittest.TestCase):
             summary["within_respondent_sensitivity"]["same_direction"],
         )
         self.assertEqual(
+            sum(
+                item["repeat_pooled_same_direction"] == "True"
+                for item in within_sensitivity
+            ),
+            summary["within_respondent_sensitivity"][
+                "repeat_pooled_same_direction_as_all_responses"
+            ],
+        )
+        self.assertEqual(
+            sum(
+                item["within_same_direction_as_repeat"] == "True"
+                for item in within_sensitivity
+            ),
+            summary["within_respondent_sensitivity"][
+                "within_same_direction_as_repeat_pooled"
+            ],
+        )
+        self.assertEqual(
             within_sensitivity[0]["signifier"],
             summary["within_respondent_sensitivity"]["results"][0]["signifier"],
         )
+        for item in within_sensitivity:
+            self.assertEqual(
+                int(item["repeat_pooled_observations"]),
+                int(item["within_observations"]),
+            )
+            self.assertEqual(
+                int(item["repeat_pooled_respondents"]),
+                int(item["repeat_respondents"]),
+            )
+            self.assertAlmostEqual(
+                float(item["repeat_sample_shift_percentage_points"])
+                + float(item["within_vs_repeat_shift_percentage_points"]),
+                float(item["within_shift_percentage_points"]),
+            )
         for name in (
             "observation-growth.svg",
             "annual-prevalence-growth-histogram.svg",

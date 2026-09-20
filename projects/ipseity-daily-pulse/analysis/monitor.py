@@ -586,6 +586,68 @@ def adjusted_leader_sensitivity(
     return results
 
 
+def repeat_respondent_clusters(stats: SignifierStats) -> list[list[int]]:
+    """Return clusters that identify a within-respondent date slope."""
+    clusters = []
+    for cluster in stats.respondent_sums.values():
+        cluster_n, sum_x, _, sum_x2, _ = cluster
+        if cluster_n > 1 and sum_x2 - sum_x * sum_x / cluster_n > 0:
+            clusters.append(cluster)
+    return clusters
+
+
+def fit_repeat_respondent_pooled_trend(stats: SignifierStats) -> dict[str, object]:
+    """Fit the pooled trend after restricting to repeat respondents.
+
+    This uses exactly the observations that can identify the respondent-fixed-
+    effect model but leaves between-respondent differences in the pooled slope.
+    """
+    components = repeat_respondent_clusters(stats)
+    clusters = len(components)
+    observations = sum(cluster[0] for cluster in components)
+    if clusters <= 1 or observations <= 2:
+        raise ValueError("repeat-sample pooled model lacks observations or respondent clusters")
+    sum_x = sum(cluster[1] for cluster in components)
+    sum_y = sum(cluster[2] for cluster in components)
+    sum_x2 = sum(cluster[3] for cluster in components)
+    sum_xy = sum(cluster[4] for cluster in components)
+    centered_x2 = sum_x2 - sum_x * sum_x / observations
+    if centered_x2 <= 0:
+        raise ValueError("repeat-sample pooled model has no date variation")
+    slope = (sum_xy - sum_x * sum_y / observations) / centered_x2
+    x_bar = sum_x / observations
+    y_bar = sum_y / observations
+    meat = 0.0
+    for cluster_n, cluster_sum_x, cluster_sum_y, cluster_sum_x2, cluster_sum_xy in components:
+        sum_z = cluster_sum_x - cluster_n * x_bar
+        sum_zy = cluster_sum_xy - x_bar * cluster_sum_y
+        sum_z2 = (
+            cluster_sum_x2
+            - 2 * x_bar * cluster_sum_x
+            + cluster_n * x_bar * x_bar
+        )
+        slope_score = sum_zy - y_bar * sum_z - slope * sum_z2
+        meat += slope_score * slope_score
+    correction = clusters / (clusters - 1) * (observations - 1) / (observations - 2)
+    slope_se = math.sqrt(max(0.0, correction * meat / (centered_x2 * centered_x2)))
+    annual_change = slope * DAYS_PER_YEAR * 100
+    annual_se = slope_se * DAYS_PER_YEAR * 100
+    p_value = (
+        math.erfc(abs(annual_change / annual_se) / math.sqrt(2))
+        if annual_se > 0
+        else (0.0 if annual_change else 1.0)
+    )
+    return {
+        "repeat_pooled_annual_change_percentage_points": annual_change,
+        "repeat_pooled_annual_change_cluster_se": annual_se,
+        "repeat_pooled_cluster_ci95_lower": annual_change - 1.96 * annual_se,
+        "repeat_pooled_cluster_ci95_upper": annual_change + 1.96 * annual_se,
+        "repeat_pooled_cluster_p_value": p_value,
+        "repeat_pooled_observations": observations,
+        "repeat_pooled_respondents": clusters,
+    }
+
+
 def fit_within_respondent_trend(stats: SignifierStats) -> dict[str, object]:
     """Fit a respondent-fixed-effect trend from cluster sufficient statistics.
 
@@ -594,10 +656,9 @@ def fit_within_respondent_trend(stats: SignifierStats) -> dict[str, object]:
     effects when calculating residual degrees of freedom.
     """
     components = []
-    for cluster_n, sum_x, sum_y, sum_x2, sum_xy in stats.respondent_sums.values():
+    repeat_clusters = repeat_respondent_clusters(stats)
+    for cluster_n, sum_x, sum_y, sum_x2, sum_xy in repeat_clusters:
         within_x2 = sum_x2 - sum_x * sum_x / cluster_n
-        if within_x2 <= 0:
-            continue
         within_xy = sum_xy - sum_x * sum_y / cluster_n
         within_y2 = sum_y - sum_y * sum_y / cluster_n
         components.append((cluster_n, within_x2, within_xy, within_y2))
@@ -662,8 +723,10 @@ def within_respondent_leader_sensitivity(
     results = []
     for tail, rank, trend in selections:
         signifier = str(trend["signifier"])
+        repeat_pooled = fit_repeat_respondent_pooled_trend(signifiers[signifier])
         fitted = fit_within_respondent_trend(signifiers[signifier])
         unadjusted = float(trend["annual_change_percentage_points"])
+        repeat = float(repeat_pooled["repeat_pooled_annual_change_percentage_points"])
         within = float(fitted["within_annual_change_percentage_points"])
         results.append(
             {
@@ -673,8 +736,13 @@ def within_respondent_leader_sensitivity(
                 "unadjusted_annual_change_percentage_points": unadjusted,
                 "unadjusted_cluster_ci95_lower": trend["annual_change_cluster_ci95_lower"],
                 "unadjusted_cluster_ci95_upper": trend["annual_change_cluster_ci95_upper"],
+                **repeat_pooled,
                 **fitted,
+                "repeat_sample_shift_percentage_points": repeat - unadjusted,
+                "within_vs_repeat_shift_percentage_points": within - repeat,
                 "within_shift_percentage_points": within - unadjusted,
+                "repeat_pooled_same_direction": (repeat >= 0) == (unadjusted >= 0),
+                "within_same_direction_as_repeat": (within >= 0) == (repeat >= 0),
                 "same_direction": (within >= 0) == (unadjusted >= 0),
             }
         )
@@ -886,7 +954,7 @@ def leader_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
 
 
 def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
-    """Compare pooled and respondent-fixed-effect slopes for displayed leaders."""
+    """Compare all-response, repeat-sample, and within-person leader slopes."""
     displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
     width, height = 960, 660
     left, right, top, bottom = 235, 38, 125, 66
@@ -896,6 +964,7 @@ def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> s
         for row in displayed
         for field in (
             "unadjusted_annual_change_percentage_points",
+            "repeat_pooled_annual_change_percentage_points",
             "within_cluster_ci95_lower",
             "within_cluster_ci95_upper",
         )
@@ -910,12 +979,14 @@ def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> s
         return top + (index + 0.5) * plot_h / len(displayed)
 
     parts = [
-        f'  <text class="title" x="{left}" y="38">Pooled and within-respondent leader slopes</text>',
-        f'  <text class="subtitle" x="{left}" y="66">Selected pooled extremes · fixed effects use repeat respondents only</text>',
+        f'  <text class="title" x="{left}" y="38">Three views of selected leader slopes</text>',
+        f'  <text class="subtitle" x="{left}" y="66">All responses · repeat-respondent sample · within-respondent fixed effects</text>',
         f'  <circle cx="{left}" cy="92" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
-        f'  <text class="tick" x="{left + 12}" y="97">Pooled</text>',
-        f'  <circle cx="{left + 86}" cy="92" r="5" fill="#4B6F44"/>',
-        f'  <text class="tick" x="{left + 98}" y="97">Within respondent; line is clustered 95% interval</text>',
+        f'  <text class="tick" x="{left + 12}" y="97">All responses</text>',
+        f'  <rect x="{left + 112}" y="87" width="10" height="10" fill="#9B6A21"/>',
+        f'  <text class="tick" x="{left + 130}" y="97">Repeat sample, pooled</text>',
+        f'  <circle cx="{left + 285}" cy="92" r="5" fill="#4B6F44"/>',
+        f'  <text class="tick" x="{left + 297}" y="97">Within respondent; line is clustered 95% interval</text>',
     ]
     for value in range(lower, upper + 1, 10):
         x = px(value)
@@ -932,13 +1003,15 @@ def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> s
     for index, row in enumerate(displayed):
         y = py(index)
         unadjusted = float(row["unadjusted_annual_change_percentage_points"])
+        repeat_pooled = float(row["repeat_pooled_annual_change_percentage_points"])
         within = float(row["within_annual_change_percentage_points"])
         ci_low = float(row["within_cluster_ci95_lower"])
         ci_high = float(row["within_cluster_ci95_upper"])
         parts.extend(
             [
                 f'  <text class="tick" text-anchor="end" x="{left - 12}" y="{y + 5:.1f}">{html.escape(str(row["signifier"]))}</text>',
-                f'  <line x1="{px(unadjusted):.1f}" y1="{y:.1f}" x2="{px(within):.1f}" y2="{y:.1f}" stroke="#aeb9b0" stroke-width="3"/>',
+                f'  <line x1="{px(unadjusted):.1f}" y1="{y:.1f}" x2="{px(repeat_pooled):.1f}" y2="{y:.1f}" stroke="#c4cbc5" stroke-width="3"/>',
+                f'  <line x1="{px(repeat_pooled):.1f}" y1="{y:.1f}" x2="{px(within):.1f}" y2="{y:.1f}" stroke="#aeb9b0" stroke-width="3"/>',
             ]
         )
         if not row["zero_within_outcome_variation"]:
@@ -948,6 +1021,7 @@ def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> s
         parts.extend(
             [
                 f'  <circle cx="{px(unadjusted):.1f}" cy="{y:.1f}" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+                f'  <rect x="{px(repeat_pooled) - 5:.1f}" y="{y - 5:.1f}" width="10" height="10" fill="#9B6A21"/>',
                 f'  <circle cx="{px(within):.1f}" cy="{y:.1f}" r="5" fill="#4B6F44"/>',
             ]
         )
@@ -955,8 +1029,8 @@ def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> s
         f'  <text class="tick" text-anchor="middle" x="{left + plot_w / 2:.1f}" y="{height - 16}">Estimated change (percentage points per year)</text>'
     )
     return svg_frame(
-        "Pooled and within-respondent leader slopes",
-        "Dumbbell plot comparing pooled and respondent-fixed-effect annual prevalence slopes for the five most positive and five most negative pooled leaders. Within-respondent estimates use repeat respondents and include respondent-clustered 95 percent intervals where at least one repeat respondent changed endorsement.",
+        "Three views of selected leader slopes",
+        "Plot comparing all-response pooled, repeat-sample pooled, and respondent-fixed-effect annual prevalence slopes for the five most positive and five most negative all-response leaders. Repeat-sample and within-person estimates use the same observations. Within-person estimates include respondent-clustered 95 percent intervals where at least one repeat respondent changed endorsement.",
         "\n".join(parts),
         width,
         height,
@@ -1009,6 +1083,15 @@ def compact_within_sensitivity(row: dict[str, object]) -> dict[str, object]:
         "unadjusted_annual_change_percentage_points": round(
             float(row["unadjusted_annual_change_percentage_points"]), 3
         ),
+        "repeat_pooled_annual_change_percentage_points": round(
+            float(row["repeat_pooled_annual_change_percentage_points"]), 3
+        ),
+        "repeat_pooled_cluster_ci95_lower": round(
+            float(row["repeat_pooled_cluster_ci95_lower"]), 3
+        ),
+        "repeat_pooled_cluster_ci95_upper": round(
+            float(row["repeat_pooled_cluster_ci95_upper"]), 3
+        ),
         "within_annual_change_percentage_points": round(
             float(row["within_annual_change_percentage_points"]), 3
         ),
@@ -1017,7 +1100,17 @@ def compact_within_sensitivity(row: dict[str, object]) -> dict[str, object]:
         "within_shift_percentage_points": round(
             float(row["within_shift_percentage_points"]), 3
         ),
+        "repeat_sample_shift_percentage_points": round(
+            float(row["repeat_sample_shift_percentage_points"]), 3
+        ),
+        "within_vs_repeat_shift_percentage_points": round(
+            float(row["within_vs_repeat_shift_percentage_points"]), 3
+        ),
+        "repeat_pooled_same_direction": row["repeat_pooled_same_direction"],
+        "within_same_direction_as_repeat": row["within_same_direction_as_repeat"],
         "same_direction": row["same_direction"],
+        "repeat_pooled_observations": row["repeat_pooled_observations"],
+        "repeat_pooled_respondents": row["repeat_pooled_respondents"],
         "within_observations": row["within_observations"],
         "repeat_respondents": row["repeat_respondents"],
         "endorsement_switchers": row["endorsement_switchers"],
@@ -1062,8 +1155,27 @@ def findings_markdown(
     median_within_absolute_shift = statistics.median(
         abs(float(row["within_shift_percentage_points"])) for row in within_sensitivity
     )
-    largest_within_shift = max(
-        within_sensitivity, key=lambda row: abs(float(row["within_shift_percentage_points"]))
+    repeat_pooled_same_direction = sum(
+        bool(row["repeat_pooled_same_direction"]) for row in within_sensitivity
+    )
+    within_same_direction_as_repeat = sum(
+        bool(row["within_same_direction_as_repeat"]) for row in within_sensitivity
+    )
+    median_repeat_sample_shift = statistics.median(
+        abs(float(row["repeat_sample_shift_percentage_points"]))
+        for row in within_sensitivity
+    )
+    largest_repeat_sample_shift = max(
+        within_sensitivity,
+        key=lambda row: abs(float(row["repeat_sample_shift_percentage_points"])),
+    )
+    median_within_vs_repeat_shift = statistics.median(
+        abs(float(row["within_vs_repeat_shift_percentage_points"]))
+        for row in within_sensitivity
+    )
+    largest_within_vs_repeat_shift = max(
+        within_sensitivity,
+        key=lambda row: abs(float(row["within_vs_repeat_shift_percentage_points"])),
     )
     median_repeat_respondents = statistics.median(
         int(row["repeat_respondents"]) for row in within_sensitivity
@@ -1119,8 +1231,8 @@ def findings_markdown(
             if int(row["unadjusted_tail_rank"]) <= 5
         ]
         lines = [
-            "| Signifier | Pooled (pp/year) | Within respondent (pp/year) | Within clustered 95% CI | Repeat respondents |",
-            "|---|---:|---:|---:|---:|",
+            "| Signifier | All responses (pp/year) | Repeat sample, pooled (pp/year) | Within respondent (pp/year) | Within clustered 95% CI | Repeat respondents |",
+            "|---|---:|---:|---:|---:|---:|",
         ]
         for row in displayed:
             if row["zero_within_outcome_variation"]:
@@ -1133,6 +1245,7 @@ def findings_markdown(
             lines.append(
                 f"| {str(row['signifier']).replace('|', '&#124;')} | "
                 f"{float(row['unadjusted_annual_change_percentage_points']):+.1f} | "
+                f"{float(row['repeat_pooled_annual_change_percentage_points']):+.1f} | "
                 f"{float(row['within_annual_change_percentage_points']):+.1f} | "
                 f"{interval} | "
                 f"{int(row['repeat_respondents']):,} |"
@@ -1225,29 +1338,42 @@ functional-form error, or selection of extremes from the full set of tests.
 
 ## Within-respondent sensitivity
 
-A second targeted check absorbs a fixed effect for each hashed respondent and
-therefore estimates change only from people who answered the same signifier on
-multiple dates. **{within_same_direction} of {len(within_sensitivity)}** pooled
-leaders retained their direction. The median absolute pooled-to-within shift
-was **{median_within_absolute_shift:.1f} percentage points per year**, and the
-median selected signifier had **{median_repeat_respondents:,.0f} repeat
-respondents**. The largest shift was for **{largest_within_shift['signifier']}**,
-from {float(largest_within_shift['unadjusted_annual_change_percentage_points']):+.1f}
-to {float(largest_within_shift['within_annual_change_percentage_points']):+.1f}
-points. For **{no_within_switches}** selected signifiers, no repeat respondent
-changed endorsement; their zero within slopes are mechanical descriptions and
-clustered intervals are not displayed.
+A second targeted check separates two diagnostic changes. It first refits the
+pooled trend using only people who answered the same signifier on multiple
+dates, then absorbs a fixed effect for each of those respondents while keeping
+the same observations. **{repeat_pooled_same_direction} of {len(within_sensitivity)}**
+repeat-sample pooled slopes retained the all-response direction; **{within_same_direction_as_repeat}
+of {len(within_sensitivity)}** within-person slopes retained the repeat-sample
+direction, and **{within_same_direction} of {len(within_sensitivity)}** retained
+the original all-response direction. Restricting the sample moved a selected slope by a median absolute
+**{median_repeat_sample_shift:.1f} percentage points per year**; absorbing
+respondent effects then moved it by **{median_within_vs_repeat_shift:.1f}
+points**. The largest sample-restriction change was for
+**{largest_repeat_sample_shift['signifier']}**, from
+{float(largest_repeat_sample_shift['unadjusted_annual_change_percentage_points']):+.1f}
+to {float(largest_repeat_sample_shift['repeat_pooled_annual_change_percentage_points']):+.1f};
+the largest repeat-pooled-to-within change was for
+**{largest_within_vs_repeat_shift['signifier']}**, from
+{float(largest_within_vs_repeat_shift['repeat_pooled_annual_change_percentage_points']):+.1f}
+to {float(largest_within_vs_repeat_shift['within_annual_change_percentage_points']):+.1f}.
+The full all-response-to-within shift had median absolute magnitude
+**{median_within_absolute_shift:.1f} points**, and the median selected signifier
+had **{median_repeat_respondents:,.0f} repeat respondents**. For
+**{no_within_switches}** selected signifiers, no repeat respondent changed
+endorsement; their zero within slopes are mechanical descriptions and clustered
+intervals are not displayed.
 
-![Pooled and within-respondent leader slopes](outputs/leader-within-respondent-sensitivity.svg)
+![All-response, repeat-sample pooled, and within-respondent leader slopes](outputs/leader-within-respondent-sensitivity.svg)
 
 {within_sensitivity_table(within_sensitivity)}
 
-This comparison removes stable differences between respondents, but it is not
-a literal decomposition of the pooled trend into turnover and individual
-change. The fixed-effect estimate uses only repeat respondents, so it also
-changes the analytic sample; it remains vulnerable to selective retention,
-time-varying confounding, functional-form error, and selection of the pooled
-extremes. Its intervals are diagnostic rather than a discovery test.
+The first comparison changes the analytic sample; the second holds those
+observations fixed but changes the model from pooled to within respondent.
+Their arithmetic shifts clarify where the displayed estimate changes, but they
+are not a causal decomposition into turnover and individual change. The models
+remain vulnerable to selective retention, time-varying confounding,
+functional-form error, nonrepresentative recruitment, and selection of pooled
+extremes. Their intervals are diagnostic rather than a discovery test.
 
 Full machine-readable estimates, eligibility flags, and interval bounds are in
 `outputs/signifier-growth.csv`; adjusted leader checks are in
@@ -1465,15 +1591,36 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
                 f"{LEADER_SENSITIVITY_PER_TAIL} negative pooled slopes"
             ),
             "model": (
-                "unweighted respondent-fixed-effect linear probability trend; "
-                "identified by repeat responses to the same signifier"
+                "unweighted pooled and respondent-fixed-effect linear probability trends "
+                "on the same repeat-respondent observations"
             ),
             "uncertainty": (
                 "CR1 sandwich standard errors clustered by hashed respondent, "
                 "counting absorbed respondent effects in residual degrees of freedom"
             ),
             "selected_signifiers": len(within_sensitivity),
+            "repeat_pooled_same_direction_as_all_responses": sum(
+                bool(row["repeat_pooled_same_direction"]) for row in within_sensitivity
+            ),
+            "within_same_direction_as_repeat_pooled": sum(
+                bool(row["within_same_direction_as_repeat"])
+                for row in within_sensitivity
+            ),
             "same_direction": sum(bool(row["same_direction"]) for row in within_sensitivity),
+            "median_absolute_repeat_sample_shift_percentage_points": round(
+                statistics.median(
+                    abs(float(row["repeat_sample_shift_percentage_points"]))
+                    for row in within_sensitivity
+                ),
+                3,
+            ),
+            "median_absolute_within_vs_repeat_shift_percentage_points": round(
+                statistics.median(
+                    abs(float(row["within_vs_repeat_shift_percentage_points"]))
+                    for row in within_sensitivity
+                ),
+                3,
+            ),
             "median_absolute_slope_shift_percentage_points": round(
                 statistics.median(
                     abs(float(row["within_shift_percentage_points"]))
