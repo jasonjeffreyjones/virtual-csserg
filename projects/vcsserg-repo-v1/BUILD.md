@@ -48,6 +48,10 @@ because that parent process already holds the repository-wide iteration lock.
 The publication verifier checks reciprocal local links and fragments, exactly
 one Executive Summary figure, the required Full Report phrase, PDF link
 annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
+The Version 1 verifier also validates the open manual-accessibility worksheet:
+it derives the required sample from current Published summaries and Full Report
+pages and refuses a `Closed` record with missing environment evidence or any
+non-passing result. This record check does not perform the rendered review.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:

@@ -1,13 +1,18 @@
 # Rendered accessibility review protocol
 
-Status: **Open**. Prepared by Bee Boring Vanilla on September 19, 2026.
+Status: **Open**. Prepared by Bee Boring Vanilla on September 19, 2026;
+structured evidence contract added September 20, 2026.
 
 ## Decision boundary
 
 This protocol makes the sole remaining Version 1 manual gate reproducible. It
 does not declare WCAG conformance. The gate closes only after a named reviewer
-records the environment and results below, fixes any blocking defect, repeats
-the affected check, and links that evidence from `STATE.md`.
+records the environment and page-by-page results below, fixes any blocking
+defect, repeats the affected check, and links that evidence from `STATE.md`.
+Change the status to **Closed** only after every result cell reads `Pass`.
+`verify_v1.py` checks the sample against the current Published summaries and
+Full Report pages and rejects a closed record with missing evidence; it does
+not perform or replace the human review.
 
 The protocol follows WCAG 2.2's testable requirements for reflow, keyboard
 operation, bypass blocks, focus order, visible and unobscured focus, and
@@ -56,7 +61,7 @@ sample.
 | `website/projects/predict-the-self/report/report.html` | Quarto chapter with dense tables and code |
 | `website/projects/nfl-team-fandom-identities/report/index.html` | Quarto report with figures, math, and tables |
 
-## Test environments and record
+## Test environment and result record
 
 Test the deployed release, and record its full Git commit and base URL. Use a
 current graphical browser at a desktop viewport (recommended 1440 by 900 CSS
@@ -65,22 +70,45 @@ Use a screen reader/browser pairing whose exact names and versions are
 recorded. A mobile screen reader is welcome additional evidence but is not a
 substitute for the 320-pixel graphical reflow check.
 
-Copy and complete this record in the closing iteration:
+Complete this record in place during the closing iteration. Use only `Pass`,
+`Fail`, or `Not tested` in the four result columns. Record a failure until its
+repair has been retested; summarize both the defect and retest under issues.
 
-```text
-Commit:
-Base URL:
-Reviewer:
-Date (UTC):
-Operating system:
-Browser and version:
-Screen reader and version:
-Desktop viewport and zoom:
-Narrow viewport and zoom:
-Pages passed:
-Pages failed:
-Issues and retest evidence:
-```
+Commit: Not recorded
+
+Base URL: Not recorded
+
+Reviewer: Not recorded
+
+Date (UTC): Not recorded
+
+Operating system: Not recorded
+
+Browser and version: Not recorded
+
+Screen reader and version: Not recorded
+
+Desktop viewport and zoom: Not recorded
+
+Narrow viewport and zoom: Not recorded
+
+Issues and retest evidence: Not recorded
+
+<!-- accessibility-results:start -->
+| Page | Desktop keyboard/focus | Narrow keyboard/focus | Narrow reflow and 200% text | Screen reader | Notes |
+|---|---|---|---|---|---|
+| `website/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/scholars/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/scholars/b-boring-vanilla/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/vcsserg-repo-v1/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/predict-the-self/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/nfl-team-fandom-identities/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/vcsserg-repo-v1/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/predict-the-self/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/predict-the-self/report/report.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/nfl-team-fandom-identities/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+<!-- accessibility-results:end -->
 
 ## Checks on every selected page
 
@@ -128,8 +156,13 @@ Issues and retest evidence:
 
 Every selected page must pass the keyboard/focus and reflow checks at both
 widths and the screen-reader checks in the recorded pairing. Every failure must
-be fixed and retested. Then rerun the Project checks, Version 1 verifier, public
-expected-file probe, and host-managed authenticated deployment inventory.
+be fixed and retested. Set every result cell to `Pass`, complete every
+environment field, and change the document status to **Closed**. The verifier
+will reject omitted or duplicate sample pages, unknown result words,
+placeholder environment fields, an invalid commit/base URL/date in a closed
+record, and any non-passing cell.
+Then rerun the Project checks, Version 1 verifier, public expected-file probe,
+and host-managed authenticated deployment inventory.
 Closing this Project remains a separate lifecycle judgment; passing this gate
 does not validate other Projects' empirical claims or create a WCAG conformance
 claim.

@@ -1,6 +1,6 @@
 # Virtual CSSERG Version 1.0
 
-Bee Boring Vanilla · Virtual CSSERG · September 19, 2026
+Bee Boring Vanilla · Virtual CSSERG · September 20, 2026
 
 [Full report](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/report/) · [Executive summary](https://jasonjones.ninja/virtual-csserg/projects/vcsserg-repo-v1/)
 
@@ -42,9 +42,9 @@ Material report revisions now record the clean outgoing commit in a Project vers
 
 ## Review and remaining gate
 
-A September 18 internal review mapped every charter deliverable and material report-claim family to current artifacts, checks, or historical evidence. It found no unsupported material claim, corrected an outgoing state timestamp that preceded its iteration's finish, and closes the substantive report gate without claiming independent peer review or validating other Projects' empirical findings. A September 19 pre-change probe found all 128 incoming public files byte-identical to production.
+A September 18 internal review mapped every charter deliverable and material report-claim family to current artifacts, checks, or historical evidence. It found no unsupported material claim, corrected an outgoing state timestamp that preceded its iteration's finish, and closes the substantive report gate without claiming independent peer review or validating other Projects' empirical findings. A September 20 pre-change probe found all 134 incoming public files byte-identical to production.
 
-The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Every public HTML page now has a first-anchor bypass mechanism and an explicit `alt` decision for every image, with negative fixtures guarding both requirements. The remaining desktop/phone keyboard and assistive-technology review now has an explicit 11-page matrix, environment record, checks, and passing rule; it remains open because this host has no graphical browser or screen reader.
+The September 15 and migration-canary logs establish successful commit, push, guarded deployment, and exact inventory. A separately invoked runner integration suite witnesses dirty-start refusal, status-inspection failure, prohibited runner edits, Scholar failure, and validation failure with no commit, push, or deployment; it is excluded from nested live-runner validation. Every public HTML page now has a first-anchor bypass mechanism and an explicit `alt` decision for every image, with negative fixtures guarding both requirements. The remaining desktop/phone keyboard and assistive-technology review now has an explicit 11-page worksheet with four results per page. The verifier derives its sample from current Published summaries and reports and rejects a closed record with placeholders, missing pages, or any non-passing result. The gate remains open because this host has no graphical browser or screen reader; worksheet validation does not perform the human review.
 
 The dialog canary is complete. All Projects and the template now use one immutable file per iteration, a bounded 20-link landing page, and complete yearly indexes. The five former DIALOG.md files are preserved byte-for-byte with recorded SHA-256 digests; the verifier checks these hashes, record filename/metadata agreement, and unique index coverage. Scholars read the full charter/state/index, active PI guidance, the three newest records, their own latest record, and older records only when cited or needed. Dr. Jones appends feedback to the record he is answering.
 

@@ -35,6 +35,10 @@ internal-review boundary; rendered keyboard and assistive-technology usability
 remains the sole manual gate. On September 19, the generated-report build made
 every bypass link first in static HTML without runtime relocation, and
 `ACCESSIBILITY-REVIEW.md` made the remaining 11-page manual gate reproducible.
+On September 20, its summary record became a page-by-page worksheet with four
+results per page, and the verifier began deriving the required sample from
+current Published summaries and Full Reports. Automated checks now prevent an
+incomplete **Closed** record without claiming to perform the human review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

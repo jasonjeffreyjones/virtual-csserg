@@ -28,6 +28,21 @@ ITERATION_NAME = re.compile(
     r"(?P<stamp>\d{4}-\d{2}-\d{2}T\d{6}Z)-"
     r"(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)\.md\Z"
 )
+ACCESSIBILITY_RESULTS_START = "<!-- accessibility-results:start -->"
+ACCESSIBILITY_RESULTS_END = "<!-- accessibility-results:end -->"
+ACCESSIBILITY_RESULT_FIELDS = (
+    "Commit",
+    "Base URL",
+    "Reviewer",
+    "Date (UTC)",
+    "Operating system",
+    "Browser and version",
+    "Screen reader and version",
+    "Desktop viewport and zoom",
+    "Narrow viewport and zoom",
+    "Issues and retest evidence",
+)
+ACCESSIBILITY_RESULT_STATUSES = {"Pass", "Fail", "Not tested"}
 
 
 @dataclass
@@ -209,6 +224,122 @@ def markdown_links(source):
     return re.findall(r"\[[^\]]+\]\(([^)]+)\)", source)
 
 
+def expected_accessibility_review_pages():
+    """Return the canonical pages that require rendered release review."""
+    pages = {
+        WEBSITE_ROOT / "index.html",
+        WEBSITE_ROOT / "projects/index.html",
+        WEBSITE_ROOT / "scholars/index.html",
+        WEBSITE_ROOT / "scholars/b-boring-vanilla/index.html",
+    }
+    for project in (PROJECT_ROOT / "projects").iterdir():
+        if (
+            not project.is_dir()
+            or project.name == "_template"
+            or read_state_metadata(project).get("publication") != "Published"
+        ):
+            continue
+        public = WEBSITE_ROOT / "projects" / project.name
+        pages.add(public / "index.html")
+        pages.update((public / "report").rglob("*.html"))
+    return sorted(path.relative_to(PROJECT_ROOT).as_posix() for path in pages)
+
+
+def accessibility_review_problems(source, expected_pages):
+    """Validate the manual review worksheet without substituting for review."""
+    problems = []
+    status_match = re.search(r"^Status: \*\*(Open|Closed)\*\*", source, re.MULTILINE)
+    if not status_match:
+        problems.append("accessibility review has no Open or Closed status")
+        review_status = None
+    else:
+        review_status = status_match.group(1)
+
+    field_values = {}
+    for label in ACCESSIBILITY_RESULT_FIELDS:
+        matches = re.findall(
+            rf"^{re.escape(label)}:\s*(\S.*)$", source, flags=re.MULTILINE
+        )
+        if len(matches) != 1:
+            problems.append(f"accessibility review must contain one {label} field")
+        else:
+            field_values[label] = matches[0].strip()
+
+    if (
+        source.count(ACCESSIBILITY_RESULTS_START) != 1
+        or source.count(ACCESSIBILITY_RESULTS_END) != 1
+        or source.find(ACCESSIBILITY_RESULTS_START)
+        >= source.find(ACCESSIBILITY_RESULTS_END)
+    ):
+        problems.append("accessibility review has invalid result-table markers")
+        return problems
+
+    table = source.split(ACCESSIBILITY_RESULTS_START, 1)[1].split(
+        ACCESSIBILITY_RESULTS_END, 1
+    )[0]
+    rows = []
+    for line in table.splitlines():
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if not cells or not re.fullmatch(r"`[^`]+`", cells[0]):
+            continue
+        path = cells[0][1:-1]
+        if len(cells) != 6:
+            problems.append(
+                f"accessibility review row for {path} has {len(cells)} cells; expected 6"
+            )
+            continue
+        statuses = cells[1:5]
+        for value in statuses:
+            if value not in ACCESSIBILITY_RESULT_STATUSES:
+                problems.append(
+                    f"accessibility review row for {path} has invalid status {value!r}"
+                )
+        rows.append((path, statuses))
+
+    counts = Counter(path for path, _ in rows)
+    for path in sorted(path for path, count in counts.items() if count != 1):
+        problems.append(f"accessibility review lists {path} more than once")
+    expected = set(expected_pages)
+    recorded = set(counts)
+    for path in sorted(expected - recorded):
+        problems.append(f"accessibility review omits {path}")
+    for path in sorted(recorded - expected):
+        problems.append(f"accessibility review includes unexpected {path}")
+
+    if review_status == "Closed":
+        incomplete = sorted(
+            path
+            for path, statuses in rows
+            if path in expected and any(value != "Pass" for value in statuses)
+        )
+        if incomplete:
+            problems.append(
+                "closed accessibility review has non-passing rows: "
+                + ", ".join(incomplete)
+            )
+        placeholders = sorted(
+            label
+            for label, value in field_values.items()
+            if value.lower() in {"not recorded", "pending", "tbd"}
+        )
+        if placeholders:
+            problems.append(
+                "closed accessibility review has placeholder fields: "
+                + ", ".join(placeholders)
+            )
+        commit = field_values.get("Commit", "")
+        if not re.fullmatch(r"[0-9a-f]{40}", commit):
+            problems.append("closed accessibility review needs a full Git commit")
+        if field_values.get("Base URL") != "https://jasonjones.ninja/virtual-csserg/":
+            problems.append("closed accessibility review needs the production base URL")
+        if not re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}Z)?",
+            field_values.get("Date (UTC)", ""),
+        ):
+            problems.append("closed accessibility review needs an ISO UTC date")
+    return problems
+
+
 def check_dialog_layout(project):
     problems = []
     landing_path = project / "DIALOG.md"
@@ -381,6 +512,7 @@ def check_repository_documents():
         "README.md",
         "RESEARCHER-ORIENTATION.md",
         "projects/vcsserg-repo-v1/CREATING-PROJECTS-AND-SCHOLARS.md",
+        "projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md",
         "projects/vcsserg-repo-v1/DIALOG-MIGRATION.md",
         "projects/vcsserg-repo-v1/REPORT-ARCHIVING.md",
         "projects/vcsserg-repo-v1/REPORT-VERSIONS.md",
@@ -460,6 +592,15 @@ def check_repository_documents():
                     problems.append(
                         f"archive {archive_key} does not contain {archived_path}"
                     )
+
+        accessibility_review = (
+            PROJECT_ROOT / "projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md"
+        ).read_text(encoding="utf-8")
+        problems.extend(
+            accessibility_review_problems(
+                accessibility_review, expected_accessibility_review_pages()
+            )
+        )
 
         try:
             scaffold_path = PROJECT_ROOT / "python/create_project.py"

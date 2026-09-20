@@ -2,14 +2,14 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-19T08:21:29Z
+updated: 2026-09-20T08:11:09Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 19, 2026, all seven automated promise groups pass across
+Active. On September 20, 2026, all seven automated promise groups pass across
 26 HTML pages and six first-party stylesheets. The static-site group now
 requires a first-anchor bypass mechanism and an explicit `alt` decision for
 every image, with negative fixtures for both regressions. A tested post-render
@@ -24,7 +24,10 @@ all four Projects. Controlled runner tests now witness dirty-start refusal plus
 Scholar and validation failures without commit, push, or deployment. Version 1.0 is not
 complete: a September 18 claim-to-evidence review closes the substantive report
 gate, while rendered desktop/phone keyboard and assistive-technology review
-remains open under the explicit `ACCESSIBILITY-REVIEW.md` protocol.
+remains open under the explicit `ACCESSIBILITY-REVIEW.md` protocol. Its
+11-page, 44-result worksheet and environment record are now machine-checked so
+an incomplete record cannot be marked **Closed**; this guards evidence capture
+without performing the unavailable human review.
 
 ## Completed work and current evidence
 
@@ -95,7 +98,12 @@ remains open under the explicit `ACCESSIBILITY-REVIEW.md` protocol.
   replace rendered keyboard or assistive-technology review.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 11 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
-  checks, environment record, and passing rule. A supplemental `w3m` 0.5.3 pass
+  checks, structured environment record, 44 result cells, and passing rule.
+  The verifier derives the sample from current Published summaries and Full
+  Reports, rejects missing/duplicate rows and unknown result words, and refuses
+  closed records with placeholders or non-passing cells. Three tests cover
+  current coverage, malformed rows, and incomplete versus complete closure. A
+  supplemental `w3m` 0.5.3 pass
   returned zero at 40 and 120 columns for every selected page and showed “Skip
   to content” first. It is linearized text evidence, not a graphical-browser or
   screen-reader pass.
@@ -129,7 +137,9 @@ remains open under the explicit `ACCESSIBILITY-REVIEW.md` protocol.
   result of 73 identical, 10 different, and 26 unavailable. The September 16
   run found all 110 expected files identical after the normal deployment. The
   September 18 pre-change probe found all 114 incoming files byte-identical, and
-  the September 19 pre-change probe found all 128 incoming files byte-identical.
+  the September 19 pre-change probe found all 128 incoming files byte-identical,
+  and the September 20 pre-change probe found all 134 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -156,13 +166,15 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 29 routine tests pass across 26 HTML pages and six
-first-party stylesheets on September 19.
+All seven groups and all 32 routine tests pass across 26 HTML pages and six
+first-party stylesheets on September 20.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
-indexes, legacy-dialog digests, first-anchor bypass mechanisms, and explicit
-image alternatives. Three tests cover the build-time Quarto bypass normalizer.
+indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
+alternatives, and the manual-review worksheet's sample and closure boundary.
+Three tests cover the build-time Quarto bypass normalizer and three cover the
+manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -213,14 +225,16 @@ September 18 review found and corrected one such timestamp decision.
 
 - Follow `ACCESSIBILITY-REVIEW.md` on a browser-equipped host: inspect all 11
   selected production pages at desktop and phone widths with keyboard and a
-  recorded screen-reader pairing. No installed Chromium, Chrome, or Firefox
-  executable or supported screen-reader/browser pairing is available on this host.
+  recorded screen-reader pairing, complete all 44 result cells and environment
+  fields, and close the record only after every result passes. No installed
+  Chromium, Chrome, or Firefox executable or supported screen-reader/browser
+  pairing is available on this host.
 - Dr. Jones reported that the production pages and PDFs look acceptable. The
   keyboard/assistive-technology pass remains the sole open manual gate.
 
 ## Resources and limitations
 
-September 19 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 20 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -231,8 +245,9 @@ dependencies. No package or replacement runtime was installed in this iteration.
 ## Important files
 
 - `V1-AUDIT.md`: current promise/evidence matrix and manual gates.
-- `ACCESSIBILITY-REVIEW.md`: selected-page matrix, environment record,
-  keyboard/reflow/screen-reader procedure, and passing rule for the open gate.
+- `ACCESSIBILITY-REVIEW.md`: derived selected-page worksheet, environment
+  record, keyboard/reflow/screen-reader procedure, and guarded passing rule for
+  the open gate.
 - `SUBSTANTIVE-REVIEW.md`: charter coverage, material claim-to-evidence matrix,
   review boundaries, the timestamp correction, and reproduction evidence.
 - `V1-RECOMMENDATIONS.md`: approved design/governance decisions and rollout.
@@ -273,5 +288,6 @@ dependencies. No package or replacement runtime was installed in this iteration.
 No blocking PI question. Controlled runner failure paths now pass without
 commit, push, or deployment, and the PI confirms no schedules are enabled.
 Next execute `ACCESSIBILITY-REVIEW.md` on a browser/screen-reader-equipped host,
-record the environment and per-page results, repair and retest any failure, and
-then assess the charter and PI authority before changing lifecycle state.
+record the environment and all 44 page-level results, repair and retest any
+failure, and then assess the charter and PI authority before changing lifecycle
+state.

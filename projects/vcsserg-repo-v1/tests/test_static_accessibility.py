@@ -16,6 +16,21 @@ def parse(source):
     return parser
 
 
+def review_source(status, rows, field_value="Not recorded"):
+    fields = "\n".join(
+        f"{label}: {field_value}" for label in VERIFY.ACCESSIBILITY_RESULT_FIELDS
+    )
+    table = "\n".join(
+        "| `" + path + "` | " + " | ".join(statuses) + " | note |"
+        for path, statuses in rows
+    )
+    return (
+        f"Status: **{status}**\n\n{fields}\n"
+        f"{VERIFY.ACCESSIBILITY_RESULTS_START}\n{table}\n"
+        f"{VERIFY.ACCESSIBILITY_RESULTS_END}\n"
+    )
+
+
 class StaticAccessibilityTests(unittest.TestCase):
     def test_accepts_first_bypass_link_and_explicit_image_alternatives(self):
         page = parse(
@@ -63,6 +78,56 @@ class StaticAccessibilityTests(unittest.TestCase):
         self.assertEqual(
             VERIFY.page_accessibility_problems(wrong_target, "wrong.html"),
             ["wrong.html: missing bypass link"],
+        )
+
+    def test_review_protocol_covers_current_manual_sample(self):
+        expected = VERIFY.expected_accessibility_review_pages()
+        source = (
+            ROOT / "projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md"
+        ).read_text(encoding="utf-8")
+        self.assertEqual(len(expected), 11)
+        self.assertEqual(VERIFY.accessibility_review_problems(source, expected), [])
+
+    def test_review_protocol_rejects_missing_duplicate_and_unknown_results(self):
+        source = review_source(
+            "Open",
+            [
+                ("website/a.html", ["Pass", "Pass", "Pass", "Pass"]),
+                ("website/a.html", ["Maybe", "Pass", "Pass", "Pass"]),
+            ],
+        )
+        problems = VERIFY.accessibility_review_problems(
+            source, ["website/a.html", "website/b.html"]
+        )
+        self.assertTrue(any("invalid status 'Maybe'" in item for item in problems))
+        self.assertIn(
+            "accessibility review lists website/a.html more than once", problems
+        )
+        self.assertIn("accessibility review omits website/b.html", problems)
+
+    def test_closed_review_requires_complete_passing_evidence(self):
+        expected = ["website/a.html"]
+        incomplete = review_source(
+            "Closed",
+            [("website/a.html", ["Pass", "Pass", "Not tested", "Pass"])],
+        )
+        problems = VERIFY.accessibility_review_problems(incomplete, expected)
+        self.assertTrue(any("non-passing rows" in item for item in problems))
+        self.assertTrue(any("placeholder fields" in item for item in problems))
+
+        complete = review_source(
+            "Closed",
+            [("website/a.html", ["Pass", "Pass", "Pass", "Pass"])],
+            field_value="Recorded",
+        )
+        complete = complete.replace("Commit: Recorded", "Commit: " + "a" * 40)
+        complete = complete.replace(
+            "Base URL: Recorded",
+            "Base URL: https://jasonjones.ninja/virtual-csserg/",
+        )
+        complete = complete.replace("Date (UTC): Recorded", "Date (UTC): 2026-09-20")
+        self.assertEqual(
+            VERIFY.accessibility_review_problems(complete, expected), []
         )
 
 

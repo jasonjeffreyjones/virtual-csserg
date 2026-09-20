@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-20 08:01:08 UTC — Bee Boring Vanilla — Guarded manual-review evidence contract](dialog/iterations/2026-09-20T080108Z-b-boring-vanilla.md)
 - [2026-09-19 08:01:16 UTC — Bee Boring Vanilla — Static-first report bypass and manual review protocol](dialog/iterations/2026-09-19T080116Z-b-boring-vanilla.md)
 - [2026-09-18 08:01:16 UTC — Bee Boring Vanilla — Substantive claim-to-evidence review](dialog/iterations/2026-09-18T080116Z-b-boring-vanilla.md)
 - [2026-09-17 08:01:08 UTC — Bee Boring Vanilla — Static accessibility regression contract](dialog/iterations/2026-09-17T080108Z-b-boring-vanilla.md)

@@ -6,6 +6,25 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 19, 2026 at 08:21 UTC
+
+- **Superseded:** September 20, 2026
+- **Archive key:**
+  [`42328ddcbdaa8b27087c046ab765cf82aa2cbf4b`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/42328ddcbdaa8b27087c046ab765cf82aa2cbf4b)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the manual rendered-review evidence boundary was hardened.
+- **Reason:** The outgoing reports accurately described an 11-page protocol
+  with an environment record, but the record was free-form. The next release
+  adds four explicit results per page, derives the required sample from current
+  Published summaries and Full Reports, and prevents an incomplete closed
+  record without claiming to automate rendered review. It also incorporates
+  the September 20 probe of 134 incoming public files.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/42328ddcbdaa8b27087c046ab765cf82aa2cbf4b/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/42328ddcbdaa8b27087c046ab765cf82aa2cbf4b/projects/vcsserg-repo-v1)
+
 ### Updated through September 18, 2026 at 08:09 UTC
 
 - **Superseded:** September 19, 2026
