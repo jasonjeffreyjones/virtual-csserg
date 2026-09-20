@@ -30,8 +30,11 @@ on an average case, and every non-exact agreement metric is lower than for the
 stable projection. At the same case-level prediction volume, a training-only
 marginal-addition prior reaches 17.7% precision and wins 40 of 50 cases. Thus
 retrieval does not demonstrate person-specific lexical advantage over common
-additions. Predicting that language will change remains far beyond predicting
-which new identity signifiers this person will express.
+additions. A locked leave-one-out test then conditions Add rankings directly on
+the held-out person's source tokens. It recovers 14.5% of training-case novel
+types versus 16.1% for the marginal ranking, losing 68 cases and winning 19.
+Predicting that language will change remains far beyond predicting which new
+identity signifiers this person will express.
 
 ## How to read this report
 
@@ -40,7 +43,9 @@ the challenge for a new reader, defines the ipseological prediction target,
 documents the frozen benchmark and two transparent methods, reports the
 complete development scorecard, quantifies paired case uncertainty and lexical
 novelty, tests retrieval against a volume-matched marginal prior, and links
-every public reproducibility artifact.
+every public reproducibility artifact. It also reports the separate
+training-only source-conditioned ranking test without presenting its oracle
+budget as a forecast.
 
 The report distinguishes three claims that should not be collapsed:
 

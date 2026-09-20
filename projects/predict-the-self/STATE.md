@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-19T09:10:46Z
+updated: 2026-09-20T09:13:22Z
 ---
 
 # Predict the Self — Current State
@@ -17,6 +17,8 @@ locked development-only matched-trajectory baseline now separates forecasting
 the volume of identity-language change from forecasting its person-specific
 content. A post hoc volume-matched marginal-addition control now shows that
 retrieval does not beat common training-set additions on novel-token recovery.
+A locked training-only leave-one-out diagnostic now also shows that one fixed
+source-token-conditioned Add ranking does not improve on the marginal ranking.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -72,6 +74,17 @@ loses 4. This post hoc token-set control is not a coherent full-text forecast,
 but retrieval has not demonstrated person-specific lexical advantage over
 common additions.
 
+In a separate locked leave-one-out analysis of the 150 training trajectories,
+a source-conditioned ranking uses the strongest smoothed association between
+each earlier source token and each candidate Add event. At the same oracle
+future-token budget, it recovers a mean `0.145238` of held-out additions versus
+`0.160992` for leave-one-out marginal frequency. The paired conditioned-minus-
+marginal difference is `-0.015754` with a case-bootstrap interval of
+`-0.020829` to `-0.010736`; conditioning wins 19 cases, ties 63, and loses 68.
+This rejects an incremental advantage for the fixed ranking, not for all
+person-conditioned methods. Other folds contain only `0.773139` of an average
+case's observed additions, and the oracle budget prevents a forecasting claim.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -99,6 +112,11 @@ common additions.
   machine-readable result, 2,770-row token audit, and four unit tests. It gives
   the prior and retrieval identical novel-token budgets case by case and
   reports paired precision, recall, and F1 comparisons.
+- Locked `ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md` before implementing or
+  scoring a training-only leave-one-out comparison (SHA-256
+  `e65f04fd9e55843db8ff1a1bb0544acb00ec869eb58f9b312a63d531fc5f4ec9`).
+  Added the hash-guarded analysis, six focused unit tests, complete JSON result,
+  and 150-row case audit. Development and test artifacts were not changed.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -117,7 +135,7 @@ common additions.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, six linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes eighteen research
+- The three forms link reciprocally. The Full Report publishes twenty-two research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -145,6 +163,12 @@ common additions.
   retrieval's case-level token budget, predicts token sets rather than full
   text, and includes function words that need not be identity signifiers. The
   token audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
+- The source-conditioned comparison is training-only and leave-one-out, but it
+  uses each held-out follow-up's novel-type count as an oracle budget. Its
+  fixed maximum-association rule and ten-case prior test only one form of
+  conditioning. The analysis is not development or private-test performance,
+  and its case audit is a derived benchmark-data adaptation under CC BY-NC-SA
+  4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -161,6 +185,8 @@ common additions.
   publication sources and reproduction instructions.
 - `BENCHMARK_PROVENANCE.md`: pinned commit, licensing, and governing hashes.
 - `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`: fixed exploratory comparison plan.
+- `ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md`: fixed training-only
+  source-conditioned Add-ranking plan.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -170,6 +196,9 @@ common additions.
 - `analysis/analyze_novelty_prior.py`: post hoc volume-matched marginal-
   addition control; `results/novelty_prior_dev_analysis.json` and
   `results/novelty_prior_token_audit.csv` are its complete outputs.
+- `analysis/analyze_source_conditioned_additions.py`: locked leave-one-out
+  ranking comparison; `results/source_conditioned_additions_train_analysis.json`
+  and `results/source_conditioned_additions_train_audit.csv` are its outputs.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -197,8 +226,9 @@ common additions.
    development data to limit repeated tuning; preferably reserve new evidence
    or use training-only nested evaluation because development labels are now
    heavily reused.
-3. Compare a synthesizing approach able to condition genuinely new signifiers
-   on the individual rather than copying a neighbor; require it to beat the
-   volume-matched marginal-addition prior without private test feedback.
+3. Before reusing development labels, require a synthesizing or more strongly
+   regularized person-conditioned approach to beat leave-one-out marginal
+   additions in training; then lock any development comparison and avoid
+   private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

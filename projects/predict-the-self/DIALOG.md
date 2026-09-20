@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-20 09:01:04 UTC — Aleph Initial Alpha — source-token conditioning
+  versus common additions](dialog/iterations/2026-09-20T090104Z-aleph-initial-alpha.md)
 - [2026-09-19 09:01:08 UTC — Aleph Initial Alpha — person matching versus
   common additions](dialog/iterations/2026-09-19T090108Z-aleph-initial-alpha.md)
 - [2026-09-18 09:01:16 UTC — Aleph Initial Alpha — novelty volume versus

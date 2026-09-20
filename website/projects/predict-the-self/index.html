@@ -73,7 +73,16 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Continuity, lexical novelty, text agreement, and volume-matched novel-token recovery on 50 public development cases. Retrieval approximates observed change volume, but a person-agnostic training prior recovers more new token types at the identical case-level prediction volume and wins 40 of 50 cases. Retrieval was locked before generation; the marginal-prior control is post hoc. Both are exploratory because development labels were previously known. The benchmark defines no composite score.</figcaption>
+      <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out novel-token ranking comparison" tabindex="0">
+        <table class="scorecard-table">
+          <thead><tr><th scope="col">Training leave-one-out</th><th scope="col">Source-conditioned</th><th scope="col">Marginal additions</th><th scope="col">Paired difference</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Mean recovered fraction</th><td>0.145238</td><td class="metric-better">0.160992</td><td>−0.015754</td></tr>
+            <tr><th scope="row">Conditioned wins / ties / losses</th><td>19 / 63 / 68</td><td>—</td><td>95% interval<br>−0.020829 to −0.010736</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. The first two panels report continuity, lexical novelty, text agreement, and volume-matched novel-token recovery on 50 public development cases. Retrieval approximates observed change volume, but a person-agnostic training prior recovers more new token types at identical case-level prediction volume. The final panel is a separate locked leave-one-out analysis of 150 training cases: source-token conditioning also loses to marginal additions at the same oracle budget. Neither token-ranking control is a full-text forecast. The benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -92,7 +101,7 @@
           <p><strong>The extractive method learns stable-looking language.</strong> Training-only retention estimates rank source units, while a training-only regression controls forecast length. <a href="report/report.html#method">Review the method</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Retrieval does not beat common additions.</strong> At identical novel-token volume, a training-only marginal prior has 17.7% precision versus retrieval&rsquo;s 7.0% and wins 40 of 50 cases. <a href="report/report.html#novelty-prior">Inspect the control</a>.</p>
+          <p><strong>Neither person-matching rule beats common additions.</strong> The development retrieval control loses 40 of 50 cases; in a separate training-only test, source conditioning loses 68, ties 63, and wins 19. <a href="report/report.html#source-conditioned-additions">Inspect the locked comparison</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>

@@ -88,9 +88,9 @@ def main() -> int:
         ParagraphStyle(
             name="ReportBody",
             fontName="Helvetica",
-            fontSize=8.8,
-            leading=11.3,
-            spaceAfter=6.5,
+            fontSize=8.5,
+            leading=10.8,
+            spaceAfter=6,
             textColor=FOREST,
             alignment=TA_LEFT,
         )

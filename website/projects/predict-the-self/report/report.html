@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aleph Initial Alpha, Virtual CSSERG">
-<meta name="dcterms.date" content="2026-09-19">
+<meta name="dcterms.date" content="2026-09-20">
 
 <title>1&nbsp; Predict the Self – Predict the Self</title>
 <style>
@@ -153,6 +153,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#post-hoc-development-diagnostics" id="toc-post-hoc-development-diagnostics" class="nav-link" data-scroll-target="#post-hoc-development-diagnostics"><span class="header-section-number">5.3</span> Post hoc development diagnostics</a></li>
   <li><a href="#locked-matched-trajectory-retrieval" id="toc-locked-matched-trajectory-retrieval" class="nav-link" data-scroll-target="#locked-matched-trajectory-retrieval"><span class="header-section-number">5.4</span> Locked matched-trajectory retrieval</a></li>
   <li><a href="#post-hoc-volume-matched-novelty-control" id="toc-post-hoc-volume-matched-novelty-control" class="nav-link" data-scroll-target="#post-hoc-volume-matched-novelty-control"><span class="header-section-number">5.5</span> Post hoc volume-matched novelty control</a></li>
+  <li><a href="#locked-training-only-source-conditioned-ranking" id="toc-locked-training-only-source-conditioned-ranking" class="nav-link" data-scroll-target="#locked-training-only-source-conditioned-ranking"><span class="header-section-number">5.6</span> Locked training-only source-conditioned ranking</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">6</span> Results</a>
   <ul class="collapse">
@@ -161,7 +162,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#extractive-limits" id="toc-extractive-limits" class="nav-link" data-scroll-target="#extractive-limits"><span class="header-section-number">6.3</span> Lexical novelty and extractive ceilings</a></li>
   <li><a href="#trajectory-retrieval" id="toc-trajectory-retrieval" class="nav-link" data-scroll-target="#trajectory-retrieval"><span class="header-section-number">6.4</span> Retrieval predicts novelty volume, not novel content</a></li>
   <li><a href="#novelty-prior" id="toc-novelty-prior" class="nav-link" data-scroll-target="#novelty-prior"><span class="header-section-number">6.5</span> Person matching does not beat common additions</a></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.6</span> Frozen test submission</a></li>
+  <li><a href="#source-conditioned-additions" id="toc-source-conditioned-additions" class="nav-link" data-scroll-target="#source-conditioned-additions"><span class="header-section-number">6.6</span> Source-token conditioning also loses to common additions</a></li>
+  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.7</span> Frozen test submission</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">7</span> Discussion</a>
   <ul class="collapse">
@@ -179,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Predict the Self</span></h1>
-<p class="subtitle lead">Evidence, method, and development results</p>
+<p class="subtitle lead">Evidence, method, and benchmark diagnostics</p>
 </div>
 
 
@@ -196,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 19, 2026</p>
+      <p class="date">September 20, 2026</p>
     </div>
   </div>
 
@@ -212,7 +214,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="../index.html">Executive Summary</a> · <a href="../short-report.pdf">Short two-column report</a> · <a href="index.html">report landing page</a></p>
 <section id="abstract" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Abstract</h1>
-<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast. A locked exploratory baseline retrieves the complete follow-up of the most similar training participant. It approximates how much new vocabulary will appear but not which vocabulary: predicted unique-token novelty is 80.2% versus 73.2% observed, while mean novel-token precision is 7.0%, recall is 8.5%, and agreement is lower than both continuity baselines. A post hoc volume-matched control sharpens the result: simply choosing the most frequent training-set additions reaches 17.7% precision and 14.3% F1, versus 7.0% and 6.7% for person-matched retrieval.</p>
+<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast. A locked exploratory baseline retrieves the complete follow-up of the most similar training participant. It approximates how much new vocabulary will appear but not which vocabulary: predicted unique-token novelty is 80.2% versus 73.2% observed, while mean novel-token precision is 7.0%, recall is 8.5%, and agreement is lower than both continuity baselines. A post hoc volume-matched control sharpens the result: simply choosing the most frequent training-set additions reaches 17.7% precision and 14.3% F1, versus 7.0% and 6.7% for person-matched retrieval. A locked training-only leave-one-out test then asks whether earlier source tokens can improve that marginal ranking. The fixed source-conditioned rule recovers 14.5% of held-out additions versus 16.1% for the marginal prior, a paired difference of −1.58 percentage points (95% case-bootstrap interval: −2.08 to −1.07).</p>
 </section>
 <section id="findings" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Findings at a glance</h1>
@@ -226,6 +228,7 @@ ul.task-list li input[type="checkbox"] {
 <li>On average, 73.2% of follow-up unique token types are new relative to the earlier response and therefore unavailable to a strictly extractive method.</li>
 <li>Matched-trajectory retrieval approximates the volume of lexical novelty and reduces source-similarity error, but its retrieved new signifiers rarely match the focal person’s observed new signifiers.</li>
 <li>At identical case-level novelty volume, a marginal prior based only on common training additions recovers more observed new token types than person-matched retrieval on 40 of 50 development cases.</li>
+<li>In a separate leave-one-out analysis of all 150 training trajectories, the locked source-conditioned Add ranking performs worse than its marginal comparator on 68 cases, ties 63, and wins 19 at the same oracle token budget.</li>
 </ul>
 </section>
 <section id="introduction" class="level1" data-number="4">
@@ -281,6 +284,12 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="5.5" class="anchored" data-anchor-id="post-hoc-volume-matched-novelty-control"><span class="header-section-number">5.5</span> Post hoc volume-matched novelty control</h2>
 <p>The retrieval method introduces many token types, creating more opportunities for chance overlap with the observed follow-up. A new diagnostic therefore holds this opportunity constant case by case. It counts, among the 150 training pairs, how many people add each token type between waves. For each development source, it excludes tokens already present and chooses the most frequently added remaining types, breaking frequency ties alphabetically. The number chosen is exactly the number of novel types emitted by retrieval for that case.</p>
 <p>This marginal-addition prior uses no development response to construct its ranking, and it has the same novel-token budget as retrieval on every case. However, it borrows that budget from retrieval and produces only a token set, not a coherent response. It is therefore a diagnostic control rather than a standalone challenge forecast. The comparison was devised after development labels had already been inspected and is explicitly post hoc. Lexical tokens also include function words and other language that need not be semantic identity signifiers.</p>
+</section>
+<section id="locked-training-only-source-conditioned-ranking" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="locked-training-only-source-conditioned-ranking"><span class="header-section-number">5.6</span> Locked training-only source-conditioned ranking</h2>
+<p>A final diagnostic tests individualization without using the development cases again. Its plan was fixed before implementation and scoring at SHA-256 <code>e65f04fd9e55843db8ff1a1bb0544acb00ec869eb58f9b312a63d531fc5f4ec9</code>. This is an analysis lock, not a preregistration: the training pairs had already informed earlier methods.</p>
+<p>Each of the 150 training cases is held out in turn. On the other 149, the analysis counts marginal Add events and every association between a token in the source and a different token added at follow-up. For a candidate addition, the source-conditioned score is its largest conditional Add rate across the held-out person’s source tokens, smoothed toward the candidate’s marginal Add rate with ten prior cases. That prior strength was fixed to match the stable projection’s existing smoothing choice. Ties favor marginal frequency and then alphabetical token order.</p>
+<p>Both rankings receive exactly as many guesses as the held-out follow-up actually adds. This oracle budget isolates token ordering but disqualifies both rankings as standalone forecasts. Because predicted and observed token sets have equal size, case-level precision, recall, and F1 are identical; the report calls their shared value the recovered fraction. A 20,000-resample paired case bootstrap uses seed <code>20260920</code>.</p>
 </section>
 </section>
 <section id="results" class="level1" data-number="6">
@@ -645,11 +654,59 @@ ul.task-list li input[type="checkbox"] {
 <p>Positive differences favor the marginal prior. It wins 40 cases, ties 6, and loses 4 on each measure. The common additions include syntactic vocabulary such as <em>an</em>, <em>in</em>, <em>my</em>, <em>is</em>, and <em>who</em>, but also more content-bearing words such as <em>friend</em>, <em>lover</em>, <em>kind</em>, <em>creative</em>, and <em>life</em>. This means the earlier retrieval F1 cannot be read as evidence that matching text and demographics identified person-specific new signifiers. At matched volume, a coarse cohort-level base rate is substantially stronger.</p>
 <p>The result does not establish that novel identity content is inherently unpredictable. It establishes a stricter baseline for future work: an individualized novelty model should beat common training additions at a comparable prediction volume before its gains are attributed to person-level conditioning.</p>
 </section>
-<section id="submission" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.6</span> Frozen test submission</h2>
+<section id="source-conditioned-additions" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="source-conditioned-additions"><span class="header-section-number">6.6</span> Source-token conditioning also loses to common additions</h2>
+<p>The fixed source-conditioned ranking does not clear that baseline in its training-only leave-one-out test. Across all 150 held-out training cases, the mean recovered fraction is <code>0.145238</code>, compared with <code>0.160992</code> for the marginal-addition ranking:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Training leave-one-out result</th>
+<th style="text-align: right;">Source-conditioned</th>
+<th style="text-align: right;">Marginal additions</th>
+<th style="text-align: right;">Paired difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mean novel-type recovered fraction</td>
+<td style="text-align: right;">0.145238</td>
+<td style="text-align: right;">0.160992</td>
+<td style="text-align: right;">−0.015754</td>
+</tr>
+<tr class="even">
+<td>Median novel-type recovered fraction</td>
+<td style="text-align: right;">0.141177</td>
+<td style="text-align: right;">0.156250</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>Case wins / ties / losses</td>
+<td style="text-align: right;">19 / 63 / 68</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>Paired case-bootstrap 95% interval</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">−0.020829 to −0.010736</td>
+</tr>
+</tbody>
+</table>
+<p>The interval excludes zero in the direction favoring the marginal ranking. Thus, under the locked interpretation rule, the source-conditioned method provides no incremental advantage. One plausible explanation is that choosing the strongest source-token cue promotes sparse, idiosyncratic pairs that fail to recur in the held-out person, while the marginal ranking spends more of its fixed budget on common additions; the analysis does not isolate that mechanism.</p>
+<p>This is a bounded negative result, not evidence that source signifiers contain no predictive information. The rule tests only token pairs, not phrases, semantics, interactions, or predicted deletions. Its mean candidate-vocabulary ceiling is <code>0.773139</code>: about 22.7% of held-out additions are absent from every other training follow-up’s additions and cannot be selected by either ranking. Most importantly, the oracle budget comes from the held-out future. The result compares ranking quality within this training cohort; it is not development or private-test performance.</p>
+</section>
+<section id="submission" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.7</span> Frozen test submission</h2>
 <p>The method generated one nonblank prediction for every test ID in the required order. The pinned official validator returned <code>VALID: 81 predictions</code>. The frozen CSV has SHA-256:</p>
 <pre class="text"><code>a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3</code></pre>
-<p>The organizer must run the private test evaluator. Until that happens, the only empirical performance reported here is public-development performance.</p>
+<p>The organizer must run the private test evaluator. Until that happens, the private-test performance remains unknown; neither public-development results nor the training-only ranking diagnostic substitutes for it.</p>
 </section>
 </section>
 <section id="discussion" class="level1" data-number="7">
@@ -657,19 +714,24 @@ ul.task-list li input[type="checkbox"] {
 <p>The stable-signifier projection does learn something useful about response form and degree of change. Yet improved prediction of how much a response will change is not the same as predicting what new identity content will appear. The novelty diagnostic makes that distinction measurable: most future lexical material lies outside the earlier response, while the method is definitionally restricted to it. A next-generation model needs a mechanism for both deletion and creation, evaluated without sacrificing the interpretability of these paired diagnostics.</p>
 <p>Matched-trajectory retrieval sharpens this inference. It supplies deletion and creation in approximately the observed proportions, but the transferred novel content is rarely person-correct. The problem is not merely calibrating how different the next self-description will be. A useful forecast must condition new signifiers on the individual without collapsing back into verbatim continuity.</p>
 <p>The marginal control tightens that conclusion. Retrieval not only recovers little new vocabulary; it recovers less than a person-agnostic training prior given the same number of guesses. The diagnostic also disciplines the language of the report: token recovery is not automatically signifier recovery, because many high-base-rate additions are connective or generic words. Future person-specific models need to demonstrate value beyond both continuity and marginal lexical prevalence.</p>
+<p>The leave-one-out source-conditioned result makes that requirement more specific. Merely finding the strongest smoothed source-token-to-Add association is not enough: under equal oracle budgets, it sacrifices 1.58 percentage points of recovery relative to marginal prevalence. Better individualization will need stronger regularization, richer context, or genuinely semantic synthesis, and it should first establish an incremental training-only advantage before reopening the heavily reused development comparison.</p>
 <section id="reproducibility" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="reproducibility"><span class="header-section-number">7.1</span> Reproducibility</h2>
 <p>The complete open materials are:</p>
 <ul>
+<li><a href="ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md"><code>ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md</code></a> — pre-analysis lock for the training-only ranking comparison;</li>
 <li><a href="ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md"><code>ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md</code></a> — pre-prediction method and evaluation lock;</li>
 <li><a href="analysis/analyze_dev_diagnostics.py"><code>analysis/analyze_dev_diagnostics.py</code></a> — hash-guarded paired bootstrap and extractive-limit analysis;</li>
 <li><a href="analysis/analyze_novelty_prior.py"><code>analysis/analyze_novelty_prior.py</code></a> — volume-matched marginal-addition diagnostic;</li>
+<li><a href="analysis/analyze_source_conditioned_additions.py"><code>analysis/analyze_source_conditioned_additions.py</code></a> — hash-guarded leave-one-out source-conditioned comparison;</li>
 <li><a href="analysis/analyze_trajectory_retrieval.py"><code>analysis/analyze_trajectory_retrieval.py</code></a> — complete paired and novelty comparison under the lock;</li>
 <li><a href="analysis/stable_signifier_projection.py"><code>analysis/stable_signifier_projection.py</code></a> — standard-library generator;</li>
 <li><a href="analysis/trajectory_retrieval.py"><code>analysis/trajectory_retrieval.py</code></a> — standard-library matched-trajectory generator;</li>
 <li><a href="results/stable_signifier_dev_diagnostics.json"><code>results/stable_signifier_dev_diagnostics.json</code></a> — complete machine-readable post hoc diagnostic results;</li>
 <li><a href="results/novelty_prior_dev_analysis.json"><code>results/novelty_prior_dev_analysis.json</code></a> — complete marginal-prior comparison and paired uncertainty;</li>
 <li><a href="results/novelty_prior_token_audit.csv"><code>results/novelty_prior_token_audit.csv</code></a> — token ranks, frequencies, prediction counts, and correct-recovery counts;</li>
+<li><a href="results/source_conditioned_additions_train_analysis.json"><code>results/source_conditioned_additions_train_analysis.json</code></a> — complete machine-readable leave-one-out result;</li>
+<li><a href="results/source_conditioned_additions_train_audit.csv"><code>results/source_conditioned_additions_train_audit.csv</code></a> — budgets, reachable additions, hits, scores, and paired case effects;</li>
 <li><a href="results/stable_signifier_dev_predictions.csv"><code>results/stable_signifier_dev_predictions.csv</code></a> — all 50 public development predictions;</li>
 <li><a href="results/stable_signifier_dev_scorecard.json"><code>results/stable_signifier_dev_scorecard.json</code></a> — complete machine-readable scorecard;</li>
 <li><a href="results/trajectory_retrieval_dev_analysis.json"><code>results/trajectory_retrieval_dev_analysis.json</code></a> — complete locked paired comparison and novelty diagnostics;</li>
@@ -695,8 +757,9 @@ ul.task-list li input[type="checkbox"] {
 <p>An extractive method cannot predict genuinely new identities, experiences, or reframing. Token recurrence is not equivalent to identity-signifier endurance, and common wording can make a signifier look stable. The line splitter also turns some prose sentences into separate output lines, worsening line-count error. Finally, public-development-guided selection can overfit a 50-case set.</p>
 <p>Trajectory retrieval adds different limitations. It transfers another participant’s public response rather than generating a person-specific future, and demographic similarity does not establish that identity change follows demographic categories. Its within-iteration lock reduces new analytic flexibility but cannot make previously inspected development data unseen.</p>
 <p>The marginal-addition control is post hoc and deliberately narrow. It uses retrieval’s case-level novel-token count, so it is not an independent full-text forecast; it isolates content choice after holding opportunity volume equal. Its ranking is estimated from only 150 training pairs, and its lexical units include function words that are not necessarily identity signifiers. The derived token audit adapts the benchmark data and remains governed by the benchmark’s CC BY-NC-SA 4.0 license.</p>
+<p>The source-conditioned comparison is locked and uses leave-one-out estimation, but it remains a training-cohort diagnostic with an oracle future-token budget. Its maximum-over-source-tokens rule can privilege sparse associations, the ten-case smoothing strength was adopted rather than tuned, and its tokens need not be semantic signifiers. The case audit is also a derived benchmark-data adaptation under CC BY-NC-SA 4.0.</p>
 <p>The paired bootstrap treats development cases as the resampling unit, but the benchmark is a selected longitudinal cohort rather than a probability sample. Its intervals describe sensitivity to the composition of these 50 cases, not uncertainty for people in general. The lexical oracles use observed follow-ups and are deliberately unattainable; they must not be read as test predictions or achievable prospective scores.</p>
-<p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. A later method should synthesize rather than copy novel content, lock its design before any additional development comparison, avoid private test feedback for tuning, and beat the volume-matched marginal-addition prior before claiming person-specific novel-content prediction.</p>
+<p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. A later method should synthesize rather than copy novel content, show an incremental advantage over leave-one-out marginal additions before any additional development comparison, lock that comparison, and avoid private test feedback for tuning.</p>
 
 
 </section>

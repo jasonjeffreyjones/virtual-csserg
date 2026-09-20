@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_source_conditioned_additions",
+  "cases": 150,
+  "scored_cases_with_positive_budget": 150,
+  "zero_budget_cases": 0,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "e65f04fd9e55843db8ff1a1bb0544acb00ec869eb58f9b312a63d531fc5f4ec9"
+  },
+  "design": {
+    "training_cases_per_fold": 149,
+    "prior_weight": 10.0,
+    "budget": "observed held-out novel-token-type count",
+    "warning": "The oracle budget uses each held-out follow-up and isolates ranking quality; neither method is a standalone forecast.",
+    "score_identity": "Predicted and observed sets have equal size, so case-level novel-type precision, recall, and F1 are identical."
+  },
+  "observed_addition_budget": {
+    "mean": 39.433333,
+    "median": 31.0,
+    "minimum": 1.0,
+    "maximum": 146.0
+  },
+  "candidate_vocabulary_reachable_fraction": {
+    "mean": 0.773139,
+    "median": 0.781534,
+    "minimum": 0.0,
+    "maximum": 1.0
+  },
+  "novel_type_recovered_fraction": {
+    "marginal_addition": {
+      "mean": 0.160992,
+      "median": 0.15625,
+      "minimum": 0.0,
+      "maximum": 0.4
+    },
+    "source_conditioned": {
+      "mean": 0.145238,
+      "median": 0.141177,
+      "minimum": 0.0,
+      "maximum": 0.4
+    }
+  },
+  "paired_comparison": {
+    "effect_definition": "source_conditioned_minus_marginal",
+    "mean_effect_positive_favors_source_conditioned": -0.015754,
+    "paired_case_bootstrap_95_ci_low": -0.020829,
+    "paired_case_bootstrap_95_ci_high": -0.010736,
+    "source_conditioned_case_wins": 19,
+    "case_ties": 63,
+    "source_conditioned_case_losses": 68
+  },
+  "bootstrap": {
+    "unit": "paired scored training case",
+    "resamples": 20000,
+    "seed": 20260920,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to training-case composition; it is not a population-generalization interval."
+  },
+  "interpretation_limits": "This training-only leave-one-out diagnostic uses an oracle token budget. Lexical tokens include function words and need not be semantic identity signifiers. It is not development or private-test performance."
+}
