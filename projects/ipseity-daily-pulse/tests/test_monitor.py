@@ -3,6 +3,7 @@ import datetime as dt
 import gzip
 import importlib.util
 import json
+import statistics
 import sys
 import tempfile
 import unittest
@@ -93,6 +94,37 @@ class MonitorTests(unittest.TestCase):
         self.assertAlmostEqual(
             adjusted["adjusted_annual_change_percentage_points"], 0.0, places=7
         )
+
+    def test_early_late_contrast_recovers_constructed_shift(self):
+        rows = []
+        start = dt.date(2025, 1, 1)
+        midpoint = start + dt.timedelta(days=99)
+        for day_index in range(200):
+            date = start + dt.timedelta(days=day_index)
+            for respondent_index in range(5):
+                endorsed = (
+                    respondent_index == 0
+                    if day_index < 100
+                    else respondent_index < 4
+                )
+                rows.append(
+                    row(
+                        "two-period",
+                        date,
+                        f"{respondent_index:012x}",
+                        int(endorsed),
+                    )
+                )
+        contrast = monitor.fit_early_late_contrast(rows, midpoint)
+        self.assertEqual(contrast["early_observations"], 500)
+        self.assertEqual(contrast["late_observations"], 500)
+        self.assertEqual(contrast["respondent_clusters"], 5)
+        self.assertAlmostEqual(contrast["early_prevalence_percent"], 20.0)
+        self.assertAlmostEqual(contrast["late_prevalence_percent"], 80.0)
+        self.assertAlmostEqual(
+            contrast["late_minus_early_percentage_points"], 60.0
+        )
+        self.assertGreater(contrast["late_minus_early_cluster_se"], 0)
 
     def test_within_respondent_trend_removes_turnover_only_change(self):
         stats = monitor.SignifierStats()
@@ -212,6 +244,58 @@ class MonitorTests(unittest.TestCase):
             sensitivity[0]["signifier"],
             summary["leader_sensitivity"]["results"][0]["signifier"],
         )
+        with (project / "outputs/leader-early-late-sensitivity.csv").open(
+            newline=""
+        ) as source:
+            early_late_sensitivity = list(csv.DictReader(source))
+        self.assertEqual(
+            len(early_late_sensitivity),
+            summary["early_late_sensitivity"]["selected_signifiers"],
+        )
+        self.assertEqual(
+            sum(item["same_direction"] == "True" for item in early_late_sensitivity),
+            summary["early_late_sensitivity"]["same_direction"],
+        )
+        self.assertEqual(
+            early_late_sensitivity[0]["midpoint_date"],
+            summary["early_late_sensitivity"]["midpoint_date"],
+        )
+        self.assertEqual(
+            early_late_sensitivity[0]["signifier"],
+            summary["early_late_sensitivity"]["results"][0]["signifier"],
+        )
+        self.assertEqual(
+            (
+                dt.date.fromisoformat(
+                    summary["early_late_sensitivity"]["early_period_end"]
+                )
+                + dt.timedelta(days=1)
+            ).isoformat(),
+            summary["early_late_sensitivity"]["late_period_start"],
+        )
+        for item in early_late_sensitivity:
+            self.assertAlmostEqual(
+                float(item["late_prevalence_percent"])
+                - float(item["early_prevalence_percent"]),
+                float(item["late_minus_early_percentage_points"]),
+            )
+            self.assertEqual(
+                (float(item["late_minus_early_percentage_points"]) >= 0)
+                == (float(item["unadjusted_annual_change_percentage_points"]) >= 0),
+                item["same_direction"] == "True",
+            )
+        self.assertEqual(
+            round(
+                statistics.median(
+                    abs(float(item["late_minus_early_percentage_points"]))
+                    for item in early_late_sensitivity
+                ),
+                3,
+            ),
+            summary["early_late_sensitivity"][
+                "median_absolute_prevalence_difference_percentage_points"
+            ],
+        )
         with (project / "outputs/leader-within-respondent-sensitivity.csv").open(
             newline=""
         ) as source:
@@ -264,6 +348,7 @@ class MonitorTests(unittest.TestCase):
             "observation-growth.svg",
             "annual-prevalence-growth-histogram.svg",
             "leader-adjustment-sensitivity.svg",
+            "leader-early-late-sensitivity.svg",
             "leader-within-respondent-sensitivity.svg",
         ):
             root = ET.parse(project / "outputs" / name).getroot()

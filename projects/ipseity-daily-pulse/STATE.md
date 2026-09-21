@@ -2,7 +2,7 @@
 title: "Ipseity Daily Pulse"
 status: Active
 publication: Unpublished
-updated: 2026-09-20T10:08:59Z
+updated: 2026-09-21T10:09:51Z
 ---
 
 # Ipseity Daily Pulse — Current state
@@ -14,45 +14,46 @@ public report has been created.
 
 ## Current findings and completed work
 
-- Five daily outside-in checks are recorded. At `2026-09-20T10:06:08Z`, the
-  homepage and canonical microdata returned HTTP 200. The 5,007,868-byte gzip
-  parsed with the documented schema: 706,425 response observations from
-  2025-07-08 through 2026-09-19, 5,010 hashed respondents, 707 signifiers, no
+- Six daily outside-in checks are recorded. At `2026-09-21T10:06:18Z`, the
+  homepage and canonical microdata returned HTTP 200. The 5,019,234-byte gzip
+  parsed with the documented schema: 707,998 response observations from
+  2025-07-08 through 2026-09-20, 5,021 hashed respondents, 707 signifiers, no
   malformed rows or duplicate canonical keys, and a one-day data lag. No
-  anomaly was detected. Since the prior check, the file gained 1,628
-  observations and five respondents, and its latest observation date advanced
+  anomaly was detected. Since the prior check, the file gained 1,573
+  observations and 11 respondents, and its latest observation date advanced
   one day. Its SHA-256 is
-  `820d311436a00c2333d3b6d342da4ec45c138daa926d60baf00a5636b4b366c8`.
-- The current growth table and accessible SVG rise to 706,425 observations
-  across 429 observation dates. Five history rows remain too few to
-  characterize service reliability or merit a separate check-history figure.
+  `83ee777095ffb9b44f26d222177cf387cb1db96e885b369f6570d1ba4509c519`.
+- The current growth table and accessible SVG rise to 707,998 observations
+  across 430 observation dates. Six history rows remain one short of the
+  planned seven-check operational view.
 - Unweighted linear probability trends remain estimable for 704 signifiers
   meeting the prespecified 300-response, 30-date, and 180-day thresholds. The
   median annualized estimate is +0.6 percentage points; the middle half ranges
-  from -1.6 to +3.2 points. `beautiful` is the most positive pooled leader
+  from -1.7 to +3.2 points. `beautiful` is the most positive pooled leader
   (+22.9 points/year), and `nba fan` is the most negative (-14.6).
 - Respondent-clustered inference and both multiplicity screens still yield no
   discovery among 704 tests: zero Benjamini–Hochberg q-values and zero
   Bonferroni-adjusted p-values are at or below .05.
+- A new two-period sensitivity splits the full observation window at
+  2026-02-12 and compares late-half with early-half prevalence for the 20
+  selected linear-trend leaders. All 20 contrasts retain the linear slope's
+  direction; their median absolute difference is 9.4 percentage points.
+  `beautiful` rises from 33.2% to 50.7%, a +17.5-point contrast with a
+  respondent-clustered 95% interval from +8.4 to +26.7. This is a selected
+  diagnostic, not a discovery test, and its point difference is not directly
+  comparable with an annualized slope.
 - The refreshed composition-and-calendar sensitivity retains the direction of
-  all 20 pooled leaders. The median absolute slope shift is 5.4 points/year.
-  This remains a selected-leader diagnostic rather than a
-  discovery test.
-- The leader panel now compares all-response pooled trends, pooled trends on
-  the repeat-respondent subset, and respondent fixed effects on those same
-  repeat observations. Sixteen of 20 repeat-sample slopes retain the
-  all-response direction; 15 of 20 within-person slopes retain the repeat-sample
-  direction; 13 of 20 retain the original direction. The median absolute
-  changes are 12.5 points/year for sample restriction, 11.6 for absorbing
-  respondent effects, and 14.0 end to end; the median signifier has only 25
-  repeat respondents. `beautiful` moves from +22.9 among all responses to +4.0
-  pooled among repeat respondents and -0.7 within person (30 repeat respondents,
-  one switcher). `singer`, `she/her`, and `social conservative` have no
-  endorsement switchers, so their zero within slopes and intervals are
-  mechanical rather than precise population evidence.
-- A new internal outreach draft uses the `beautiful` three-way comparison to
-  explain why sample restriction and within-person change answer distinct
-  questions. It remains unpublished pending PI guidance.
+  all 20 pooled leaders; the median absolute slope shift is 5.6 points/year.
+- The three-way leader panel now has 17 of 20 repeat-sample slopes retaining
+  the all-response direction, 15 of 20 within-person slopes retaining the
+  repeat-sample direction, and 12 of 20 retaining the original direction. The
+  median absolute shifts are 11.7 points/year for sample restriction, 13.4 for
+  absorbing respondent effects, and 13.8 end to end; the median signifier has
+  26 repeat respondents. Two signifiers have no endorsement switchers, so
+  their zero within slopes and intervals are mechanical rather than precise
+  population evidence.
+- A new internal outreach draft explains the two-period robustness check. It
+  remains unpublished pending PI guidance.
 
 ## Decisions and constraints
 
@@ -64,12 +65,12 @@ public report has been created.
 - Keep the unweighted pooled daily slope as the charter-requested descriptive
   point estimate. Use respondent-clustered intervals and both BH and Bonferroni
   adjustments for the primary screen.
-- Treat the composition-and-calendar, repeat-sample pooled, and
-  respondent-fixed-effect models as selected-leader sensitivities, not
-  replacement estimands or multiplicity corrections. The repeat-sample model
-  isolates the change from restricting the analytic sample; the fixed-effect
-  model then removes stable respondent differences on the same observations.
-  Their arithmetic shifts are not a causal turnover decomposition.
+- Treat the composition-and-calendar, early-versus-late, repeat-sample pooled,
+  and respondent-fixed-effect models as selected-leader sensitivities, not
+  replacement estimands or multiplicity corrections. The early/late contrast
+  relaxes straight-line form but can hide shorter reversals and changing
+  composition. The repeat-sample and fixed-effect shifts are not a causal
+  turnover decomposition.
 - Do not interpret nominal intervals excluding zero as discoveries when none
   of the 704 primary tests passes either multiplicity screen. Do not interpret
   a zero sandwich interval as precision when repeat respondents never change
@@ -82,26 +83,26 @@ public report has been created.
 - `PROJECT.md`: PI-owned charter.
 - `CURRENT-FINDINGS.md`: replaceable reader-facing current results and sources.
 - `ANALYSIS.md` and `analysis/monitor.py`: method, reproduction, live monitor,
-  clustered inference, multiplicity adjustment, leader adjustment, and
-  within-respondent sensitivity.
+  clustered inference, multiplicity adjustment, leader sensitivities, and
+  artifact generation.
 - `data/monitoring-history.csv`: append-only outside-in check history.
-- `outputs/`: current summary, growth tables, full trend estimates, two leader
-  sensitivity tables, and four accessible SVGs.
-- `tests/test_monitor.py`: synthetic validation, inference, adjustment,
-  fixed-effect, and artifact consistency tests.
+- `outputs/`: current summary, growth tables, full trend estimates, three
+  leader sensitivity tables, and five accessible SVGs.
+- `tests/test_monitor.py`: synthetic validation, inference, sensitivity, and
+  artifact consistency tests.
 - `outreach/`: workflow recommendation and internal content drafts.
 - `DIALOG.md`, `dialog/iterations/`, and `dialog/indexes/`: bounded handoff and
   immutable iteration history.
 
 ## Problems and unresolved PI questions
 
-- Five history rows establish four healthy daily intervals, not enough
-  evidence to characterize service reliability or create a useful
-  check-history figure.
+- Six history rows establish five healthy daily intervals, not enough evidence
+  to characterize service reliability. The planned one-week operational view
+  becomes available after the next successful daily check.
 - No signifier slope survives either multiplicity adjustment. Leader
   sensitivities use small, selected subsets and do not address population
-  weighting, time-varying confounding, selective retention, or nonlinear trend
-  form.
+  weighting, time-varying confounding, selective retention, or changing
+  unobserved composition.
 - Should Virtual CSSERG adopt the proposed shared, Project-organized outreach
   feed in which Scholars leave evidence-linked drafts and Dr. Jones approves or
   posts them? Until guidance arrives, drafts remain internal and unpublished.
@@ -110,10 +111,10 @@ public report has been created.
 
 1. On the next UTC day, run the live monitor once; investigate only if its
    anomaly field is not `none`.
-2. Test whether selected pooled leaders are stable to nonlinear time form or a
-   prespecified early/late-period comparison; retain the primary linear slopes
-   and the multiple-testing cautions.
-3. Add a check-history visualization after at least seven daily observations
-   make a one-week operational view interpretable.
+2. After the seventh history row, add a compact check-history visualization for
+   endpoint status, data lag, and observation growth across checks.
+3. Test whether the selected early/late contrasts persist after observed
+   composition and calendar adjustment, while retaining the linear primary
+   estimand and all selection and multiplicity cautions.
 4. Incorporate PI outreach guidance and keep public trend claims deferred until
    robustness evidence is stronger.

@@ -42,6 +42,10 @@ replay. The script refuses to append a duplicate check timestamp.
   ten most negative unadjusted slopes with observed composition and calendar
   controls; `outputs/leader-adjustment-sensitivity.svg` compares the displayed
   leaders before and after that adjustment.
+- `outputs/leader-early-late-sensitivity.csv` compares endorsement prevalence
+  after versus on or before the full observation window's calendar midpoint
+  for the same leaders; `outputs/leader-early-late-sensitivity.svg` shows the
+  displayed contrasts with respondent-clustered intervals.
 - `outputs/leader-within-respondent-sensitivity.csv` refits those leader tails
   first as pooled trends on the repeat-respondent subset and then with
   respondent fixed effects;
@@ -76,6 +80,16 @@ and uncertainty remains CR1-clustered by hashed respondent. This targeted
 diagnostic tests whether the displayed extremes are fragile to observed
 composition and seasonality; because the signifiers were selected as extremes,
 its intervals are not a new multiple-testing or discovery procedure.
+
+The early-versus-late sensitivity splits the full dataset window at its
+calendar midpoint, uses the same cutoff for every selected signifier, and
+reports the unweighted late-half prevalence minus the early-half prevalence.
+This direct percentage-point contrast does not assume a straight-line path
+within either period. Its uncertainty uses the same respondent-clustered CR1
+sandwich correction as the primary two-term fit. The contrast can still hide
+shorter reversals, is vulnerable to changing sample composition, and is
+selected using the most extreme linear slopes. Its magnitude is not directly
+comparable with the annualized slope; only direction is compared.
 
 The within-respondent sensitivity uses the respondent–signifier sufficient
 statistics retained during validation. It first refits the pooled trend after

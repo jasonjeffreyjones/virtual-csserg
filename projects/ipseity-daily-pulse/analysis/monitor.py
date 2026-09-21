@@ -586,6 +586,128 @@ def adjusted_leader_sensitivity(
     return results
 
 
+def fit_early_late_contrast(
+    rows: list[dict[str, str]], midpoint: dt.date
+) -> dict[str, object]:
+    """Compare endorsement prevalence after versus on/before a fixed midpoint.
+
+    The two-period coefficient is an unweighted late-minus-early difference in
+    proportions. Its CR1 sandwich uncertainty clusters observations by hashed
+    respondent and uses the same finite-sample correction as the primary
+    two-term linear trend.
+    """
+    periods = [
+        int(dt.date.fromisoformat(row["observation_date"]) > midpoint)
+        for row in rows
+    ]
+    outcomes = [float(row["endorsed"]) for row in rows]
+    observations = len(rows)
+    late_observations = sum(periods)
+    early_observations = observations - late_observations
+    if early_observations == 0 or late_observations == 0:
+        raise ValueError("early/late contrast requires observations in both periods")
+
+    early_yes = sum(outcome for outcome, late in zip(outcomes, periods) if not late)
+    late_yes = sum(outcome for outcome, late in zip(outcomes, periods) if late)
+    early_prevalence = early_yes / early_observations
+    late_prevalence = late_yes / late_observations
+    difference = late_prevalence - early_prevalence
+
+    # Score vectors correspond to the intercept and late-period coefficient.
+    cluster_scores: dict[str, list[float]] = {}
+    for source_row, outcome, late in zip(rows, outcomes, periods):
+        fitted = early_prevalence + difference * late
+        residual = outcome - fitted
+        score = cluster_scores.setdefault(
+            source_row["hashed_respondent_id"], [0.0, 0.0]
+        )
+        score[0] += residual
+        score[1] += late * residual
+    clusters = len(cluster_scores)
+    if clusters <= 1 or observations <= 2:
+        raise ValueError("early/late contrast lacks observations or respondent clusters")
+
+    inverse = invert_matrix(
+        [
+            [float(observations), float(late_observations)],
+            [float(late_observations), float(late_observations)],
+        ]
+    )
+    difference_column = [inverse[index][1] for index in range(2)]
+    variance = sum(
+        sum(weight * value for weight, value in zip(difference_column, score)) ** 2
+        for score in cluster_scores.values()
+    )
+    correction = clusters / (clusters - 1) * (observations - 1) / (observations - 2)
+    difference_se = math.sqrt(max(0.0, correction * variance))
+    difference_pp = difference * 100
+    difference_se_pp = difference_se * 100
+    p_value = (
+        math.erfc(abs(difference_pp / difference_se_pp) / math.sqrt(2))
+        if difference_se_pp > 0
+        else (0.0 if difference_pp else 1.0)
+    )
+    return {
+        "midpoint_date": midpoint.isoformat(),
+        "early_observations": early_observations,
+        "late_observations": late_observations,
+        "respondent_clusters": clusters,
+        "early_prevalence_percent": early_prevalence * 100,
+        "late_prevalence_percent": late_prevalence * 100,
+        "late_minus_early_percentage_points": difference_pp,
+        "late_minus_early_cluster_se": difference_se_pp,
+        "late_minus_early_cluster_ci95_lower": difference_pp - 1.96 * difference_se_pp,
+        "late_minus_early_cluster_ci95_upper": difference_pp + 1.96 * difference_se_pp,
+        "late_minus_early_cluster_p_value": p_value,
+    }
+
+
+def early_late_leader_sensitivity(
+    path: Path,
+    trends: list[dict[str, object]],
+    earliest: dt.date,
+    latest: dt.date,
+) -> list[dict[str, object]]:
+    """Compare the selected linear-trend leaders across two calendar halves."""
+    eligible = [row for row in trends if row["eligible"]]
+    growing = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"]), reverse=True
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    shrinking = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"])
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    selections = [
+        ("positive", rank, row) for rank, row in enumerate(growing, start=1)
+    ] + [("negative", rank, row) for rank, row in enumerate(shrinking, start=1)]
+    wanted = {str(row["signifier"]) for _, _, row in selections}
+    observations: dict[str, list[dict[str, str]]] = {
+        signifier: [] for signifier in wanted
+    }
+    with gzip.open(path, "rt", encoding="utf-8", newline="") as source:
+        for row in csv.DictReader(source):
+            if row["signifier"] in observations:
+                observations[row["signifier"]].append(row)
+
+    midpoint = earliest + dt.timedelta(days=(latest - earliest).days // 2)
+    results = []
+    for tail, rank, trend in selections:
+        signifier = str(trend["signifier"])
+        fitted = fit_early_late_contrast(observations[signifier], midpoint)
+        unadjusted = float(trend["annual_change_percentage_points"])
+        contrast = float(fitted["late_minus_early_percentage_points"])
+        results.append(
+            {
+                "unadjusted_tail": tail,
+                "unadjusted_tail_rank": rank,
+                "signifier": signifier,
+                "unadjusted_annual_change_percentage_points": unadjusted,
+                **fitted,
+                "same_direction": (contrast >= 0) == (unadjusted >= 0),
+            }
+        )
+    return results
+
+
 def repeat_respondent_clusters(stats: SignifierStats) -> list[list[int]]:
     """Return clusters that identify a within-respondent date slope."""
     clusters = []
@@ -953,6 +1075,77 @@ def leader_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     )
 
 
+def early_late_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
+    """Plot late-minus-early prevalence contrasts for displayed leaders."""
+    displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
+    width, height = 960, 660
+    left, right, top, bottom = 235, 38, 112, 66
+    plot_w, plot_h = width - left - right, height - top - bottom
+    values = [
+        float(row[field])
+        for row in displayed
+        for field in (
+            "late_minus_early_cluster_ci95_lower",
+            "late_minus_early_cluster_ci95_upper",
+        )
+    ]
+    lower = math.floor(min(values) / 10) * 10
+    upper = math.ceil(max(values) / 10) * 10
+    if lower == upper:
+        lower -= 10
+        upper += 10
+
+    def px(value: float) -> float:
+        return left + (value - lower) / (upper - lower) * plot_w
+
+    def py(index: int) -> float:
+        return top + (index + 0.5) * plot_h / len(displayed)
+
+    midpoint = dt.date.fromisoformat(str(displayed[0]["midpoint_date"]))
+    late_start = midpoint + dt.timedelta(days=1)
+    parts = [
+        f'  <text class="title" x="{left}" y="38">Late-half versus early-half prevalence</text>',
+        f'  <text class="subtitle" x="{left}" y="66">Early ≤ {midpoint.isoformat()} · late ≥ {late_start.isoformat()} · selected leaders</text>',
+        f'  <circle cx="{left}" cy="90" r="5" fill="#4B6F44"/>',
+        f'  <text class="tick" x="{left + 12}" y="95">Late minus early; line is respondent-clustered 95% interval</text>',
+    ]
+    for value in range(lower, upper + 1, 10):
+        x = px(value)
+        parts.append(
+            f'  <line class="grid" x1="{x:.1f}" y1="{top}" x2="{x:.1f}" y2="{top + plot_h}"/>'
+        )
+        parts.append(
+            f'  <text class="tick" text-anchor="middle" x="{x:.1f}" y="{top + plot_h + 26}">{value:+d}</text>'
+        )
+    zero_x = px(0)
+    parts.append(
+        f'  <line x1="{zero_x:.1f}" y1="{top}" x2="{zero_x:.1f}" y2="{top + plot_h}" stroke="#243128" stroke-width="2"/>'
+    )
+    for index, row in enumerate(displayed):
+        y = py(index)
+        difference = float(row["late_minus_early_percentage_points"])
+        ci_low = float(row["late_minus_early_cluster_ci95_lower"])
+        ci_high = float(row["late_minus_early_cluster_ci95_upper"])
+        color = "#4B6F44" if row["same_direction"] else "#9B6A21"
+        parts.extend(
+            [
+                f'  <text class="tick" text-anchor="end" x="{left - 12}" y="{y + 5:.1f}">{html.escape(str(row["signifier"]))}</text>',
+                f'  <line x1="{px(ci_low):.1f}" y1="{y:.1f}" x2="{px(ci_high):.1f}" y2="{y:.1f}" stroke="{color}" stroke-width="2"/>',
+                f'  <circle cx="{px(difference):.1f}" cy="{y:.1f}" r="5" fill="{color}"/>',
+            ]
+        )
+    parts.append(
+        f'  <text class="tick" text-anchor="middle" x="{left + plot_w / 2:.1f}" y="{height - 16}">Late minus early endorsement prevalence (percentage points)</text>'
+    )
+    return svg_frame(
+        "Late-half versus early-half prevalence",
+        "Point and interval plot of late-half minus early-half endorsement prevalence for the five most positive and five most negative linear-trend leaders. Green contrasts match the direction of the selected linear slope; ochre contrasts do not.",
+        "\n".join(parts),
+        width,
+        height,
+    )
+
+
 def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     """Compare all-response, repeat-sample, and within-person leader slopes."""
     displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
@@ -1075,6 +1268,33 @@ def compact_sensitivity(row: dict[str, object]) -> dict[str, object]:
     }
 
 
+def compact_early_late_sensitivity(row: dict[str, object]) -> dict[str, object]:
+    return {
+        "unadjusted_tail": row["unadjusted_tail"],
+        "unadjusted_tail_rank": row["unadjusted_tail_rank"],
+        "signifier": row["signifier"],
+        "unadjusted_annual_change_percentage_points": round(
+            float(row["unadjusted_annual_change_percentage_points"]), 3
+        ),
+        "midpoint_date": row["midpoint_date"],
+        "early_prevalence_percent": round(float(row["early_prevalence_percent"]), 3),
+        "late_prevalence_percent": round(float(row["late_prevalence_percent"]), 3),
+        "late_minus_early_percentage_points": round(
+            float(row["late_minus_early_percentage_points"]), 3
+        ),
+        "late_minus_early_cluster_ci95_lower": round(
+            float(row["late_minus_early_cluster_ci95_lower"]), 3
+        ),
+        "late_minus_early_cluster_ci95_upper": round(
+            float(row["late_minus_early_cluster_ci95_upper"]), 3
+        ),
+        "same_direction": row["same_direction"],
+        "early_observations": row["early_observations"],
+        "late_observations": row["late_observations"],
+        "respondent_clusters": row["respondent_clusters"],
+    }
+
+
 def compact_within_sensitivity(row: dict[str, object]) -> dict[str, object]:
     return {
         "unadjusted_tail": row["unadjusted_tail"],
@@ -1129,6 +1349,7 @@ def findings_markdown(
     checked_at: dt.datetime,
     trends: list[dict[str, object]],
     sensitivity: list[dict[str, object]],
+    early_late_sensitivity: list[dict[str, object]],
     within_sensitivity: list[dict[str, object]],
 ) -> str:
     eligible = [row for row in trends if row["eligible"]]
@@ -1150,6 +1371,17 @@ def findings_markdown(
     )
     largest_shift = max(
         sensitivity, key=lambda row: abs(float(row["adjustment_shift_percentage_points"]))
+    )
+    early_late_same_direction = sum(
+        bool(row["same_direction"]) for row in early_late_sensitivity
+    )
+    median_early_late_contrast = statistics.median(
+        abs(float(row["late_minus_early_percentage_points"]))
+        for row in early_late_sensitivity
+    )
+    largest_early_late_contrast = max(
+        early_late_sensitivity,
+        key=lambda row: abs(float(row["late_minus_early_percentage_points"])),
     )
     within_same_direction = sum(bool(row["same_direction"]) for row in within_sensitivity)
     median_within_absolute_shift = statistics.median(
@@ -1252,6 +1484,28 @@ def findings_markdown(
             )
         return "\n".join(lines)
 
+    def early_late_sensitivity_table(rows: list[dict[str, object]]) -> str:
+        displayed = [
+            row
+            for row in rows
+            if int(row["unadjusted_tail_rank"]) <= 5
+        ]
+        lines = [
+            "| Signifier | Linear slope (pp/year) | Early prevalence | Late prevalence | Late − early (pp) | Clustered 95% CI |",
+            "|---|---:|---:|---:|---:|---:|",
+        ]
+        for row in displayed:
+            lines.append(
+                f"| {str(row['signifier']).replace('|', '&#124;')} | "
+                f"{float(row['unadjusted_annual_change_percentage_points']):+.1f} | "
+                f"{float(row['early_prevalence_percent']):.1f}% | "
+                f"{float(row['late_prevalence_percent']):.1f}% | "
+                f"{float(row['late_minus_early_percentage_points']):+.1f} | "
+                f"[{float(row['late_minus_early_cluster_ci95_lower']):+.1f}, "
+                f"{float(row['late_minus_early_cluster_ci95_upper']):+.1f}] |"
+            )
+        return "\n".join(lines)
+
     return f"""# Current monitoring and prevalence findings
 
 Current through the monitoring check at **{iso_z(checked_at)}**. This file is
@@ -1336,6 +1590,32 @@ This selected-leader sensitivity is diagnostic, not a new discovery screen.
 It cannot correct unobserved composition, nonrepresentative recruitment,
 functional-form error, or selection of extremes from the full set of tests.
 
+## Early-versus-late period sensitivity
+
+To relax the assumption that prevalence follows one straight line, a
+prespecified two-period check divides the full observation window at its
+calendar midpoint, **{early_late_sensitivity[0]['midpoint_date']}**. For the
+same selected leaders, it compares unweighted prevalence after that date with
+prevalence on or before it. **{early_late_same_direction} of
+{len(early_late_sensitivity)}** contrasts have the same direction as the
+selected linear slope. The median absolute late-minus-early difference is
+**{median_early_late_contrast:.1f} percentage points**. The largest contrast is
+for **{largest_early_late_contrast['signifier']}**:
+{float(largest_early_late_contrast['early_prevalence_percent']):.1f}% early
+versus {float(largest_early_late_contrast['late_prevalence_percent']):.1f}%
+late, a {float(largest_early_late_contrast['late_minus_early_percentage_points']):+.1f}-point
+difference.
+
+![Late-half versus early-half prevalence](outputs/leader-early-late-sensitivity.svg)
+
+{early_late_sensitivity_table(early_late_sensitivity)}
+
+This contrast does not impose a trajectory within either half, but it can hide
+shorter reversals and remains sensitive to changing respondents and selection
+of the 20 linear-trend extremes. Its percentage-point magnitude is not on the
+same scale as the annualized linear slope; only their directions are compared.
+The clustered intervals are diagnostic, not a discovery screen.
+
 ## Within-respondent sensitivity
 
 A second targeted check separates two diagnostic changes. It first refits the
@@ -1377,7 +1657,8 @@ extremes. Their intervals are diagnostic rather than a discovery test.
 
 Full machine-readable estimates, eligibility flags, and interval bounds are in
 `outputs/signifier-growth.csv`; adjusted leader checks are in
-`outputs/leader-adjusted-sensitivity.csv`; within-respondent checks are in
+`outputs/leader-adjusted-sensitivity.csv`; two-period checks are in
+`outputs/leader-early-late-sensitivity.csv`; within-respondent checks are in
 `outputs/leader-within-respondent-sensitivity.csv`; the daily and cumulative
 counts are in `outputs/daily-observation-growth.csv`.
 
@@ -1512,6 +1793,14 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         list(sensitivity[0]),
         sensitivity,
     )
+    early_late_sensitivity = early_late_leader_sensitivity(
+        audit.path, trends, audit.earliest, audit.latest
+    )
+    write_csv(
+        output_dir / "leader-early-late-sensitivity.csv",
+        list(early_late_sensitivity[0]),
+        early_late_sensitivity,
+    )
     within_sensitivity = within_respondent_leader_sensitivity(trends, audit.signifiers)
     write_csv(
         output_dir / "leader-within-respondent-sensitivity.csv",
@@ -1520,6 +1809,9 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
     )
     (output_dir / "leader-adjustment-sensitivity.svg").write_text(
         leader_sensitivity_svg(sensitivity), encoding="utf-8"
+    )
+    (output_dir / "leader-early-late-sensitivity.svg").write_text(
+        early_late_sensitivity_svg(early_late_sensitivity), encoding="utf-8"
     )
     (output_dir / "leader-within-respondent-sensitivity.svg").write_text(
         within_respondent_sensitivity_svg(within_sensitivity), encoding="utf-8"
@@ -1585,6 +1877,40 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
             ),
             "results": [compact_sensitivity(row) for row in sensitivity],
         },
+        "early_late_sensitivity": {
+            "selection": (
+                f"top {LEADER_SENSITIVITY_PER_TAIL} positive and top "
+                f"{LEADER_SENSITIVITY_PER_TAIL} negative linear slopes"
+            ),
+            "model": (
+                "unweighted difference in endorsement prevalence after versus "
+                "on/before the full observation window's calendar midpoint"
+            ),
+            "uncertainty": "CR1 sandwich standard errors clustered by hashed respondent",
+            "midpoint_date": early_late_sensitivity[0]["midpoint_date"],
+            "early_period_start": audit.earliest.isoformat(),
+            "early_period_end": early_late_sensitivity[0]["midpoint_date"],
+            "late_period_start": (
+                dt.date.fromisoformat(str(early_late_sensitivity[0]["midpoint_date"]))
+                + dt.timedelta(days=1)
+            ).isoformat(),
+            "late_period_end": audit.latest.isoformat(),
+            "selected_signifiers": len(early_late_sensitivity),
+            "same_direction": sum(
+                bool(row["same_direction"]) for row in early_late_sensitivity
+            ),
+            "median_absolute_prevalence_difference_percentage_points": round(
+                statistics.median(
+                    abs(float(row["late_minus_early_percentage_points"]))
+                    for row in early_late_sensitivity
+                ),
+                3,
+            ),
+            "results": [
+                compact_early_late_sensitivity(row)
+                for row in early_late_sensitivity
+            ],
+        },
         "within_respondent_sensitivity": {
             "selection": (
                 f"top {LEADER_SENSITIVITY_PER_TAIL} positive and top "
@@ -1638,7 +1964,14 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     (PROJECT / "CURRENT-FINDINGS.md").write_text(
-        findings_markdown(audit, checked_at, trends, sensitivity, within_sensitivity),
+        findings_markdown(
+            audit,
+            checked_at,
+            trends,
+            sensitivity,
+            early_late_sensitivity,
+            within_sensitivity,
+        ),
         encoding="utf-8",
     )
 
