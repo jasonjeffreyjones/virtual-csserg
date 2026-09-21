@@ -92,15 +92,19 @@ def main() -> int:
     assert short_path.resolve() in local_targets(landing_path, landing)
 
     expected_artifacts = {
+        PUBLIC / "report/ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md",
         PUBLIC / "report/ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md",
         PUBLIC / "report/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
         PUBLIC / "report/BENCHMARK_PROVENANCE.md",
         PUBLIC / "report/analysis/analyze_dev_diagnostics.py",
+        PUBLIC / "report/analysis/analyze_neighborhood_additions.py",
         PUBLIC / "report/analysis/analyze_novelty_prior.py",
         PUBLIC / "report/analysis/analyze_source_conditioned_additions.py",
         PUBLIC / "report/analysis/analyze_trajectory_retrieval.py",
         PUBLIC / "report/analysis/stable_signifier_projection.py",
         PUBLIC / "report/analysis/trajectory_retrieval.py",
+        PUBLIC / "report/results/neighborhood_additions_train_analysis.json",
+        PUBLIC / "report/results/neighborhood_additions_train_audit.csv",
         PUBLIC / "report/results/novelty_prior_dev_analysis.json",
         PUBLIC / "report/results/novelty_prior_token_audit.csv",
         PUBLIC / "report/results/source_conditioned_additions_train_analysis.json",
@@ -118,15 +122,19 @@ def main() -> int:
     evidence_targets = local_targets(evidence_path, evidence)
     assert expected_artifacts <= evidence_targets, "Full Report omits public artifacts"
     for source, legacy in (
+        ("ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md", "artifacts/ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md"),
         ("ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md", "artifacts/ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md"),
         ("ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md", "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md"),
         ("BENCHMARK_PROVENANCE.md", "artifacts/BENCHMARK_PROVENANCE.md"),
         ("analysis/analyze_dev_diagnostics.py", "artifacts/analyze_dev_diagnostics.py"),
+        ("analysis/analyze_neighborhood_additions.py", "artifacts/analyze_neighborhood_additions.py"),
         ("analysis/analyze_novelty_prior.py", "artifacts/analyze_novelty_prior.py"),
         ("analysis/analyze_source_conditioned_additions.py", "artifacts/analyze_source_conditioned_additions.py"),
         ("analysis/analyze_trajectory_retrieval.py", "artifacts/analyze_trajectory_retrieval.py"),
         ("analysis/stable_signifier_projection.py", "artifacts/stable_signifier_projection.py"),
         ("analysis/trajectory_retrieval.py", "artifacts/trajectory_retrieval.py"),
+        ("results/neighborhood_additions_train_analysis.json", "artifacts/neighborhood_additions_train_analysis.json"),
+        ("results/neighborhood_additions_train_audit.csv", "artifacts/neighborhood_additions_train_audit.csv"),
         ("results/novelty_prior_dev_analysis.json", "artifacts/novelty_prior_dev_analysis.json"),
         ("results/novelty_prior_token_audit.csv", "artifacts/novelty_prior_token_audit.csv"),
         ("results/source_conditioned_additions_train_analysis.json", "artifacts/source_conditioned_additions_train_analysis.json"),
@@ -168,7 +176,7 @@ def main() -> int:
 
     print(
         "Predict the Self publication: one summary figure, two-chapter linked "
-        f"Full Report, artifacts, required phrase, and {len(pdf.pages)}-page "
+        f"Full Report, 26 artifacts, required phrase, and {len(pdf.pages)}-page "
         "two-column PDF passed."
     )
     return 0

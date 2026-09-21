@@ -75,14 +75,14 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out novel-token ranking comparison" tabindex="0">
         <table class="scorecard-table">
-          <thead><tr><th scope="col">Training leave-one-out</th><th scope="col">Source-conditioned</th><th scope="col">Marginal additions</th><th scope="col">Paired difference</th></tr></thead>
+          <thead><tr><th scope="col">Training leave-one-out</th><th scope="col">Individualized ranking</th><th scope="col">Marginal additions</th><th scope="col">Paired difference</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Mean recovered fraction</th><td>0.145238</td><td class="metric-better">0.160992</td><td>−0.015754</td></tr>
-            <tr><th scope="row">Conditioned wins / ties / losses</th><td>19 / 63 / 68</td><td>—</td><td>95% interval<br>−0.020829 to −0.010736</td></tr>
+            <tr><th scope="row">Source-token recovered fraction</th><td>0.145238</td><td class="metric-better">0.160992</td><td>−0.015754<br><small>95% interval −0.020829 to −0.010736</small></td></tr>
+            <tr><th scope="row">30-neighbor recovered fraction</th><td>0.149007</td><td class="metric-better">0.160992</td><td>−0.011984<br><small>95% interval −0.018426 to −0.005693</small></td></tr>
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. The first two panels report continuity, lexical novelty, text agreement, and volume-matched novel-token recovery on 50 public development cases. Retrieval approximates observed change volume, but a person-agnostic training prior recovers more new token types at identical case-level prediction volume. The final panel is a separate locked leave-one-out analysis of 150 training cases: source-token conditioning also loses to marginal additions at the same oracle budget. Neither token-ranking control is a full-text forecast. The benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. The first two panels report continuity, lexical novelty, text agreement, and volume-matched novel-token recovery on 50 public development cases. Retrieval approximates observed change volume, but a person-agnostic training prior recovers more new token types at identical case-level prediction volume. The final panel reports two separate locked leave-one-out analyses of 150 training cases: both sparse source-token conditioning and a strongly regularized 30-neighbor ensemble lose to marginal additions at the same oracle budget. None of the token-ranking controls is a full-text forecast. The benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -101,7 +101,7 @@
           <p><strong>The extractive method learns stable-looking language.</strong> Training-only retention estimates rank source units, while a training-only regression controls forecast length. <a href="report/report.html#method">Review the method</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Neither person-matching rule beats common additions.</strong> The development retrieval control loses 40 of 50 cases; in a separate training-only test, source conditioning loses 68, ties 63, and wins 19. <a href="report/report.html#source-conditioned-additions">Inspect the locked comparison</a>.</p>
+          <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token conditioning loses 68 and wins 19; a regularized 30-neighbor ensemble loses 65 and wins 25. <a href="report/report.html#neighborhood-additions">Inspect the locked comparisons</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>

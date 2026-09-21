@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-20T09:13:22Z
+updated: 2026-09-21T09:07:54Z
 ---
 
 # Predict the Self — Current State
@@ -19,6 +19,8 @@ content. A post hoc volume-matched marginal-addition control now shows that
 retrieval does not beat common training-set additions on novel-token recovery.
 A locked training-only leave-one-out diagnostic now also shows that one fixed
 source-token-conditioned Add ranking does not improve on the marginal ranking.
+A second locked diagnostic shows that pooling 30 similar trajectories with
+strong shrinkage narrows but does not reverse that deficit.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -85,6 +87,16 @@ This rejects an incremental advantage for the fixed ranking, not for all
 person-conditioned methods. Other folds contain only `0.773139` of an average
 case's observed additions, and the oracle budget prevents a forecasting claim.
 
+A second locked leave-one-out analysis replaces the strongest-token rule with
+a strongly regularized 30-neighbor ensemble over source-text and 2024-
+demographic TF-IDF. It recovers a mean `0.149007` of held-out additions versus
+`0.160992` for the same marginal ranking. The paired neighborhood-minus-
+marginal difference is `-0.011984` with a case-bootstrap interval of
+`-0.018426` to `-0.005693`; conditioning wins 25 cases, ties 60, and loses 65.
+The top sets overlap by `0.739706` on average, so the model changes about 26%
+of guesses yet still performs worse. Pooling and stronger shrinkage narrow the
+earlier deficit but do not demonstrate person-conditioned lexical advantage.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -117,6 +129,12 @@ case's observed additions, and the oracle budget prevents a forecasting claim.
   `e65f04fd9e55843db8ff1a1bb0544acb00ec869eb58f9b312a63d531fc5f4ec9`).
   Added the hash-guarded analysis, six focused unit tests, complete JSON result,
   and 150-row case audit. Development and test artifacts were not changed.
+- Locked `ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md` before implementation or
+  scoring (SHA-256
+  `c7a494327dd1dd7fc83911540a6a9095fcc8d684172a7388bd610206ac4ca13d`).
+  Added the hash-guarded analysis, six focused unit tests, complete JSON result,
+  and 150-row case audit. No development or test artifact was generated or
+  changed.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -135,7 +153,7 @@ case's observed additions, and the oracle budget prevents a forecasting claim.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, six linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes twenty-two research
+- The three forms link reciprocally. The Full Report publishes twenty-six research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -169,6 +187,12 @@ case's observed additions, and the oracle budget prevents a forecasting claim.
   conditioning. The analysis is not development or private-test performance,
   and its case audit is a derived benchmark-data adaptation under CC BY-NC-SA
   4.0.
+- The regularized-neighborhood comparison shares the training-only oracle
+  budget and lexical identity-signifier limits. Its fixed 30-neighbor size and 30-case
+  marginal prior were not tuned; the text-and-demographic representation was
+  selected in earlier work. Coarse demographic similarity is not an
+  ipseological mechanism, and its case audit is a derived benchmark-data
+  adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -187,6 +211,8 @@ case's observed additions, and the oracle budget prevents a forecasting claim.
 - `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`: fixed exploratory comparison plan.
 - `ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md`: fixed training-only
   source-conditioned Add-ranking plan.
+- `ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`: fixed training-only regularized-
+  neighborhood Add-ranking plan.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -199,6 +225,9 @@ case's observed additions, and the oracle budget prevents a forecasting claim.
 - `analysis/analyze_source_conditioned_additions.py`: locked leave-one-out
   ranking comparison; `results/source_conditioned_additions_train_analysis.json`
   and `results/source_conditioned_additions_train_audit.csv` are its outputs.
+- `analysis/analyze_neighborhood_additions.py`: locked leave-one-out pooled-
+  trajectory comparison; `results/neighborhood_additions_train_analysis.json`
+  and `results/neighborhood_additions_train_audit.csv` are its outputs.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -226,9 +255,10 @@ case's observed additions, and the oracle budget prevents a forecasting claim.
    development data to limit repeated tuning; preferably reserve new evidence
    or use training-only nested evaluation because development labels are now
    heavily reused.
-3. Before reusing development labels, require a synthesizing or more strongly
-   regularized person-conditioned approach to beat leave-one-out marginal
-   additions in training; then lock any development comparison and avoid
-   private test feedback.
+3. Avoid further fixed lexical re-rankers on the same 150 cases without a
+   substantively new representation. Before reusing development labels,
+   require a synthesizing or semantic person-conditioned approach to beat
+   leave-one-out marginal additions in training; then lock any development
+   comparison and avoid private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

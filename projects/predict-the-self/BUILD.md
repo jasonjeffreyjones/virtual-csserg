@@ -59,6 +59,16 @@ python3 projects/predict-the-self/analysis/analyze_source_conditioned_additions.
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked training-only leave-one-out comparison of the
+regularized-neighborhood and marginal Add rankings. It hash-guards the training
+data, evaluator, and its pre-analysis plan and writes a machine-readable result
+plus case audit:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_neighborhood_additions.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

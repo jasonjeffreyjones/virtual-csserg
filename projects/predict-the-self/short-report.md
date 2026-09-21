@@ -18,6 +18,8 @@ A post hoc control holds the number of novel guesses identical case by case. A t
 
 A locked training-only leave-one-out test asks whether earlier source tokens improve the marginal Add ranking. At an oracle budget equal to each held-out case's observed number of additions, source conditioning recovers 14.5238% of novel types versus 16.0992% for marginal frequency. The −1.5754-point paired difference has a case-bootstrap interval of −2.0829 to −1.0736 points; conditioning wins 19 cases, ties 63, and loses 68.
 
+A second locked test pools Add events from 30 text-and-demographically similar trajectories and shrinks their weighted rates equally toward marginal frequency. It recovers 14.9007% versus 16.0992%; the −1.1984-point difference has an interval of −1.8426 to −0.5693 points. Pooling narrows the earlier deficit but still loses 65 cases, ties 60, and wins 25.
+
 ## Question and benchmark
 
 The larger project asks how predictable human lives are. Its first tractable task is Dr. Jason Jeffrey Jones' Predict Future Selves challenge: predict later personally expressed identity from an earlier self-description. The target is an individual's later expression of identity, not a latent true self or a complete life outcome.
@@ -48,6 +50,10 @@ A separate post hoc diagnostic ranks token types by how often they were added ac
 
 Before scoring a new comparison, the Project locked a leave-one-out training analysis. For each held-out training case, the other 149 estimate marginal Add frequencies and smoothed source-token-to-Add associations. Each candidate receives its strongest source-token conditional rate, shrunk toward its marginal rate with ten prior cases. Both rankings receive the observed held-out addition count, so precision, recall, and F1 coincide. This oracle budget isolates ranking quality and cannot serve as a prospective forecast. The paired bootstrap uses 20,000 resamples and seed 20260920.
 
+## Regularized-neighborhood additions
+
+The second training-only plan was also fixed before implementation and scoring. Within each leave-one-out fold, TF-IDF over source text and field-qualified 2024 demographics selects 30 neighbors. Similarity-weighted Add counts contribute 30 effective cases and are combined with a 30-case marginal prior. The neighborhood size and shrinkage are fixed, not tuned. The marginal comparator receives the same oracle budget, and 20,000 paired resamples use seed 20260921.
+
 ## Complete result pattern
 
 The projection improves three of six text-agreement measures, worsens two, and ties exact match. Its word-count mean absolute error falls from 56.68 to 41.64 words, a +15.04 error reduction with paired case-bootstrap interval +1.18 to +32.36. Source-similarity error falls from 0.774317 to 0.678215; its +0.096102 reduction has interval +0.066064 to +0.129348. Line-count error rises from 6.80 to 9.76; its −2.96 error reduction has interval −5.54 to −0.42. These mixed directions are why no single headline score summarizes the method.
@@ -60,17 +66,19 @@ With mean novel-token volume fixed at 46.94 types per case, the marginal prior's
 
 Source conditioning also fails to beat the marginal prior. In 150 leave-one-out training cases, mean recovered fraction is 0.145238 versus 0.160992; the paired difference is −0.015754 (interval −0.020829 to −0.010736). Other folds contain a mean 77.3139% of each held-out case's observed additions, so roughly 22.7% are outside both rankings' candidate vocabulary. This bounded negative result applies to the fixed token-pair rule, not every possible individualized method.
 
+The regularized neighborhood changes about 26.0% of the marginal top-set guesses on an average case but also performs worse: mean recovered fraction is 0.149007 versus 0.160992, a paired difference of −0.011984 (interval −0.018426 to −0.005693). Mean cosine similarity across the 30 selected neighbors is 0.169564. Together, the two training-only tests find no incremental advantage for either sparse token-pair conditioning or pooled surface-level similarity.
+
 The submission contains one nonblank prediction for every required test ID in order. Its SHA-256 is a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3. Only the organizer can run the private evaluator. Validation establishes artifact shape, not predictive performance.
 
 ## Interpretation and limits
 
-Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. The marginal control further shows that retrieval's few correct novel tokens are not evidence of person-specific advantage over common additions. Its lexical units include function words, and its borrowed case-level token budget makes it a diagnostic rather than an independent prediction method. Repeated tuning on 50 development cases would risk overfitting, and neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
+Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. The marginal control further shows that retrieval's few correct novel tokens are not evidence of person-specific advantage over common additions. The conditioned rankings share an oracle future-token budget, and coarse demographic or lexical similarity is not an ipseological mechanism. Their units include function words, so all are diagnostics rather than independent predictions. Repeated tuning on 50 development cases would risk overfitting, and neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
 
-The next research step is to submit the frozen CSV and method card and publish the organizer's complete private scorecard unchanged. Before reusing development labels, a later method should synthesize rather than copy new signifiers and beat leave-one-out marginal additions in training. Any development comparison should then be locked and avoid private test feedback for tuning.
+The next research step is to submit the frozen CSV and method card and publish the organizer's complete private scorecard unchanged. Further fixed lexical re-rankers on the same 150 cases are unlikely to be informative without a substantively new representation. Before reusing development labels, a later method should synthesize rather than copy new signifiers and beat leave-one-out marginal additions in training. Any development comparison should then be locked and avoid private test feedback for tuning.
 
 ## Reproducibility and references
 
-The public repository contains both deterministic standard-library generators, the retrieval analysis lock and audit, hash-guarded diagnostic scripts, both sets of 50 development predictions, the marginal-prior token audit, complete machine-readable scorecards and diagnostics, the frozen 81-case stable-projection test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
+The public repository contains both deterministic standard-library generators, three analysis locks, hash-guarded diagnostic scripts, complete development and training audits, machine-readable scorecards, the frozen 81-case stable-projection test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
 
 Jones, J. J. (2023). <i>Ipseology—A new science of the self.</i> https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/
 
