@@ -2,17 +2,19 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-20T08:11:09Z
+updated: 2026-09-21T08:12:07Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 20, 2026, all seven automated promise groups pass across
+Active. On September 21, 2026, all seven automated promise groups pass across
 26 HTML pages and six first-party stylesheets. The static-site group now
-requires a first-anchor bypass mechanism and an explicit `alt` decision for
-every image, with negative fixtures for both regressions. A tested post-render
+requires the first anchor itself to be a bypass link targeting `main`, plus an
+explicit `alt` decision for every image. A dedicated negative fixture now
+rejects a misleading first skip-styled link even when a valid bypass appears
+later in the document. A tested post-render
 normalizer makes the bypass link first in all four generated Quarto pages
 without runtime JavaScript. The September 15 normal Scholar
 run reached completion only after its guarded deployment and authenticated
@@ -88,7 +90,9 @@ without performing the unavailable human review.
   design pages; the verifier rejects missing groups and misplaced links.
 - Every public HTML page now exposes a first-anchor bypass link, and every image has an
   explicit `alt` attribute (including empty alternatives for decorative
-  images). The four generated Quarto pages use a source-controlled link and a
+  images). The verifier records the first anchor's own target and requires that
+  target to identify `main`; it no longer lets an invalid first skip-styled link
+  borrow validity from a later bypass. The four generated Quarto pages use a source-controlled link and a
   standard-library post-render normalizer that preflights the whole output tree,
   moves the link before repeated navigation, validates its `main` target, and
   refuses duplicates before writing. Three focused normalizer tests cover
@@ -138,7 +142,8 @@ without performing the unavailable human review.
   run found all 110 expected files identical after the normal deployment. The
   September 18 pre-change probe found all 114 incoming files byte-identical, and
   the September 19 pre-change probe found all 128 incoming files byte-identical,
-  and the September 20 pre-change probe found all 134 incoming files
+  the September 20 pre-change probe found all 134 incoming files byte-identical,
+  and the September 21 pre-change probe found all 142 incoming files
   byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
@@ -166,14 +171,15 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 32 routine tests pass across 26 HTML pages and six
-first-party stylesheets on September 20.
+All seven groups and all 33 routine tests pass across 26 HTML pages and six
+first-party stylesheets on September 21.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
 alternatives, and the manual-review worksheet's sample and closure boundary.
-Three tests cover the build-time Quarto bypass normalizer and three cover the
+One focused negative test guards the first-anchor/target conjunction, three
+tests cover the build-time Quarto bypass normalizer, and three cover the
 manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
@@ -234,7 +240,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 20 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 21 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.

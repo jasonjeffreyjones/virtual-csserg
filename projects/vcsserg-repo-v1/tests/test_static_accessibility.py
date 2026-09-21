@@ -80,6 +80,20 @@ class StaticAccessibilityTests(unittest.TestCase):
             ["wrong.html: missing bypass link"],
         )
 
+    def test_rejects_valid_bypass_after_misleading_first_skip_link(self):
+        misleading_first_link = parse(
+            '<a class="skip" href="#navigation">Skip to navigation</a>'
+            '<nav id="navigation"></nav>'
+            '<a class="skip" href="#main">Skip to content</a>'
+            '<main id="main"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(
+                misleading_first_link, "misleading.html"
+            ),
+            ["misleading.html: bypass link is not the first link"],
+        )
+
     def test_review_protocol_covers_current_manual_sample(self):
         expected = VERIFY.expected_accessibility_review_pages()
         source = (

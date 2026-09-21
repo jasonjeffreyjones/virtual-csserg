@@ -24,9 +24,12 @@ accessibility evaluation.
 
 ## What is already established
 
-- `verify_v1.py` examines every public HTML page for one main region, a bypass
-  link that is the first anchor and targets that main, explicit image
-  alternatives, page language and title, local references, and duplicate IDs.
+- `verify_v1.py` examines every public HTML page for one main region and
+  requires the first anchor itself to be a bypass link targeting that main. A
+  focused fixture rejects an invalid first skip-styled link followed by a valid
+  bypass, preventing the two anchors from jointly satisfying that one-link
+  requirement. The verifier also checks explicit image alternatives, page
+  language and title, local references, and duplicate IDs.
 - All four generated Quarto report pages now receive a source-controlled bypass
   link through a tested post-render normalizer. The public HTML contains that
   link first in body order; it no longer depends on JavaScript to move the link
@@ -35,9 +38,11 @@ accessibility evaluation.
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
   focus, responsive-layout, or screen-reader evidence.
-- Before this revision, the credential-free production probe found all 128
-  expected files byte-identical. It cannot discover extra remote-only paths,
-  and it does not describe the not-yet-deployed changes in this iteration.
+- Before the September 19 protocol revision, the credential-free production
+  probe found all 128 expected files byte-identical. Before this September 21
+  verifier revision, the same probe found all 142 expected files
+  byte-identical. It cannot discover extra remote-only paths, and the latest
+  result does not describe the not-yet-deployed changes in this iteration.
 
 ## Selected production pages
 

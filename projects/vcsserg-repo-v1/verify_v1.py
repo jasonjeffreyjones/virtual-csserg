@@ -70,6 +70,7 @@ class PageParser(HTMLParser):
         self.ids = []
         self.in_title = False
         self.first_anchor_is_skip = False
+        self.first_anchor_reference = None
         self.anchor_count = 0
         self.main_count = 0
         self.main_ids = []
@@ -100,6 +101,7 @@ class PageParser(HTMLParser):
             is_skip = any("skip" in class_name for class_name in classes)
             if self.anchor_count == 0:
                 self.first_anchor_is_skip = is_skip
+                self.first_anchor_reference = attributes.get("href", "")
             self.anchor_count += 1
             if is_skip:
                 self.skip_references.append(attributes.get("href", ""))
@@ -184,7 +186,10 @@ def page_accessibility_problems(parsed, relative):
     ]
     if not valid_skip_references:
         problems.append(f"{relative}: missing bypass link")
-    elif not parsed.first_anchor_is_skip:
+    elif (
+        not parsed.first_anchor_is_skip
+        or parsed.first_anchor_reference not in valid_skip_references
+    ):
         problems.append(f"{relative}: bypass link is not the first link")
     for number, image in enumerate(parsed.images, start=1):
         if "alt" not in image:
