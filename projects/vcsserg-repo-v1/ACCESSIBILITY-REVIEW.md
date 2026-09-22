@@ -33,16 +33,22 @@ accessibility evaluation.
 - All four generated Quarto report pages now receive a source-controlled bypass
   link through a tested post-render normalizer. The public HTML contains that
   link first in body order; it no longer depends on JavaScript to move the link
-  ahead of repeated navigation.
+  ahead of repeated navigation. The same normalizer now gives stable accessible
+  names to Quarto's report, chapter, on-page, and previous/next navigation
+  landmarks. The whole-site verifier rejects unnamed navigation landmarks when
+  a page exposes more than one, and it rejects unresolved `aria-labelledby`
+  references.
 - On September 19, `w3m` 0.5.3 returned successfully for all 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
   focus, responsive-layout, or screen-reader evidence.
 - Before the September 19 protocol revision, the credential-free production
-  probe found all 128 expected files byte-identical. Before this September 21
+  probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
-  byte-identical. It cannot discover extra remote-only paths, and the latest
-  result does not describe the not-yet-deployed changes in this iteration.
+  byte-identical; before the September 22 navigation-landmark revision, all 150
+  expected files were byte-identical. It cannot discover extra remote-only
+  paths, and the latest result does not describe the not-yet-deployed changes
+  in this iteration.
 
 ## Selected production pages
 

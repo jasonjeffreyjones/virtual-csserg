@@ -14,10 +14,13 @@ SPEC.loader.exec_module(PROMOTE)
 def generated_page(skip_link=PROMOTE.SKIP_LINK):
     return (
         '<!doctype html><html><body class="nav-sidebar">\n'
-        '<nav><a href="index.html">Contents</a></nav>\n'
+        '<nav class="quarto-secondary-nav"><a href="index.html">Contents</a></nav>\n'
+        '<nav class="sidebar-navigation"><a href="chapter.html">Chapter</a></nav>\n'
+        '<nav class="toc-active"><a href="#section">On this page</a></nav>\n'
+        '<nav class="page-navigation"><a href="next.html">Next</a></nav>\n'
         '<main id="quarto-document-content">\n'
         f"{skip_link}\n"
-        "<h1>Report</h1></main></body></html>\n"
+        '<h1>Report</h1><section id="section"></section></main></body></html>\n'
     )
 
 
@@ -30,17 +33,19 @@ class PromoteReportSkipLinksTests(unittest.TestCase):
 
             self.assertEqual(PROMOTE.promote_tree(tree), (1, 1))
             promoted = page.read_text(encoding="utf-8")
-            self.assertLess(promoted.index(PROMOTE.SKIP_LINK), promoted.index("<nav>"))
+            self.assertLess(promoted.index(PROMOTE.SKIP_LINK), promoted.index("<nav"))
+            for accessible_name in PROMOTE.NAVIGATION_CLASS_LABELS.values():
+                self.assertIn(f'aria-label="{accessible_name}"', promoted)
             self.assertEqual(PROMOTE.promote_tree(tree), (1, 0))
             self.assertEqual(page.read_text(encoding="utf-8"), promoted)
 
             button_first = generated_page().replace(
-                '<nav><a href="index.html">Contents</a></nav>',
-                '<nav><button type="button">Menu</button></nav>',
+                '<nav class="quarto-secondary-nav"><a href="index.html">Contents</a></nav>',
+                '<nav class="quarto-secondary-nav"><button type="button">Menu</button></nav>',
             )
             normalized, changed = PROMOTE.normalized_page(button_first, "button.html")
             self.assertTrue(changed)
-            self.assertLess(normalized.index(PROMOTE.SKIP_LINK), normalized.index("<nav>"))
+            self.assertLess(normalized.index(PROMOTE.SKIP_LINK), normalized.index("<nav"))
 
     def test_preflight_refuses_duplicate_link_without_mutating_tree(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -64,6 +69,15 @@ class PromoteReportSkipLinksTests(unittest.TestCase):
         )
         with self.assertRaises(PROMOTE.PromotionError):
             PROMOTE.normalized_page(source, "missing-target.html")
+
+    def test_refuses_unlabelled_unknown_navigation_landmark(self):
+        source = generated_page().replace(
+            "</main>", '<nav class="new-quarto-navigation"></nav></main>'
+        )
+        with self.assertRaisesRegex(
+            PROMOTE.PromotionError, "navigation landmark has no accessible name"
+        ):
+            PROMOTE.normalized_page(source, "unknown-navigation.html")
 
 
 if __name__ == "__main__":

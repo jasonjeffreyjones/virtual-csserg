@@ -7,13 +7,14 @@ report; Virtual CSSERG does not prescribe an exact chapter count.
 
 Quarto renders into ignored project-local `_book/`. A standard-library
 post-render command moves the source-controlled bypass link to the beginning of
-each generated body without runtime JavaScript. The guarded publisher then
+each generated body and names Quarto's repeated navigation landmarks without
+runtime JavaScript or hand-editing generated files. The guarded publisher then
 replaces the complete public report tree, including copied reproducibility
 artifacts, so stale generated libraries cannot survive. It also preserves the
-matching `report/artifacts/` URLs as byte-identical compatibility copies
-and removes Quarto-introduced line-end whitespace from generated HTML. The
-Executive Summary is maintained as static HTML. `short-report.md` is the
-derivative PDF source.
+matching `report/artifacts/` URLs as byte-identical compatibility copies and
+removes Quarto-introduced line-end whitespace from generated HTML. The Executive
+Summary is maintained as static HTML. `short-report.md` is the derivative PDF
+source.
 
 The host has no TeX PDF engine, so the short-report renderer uses optional
 build-only packages. They do not become website or production dependencies.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Move Quarto report bypass links to the start of each generated body."""
+"""Normalize generated Quarto bypass links and navigation landmarks."""
 
 import argparse
 from html.parser import HTMLParser
@@ -11,14 +11,21 @@ SKIP_LINK = (
     '<a class="report-skip" href="#quarto-document-content">Skip to content</a>'
 )
 BODY_PATTERN = re.compile(r"<body(?:\s[^>]*)?>", flags=re.IGNORECASE)
+NAV_PATTERN = re.compile(r"<nav(?:\s[^>]*)?>", flags=re.IGNORECASE)
+NAVIGATION_CLASS_LABELS = {
+    "quarto-secondary-nav": "Report navigation",
+    "sidebar-navigation": "Report chapters",
+    "toc-active": "On this page",
+    "page-navigation": "Previous and next chapters",
+}
 
 
 class PromotionError(ValueError):
     """Raised when a generated report cannot be normalized safely."""
 
 
-class BypassParser(HTMLParser):
-    """Collect the minimum structure needed to validate a promoted page."""
+class ReportParser(HTMLParser):
+    """Collect the structure needed to validate a normalized report page."""
 
     def __init__(self):
         super().__init__()
@@ -26,9 +33,13 @@ class BypassParser(HTMLParser):
         self.main_ids = set()
         self.anchor_classes = []
         self.anchor_references = []
+        self.ids = set()
+        self.navigation_landmarks = []
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        if attributes.get("id"):
+            self.ids.add(attributes["id"])
         if tag == "body":
             self.body_count += 1
         elif tag == "main" and attributes.get("id"):
@@ -36,10 +47,63 @@ class BypassParser(HTMLParser):
         elif tag == "a":
             self.anchor_classes.append(set(attributes.get("class", "").split()))
             self.anchor_references.append(attributes.get("href", ""))
+        if tag == "nav":
+            self.navigation_landmarks.append(
+                (
+                    set(attributes.get("class", "").split()),
+                    attributes.get("aria-label", "").strip(),
+                    attributes.get("aria-labelledby", "").split(),
+                )
+            )
+
+
+class StartTagParser(HTMLParser):
+    """Parse one generated start tag without rewriting unrelated markup."""
+
+    def __init__(self):
+        super().__init__()
+        self.attributes = {}
+
+    def handle_starttag(self, _tag, attrs):
+        self.attributes = dict(attrs)
+
+
+def label_navigation_landmarks(source: str, label: str) -> tuple[str, bool]:
+    """Add stable names to Quarto navigation landmarks that omit them."""
+
+    changed = False
+
+    def replacement(match):
+        nonlocal changed
+        tag_source = match.group(0)
+        parser = StartTagParser()
+        parser.feed(tag_source)
+        attributes = parser.attributes
+        classes = set(attributes.get("class", "").split())
+        matched_labels = {
+            accessible_name
+            for class_name, accessible_name in NAVIGATION_CLASS_LABELS.items()
+            if class_name in classes
+        }
+        if not matched_labels:
+            return tag_source
+        if len(matched_labels) != 1:
+            raise PromotionError(
+                f"{label}: navigation landmark matches conflicting label rules"
+            )
+        if attributes.get("aria-label", "").strip() or attributes.get(
+            "aria-labelledby", ""
+        ).strip():
+            return tag_source
+        changed = True
+        accessible_name = matched_labels.pop()
+        return tag_source[:-1] + f' aria-label="{accessible_name}">'
+
+    return NAV_PATTERN.sub(replacement, source), changed
 
 
 def normalized_page(source: str, label: str) -> tuple[str, bool]:
-    """Return public HTML whose report bypass link is the first anchor."""
+    """Return public HTML with an early bypass and named navigation landmarks."""
     if source.count(SKIP_LINK) != 1:
         raise PromotionError(f"{label}: expected exactly one report bypass link")
 
@@ -57,7 +121,7 @@ def normalized_page(source: str, label: str) -> tuple[str, bool]:
     )
     if already_promoted:
         candidate = source
-        changed = False
+        bypass_changed = False
     else:
         without_skip = source[:skip_start] + source[skip_start + len(SKIP_LINK) :]
         body = BODY_PATTERN.search(without_skip)
@@ -67,9 +131,11 @@ def normalized_page(source: str, label: str) -> tuple[str, bool]:
             + SKIP_LINK
             + without_skip[body.end() :]
         )
-        changed = True
+        bypass_changed = True
 
-    parsed = BypassParser()
+    candidate, navigation_changed = label_navigation_landmarks(candidate, label)
+
+    parsed = ReportParser()
     parsed.feed(candidate)
     if parsed.body_count != 1:
         raise PromotionError(f"{label}: promotion did not preserve one body element")
@@ -83,7 +149,19 @@ def normalized_page(source: str, label: str) -> tuple[str, bool]:
         raise PromotionError(f"{label}: bypass link is not the first anchor")
     if parsed.anchor_references[0] != "#quarto-document-content":
         raise PromotionError(f"{label}: bypass link has the wrong target")
-    return candidate, changed
+    for classes, accessible_name, labelled_by in parsed.navigation_landmarks:
+        if not accessible_name and not labelled_by:
+            description = " ".join(sorted(classes)) or "unclassified"
+            raise PromotionError(
+                f"{label}: navigation landmark has no accessible name: {description}"
+            )
+        missing_ids = sorted(set(labelled_by) - parsed.ids)
+        if missing_ids:
+            raise PromotionError(
+                f"{label}: navigation landmark references missing label ids: "
+                + ", ".join(missing_ids)
+            )
+    return candidate, bypass_changed or navigation_changed
 
 
 def promote_tree(tree: Path) -> tuple[int, int]:
@@ -111,7 +189,7 @@ def promote_tree(tree: Path) -> tuple[int, int]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Promote Quarto report bypass links in generated HTML."
+        description="Normalize Quarto report accessibility in generated HTML."
     )
     parser.add_argument("tree", type=Path, help="generated report directory")
     args = parser.parse_args()
@@ -119,7 +197,7 @@ def main() -> int:
         pages, changed = promote_tree(args.tree)
     except PromotionError as error:
         raise SystemExit(f"promote_report_skip_links: {error}") from error
-    print(f"Validated {pages} report page(s); promoted {changed} bypass link(s).")
+    print(f"Validated {pages} report page(s); normalized {changed} page(s).")
     return 0
 
 

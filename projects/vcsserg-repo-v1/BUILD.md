@@ -7,9 +7,10 @@ requirement. Quarto renders into the ignored project-local `_book/`, then
 `website/projects/vcsserg-repo-v1/report/`. Keeping Quarto's output inside its
 project lets it clean stale libraries without warnings. A standard-library
 post-render command moves the source-controlled bypass link to the beginning of
-each generated body before publication, so correct source order does not depend
-on runtime JavaScript. The Executive Summary is maintained as static HTML, and
-`short-report.md` is the derivative PDF source.
+each generated body and names Quarto's repeated navigation landmarks before
+publication, so correct source order and landmark names do not depend on
+runtime JavaScript or hand-editing generated files. The Executive Summary is
+maintained as static HTML, and `short-report.md` is the derivative PDF source.
 
 Quarto uses a writable temporary cache. The host has no TeX PDF engine, so the
 short-report renderer uses the optional build-only packages in

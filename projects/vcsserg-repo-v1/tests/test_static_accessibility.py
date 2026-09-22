@@ -94,6 +94,30 @@ class StaticAccessibilityTests(unittest.TestCase):
             ["misleading.html: bypass link is not the first link"],
         )
 
+    def test_repeated_navigation_landmarks_need_resolvable_names(self):
+        unnamed = parse(
+            '<a class="skip" href="#main">Skip</a>'
+            '<nav><a href="/">Home</a></nav>'
+            '<main id="main"><nav aria-labelledby="missing"></nav></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(unnamed, "navigation.html"),
+            [
+                "navigation.html: navigation landmark 1 has no accessible name",
+                "navigation.html: navigation landmark 2 references missing label ids: missing",
+            ],
+        )
+
+        named = parse(
+            '<a class="skip" href="#main">Skip</a>'
+            '<nav aria-label="Primary"><a href="/">Home</a></nav>'
+            '<main id="main"><h2 id="contents">Contents</h2>'
+            '<nav aria-labelledby="contents"></nav></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(named, "navigation.html"), []
+        )
+
     def test_review_protocol_covers_current_manual_sample(self):
         expected = VERIFY.expected_accessibility_review_pages()
         source = (

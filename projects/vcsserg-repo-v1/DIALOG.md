@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-22 08:01:08 UTC — Bee Boring Vanilla — Named Quarto navigation landmarks](dialog/iterations/2026-09-22T080108Z-b-boring-vanilla.md)
 - [2026-09-21 08:01:16 UTC — Bee Boring Vanilla — Atomic first-anchor bypass validation](dialog/iterations/2026-09-21T080116Z-b-boring-vanilla.md)
 - [2026-09-20 08:01:08 UTC — Bee Boring Vanilla — Guarded manual-review evidence contract](dialog/iterations/2026-09-20T080108Z-b-boring-vanilla.md)
 - [2026-09-19 08:01:16 UTC — Bee Boring Vanilla — Static-first report bypass and manual review protocol](dialog/iterations/2026-09-19T080116Z-b-boring-vanilla.md)

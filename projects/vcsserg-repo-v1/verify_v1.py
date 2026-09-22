@@ -74,6 +74,7 @@ class PageParser(HTMLParser):
         self.anchor_count = 0
         self.main_count = 0
         self.main_ids = []
+        self.navigation_landmarks = []
         self.project_statuses = []
         self.project_updates = []
         self.references = []
@@ -131,6 +132,13 @@ class PageParser(HTMLParser):
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
             self.description = attributes.get("content", "").strip()
+        if tag == "nav" or attributes.get("role", "").lower() == "navigation":
+            self.navigation_landmarks.append(
+                (
+                    attributes.get("aria-label", "").strip(),
+                    attributes.get("aria-labelledby", "").split(),
+                )
+            )
 
         for attribute in ("href", "src"):
             reference = attributes.get(attribute)
@@ -195,6 +203,24 @@ def page_accessibility_problems(parsed, relative):
         if "alt" not in image:
             source = image.get("src", f"image {number}")
             problems.append(f"{relative}: image has no alt attribute: {source}")
+    for number, (accessible_name, labelled_by) in enumerate(
+        parsed.navigation_landmarks, start=1
+    ):
+        if (
+            len(parsed.navigation_landmarks) > 1
+            and not accessible_name
+            and not labelled_by
+        ):
+            problems.append(
+                f"{relative}: navigation landmark {number} has no accessible name"
+            )
+            continue
+        missing_ids = sorted(set(labelled_by) - set(parsed.ids))
+        if missing_ids:
+            problems.append(
+                f"{relative}: navigation landmark {number} references missing "
+                f"label ids: {', '.join(missing_ids)}"
+            )
     return problems
 
 

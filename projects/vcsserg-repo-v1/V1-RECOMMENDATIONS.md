@@ -39,6 +39,12 @@ On September 20, its summary record became a page-by-page worksheet with four
 results per page, and the verifier began deriving the required sample from
 current Published summaries and Full Reports. Automated checks now prevent an
 incomplete **Closed** record without claiming to perform the human review.
+On September 22, a deterministic landmark audit found 14 unnamed navigation
+regions across the four generated Quarto pages. The shared post-render
+normalizer now names those regions, and the whole-site verifier rejects unnamed
+repeated navigation landmarks or missing `aria-labelledby` targets. This
+reduces a known screen-reader risk but does not replace the open rendered
+review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

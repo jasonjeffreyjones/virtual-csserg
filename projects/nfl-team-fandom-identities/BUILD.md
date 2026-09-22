@@ -51,10 +51,11 @@ python3 projects/nfl-team-fandom-identities/analysis/copy_public_artifacts.py
 
 The cache override only places Quarto's writable cache in a permitted location.
 It does not replace or modify Quarto. A standard-library post-render command
-moves the source-controlled bypass link to the beginning of the generated body
-without runtime JavaScript. The PDF renderer reads `short-report.md`, uses two
-columns, and rejects output above ten pages. The executive summary is maintained
-as static HTML in `website/projects/nfl-team-fandom-identities/index.html`.
+places the source-controlled bypass link at the beginning of the generated body
+and names Quarto's repeated navigation landmarks without runtime JavaScript or
+hand-editing generated files. The PDF renderer reads `short-report.md`, uses
+two columns, and rejects output above ten pages. The executive summary is
+maintained as static HTML in `website/projects/nfl-team-fandom-identities/index.html`.
 Revise derivatives after revising the full report, then verify numerical agreement.
 
 ```bash

@@ -2,21 +2,21 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-21T08:12:07Z
+updated: 2026-09-22T08:18:42Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 21, 2026, all seven automated promise groups pass across
-26 HTML pages and six first-party stylesheets. The static-site group now
-requires the first anchor itself to be a bypass link targeting `main`, plus an
-explicit `alt` decision for every image. A dedicated negative fixture now
-rejects a misleading first skip-styled link even when a valid bypass appears
-later in the document. A tested post-render
-normalizer makes the bypass link first in all four generated Quarto pages
-without runtime JavaScript. The September 15 normal Scholar
+Active. On September 22, 2026, all seven automated promise groups pass across
+26 HTML pages and six first-party stylesheets. The static-site group requires
+the first anchor itself to be a bypass link targeting `main`, an explicit `alt`
+decision for every image, and an accessible name for every navigation landmark
+on pages containing more than one. A tested post-render normalizer makes the
+bypass link first and names Quarto's repeated navigation regions in all four
+generated report pages without runtime JavaScript or hand-editing. The
+September 15 normal Scholar
 run reached completion only after its guarded deployment and authenticated
 inventory phase returned successfully; the September 16 public probe then found all 110
 expected files byte-identical. This closes the deployment gate and observes the
@@ -88,18 +88,23 @@ without performing the unavailable human review.
   GitHub and CC BY 4.0 under **Open work**. The system is synchronized across
   direct HTML, all three Quarto footer sources/generated reports, and archived
   design pages; the verifier rejects missing groups and misplaced links.
-- Every public HTML page now exposes a first-anchor bypass link, and every image has an
-  explicit `alt` attribute (including empty alternatives for decorative
+- Every public HTML page now exposes a first-anchor bypass link, and every image
+  has an explicit `alt` attribute (including empty alternatives for decorative
   images). The verifier records the first anchor's own target and requires that
   target to identify `main`; it no longer lets an invalid first skip-styled link
-  borrow validity from a later bypass. The four generated Quarto pages use a source-controlled link and a
-  standard-library post-render normalizer that preflights the whole output tree,
-  moves the link before repeated navigation, validates its `main` target, and
-  refuses duplicates before writing. Three focused normalizer tests cover
-  promotion, idempotence, and failure without partial mutation; the verifier no
-  longer accepts runtime JavaScript relocation. The two NFL report figures
-  retain detailed alternatives after rendering. These static checks do not
-  replace rendered keyboard or assistive-technology review.
+  borrow validity from a later bypass. It also requires accessible names on
+  repeated navigation landmarks and resolves `aria-labelledby` targets. This
+  exposed 14 unnamed Quarto navigation regions across the four generated report
+  pages. Their shared standard-library post-render normalizer now preflights the
+  whole output tree, moves the bypass before repeated navigation, validates its
+  `main` target, labels Quarto's report/chapter/on-page/previous-next navigation,
+  and refuses unknown unnamed `nav` regions before writing. Four focused
+  normalizer tests cover promotion, names, idempotence, and failure without
+  partial mutation; a generic fixture covers missing landmark names and label
+  targets. The verifier no longer accepts runtime JavaScript relocation. The
+  two NFL report figures retain detailed alternatives after rendering. These
+  static checks do not replace rendered keyboard or assistive-technology
+  review.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 11 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 44 result cells, and passing rule.
@@ -144,6 +149,7 @@ without performing the unavailable human review.
   the September 19 pre-change probe found all 128 incoming files byte-identical,
   the September 20 pre-change probe found all 134 incoming files byte-identical,
   and the September 21 pre-change probe found all 142 incoming files
+  byte-identical. The September 22 pre-change probe found all 150 incoming files
   byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
@@ -171,16 +177,17 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 33 routine tests pass across 26 HTML pages and six
-first-party stylesheets on September 21.
+All seven groups and all 35 routine tests pass across 26 HTML pages and six
+first-party stylesheets on September 22.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
-alternatives, and the manual-review worksheet's sample and closure boundary.
-One focused negative test guards the first-anchor/target conjunction, three
-tests cover the build-time Quarto bypass normalizer, and three cover the
-manual-review record.
+alternatives, repeated navigation names, resolved landmark-label references,
+and the manual-review worksheet's sample and closure boundary. One focused
+negative test guards the first-anchor/target conjunction, four tests cover the
+build-time Quarto normalizer, one covers the generic navigation-name rule, and
+three cover the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -240,7 +247,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 21 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 22 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -266,7 +273,8 @@ dependencies. No package or replacement runtime was installed in this iteration.
   v1 release ledger.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
-  post-render normalizer that makes bypass links first in static HTML.
+  post-render normalizer that makes bypass links first and names repeated
+  navigation landmarks in static HTML.
 - `scholars.json`, `scholars/`, `python/create_scholar.py`, and
   `python/scholar_roster.py`: identity data, canonical biographies, guarded
   creation, and read-only validation.
