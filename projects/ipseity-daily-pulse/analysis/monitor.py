@@ -946,6 +946,174 @@ def observation_growth_svg(audit: DatasetAudit) -> str:
     )
 
 
+def monitoring_history_summary(history: list[dict[str, object]]) -> dict[str, object]:
+    """Summarize the sequence of outside-in checks for machine-readable output."""
+    successful = [
+        row
+        for row in history
+        if str(row.get("main_site_reachable", "")).lower() == "true"
+        and str(row.get("canonical_dataset_retrieved", "")).lower() == "true"
+        and str(row.get("parsed_successfully", "")).lower() == "true"
+        and str(row.get("anomaly", "")) == "none"
+    ]
+    observed = [row for row in history if str(row.get("observations", ""))]
+    lags = [
+        int(str(row["data_lag_days"]))
+        for row in history
+        if str(row.get("data_lag_days", ""))
+    ]
+    return {
+        "checks": len(history),
+        "fully_healthy_checks": len(successful),
+        "first_check_utc": str(history[0]["checked_at_utc"]) if history else None,
+        "latest_check_utc": str(history[-1]["checked_at_utc"]) if history else None,
+        "latest_data_lag_days": lags[-1] if lags else None,
+        "maximum_data_lag_days": max(lags) if lags else None,
+        "observation_growth_across_checks": (
+            int(str(observed[-1]["observations"]))
+            - int(str(observed[0]["observations"]))
+            if observed
+            else None
+        ),
+    }
+
+
+def monitoring_history_svg(history: list[dict[str, object]]) -> str:
+    """Render aligned endpoint, lag, and observation-count views across checks."""
+    if not history:
+        return svg_frame(
+            "Ipseity Daily outside-in monitoring history",
+            "No outside-in monitoring checks have been recorded.",
+            '  <text class="subtitle" x="92" y="92">No monitoring checks recorded</text>',
+        )
+
+    width, height = 960, 720
+    left, right = 150, 45
+    plot_w = width - left - right
+    n = len(history)
+
+    def px(index: int) -> float:
+        return left + index / max(1, n - 1) * plot_w
+
+    checked_dates = [
+        dt.datetime.fromisoformat(str(row["checked_at_utc"]).replace("Z", "+00:00")).date()
+        for row in history
+    ]
+    status_fields = [
+        ("Homepage", "main_site_reachable"),
+        ("Dataset", "canonical_dataset_retrieved"),
+        ("CSV parse", "parsed_successfully"),
+    ]
+    status_y = [130, 166, 202]
+    lag_points = [
+        (index, int(str(row["data_lag_days"])))
+        for index, row in enumerate(history)
+        if str(row.get("data_lag_days", ""))
+    ]
+    observation_points = [
+        (index, int(str(row["observations"])))
+        for index, row in enumerate(history)
+        if str(row.get("observations", ""))
+    ]
+    lag_top, lag_bottom = 294, 420
+    obs_top, obs_bottom = 486, 612
+    lag_max = max(4, max((value for _, value in lag_points), default=0))
+    obs_min = min((value for _, value in observation_points), default=0)
+    obs_max = max((value for _, value in observation_points), default=1)
+    obs_padding = max(1, math.ceil((obs_max - obs_min) * 0.08))
+    obs_floor = max(0, obs_min - obs_padding)
+    obs_ceiling = obs_max + obs_padding
+
+    def lag_py(value: int) -> float:
+        return lag_bottom - value / max(1, lag_max) * (lag_bottom - lag_top)
+
+    def obs_py(value: int) -> float:
+        return obs_bottom - (value - obs_floor) / max(1, obs_ceiling - obs_floor) * (
+            obs_bottom - obs_top
+        )
+
+    summary = monitoring_history_summary(history)
+    latest_lag = summary["latest_data_lag_days"]
+    lag_unit = "day" if latest_lag == 1 else "days"
+    growth = summary["observation_growth_across_checks"]
+    growth_text = f"{growth:,}" if isinstance(growth, int) else "an unavailable number of"
+    parts = [
+        f'  <text class="title" x="{left}" y="38">Ipseity Daily outside-in monitoring history</text>',
+        f'  <text class="subtitle" x="{left}" y="66">{n} checks · {summary["fully_healthy_checks"]} fully healthy · {checked_dates[0]} through {checked_dates[-1]}</text>',
+        f'  <text class="subtitle" x="{left}" y="99">Endpoint and parse status</text>',
+    ]
+    for label, y in zip((item[0] for item in status_fields), status_y):
+        parts.append(f'  <text class="tick" text-anchor="end" x="{left - 18}" y="{y + 5}">{label}</text>')
+    for index, row in enumerate(history):
+        x = px(index)
+        for (_, field), y in zip(status_fields, status_y):
+            ok = str(row.get(field, "")).lower() == "true"
+            fill = "#4B6F44" if ok else "#b43c32"
+            parts.append(
+                f'  <circle cx="{x:.1f}" cy="{y}" r="8" fill="{fill}" '
+                f'stroke="#243128" stroke-width="1"/>'
+            )
+            symbol = "✓" if ok else "×"
+            parts.append(
+                f'  <text x="{x:.1f}" y="{y + 4}" text-anchor="middle" '
+                f'font-size="11" font-weight="700" style="fill:#ffffff">{symbol}</text>'
+            )
+
+    parts.extend(
+        [
+            f'  <circle cx="{left}" cy="244" r="7" fill="#4B6F44"/><text class="tick" x="{left + 14}" y="249">Healthy</text>',
+            f'  <circle cx="{left + 90}" cy="244" r="7" fill="#b43c32"/><text class="tick" x="{left + 104}" y="249">Failed</text>',
+            f'  <text class="subtitle" x="{left}" y="278">Newest-observation lag (days)</text>',
+        ]
+    )
+    for value in range(0, lag_max + 1):
+        y = lag_py(value)
+        parts.append(f'  <line class="grid" x1="{left}" y1="{y:.1f}" x2="{left + plot_w}" y2="{y:.1f}"/>')
+        parts.append(f'  <text class="tick" text-anchor="end" x="{left - 18}" y="{y + 5:.1f}">{value}</text>')
+    if lag_points:
+        points = " ".join(f"{px(index):.1f},{lag_py(value):.1f}" for index, value in lag_points)
+        parts.append(f'  <polyline points="{points}" fill="none" stroke="#4B6F44" stroke-width="3"/>')
+        for index, value in lag_points:
+            parts.append(f'  <circle cx="{px(index):.1f}" cy="{lag_py(value):.1f}" r="5" fill="#243128"/>')
+
+    parts.append(f'  <text class="subtitle" x="{left}" y="470">Validated observations in canonical file</text>')
+    obs_ticks = sorted({obs_floor, round((obs_floor + obs_ceiling) / 2), obs_ceiling})
+    for value in obs_ticks:
+        y = obs_py(value)
+        parts.append(f'  <line class="grid" x1="{left}" y1="{y:.1f}" x2="{left + plot_w}" y2="{y:.1f}"/>')
+        parts.append(f'  <text class="tick" text-anchor="end" x="{left - 18}" y="{y + 5:.1f}">{value / 1000:.1f}k</text>')
+    if observation_points:
+        points = " ".join(
+            f"{px(index):.1f},{obs_py(value):.1f}" for index, value in observation_points
+        )
+        parts.append(f'  <polyline points="{points}" fill="none" stroke="#4B6F44" stroke-width="4"/>')
+        for index, value in observation_points:
+            parts.append(f'  <circle cx="{px(index):.1f}" cy="{obs_py(value):.1f}" r="5" fill="#243128"/>')
+
+    label_indexes = sorted({0, n - 1, *range(0, n, max(1, math.ceil(n / 7)))})
+    for index in label_indexes:
+        x = px(index)
+        parts.append(f'  <line class="axis" x1="{x:.1f}" y1="{obs_bottom}" x2="{x:.1f}" y2="{obs_bottom + 6}"/>')
+        parts.append(
+            f'  <text class="tick" text-anchor="end" transform="translate({x + 4:.1f} {obs_bottom + 24}) rotate(-35)">{checked_dates[index].isoformat()}</text>'
+        )
+    parts.append(
+        f'  <text class="tick" text-anchor="middle" x="{left + plot_w / 2:.1f}" y="{height - 18}">UTC check date</text>'
+    )
+    return svg_frame(
+        "Ipseity Daily outside-in monitoring history",
+        (
+            f"Across {n} checks from {checked_dates[0]} through {checked_dates[-1]}, "
+            f"{summary['fully_healthy_checks']} had a reachable homepage, retrievable and "
+            f"parseable canonical dataset, and no anomaly. The latest data lag was "
+            f"{latest_lag} {lag_unit}, and validated observations grew by {growth_text}."
+        ),
+        "\n".join(parts),
+        width,
+        height,
+    )
+
+
 def trend_histogram_svg(trends: list[dict[str, object]], latest: dt.date) -> str:
     width, height = 960, 540
     left, right, top, bottom = 92, 35, 100, 74
@@ -1347,11 +1515,17 @@ def compact_within_sensitivity(row: dict[str, object]) -> dict[str, object]:
 def findings_markdown(
     audit: DatasetAudit,
     checked_at: dt.datetime,
+    history: list[dict[str, object]],
     trends: list[dict[str, object]],
     sensitivity: list[dict[str, object]],
     early_late_sensitivity: list[dict[str, object]],
     within_sensitivity: list[dict[str, object]],
 ) -> str:
+    history_summary = monitoring_history_summary(history)
+    history_growth = history_summary["observation_growth_across_checks"]
+    history_growth_text = (
+        f"{history_growth:,}" if isinstance(history_growth, int) else "an unavailable number of"
+    )
     eligible = [row for row in trends if row["eligible"]]
     estimates = sorted(float(row["annual_change_percentage_points"]) for row in eligible)
     quartiles = statistics.quantiles(estimates, n=4, method="inclusive")
@@ -1526,7 +1700,15 @@ check records no anomaly.
 
 The cumulative series is derived from observation dates inside the current
 microdata, while `data/monitoring-history.csv` preserves the separate sequence
-of outside-in checks for longitudinal monitoring.
+of outside-in checks for longitudinal monitoring. Across
+**{history_summary['checks']} checks**, **{history_summary['fully_healthy_checks']}**
+had a reachable homepage, a retrieved and parseable canonical file, and no
+anomaly. The file gained
+**{history_growth_text} observations** from
+the first recorded check to the latest. This short run is an operational view,
+not an estimate of long-run service reliability.
+
+![Endpoint status, data lag, and observation growth across checks](outputs/monitoring-history.svg)
 
 ## Estimated signifier prevalence change
 
@@ -1766,7 +1948,12 @@ def append_history(path: Path, row: dict[str, object], existing: list[dict[str, 
         writer.writerow(row)
 
 
-def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path) -> None:
+def write_outputs(
+    audit: DatasetAudit,
+    checked_at: dt.datetime,
+    output_dir: Path,
+    history: list[dict[str, object]],
+) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     daily_rows = []
     running = 0
@@ -1820,6 +2007,9 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
     (output_dir / "annual-prevalence-growth-histogram.svg").write_text(
         trend_histogram_svg(trends, audit.latest), encoding="utf-8"
     )
+    (output_dir / "monitoring-history.svg").write_text(
+        monitoring_history_svg(history), encoding="utf-8"
+    )
     eligible = [row for row in trends if row["eligible"]]
     growing = sorted(eligible, key=lambda row: float(row["annual_change_percentage_points"]), reverse=True)[:10]
     shrinking = sorted(eligible, key=lambda row: float(row["annual_change_percentage_points"]))[:10]
@@ -1831,6 +2021,7 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
             "duplicate_keys": audit.duplicate_keys,
             "errors": audit.errors,
         },
+        "monitoring_history": monitoring_history_summary(history),
         "dataset": {
             "observations": audit.rows,
             "earliest_observation_date": audit.earliest.isoformat(),
@@ -1967,6 +2158,7 @@ def write_outputs(audit: DatasetAudit, checked_at: dt.datetime, output_dir: Path
         findings_markdown(
             audit,
             checked_at,
+            history,
             trends,
             sensitivity,
             early_late_sensitivity,
@@ -2022,8 +2214,11 @@ def main() -> int:
     row = history_row(checked_at, main_status, dataset_status, audit, anomaly)
     if not args.no_history:
         append_history(args.history, row, existing)
+        output_history: list[dict[str, object]] = [*existing, row]
+    else:
+        output_history = existing
     if audit is not None and audit.parsed_successfully:
-        write_outputs(audit, checked_at, args.output_dir)
+        write_outputs(audit, checked_at, args.output_dir, output_history)
     if temporary is not None:
         dataset_path.unlink(missing_ok=True)
 

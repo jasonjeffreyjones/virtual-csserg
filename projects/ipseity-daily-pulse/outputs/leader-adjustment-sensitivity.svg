@@ -36,20 +36,20 @@
   <text class="tick" text-anchor="middle" x="922.0" y="620">+40</text>
   <line x1="578.5" y1="125" x2="578.5" y2="594" stroke="#243128" stroke-width="2"/>
   <text class="tick" text-anchor="end" x="223" y="153.4">beautiful</text>
-  <line x1="775.3" y1="148.4" x2="677.1" y2="148.4" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="544.0" y1="148.4" x2="810.1" y2="148.4" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="775.3" cy="148.4" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="677.1" cy="148.4" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="200.3">amateur artist</text>
-  <line x1="735.3" y1="195.3" x2="686.3" y2="195.3" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="549.2" y1="195.3" x2="823.4" y2="195.3" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="735.3" cy="195.3" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="686.3" cy="195.3" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="247.2">romance fan</text>
-  <line x1="733.1" y1="242.2" x2="644.0" y2="242.2" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="521.1" y1="242.2" x2="766.9" y2="242.2" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="733.1" cy="242.2" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="644.0" cy="242.2" r="5" fill="#4B6F44"/>
+  <line x1="779.8" y1="148.4" x2="680.8" y2="148.4" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="547.8" y1="148.4" x2="813.8" y2="148.4" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="779.8" cy="148.4" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="680.8" cy="148.4" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="200.3">romance fan</text>
+  <line x1="733.1" y1="195.3" x2="644.0" y2="195.3" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="521.1" y1="195.3" x2="766.9" y2="195.3" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="733.1" cy="195.3" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="644.0" cy="195.3" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="247.2">amateur artist</text>
+  <line x1="731.3" y1="242.2" x2="681.4" y2="242.2" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="545.0" y1="242.2" x2="817.8" y2="242.2" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="731.3" cy="242.2" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="681.4" cy="242.2" r="5" fill="#4B6F44"/>
   <text class="tick" text-anchor="end" x="223" y="294.1">pretty</text>
   <line x1="729.1" y1="289.1" x2="624.4" y2="289.1" stroke="#aeb9b0" stroke-width="3"/>
   <line x1="481.7" y1="289.1" x2="767.1" y2="289.1" stroke="#4B6F44" stroke-width="2"/>
@@ -60,30 +60,30 @@
   <line x1="535.1" y1="336.1" x2="849.2" y2="336.1" stroke="#4B6F44" stroke-width="2"/>
   <circle cx="727.9" cy="336.1" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
   <circle cx="692.1" cy="336.1" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="387.9">nba fan</text>
-  <line x1="453.5" y1="382.9" x2="526.5" y2="382.9" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="388.2" y1="382.9" x2="664.8" y2="382.9" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="453.5" cy="382.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="526.5" cy="382.9" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="434.9">star wars fan</text>
-  <line x1="455.0" y1="429.9" x2="479.9" y2="429.9" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="343.4" y1="429.9" x2="616.4" y2="429.9" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="455.0" cy="429.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="479.9" cy="429.9" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="387.9">star wars fan</text>
+  <line x1="452.2" y1="382.9" x2="479.3" y2="382.9" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="342.8" y1="382.9" x2="615.8" y2="382.9" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="452.2" cy="382.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="479.3" cy="382.9" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="434.9">nba fan</text>
+  <line x1="453.5" y1="429.9" x2="526.5" y2="429.9" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="388.2" y1="429.9" x2="664.8" y2="429.9" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="453.5" cy="429.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="526.5" cy="429.9" r="5" fill="#4B6F44"/>
   <text class="tick" text-anchor="end" x="223" y="481.8">social conservative</text>
-  <line x1="457.4" y1="476.8" x2="477.0" y2="476.8" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="347.1" y1="476.8" x2="606.8" y2="476.8" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="457.4" cy="476.8" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="477.0" cy="476.8" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="528.6">planner</text>
-  <line x1="467.7" y1="523.6" x2="434.9" y2="523.6" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="300.9" y1="523.6" x2="569.0" y2="523.6" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="467.7" cy="523.6" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="434.9" cy="523.6" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="575.5">2a supporter</text>
-  <line x1="471.3" y1="570.5" x2="442.7" y2="570.5" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="307.3" y1="570.5" x2="578.0" y2="570.5" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="471.3" cy="570.5" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="442.7" cy="570.5" r="5" fill="#4B6F44"/>
+  <line x1="465.6" y1="476.8" x2="489.0" y2="476.8" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="358.5" y1="476.8" x2="619.4" y2="476.8" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="465.6" cy="476.8" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="489.0" cy="476.8" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="528.6">2a supporter</text>
+  <line x1="471.3" y1="523.6" x2="442.7" y2="523.6" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="307.3" y1="523.6" x2="578.0" y2="523.6" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="471.3" cy="523.6" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="442.7" cy="523.6" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="575.5">planner</text>
+  <line x1="471.5" y1="570.5" x2="443.6" y2="570.5" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="310.7" y1="570.5" x2="576.5" y2="570.5" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="471.5" cy="570.5" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="443.6" cy="570.5" r="5" fill="#4B6F44"/>
   <text class="tick" text-anchor="middle" x="578.5" y="644">Estimated change (percentage points per year)</text>
 </svg>

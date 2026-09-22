@@ -179,6 +179,36 @@ class MonitorTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "refusing duplicate"):
                 monitor.append_history(path, template, existing)
 
+    def test_monitoring_history_summary_and_svg(self):
+        history = []
+        for index, observations in enumerate((100, 125, 160)):
+            item = {field: "" for field in monitor.HISTORY_FIELDS}
+            item.update(
+                {
+                    "checked_at_utc": f"2026-09-{16 + index:02d}T10:00:00Z",
+                    "main_site_reachable": "true",
+                    "canonical_dataset_retrieved": "true",
+                    "parsed_successfully": "true",
+                    "observations": str(observations),
+                    "data_lag_days": "1",
+                    "anomaly": "none",
+                }
+            )
+            history.append(item)
+        history[1]["main_site_reachable"] = "false"
+        history[1]["anomaly"] = "main site unreachable"
+        summary = monitor.monitoring_history_summary(history)
+        self.assertEqual(summary["checks"], 3)
+        self.assertEqual(summary["fully_healthy_checks"], 2)
+        self.assertEqual(summary["maximum_data_lag_days"], 1)
+        self.assertEqual(summary["observation_growth_across_checks"], 60)
+        root = ET.fromstring(monitor.monitoring_history_svg(history))
+        self.assertEqual(root.tag, "{http://www.w3.org/2000/svg}svg")
+        self.assertIn(
+            "Across 3 checks", root.find("{http://www.w3.org/2000/svg}desc").text
+        )
+        self.assertIn("×", ET.tostring(root, encoding="unicode"))
+
     def test_committed_outputs_are_internally_consistent(self):
         project = Path(__file__).resolve().parents[1]
         history = monitor.read_history(project / "data/monitoring-history.csv")
@@ -186,6 +216,25 @@ class MonitorTests(unittest.TestCase):
         self.assertEqual(history[-1]["checked_at_utc"], summary["checked_at_utc"])
         self.assertEqual(int(history[-1]["observations"]), summary["dataset"]["observations"])
         self.assertEqual(history[-1]["dataset_sha256"], summary["source"]["sha256"])
+        self.assertEqual(len(history), summary["monitoring_history"]["checks"])
+        healthy = sum(
+            item["main_site_reachable"] == "true"
+            and item["canonical_dataset_retrieved"] == "true"
+            and item["parsed_successfully"] == "true"
+            and item["anomaly"] == "none"
+            for item in history
+        )
+        self.assertEqual(
+            healthy, summary["monitoring_history"]["fully_healthy_checks"]
+        )
+        self.assertEqual(
+            max(int(item["data_lag_days"]) for item in history if item["data_lag_days"]),
+            summary["monitoring_history"]["maximum_data_lag_days"],
+        )
+        self.assertEqual(
+            int(history[-1]["observations"]) - int(history[0]["observations"]),
+            summary["monitoring_history"]["observation_growth_across_checks"],
+        )
 
         with (project / "outputs/daily-observation-growth.csv").open(newline="") as source:
             daily = list(csv.DictReader(source))
@@ -346,6 +395,7 @@ class MonitorTests(unittest.TestCase):
             )
         for name in (
             "observation-growth.svg",
+            "monitoring-history.svg",
             "annual-prevalence-growth-histogram.svg",
             "leader-adjustment-sensitivity.svg",
             "leader-early-late-sensitivity.svg",

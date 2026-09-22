@@ -31,6 +31,9 @@ replay. The script refuses to append a duplicate check timestamp.
 
 - `data/monitoring-history.csv` is the append-only, machine-readable sequence
   of monitoring checks.
+- `outputs/monitoring-history.svg` aligns homepage, dataset, and parse status
+  with newest-observation lag and canonical-file observation counts across
+  outside-in checks.
 - `outputs/current-summary.json` records current provenance, validation, and
   trend leaders.
 - `outputs/daily-observation-growth.csv` and `outputs/observation-growth.svg`

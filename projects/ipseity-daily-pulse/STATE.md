@@ -2,7 +2,7 @@
 title: "Ipseity Daily Pulse"
 status: Active
 publication: Unpublished
-updated: 2026-09-21T10:09:51Z
+updated: 2026-09-22T10:13:27Z
 ---
 
 # Ipseity Daily Pulse — Current state
@@ -14,46 +14,50 @@ public report has been created.
 
 ## Current findings and completed work
 
-- Six daily outside-in checks are recorded. At `2026-09-21T10:06:18Z`, the
-  homepage and canonical microdata returned HTTP 200. The 5,019,234-byte gzip
-  parsed with the documented schema: 707,998 response observations from
-  2025-07-08 through 2026-09-20, 5,021 hashed respondents, 707 signifiers, no
+- Seven daily outside-in checks are recorded. At `2026-09-22T10:08:02Z`, the
+  homepage and canonical microdata returned HTTP 200. The 5,031,507-byte gzip
+  parsed with the documented schema: 709,659 response observations from
+  2025-07-08 through 2026-09-21, 5,028 hashed respondents, 707 signifiers, no
   malformed rows or duplicate canonical keys, and a one-day data lag. No
-  anomaly was detected. Since the prior check, the file gained 1,573
-  observations and 11 respondents, and its latest observation date advanced
+  anomaly was detected. Since the prior check, the file gained 1,661
+  observations and seven respondents, and its latest observation date advanced
   one day. Its SHA-256 is
-  `83ee777095ffb9b44f26d222177cf387cb1db96e885b369f6570d1ba4509c519`.
-- The current growth table and accessible SVG rise to 707,998 observations
-  across 430 observation dates. Six history rows remain one short of the
-  planned seven-check operational view.
+  `d516f950d2102c2a6a5d39ac6d76a1ad951b71cf4e3bebf57627d5ac87c01db5`.
+- The current growth table and accessible SVG rise to 709,659 observations
+  across 431 observation dates. A new accessible monitoring-history SVG aligns
+  endpoint and parse status, data lag, and file size across checks. All seven
+  recorded checks were healthy, lag was one day each time, and the canonical
+  file gained 9,824 observations from the first check to the latest. This is a
+  short operational view, not an uptime or long-run reliability estimate.
 - Unweighted linear probability trends remain estimable for 704 signifiers
   meeting the prespecified 300-response, 30-date, and 180-day thresholds. The
   median annualized estimate is +0.6 percentage points; the middle half ranges
-  from -1.7 to +3.2 points. `beautiful` is the most positive pooled leader
-  (+22.9 points/year), and `nba fan` is the most negative (-14.6).
+  from -1.6 to +3.1 points. `beautiful` is the most positive pooled leader
+  (+23.4 points/year), and `star wars fan` is the most negative (-14.7).
 - Respondent-clustered inference and both multiplicity screens still yield no
   discovery among 704 tests: zero Benjamini–Hochberg q-values and zero
   Bonferroni-adjusted p-values are at or below .05.
-- A new two-period sensitivity splits the full observation window at
-  2026-02-12 and compares late-half with early-half prevalence for the 20
+- The two-period sensitivity splits the full observation window at
+  2026-02-13 and compares late-half with early-half prevalence for the 20
   selected linear-trend leaders. All 20 contrasts retain the linear slope's
-  direction; their median absolute difference is 9.4 percentage points.
-  `beautiful` rises from 33.2% to 50.7%, a +17.5-point contrast with a
-  respondent-clustered 95% interval from +8.4 to +26.7. This is a selected
+  direction; their median absolute difference is 9.7 percentage points.
+  `beautiful` rises from 33.2% to 50.9%, a +17.8-point contrast with a
+  respondent-clustered 95% interval from +8.6 to +26.9. This is a selected
   diagnostic, not a discovery test, and its point difference is not directly
   comparable with an annualized slope.
 - The refreshed composition-and-calendar sensitivity retains the direction of
-  all 20 pooled leaders; the median absolute slope shift is 5.6 points/year.
+  all 20 pooled leaders; the median absolute slope shift is 5.7 points/year.
 - The three-way leader panel now has 17 of 20 repeat-sample slopes retaining
-  the all-response direction, 15 of 20 within-person slopes retaining the
-  repeat-sample direction, and 12 of 20 retaining the original direction. The
-  median absolute shifts are 11.7 points/year for sample restriction, 13.4 for
-  absorbing respondent effects, and 13.8 end to end; the median signifier has
+  the all-response direction, 16 of 20 within-person slopes retaining the
+  repeat-sample direction, and 13 of 20 retaining the original direction. The
+  median absolute shifts are 11.3 points/year for sample restriction, 16.8 for
+  absorbing respondent effects, and 12.8 end to end; the median signifier has
   26 repeat respondents. Two signifiers have no endorsement switchers, so
   their zero within slopes and intervals are mechanical rather than precise
   population evidence.
-- A new internal outreach draft explains the two-period robustness check. It
-  remains unpublished pending PI guidance.
+- A new internal outreach draft presents the seven-check operational view and
+  explicitly distinguishes daily snapshots from uptime evidence. It remains
+  unpublished pending PI guidance.
 
 ## Decisions and constraints
 
@@ -75,6 +79,8 @@ public report has been created.
   of the 704 primary tests passes either multiplicity screen. Do not interpret
   a zero sandwich interval as precision when repeat respondents never change
   their outcome.
+- Treat the seven-check history view as evidence about the sampled moments,
+  not continuous availability or a service-level estimate.
 - Keep outreach material internal until the PI establishes a publication
   surface and approval/posting workflow.
 
@@ -96,9 +102,9 @@ public report has been created.
 
 ## Problems and unresolved PI questions
 
-- Six history rows establish five healthy daily intervals, not enough evidence
-  to characterize service reliability. The planned one-week operational view
-  becomes available after the next successful daily check.
+- Seven history rows establish six healthy daily intervals and a useful first
+  operational view, but not enough evidence to characterize service
+  reliability or interruptions between checks.
 - No signifier slope survives either multiplicity adjustment. Leader
   sensitivities use small, selected subsets and do not address population
   weighting, time-varying confounding, selective retention, or changing
@@ -111,8 +117,8 @@ public report has been created.
 
 1. On the next UTC day, run the live monitor once; investigate only if its
    anomaly field is not `none`.
-2. After the seventh history row, add a compact check-history visualization for
-   endpoint status, data lag, and observation growth across checks.
+2. Continue the check history so the operational view can eventually
+   distinguish isolated from continuing failures and summarize longer-run lag.
 3. Test whether the selected early/late contrasts persist after observed
    composition and calendar adjustment, while retaining the linear primary
    estimand and all selection and multiplicity cautions.
