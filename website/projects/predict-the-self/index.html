@@ -63,6 +63,18 @@
           </tbody>
         </table>
       </div>
+      <div class="scorecard-wrap" role="region" aria-label="Stable projection training cross-validation" tabindex="0">
+        <table class="scorecard-table">
+          <thead><tr><th scope="col">150-case leave-one-out</th><th scope="col">Stable projection</th><th scope="col">Repeat 2024</th><th scope="col">Paired effect</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Edit similarity</th><td class="metric-better">0.276809</td><td>0.272662</td><td>+0.004147<br><small>95% interval +0.000652 to +0.007753</small></td></tr>
+            <tr><th scope="row">Token-overlap F1</th><td>0.276737</td><td class="metric-better">0.280231</td><td>−0.003493<br><small>95% interval −0.007228 to −0.000077</small></td></tr>
+            <tr><th scope="row">Word-count error reduction</th><td colspan="2">46.986667 versus 55.580000 MAE</td><td class="metric-better">+8.593333</td></tr>
+            <tr><th scope="row">Source-similarity error reduction</th><td colspan="2">0.729214 versus 0.799983 MAE</td><td class="metric-better">+0.070769</td></tr>
+            <tr><th scope="row">Line-count error reduction</th><td colspan="2">9.066667 versus 6.160000 MAE</td><td>−2.906667</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="scorecard-wrap" role="region" aria-label="Volume-matched novel-token recovery comparison" tabindex="0">
         <table class="scorecard-table">
           <thead><tr><th scope="col">Novel-token recovery</th><th scope="col">Marginal prior</th><th scope="col">Trajectory retrieval</th><th scope="col">Paired difference</th></tr></thead>
@@ -82,7 +94,7 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. The first two panels report continuity, lexical novelty, text agreement, and volume-matched novel-token recovery on 50 public development cases. Retrieval approximates observed change volume, but a person-agnostic training prior recovers more new token types at identical case-level prediction volume. The final panel reports two separate locked leave-one-out analyses of 150 training cases: both sparse source-token conditioning and a strongly regularized 30-neighbor ensemble lose to marginal additions at the same oracle budget. None of the token-ranking controls is a full-text forecast. The benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. A locked 150-case leave-one-out analysis of the unchanged stable projection repeats the mixed pattern: edit similarity improves slightly, token-overlap F1 worsens slightly, and form/change errors move in the same directions as development. The final panel reports two separate training-only token-ranking analyses; both individualized rules lose to marginal additions at the same oracle budget. Cross-validation is not fresh confirmation, none of the token-ranking controls is a full-text forecast, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -98,7 +110,7 @@
           <p><strong>The benchmark and submission are frozen.</strong> All governing inputs are pinned and hashed; all 81 private-test predictions pass the official format validator. <a href="report/report.html#benchmark">Inspect provenance</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>The extractive method learns stable-looking language.</strong> Training-only retention estimates rank source units, while a training-only regression controls forecast length. <a href="report/report.html#method">Review the method</a>.</p>
+          <p><strong>Cross-validation repeats a mixed result.</strong> In 150 leave-one-out training cases, edit similarity improves slightly while token-overlap F1 worsens; the method again improves word-count and source-similarity error but worsens line-count error. <a href="report/report.html#stable-projection-cv">Inspect the recurrence check</a>.</p>
         </article>
         <article class="finding">
           <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token conditioning loses 68 and wins 19; a regularized 30-neighbor ensemble loses 65 and wins 25. <a href="report/report.html#neighborhood-additions">Inspect the locked comparisons</a>.</p>

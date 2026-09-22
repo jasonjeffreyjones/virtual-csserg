@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-21"
+date: "2026-09-22"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -35,7 +35,11 @@ fixed source-conditioned rule recovers 14.5% of held-out additions versus
 similar text-and-demographic trajectories; it recovers 14.9% versus the same
 16.1% marginal result, a paired difference of −1.20 percentage points (95%
 case-bootstrap interval: −1.84 to −0.57). Neither individualized ranking
-demonstrates incremental advantage.
+demonstrates incremental advantage. A separately locked leave-one-out
+cross-validation of the frozen stable projection repeats its central mixed
+pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
+`0.003493`, word-count and source-similarity error fall, and line-count error
+rises. The other non-exact agreement intervals span zero.
 
 # Findings at a glance {#findings}
 
@@ -52,6 +56,9 @@ demonstrates incremental advantage.
   line-count error. There is no composite score or defensible “overall winner.”
 - Paired case-bootstrap intervals span zero for all five nonzero agreement
   differences; only error in length and amount of change has a clearer pattern.
+- Leave-one-out prediction of all 150 training trajectories repeats that mixed
+  pattern without using each case's own follow-up in its fitted model. It does
+  not convert method-development data into untouched confirmation.
 - It still forecasts too much continuity: mean prediction-to-source ROUGE-L is
   0.903898, compared with 0.225683 for observed follow-ups.
 - On average, 73.2% of follow-up unique token types are new relative to the
@@ -135,6 +142,24 @@ allows. Fixed extraction fractions and the training-only length regression
 were compared; the regression-length rule was frozen before the test artifact
 was generated. The development scorecard is therefore a model-selection
 result, not an untouched confirmatory estimate.
+
+## Locked training cross-validation of the stable projection
+
+Before generating any fold prediction, the Project fixed a leave-one-out plan
+at SHA-256
+`2929b1fb8111c42170d23e725c08f6167135d9a703a1b61e87ed59af5f97c5d8`
+and hash-guarded the unchanged generator. Each of the 150 training cases is
+held out in turn; the original retention estimator and length regression are
+refit on the other 149, with the same ten-observation smoothing prior, and the
+held-out response is predicted from its 2024 text alone. Repeat-2024 is the
+paired comparator.
+
+The analysis reports the full official scorecard and 20,000 paired case-
+bootstrap resamples with seed `20260922`. It is a cross-validation diagnostic,
+not a preregistration or fresh confirmation: the training corpus and public
+development results informed earlier method development. Withholding each
+case's own follow-up prevents direct fold leakage, but it cannot erase that
+history or establish population generalization.
 
 ## Post hoc development diagnostics
 
@@ -319,6 +344,38 @@ paired case resamples, while its line-count error is consistently worse. The
 source-similarity result is directional but inadequate in magnitude: even
 after improvement, the projection still remains much too close to the past.
 
+## Training cross-validation repeats the mixed pattern {#stable-projection-cv}
+
+The locked leave-one-out analysis refits the frozen projection 150 times. As
+in the development analysis, positive paired effects favor the projection;
+for error measures they are repeat-2024 error minus projection error.
+
+| Metric | Projection | Repeat 2024 | Mean effect | Paired case-bootstrap 95% interval |
+| --- | ---: | ---: | ---: | ---: |
+| Normalized exact match | 0.000000 | 0.000000 | 0.000000 | 0.000000 to 0.000000 |
+| Normalized edit similarity | 0.276809 | 0.272662 | +0.004147 | +0.000652 to +0.007753 |
+| Token Jaccard similarity | 0.133873 | 0.134297 | −0.000424 | −0.002229 to +0.001237 |
+| Token-overlap F1 | 0.276737 | 0.280231 | −0.003493 | −0.007228 to −0.000077 |
+| ROUGE-L F1 | 0.200304 | 0.200017 | +0.000287 | −0.002003 to +0.002538 |
+| Character n-gram F1 | 0.266194 | 0.267813 | −0.001620 | −0.005530 to +0.002270 |
+| Word-count MAE | 46.986667 | 55.580000 | +8.593333 | +2.573333 to +15.266667 |
+| Line-count MAE | 9.066667 | 6.160000 | −2.906667 | −4.346833 to −1.480000 |
+| Source-similarity MAE | 0.729214 | 0.799983 | +0.070769 | +0.054503 to +0.088484 |
+
+Only two nonzero agreement intervals exclude zero, and they point in opposite
+directions: normalized edit similarity improves slightly while token-overlap
+F1 worsens slightly. The other agreement differences remain unstable to cohort
+composition. The form/change findings are more reproducible: the method lowers
+word-count and source-similarity error but raises line-count error. Magnitude
+remains the substantive problem. Mean predicted source similarity is
+`0.929231`, versus `0.200017` for observed follow-ups, and 46.7% of predictions
+repeat the source exactly while no observed follow-up does.
+
+The direction of all three error results matches development; four of five
+non-exact agreement directions also match, with token Jaccard shifting from a
+tiny positive difference to a tiny negative one. This is useful recurrence
+within the same method-development corpus, not independent replication.
+
 ## Lexical novelty and extractive ceilings {#extractive-limits}
 
 The observed follow-ups contain substantial new lexical material. On an
@@ -478,6 +535,13 @@ restricted to it. A next-generation model needs a mechanism for both deletion
 and creation, evaluated without sacrificing the interpretability of these
 paired diagnostics.
 
+Leave-one-out cross-validation makes this conclusion less dependent on the 50
+reused development cases. Its larger training-cohort analysis reproduces all
+three directional error results and the overall lack of a uniform agreement
+gain. The projection can adjust length and continuity without solving content:
+its small edit-similarity gain coexists with a small token-overlap loss and
+extreme overprediction of source continuity.
+
 Matched-trajectory retrieval sharpens this inference. It supplies deletion and
 creation in approximately the observed proportions, but the transferred novel
 content is rarely person-correct. The problem is not merely calibrating how
@@ -511,6 +575,8 @@ The complete open materials are:
   — pre-analysis lock for the regularized-neighborhood comparison;
 - [`ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md`](ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md)
   — pre-analysis lock for the training-only ranking comparison;
+- [`ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md`](ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md)
+  — pre-analysis lock for leave-one-out validation of the frozen projection;
 - [`ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`](ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md)
   — pre-prediction method and evaluation lock;
 - [`analysis/analyze_dev_diagnostics.py`](analysis/analyze_dev_diagnostics.py)
@@ -521,6 +587,8 @@ The complete open materials are:
   — hash-guarded regularized-neighborhood leave-one-out comparison;
 - [`analysis/analyze_source_conditioned_additions.py`](analysis/analyze_source_conditioned_additions.py)
   — hash-guarded leave-one-out source-conditioned comparison;
+- [`analysis/analyze_stable_projection_cross_validation.py`](analysis/analyze_stable_projection_cross_validation.py)
+  — hash-guarded leave-one-out stable-projection evaluation;
 - [`analysis/analyze_trajectory_retrieval.py`](analysis/analyze_trajectory_retrieval.py)
   — complete paired and novelty comparison under the lock;
 - [`analysis/stable_signifier_projection.py`](analysis/stable_signifier_projection.py)
@@ -545,6 +613,10 @@ The complete open materials are:
   — all 50 public development predictions;
 - [`results/stable_signifier_dev_scorecard.json`](results/stable_signifier_dev_scorecard.json)
   — complete machine-readable scorecard;
+- [`results/stable_projection_train_cv_analysis.json`](results/stable_projection_train_cv_analysis.json)
+  — complete paired training cross-validation result;
+- [`results/stable_projection_train_cv_predictions.csv`](results/stable_projection_train_cv_predictions.csv)
+  — all 150 leave-one-out fold predictions;
 - [`results/trajectory_retrieval_dev_analysis.json`](results/trajectory_retrieval_dev_analysis.json)
   — complete locked paired comparison and novelty diagnostics;
 - [`results/trajectory_retrieval_dev_audit.csv`](results/trajectory_retrieval_dev_audit.csv)
@@ -583,6 +655,13 @@ reframing. Token recurrence is not equivalent to identity-signifier endurance,
 and common wording can make a signifier look stable. The line splitter also
 turns some prose sentences into separate output lines, worsening line-count
 error. Finally, public-development-guided selection can overfit a 50-case set.
+
+The stable-projection cross-validation withholds each case's future from its
+own model fit, but it is not untouched confirmation. The training corpus had
+already informed the method, and cross-validation folds overlap heavily. Its
+case-bootstrap intervals describe this selected training cohort rather than a
+population. The published fold predictions are a derived benchmark-data
+adaptation under CC BY-NC-SA 4.0.
 
 Trajectory retrieval adds different limitations. It transfers another
 participant's public response rather than generating a person-specific future,

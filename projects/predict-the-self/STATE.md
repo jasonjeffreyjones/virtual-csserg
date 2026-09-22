@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-21T09:07:54Z
+updated: 2026-09-22T09:18:27Z
 ---
 
 # Predict the Self — Current State
@@ -21,6 +21,9 @@ A locked training-only leave-one-out diagnostic now also shows that one fixed
 source-token-conditioned Add ranking does not improve on the marginal ranking.
 A second locked diagnostic shows that pooling 30 similar trajectories with
 strong shrinkage narrows but does not reverse that deficit.
+A locked leave-one-out cross-validation of the unchanged stable projection now
+shows that its mixed public-development pattern largely recurs across all 150
+training trajectories without fitting on each held-out case's own follow-up.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -48,6 +51,19 @@ reduction (`+0.096102`, `+0.066064` to `+0.129348`) are more stable to
 development-case composition; line-count error reduction is negative
 (`-2.96`, `-5.54` to `-0.42`). These are not population-generalization
 intervals.
+
+In a locked leave-one-out analysis of all 150 training trajectories, the
+unchanged stable projection improves normalized edit similarity by `+0.004147`
+(case-bootstrap interval `+0.000652` to `+0.007753`) but worsens token-overlap
+F1 by `-0.003493` (`-0.007228` to `-0.000077`). Token Jaccard, ROUGE-L, and
+character n-gram differences have intervals spanning zero. Word-count error
+falls by `8.593333` (`2.573333` to `15.266667`) and source-similarity error by
+`0.070769` (`0.054503` to `0.088484`), while the line-count error-reduction
+effect is `-2.906667` (`-4.346833` to `-1.480000`).
+Mean prediction-to-source similarity remains `0.929231` versus `0.200017`
+observed, and `46.6667%` of fold predictions repeat the source exactly versus
+zero observed follow-ups. This is recurrence within method-development data,
+not untouched confirmation or population evidence.
 
 On an average development case, `73.1727%` of distinct follow-up token types
 are absent from the earlier response (case-bootstrap interval `69.7982%`–
@@ -111,6 +127,12 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
 - Added `analysis/analyze_dev_diagnostics.py`, a hash-guarded deterministic
   paired bootstrap and extractive-limit analysis, plus its complete
   machine-readable JSON result and three unit tests.
+- Locked `ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md` before fold
+  prediction or scoring (SHA-256
+  `2929b1fb8111c42170d23e725c08f6167135d9a703a1b61e87ed59af5f97c5d8`).
+  Added a hash-guarded 150-case leave-one-out evaluation of the frozen
+  generator, five focused tests, all fold predictions, and the complete paired
+  machine-readable scorecard. Development and test artifacts were not changed.
 - Locked `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md` before generating new
   development predictions (SHA-256
   `86b2ddfe775773e1964beeefbac5479d88f6c46cd3385bf3a992fc7ae64e9c83`).
@@ -153,7 +175,7 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, six linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes twenty-six research
+- The three forms link reciprocally. The Full Report publishes thirty research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -170,6 +192,11 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
 - The bootstrap and lexical-limit analysis are post hoc diagnostics of frozen
   predictions. Their intervals characterize development-case composition only;
   their oracles inspect observed futures and are unattainable prospectively.
+- Stable-projection cross-validation withholds each case's future from its own
+  model fit, but the training corpus had already informed method development
+  and folds overlap heavily. Its intervals describe sensitivity to this
+  selected training cohort, not population generalization. The fold-prediction
+  CSV is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
 - The retrieval method and evaluation were locked before generation in this
   iteration, but its development comparison remains exploratory because those
   labels were examined earlier. It transfers another participant's public
@@ -209,6 +236,8 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
   publication sources and reproduction instructions.
 - `BENCHMARK_PROVENANCE.md`: pinned commit, licensing, and governing hashes.
 - `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`: fixed exploratory comparison plan.
+- `ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md`: fixed training-only
+  recurrence check for the frozen stable projection.
 - `ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md`: fixed training-only
   source-conditioned Add-ranking plan.
 - `ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`: fixed training-only regularized-
@@ -216,6 +245,8 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
+- `analysis/analyze_stable_projection_cross_validation.py`: hash-guarded
+  leave-one-out evaluation; its JSON and prediction CSV are under `results/`.
 - `analysis/trajectory_retrieval.py` and
   `analysis/analyze_trajectory_retrieval.py`: development-only retrieval and
   locked paired/novelty analysis.

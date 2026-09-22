@@ -21,6 +21,14 @@ consistently, while line-count error worsens. Most importantly, an average
 73.2% of distinct follow-up token types are absent from the same person's
 earlier response.
 
+A locked leave-one-out analysis of all 150 training trajectories now tests the
+unchanged projection without fitting on each held-out person's follow-up. It
+repeats the mixed pattern: normalized edit similarity improves slightly
+(`+0.004147`) while token-overlap F1 worsens slightly (`−0.003493`); the other
+non-exact agreement intervals span zero. Word-count and source-similarity error
+fall, line-count error rises, and predicted responses remain far too similar to
+their sources (`0.929231` versus `0.200017` observed).
+
 A new locked exploratory comparison asks whether borrowing the complete
 follow-up of the most similar training participant can supply that missing
 novelty. The retrieval forecast nearly matches the amount of change: 80.2% of
@@ -45,9 +53,9 @@ the challenge for a new reader, defines the ipseological prediction target,
 documents the frozen benchmark and two transparent methods, reports the
 complete development scorecard, quantifies paired case uncertainty and lexical
 novelty, tests retrieval against a volume-matched marginal prior, and links
-every public reproducibility artifact. It also reports both separate
-training-only conditioned-ranking tests without presenting their oracle budgets
-as forecasts.
+every public reproducibility artifact. It also reports the frozen projection's
+training cross-validation and both separate conditioned-ranking tests without
+presenting reused training cases or oracle budgets as fresh confirmation.
 
 The report distinguishes three claims that should not be collapsed:
 

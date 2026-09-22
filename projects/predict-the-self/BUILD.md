@@ -70,6 +70,16 @@ python3 projects/predict-the-self/analysis/analyze_neighborhood_additions.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked leave-one-out cross-validation of the frozen stable-
+signifier projection. It hash-guards the training data, evaluator, frozen
+generator, and analysis plan; it does not read or alter development or test
+artifacts:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_stable_projection_cross_validation.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

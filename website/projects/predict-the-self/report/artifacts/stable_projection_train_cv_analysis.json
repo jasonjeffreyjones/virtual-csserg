@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "analysis": "leave_one_out_cross_validation_of_frozen_stable_projection",
+  "cases": 150,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "2929b1fb8111c42170d23e725c08f6167135d9a703a1b61e87ed59af5f97c5d8",
+    "stable_generator_sha256": "ae1eb8b653cd704fcc411790b39f83109e0f92c9af3bfe4fc347d5fb0e04b8c3"
+  },
+  "model": {
+    "training_cases_per_fold": 149,
+    "token_retention_prior_strength": 10.0,
+    "held_out_information_used_for_prediction": "tst_2024 only"
+  },
+  "bootstrap": {
+    "unit": "paired training case",
+    "resamples": 20000,
+    "seed": 20260922,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to training-cohort case composition; it is not a population-generalization interval."
+  },
+  "paired_comparisons": {
+    "normalized_exact_match_rate": {
+      "stable_mean": 0.0,
+      "repeat_2024_mean": 0.0,
+      "effect_definition": "stable_minus_repeat_2024",
+      "mean_effect_positive_favors_stable": 0.0,
+      "paired_case_bootstrap_95_ci_low": 0.0,
+      "paired_case_bootstrap_95_ci_high": 0.0,
+      "stable_case_wins": 0,
+      "case_ties": 150,
+      "stable_case_losses": 0
+    },
+    "normalized_edit_similarity": {
+      "stable_mean": 0.276809,
+      "repeat_2024_mean": 0.272662,
+      "effect_definition": "stable_minus_repeat_2024",
+      "mean_effect_positive_favors_stable": 0.004147,
+      "paired_case_bootstrap_95_ci_low": 0.000652,
+      "paired_case_bootstrap_95_ci_high": 0.007753,
+      "stable_case_wins": 49,
+      "case_ties": 73,
+      "stable_case_losses": 28
+    },
+    "token_jaccard_similarity": {
+      "stable_mean": 0.133873,
+      "repeat_2024_mean": 0.134297,
+      "effect_definition": "stable_minus_repeat_2024",
+      "mean_effect_positive_favors_stable": -0.000424,
+      "paired_case_bootstrap_95_ci_low": -0.002229,
+      "paired_case_bootstrap_95_ci_high": 0.001237,
+      "stable_case_wins": 38,
+      "case_ties": 86,
+      "stable_case_losses": 26
+    },
+    "token_overlap_f1": {
+      "stable_mean": 0.276737,
+      "repeat_2024_mean": 0.280231,
+      "effect_definition": "stable_minus_repeat_2024",
+      "mean_effect_positive_favors_stable": -0.003493,
+      "paired_case_bootstrap_95_ci_low": -0.007228,
+      "paired_case_bootstrap_95_ci_high": -7.7e-05,
+      "stable_case_wins": 29,
+      "case_ties": 86,
+      "stable_case_losses": 35
+    },
+    "rouge_l_f1": {
+      "stable_mean": 0.200304,
+      "repeat_2024_mean": 0.200017,
+      "effect_definition": "stable_minus_repeat_2024",
+      "mean_effect_positive_favors_stable": 0.000287,
+      "paired_case_bootstrap_95_ci_low": -0.002003,
+      "paired_case_bootstrap_95_ci_high": 0.002538,
+      "stable_case_wins": 37,
+      "case_ties": 86,
+      "stable_case_losses": 27
+    },
+    "character_ngram_f1": {
+      "stable_mean": 0.266194,
+      "repeat_2024_mean": 0.267813,
+      "effect_definition": "stable_minus_repeat_2024",
+      "mean_effect_positive_favors_stable": -0.00162,
+      "paired_case_bootstrap_95_ci_low": -0.00553,
+      "paired_case_bootstrap_95_ci_high": 0.00227,
+      "stable_case_wins": 41,
+      "case_ties": 70,
+      "stable_case_losses": 39
+    },
+    "word_count_mae": {
+      "stable_mean": 46.986667,
+      "repeat_2024_mean": 55.58,
+      "effect_definition": "repeat_2024_error_minus_stable_error",
+      "mean_effect_positive_favors_stable": 8.593333,
+      "paired_case_bootstrap_95_ci_low": 2.573333,
+      "paired_case_bootstrap_95_ci_high": 15.266667,
+      "stable_case_wins": 38,
+      "case_ties": 85,
+      "stable_case_losses": 27
+    },
+    "line_count_mae": {
+      "stable_mean": 9.066667,
+      "repeat_2024_mean": 6.16,
+      "effect_definition": "repeat_2024_error_minus_stable_error",
+      "mean_effect_positive_favors_stable": -2.906667,
+      "paired_case_bootstrap_95_ci_low": -4.346833,
+      "paired_case_bootstrap_95_ci_high": -1.48,
+      "stable_case_wins": 39,
+      "case_ties": 37,
+      "stable_case_losses": 74
+    },
+    "source_similarity_mae": {
+      "stable_mean": 0.729214,
+      "repeat_2024_mean": 0.799983,
+      "effect_definition": "repeat_2024_error_minus_stable_error",
+      "mean_effect_positive_favors_stable": 0.070769,
+      "paired_case_bootstrap_95_ci_low": 0.054503,
+      "paired_case_bootstrap_95_ci_high": 0.088484,
+      "stable_case_wins": 65,
+      "case_ties": 85,
+      "stable_case_losses": 0
+    }
+  },
+  "descriptive_scorecard": {
+    "prediction_word_count_mean": 74.146667,
+    "reference_word_count_mean": 88.533333,
+    "prediction_repeat_2024_rate": 0.466667,
+    "observed_repeat_2024_rate": 0.0,
+    "prediction_source_similarity_mean": 0.929231,
+    "observed_source_similarity_mean": 0.200017
+  },
+  "claim_boundary": "The method and data informed earlier Project work. Leave-one-out fitting withholds each case's own follow-up, but this is not untouched confirmation or private-test performance."
+}

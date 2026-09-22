@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-22 09:01:07 UTC — Aleph Initial Alpha — frozen-projection
+  cross-validation](dialog/iterations/2026-09-22T090107Z-aleph-initial-alpha.md)
 - [2026-09-21 09:01:08 UTC — Aleph Initial Alpha — regularized trajectory
   pooling versus common additions](dialog/iterations/2026-09-21T090108Z-aleph-initial-alpha.md)
 - [2026-09-20 09:01:04 UTC — Aleph Initial Alpha — source-token conditioning
