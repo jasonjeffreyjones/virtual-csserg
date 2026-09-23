@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_change_volume_forecasting",
+  "cases": 150,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "53c974fcd37f443ea846e88328a125169265fb41ac1cc7877529bdbf9a09638f",
+    "retrieval_feature_implementation_sha256": "05f64bb95440dcea8125358441878612e71ba19b898a791a0d3a200511a5077e"
+  },
+  "design": {
+    "training_cases_per_fold": 149,
+    "neighbor_count": 30,
+    "neighbor_effective_weight": 30.0,
+    "fold_prior_effective_weight": 30.0,
+    "estimator": "weighted median",
+    "source_representation": "text and field-qualified 2024 demographics with fold-fit TF-IDF",
+    "future_information_used_for_prediction": "none",
+    "warning": "This forecasts revision volume and response form, not correct future lexical content."
+  },
+  "mean_selected_neighbor_cosine_similarity": {
+    "mean": 0.169564,
+    "median": 0.17436
+  },
+  "outcomes": {
+    "add_count": {
+      "observed": {
+        "mean": 39.433333,
+        "median": 31.0
+      },
+      "source_calibrated_marginal_prediction": {
+        "mean": 31.0,
+        "median": 31.0
+      },
+      "regularized_neighborhood_prediction": {
+        "mean": 29.706667,
+        "median": 29.0
+      },
+      "source_calibrated_marginal_error": {
+        "mean_absolute_error": 21.34,
+        "root_mean_squared_error": 29.099714
+      },
+      "regularized_neighborhood_error": {
+        "mean_absolute_error": 20.126667,
+        "root_mean_squared_error": 28.728499
+      },
+      "paired_absolute_error_comparison": {
+        "effect_definition": "marginal_mae_minus_neighborhood_mae",
+        "mean_effect_positive_favors_neighborhood": 1.213333,
+        "paired_case_bootstrap_95_ci_low": 0.68,
+        "paired_case_bootstrap_95_ci_high": 1.74,
+        "neighborhood_case_wins": 79,
+        "case_ties": 17,
+        "neighborhood_case_losses": 54
+      }
+    },
+    "delete_count": {
+      "observed": {
+        "mean": 43.466667,
+        "median": 36.0
+      },
+      "source_calibrated_marginal_prediction": {
+        "mean": 42.30975,
+        "median": 34.783183
+      },
+      "regularized_neighborhood_prediction": {
+        "mean": 42.712057,
+        "median": 34.735714
+      },
+      "source_calibrated_marginal_error": {
+        "mean_absolute_error": 5.614935,
+        "root_mean_squared_error": 8.146901
+      },
+      "regularized_neighborhood_error": {
+        "mean_absolute_error": 5.336275,
+        "root_mean_squared_error": 7.873112
+      },
+      "paired_absolute_error_comparison": {
+        "effect_definition": "marginal_mae_minus_neighborhood_mae",
+        "mean_effect_positive_favors_neighborhood": 0.27866,
+        "paired_case_bootstrap_95_ci_low": 0.022274,
+        "paired_case_bootstrap_95_ci_high": 0.545876,
+        "neighborhood_case_wins": 88,
+        "case_ties": 5,
+        "neighborhood_case_losses": 57
+      }
+    },
+    "word_count": {
+      "observed": {
+        "mean": 88.533333,
+        "median": 86.5
+      },
+      "source_calibrated_marginal_prediction": {
+        "mean": 95.96,
+        "median": 84.5
+      },
+      "regularized_neighborhood_prediction": {
+        "mean": 88.26,
+        "median": 76.5
+      },
+      "source_calibrated_marginal_error": {
+        "mean_absolute_error": 56.08,
+        "root_mean_squared_error": 79.868141
+      },
+      "regularized_neighborhood_error": {
+        "mean_absolute_error": 52.94,
+        "root_mean_squared_error": 75.60604
+      },
+      "paired_absolute_error_comparison": {
+        "effect_definition": "marginal_mae_minus_neighborhood_mae",
+        "mean_effect_positive_favors_neighborhood": 3.14,
+        "paired_case_bootstrap_95_ci_low": 1.093333,
+        "paired_case_bootstrap_95_ci_high": 5.213333,
+        "neighborhood_case_wins": 82,
+        "case_ties": 13,
+        "neighborhood_case_losses": 55
+      }
+    },
+    "line_count": {
+      "observed": {
+        "mean": 8.413333,
+        "median": 1.0
+      },
+      "source_calibrated_marginal_prediction": {
+        "mean": 8.16,
+        "median": 1.0
+      },
+      "regularized_neighborhood_prediction": {
+        "mean": 8.16,
+        "median": 1.0
+      },
+      "source_calibrated_marginal_error": {
+        "mean_absolute_error": 6.16,
+        "root_mean_squared_error": 10.340857
+      },
+      "regularized_neighborhood_error": {
+        "mean_absolute_error": 6.16,
+        "root_mean_squared_error": 10.340857
+      },
+      "paired_absolute_error_comparison": {
+        "effect_definition": "marginal_mae_minus_neighborhood_mae",
+        "mean_effect_positive_favors_neighborhood": 0.0,
+        "paired_case_bootstrap_95_ci_low": 0.0,
+        "paired_case_bootstrap_95_ci_high": 0.0,
+        "neighborhood_case_wins": 0,
+        "case_ties": 150,
+        "neighborhood_case_losses": 0
+      }
+    },
+    "source_similarity": {
+      "observed": {
+        "mean": 0.200017,
+        "median": 0.17789
+      },
+      "source_calibrated_marginal_prediction": {
+        "mean": 0.17789,
+        "median": 0.17789
+      },
+      "regularized_neighborhood_prediction": {
+        "mean": 0.192438,
+        "median": 0.188235
+      },
+      "source_calibrated_marginal_error": {
+        "mean_absolute_error": 0.109648,
+        "root_mean_squared_error": 0.142223
+      },
+      "regularized_neighborhood_error": {
+        "mean_absolute_error": 0.106781,
+        "root_mean_squared_error": 0.135809
+      },
+      "paired_absolute_error_comparison": {
+        "effect_definition": "marginal_mae_minus_neighborhood_mae",
+        "mean_effect_positive_favors_neighborhood": 0.002867,
+        "paired_case_bootstrap_95_ci_low": -0.00096,
+        "paired_case_bootstrap_95_ci_high": 0.00673,
+        "neighborhood_case_wins": 75,
+        "case_ties": 10,
+        "neighborhood_case_losses": 65
+      }
+    }
+  },
+  "bootstrap": {
+    "unit": "paired training case",
+    "resamples": 20000,
+    "seed_restarted_for_each_outcome": 20260923,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to training-case composition; it is not a population-generalization interval."
+  },
+  "claim_boundary": "This is a locked training-cohort diagnostic using a previously selected representation and hyperparameters, not untouched confirmation, development performance, or private-test performance."
+}

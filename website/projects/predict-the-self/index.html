@@ -94,7 +94,19 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. A locked 150-case leave-one-out analysis of the unchanged stable projection repeats the mixed pattern: edit similarity improves slightly, token-overlap F1 worsens slightly, and form/change errors move in the same directions as development. The final panel reports two separate training-only token-ranking analyses; both individualized rules lose to marginal additions at the same oracle budget. Cross-validation is not fresh confirmation, none of the token-ranking controls is a full-text forecast, and the benchmark defines no composite score.</figcaption>
+      <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out change-volume forecasting" tabindex="0">
+        <table class="scorecard-table">
+          <thead><tr><th scope="col">No-oracle quantity forecast</th><th scope="col">30-neighbor MAE</th><th scope="col">Source-calibrated marginal MAE</th><th scope="col">Error reduction</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Add count</th><td class="metric-better">20.126667</td><td>21.340000</td><td>+1.213333<br><small>95% interval +0.680000 to +1.740000</small></td></tr>
+            <tr><th scope="row">Delete count</th><td class="metric-better">5.336275</td><td>5.614935</td><td>+0.278660<br><small>95% interval +0.022274 to +0.545876</small></td></tr>
+            <tr><th scope="row">Follow-up word count</th><td class="metric-better">52.940000</td><td>56.080000</td><td>+3.140000<br><small>95% interval +1.093333 to +5.213333</small></td></tr>
+            <tr><th scope="row">Follow-up line count</th><td>6.160000</td><td>6.160000</td><td>0.000000</td></tr>
+            <tr><th scope="row">Source similarity</th><td>0.106781</td><td>0.109648</td><td>+0.002867<br><small>95% interval −0.000960 to +0.006730</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, the same regularized neighborhood improves Add-count, Delete-count, and word-count forecasts, but not line count or source similarity. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -114,6 +126,9 @@
         </article>
         <article class="finding">
           <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token conditioning loses 68 and wins 19; a regularized 30-neighbor ensemble loses 65 and wins 25. <a href="report/report.html#neighborhood-additions">Inspect the locked comparisons</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>Person matching does predict some revision volume.</strong> Without an oracle budget, the 30-neighbor model lowers leave-one-out error for Add count, Delete count, and follow-up word count, but not line count or source similarity. <a href="report/report.html#change-volume">Inspect the volume forecasts</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>

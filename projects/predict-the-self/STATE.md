@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-22T09:18:27Z
+updated: 2026-09-23T09:23:42Z
 ---
 
 # Predict the Self — Current State
@@ -24,6 +24,10 @@ strong shrinkage narrows but does not reverse that deficit.
 A locked leave-one-out cross-validation of the unchanged stable projection now
 shows that its mixed public-development pattern largely recurs across all 150
 training trajectories without fitting on each held-out case's own follow-up.
+Another locked leave-one-out analysis now removes the oracle addition budget
+and shows that the fixed regularized neighborhood modestly improves forecasts
+of Add count, Delete count, and follow-up word count, even though it does not
+improve line count or establish a source-similarity advantage.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -113,6 +117,17 @@ The top sets overlap by `0.739706` on average, so the model changes about 26%
 of guesses yet still performs worse. Pooling and stronger shrinkage narrow the
 earlier deficit but do not demonstrate person-conditioned lexical advantage.
 
+In a third locked leave-one-out analysis, the same 30-neighbor representation
+forecasts revision volume without using any held-out future-derived budget.
+Relative to source-calibrated fold medians, it lowers Add-count MAE to
+`20.126667` from `21.340000` (error reduction `+1.213333`, interval `+0.680000`
+to `+1.740000`), Delete-count MAE to `5.336275` from `5.614935` (`+0.278660`,
+`+0.022274` to `+0.545876`), and word-count MAE to `52.940000` from `56.080000`
+(`+3.140000`, `+1.093333` to `+5.213333`). Line-count forecasts are identical,
+and the source-similarity reduction of `+0.002867` has an interval spanning
+zero (`-0.000960` to `+0.006730`). Person matching carries modest signal about
+the amount of revision but has not identified its new lexical content.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -157,6 +172,12 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
   Added the hash-guarded analysis, six focused unit tests, complete JSON result,
   and 150-row case audit. No development or test artifact was generated or
   changed.
+- Locked `ANALYSIS_PLAN_CHANGE_VOLUME.md` before benchmark retrieval in this
+  iteration, implementation, or scoring (SHA-256
+  `53c974fcd37f443ea846e88328a125169265fb41ac1cc7877529bdbf9a09638f`).
+  Added a hash-guarded no-oracle leave-one-out volume analysis, six focused
+  tests, a complete JSON result, and a 150-row case audit. No development or
+  test artifact was read or changed by the analysis.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -173,9 +194,9 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
   two-column PDF. Validation permits any nonempty length through the actual
   ten-page ceiling.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
-  question/status, exactly one dense quantitative figure, six linked findings,
+  question/status, exactly one dense quantitative figure, seven linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes thirty research
+- The three forms link reciprocally. The Full Report publishes thirty-four research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -220,6 +241,10 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
   selected in earlier work. Coarse demographic similarity is not an
   ipseological mechanism, and its case audit is a derived benchmark-data
   adaptation under CC BY-NC-SA 4.0.
+- The change-volume comparison uses no held-out future budget, but its
+  representation and fixed 30-neighbor/equal-shrinkage choices came from
+  earlier Project work. Counts remain continuous, its folds overlap, and its
+  audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -242,6 +267,8 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
   source-conditioned Add-ranking plan.
 - `ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`: fixed training-only regularized-
   neighborhood Add-ranking plan.
+- `ANALYSIS_PLAN_CHANGE_VOLUME.md`: fixed no-oracle leave-one-out revision-
+  volume forecasting plan.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -259,6 +286,8 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
 - `analysis/analyze_neighborhood_additions.py`: locked leave-one-out pooled-
   trajectory comparison; `results/neighborhood_additions_train_analysis.json`
   and `results/neighborhood_additions_train_audit.csv` are its outputs.
+- `analysis/analyze_change_volume.py`: locked leave-one-out response-form and
+  revision-volume forecasts; its JSON and case audit are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -288,8 +317,9 @@ earlier deficit but do not demonstrate person-conditioned lexical advantage.
    heavily reused.
 3. Avoid further fixed lexical re-rankers on the same 150 cases without a
    substantively new representation. Before reusing development labels,
-   require a synthesizing or semantic person-conditioned approach to beat
-   leave-one-out marginal additions in training; then lock any development
-   comparison and avoid private test feedback.
+   require a synthesizing or semantic person-conditioned approach to preserve
+   the modest volume-calibration signal and beat leave-one-out marginal
+   additions in training; then lock any development comparison and avoid
+   private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

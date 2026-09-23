@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-22"
+date: "2026-09-23"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -35,7 +35,13 @@ fixed source-conditioned rule recovers 14.5% of held-out additions versus
 similar text-and-demographic trajectories; it recovers 14.9% versus the same
 16.1% marginal result, a paired difference of −1.20 percentage points (95%
 case-bootstrap interval: −1.84 to −0.57). Neither individualized ranking
-demonstrates incremental advantage. A separately locked leave-one-out
+demonstrates incremental content advantage. A third locked leave-one-out test
+removes the oracle budget and forecasts how much each held-out response will
+change. The same regularized neighborhood lowers MAE relative to source-
+calibrated fold medians for Add count (`20.126667` versus `21.340000`), Delete
+count (`5.336275` versus `5.614935`), and word count (`52.940000` versus
+`56.080000`); all three paired intervals exclude zero. It ties on line count,
+while the source-similarity interval spans zero. A separately locked leave-one-out
 cross-validation of the frozen stable projection repeats its central mixed
 pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
 `0.003493`, word-count and source-similarity error fall, and line-count error
@@ -75,6 +81,10 @@ rises. The other non-exact agreement intervals span zero.
 - A strongly regularized 30-neighbor Add ranking also falls short: it loses 65
   cases, ties 60, and wins 25, despite changing 26.0% of marginal-prior guesses
   on an average case.
+- Without an oracle future-token budget, that fixed neighborhood does improve
+  leave-one-out forecasts of Add count, Delete count, and follow-up word count
+  over source-calibrated fold medians. It does not improve line count or show a
+  stable source-similarity advantage.
 
 # Introduction {#introduction}
 
@@ -278,6 +288,32 @@ marginal ranking; both receive the held-out case's observed addition count as
 an oracle budget. A 20,000-resample paired case bootstrap uses seed `20260921`.
 The plan is an analysis lock, not a preregistration, because both the training
 data and source representation informed earlier work.
+
+## Locked prospective change-volume forecasting
+
+A third training-only plan was fixed before retrieving the benchmark in this
+iteration, implementation, or scoring at SHA-256
+`53c974fcd37f443ea846e88328a125169265fb41ac1cc7877529bdbf9a09638f`.
+It reuses the same 30-neighbor text-and-demographic representation and equal
+30-case neighborhood/prior weights, but removes the oracle future-token budget.
+The question is now whether similarity helps forecast response form and the
+*number* of Add and Delete events.
+
+For each held-out case, the other 149 provide five modeled quantities: Add
+count; Delete count as a fraction of the source's distinct token count;
+follow-up-minus-source word and nonempty-line counts; and follow-up-to-source
+ROUGE-L. A source-calibrated marginal forecast uses the fold median. The
+neighborhood forecast uses a weighted median combining 30 similarity-weighted
+neighbors with a 30-case prior spread across the whole fold. Fractions and
+changes are transformed back using only the held-out 2024 response. The
+analysis therefore uses no follow-up-derived budget or other held-out future
+information for prediction.
+
+The primary effect is marginal absolute error minus neighborhood absolute
+error, so positive values favor person conditioning. Twenty thousand paired
+case-bootstrap resamples use seed `20260923`, restarted for each outcome. This
+lock cannot undo earlier use of the training corpus or earlier selection of
+the representation and hyperparameters.
 
 # Results {#results}
 
@@ -510,6 +546,36 @@ operate on surface lexical overlap, both use an oracle future-token budget,
 and both draw candidates from other cases' additions. The shared
 candidate-vocabulary ceiling remains `0.773139`.
 
+## Neighborhoods predict some revision volume {#change-volume}
+
+When the oracle addition budget is removed, the same neighborhood has a more
+limited but positive role. It improves absolute-error forecasts for how many
+distinct token types are added and deleted and for follow-up word count:
+
+| Training leave-one-out outcome | Neighborhood MAE | Source-calibrated marginal MAE | Error reduction | Paired case-bootstrap 95% interval |
+| --- | ---: | ---: | ---: | ---: |
+| Add count | 20.126667 | 21.340000 | +1.213333 | +0.680000 to +1.740000 |
+| Delete count | 5.336275 | 5.614935 | +0.278660 | +0.022274 to +0.545876 |
+| Follow-up word count | 52.940000 | 56.080000 | +3.140000 | +1.093333 to +5.213333 |
+| Follow-up line count | 6.160000 | 6.160000 | 0.000000 | 0.000000 to 0.000000 |
+| Source similarity | 0.106781 | 0.109648 | +0.002867 | −0.000960 to +0.006730 |
+
+Positive reductions favor the regularized neighborhood. Its Add-count forecast
+wins 79 cases, ties 17, and loses 54; Delete count wins 88, ties 5, and loses
+57; word count wins 82, ties 13, and loses 55. The line-count forecasts are
+identical for all cases because both weighted medians select the same modeled
+line change. The source-similarity point estimate favors neighborhoods, but its
+interval spans zero.
+
+The magnitudes are modest: Add-count MAE falls by 5.7%, Delete-count MAE by
+5.0%, and word-count MAE by 5.6% relative to their comparators. Still, the
+direction matters. Surface text and coarse demographics contain some
+case-specific information about *how much* personally expressed identity will
+be revised, even though the same representation makes worse choices about
+*which* new tokens will appear. These are volume and form forecasts within the
+selected training cohort, not full-text forecasts or evidence that demographic
+similarity is an ipseological mechanism.
+
 ## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
@@ -567,10 +633,20 @@ richer context, genuinely semantic synthesis, or new longitudinal evidence;
 it should establish an incremental training-only advantage before reopening
 the heavily reused development comparison.
 
+The prospective volume analysis qualifies that negative content result. The
+fixed neighborhood improves three no-oracle quantity forecasts even while its
+oracle-budget lexical ranking loses to marginal additions. Person conditioning
+therefore is not uniformly uninformative: it helps estimate the extent of
+revision but has not identified its future signifiers. A synthesizing model
+should preserve that modest calibration signal while demonstrating content
+value beyond marginal prevalence.
+
 ## Reproducibility {#reproducibility}
 
 The complete open materials are:
 
+- [`ANALYSIS_PLAN_CHANGE_VOLUME.md`](ANALYSIS_PLAN_CHANGE_VOLUME.md)
+  — pre-analysis lock for prospective revision-volume forecasts;
 - [`ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`](ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md)
   — pre-analysis lock for the regularized-neighborhood comparison;
 - [`ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md`](ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md)
@@ -581,6 +657,8 @@ The complete open materials are:
   — pre-prediction method and evaluation lock;
 - [`analysis/analyze_dev_diagnostics.py`](analysis/analyze_dev_diagnostics.py)
   — hash-guarded paired bootstrap and extractive-limit analysis;
+- [`analysis/analyze_change_volume.py`](analysis/analyze_change_volume.py)
+  — hash-guarded leave-one-out response-form and revision-volume forecasts;
 - [`analysis/analyze_novelty_prior.py`](analysis/analyze_novelty_prior.py)
   — volume-matched marginal-addition diagnostic;
 - [`analysis/analyze_neighborhood_additions.py`](analysis/analyze_neighborhood_additions.py)
@@ -597,6 +675,10 @@ The complete open materials are:
   — standard-library matched-trajectory generator;
 - [`results/stable_signifier_dev_diagnostics.json`](results/stable_signifier_dev_diagnostics.json)
   — complete machine-readable post hoc diagnostic results;
+- [`results/change_volume_train_analysis.json`](results/change_volume_train_analysis.json)
+  — complete machine-readable change-volume result;
+- [`results/change_volume_train_audit.csv`](results/change_volume_train_audit.csv)
+  — all 150 cases' observed quantities, predictions, errors, and paired effects;
 - [`results/novelty_prior_dev_analysis.json`](results/novelty_prior_dev_analysis.json)
   — complete marginal-prior comparison and paired uncertainty;
 - [`results/novelty_prior_token_audit.csv`](results/novelty_prior_token_audit.csv)
@@ -690,6 +772,14 @@ were fixed without tuning, while its text-and-demographic representation was
 selected in earlier Project work. Coarse demographic similarity is not an
 ipseological mechanism. Its case audit is likewise a derived benchmark-data
 adaptation under CC BY-NC-SA 4.0.
+
+The change-volume comparison removes that oracle budget, but its surface-text
+and coarse-demographic representation and its 30-neighbor, equal-shrinkage
+choices came from prior Project work rather than untouched selection. Its
+overlapping folds and case-bootstrap intervals characterize this selected
+training cohort, not a population. Count forecasts remain continuous to avoid
+an arbitrary rounding rule, Add/Delete tokens need not all be identity
+signifiers, and the derived case audit is governed by CC BY-NC-SA 4.0.
 
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.

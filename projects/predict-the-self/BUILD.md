@@ -80,6 +80,16 @@ python3 projects/predict-the-self/analysis/analyze_stable_projection_cross_valid
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked training-only leave-one-out forecasts of revision volume
+and response form. The script hash-guards the training data, evaluator,
+pre-analysis plan, and inherited retrieval features; it never reads or writes a
+development or test artifact:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_change_volume.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

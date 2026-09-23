@@ -12,11 +12,13 @@ ROOT = PROJECT.parents[1]
 SOURCE = PROJECT / "_book"
 PUBLIC = ROOT / "website/projects/predict-the-self/report"
 COMPATIBILITY_ARTIFACTS = {
+    "ANALYSIS_PLAN_CHANGE_VOLUME.md": "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md",
     "ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md": "artifacts/ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md",
     "ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md": "artifacts/ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md",
     "ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md": "artifacts/ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md",
     "ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md": "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
     "BENCHMARK_PROVENANCE.md": "artifacts/BENCHMARK_PROVENANCE.md",
+    "analysis/analyze_change_volume.py": "artifacts/analyze_change_volume.py",
     "analysis/analyze_dev_diagnostics.py": "artifacts/analyze_dev_diagnostics.py",
     "analysis/analyze_neighborhood_additions.py": "artifacts/analyze_neighborhood_additions.py",
     "analysis/analyze_novelty_prior.py": "artifacts/analyze_novelty_prior.py",
@@ -25,6 +27,8 @@ COMPATIBILITY_ARTIFACTS = {
     "analysis/analyze_trajectory_retrieval.py": "artifacts/analyze_trajectory_retrieval.py",
     "analysis/stable_signifier_projection.py": "artifacts/stable_signifier_projection.py",
     "analysis/trajectory_retrieval.py": "artifacts/trajectory_retrieval.py",
+    "results/change_volume_train_analysis.json": "artifacts/change_volume_train_analysis.json",
+    "results/change_volume_train_audit.csv": "artifacts/change_volume_train_audit.csv",
     "results/neighborhood_additions_train_analysis.json": "artifacts/neighborhood_additions_train_analysis.json",
     "results/neighborhood_additions_train_audit.csv": "artifacts/neighborhood_additions_train_audit.csv",
     "results/novelty_prior_dev_analysis.json": "artifacts/novelty_prior_dev_analysis.json",

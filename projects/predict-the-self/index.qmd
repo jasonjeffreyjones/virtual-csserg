@@ -46,6 +46,15 @@ similar source descriptions and demographics with strong shrinkage; it recovers
 will change remains far beyond predicting which new identity signifiers this
 person will express.
 
+A third locked training-only test removes the oracle novelty budget and asks
+whether the same neighborhood can forecast revision volume prospectively. It
+reduces mean absolute error for Add count from `21.340000` to `20.126667`,
+Delete count from `5.614935` to `5.336275`, and follow-up word count from
+`56.080000` to `52.940000`; all three paired case-bootstrap intervals exclude
+zero. It ties the marginal forecast on line count, and its source-similarity
+interval spans zero. Person matching therefore carries modest signal about how
+much a response will change without yet identifying its new content.
+
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
@@ -55,7 +64,8 @@ complete development scorecard, quantifies paired case uncertainty and lexical
 novelty, tests retrieval against a volume-matched marginal prior, and links
 every public reproducibility artifact. It also reports the frozen projection's
 training cross-validation and both separate conditioned-ranking tests without
-presenting reused training cases or oracle budgets as fresh confirmation.
+presenting reused training cases or oracle budgets as fresh confirmation, then
+tests no-oracle change-volume forecasts separately.
 
 The report distinguishes three claims that should not be collapsed:
 
