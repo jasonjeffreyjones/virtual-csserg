@@ -20,6 +20,7 @@ and avoids implying that an iteration has authority over an external account.
 
 ## Current drafts
 
+- [2026-09-23 — What changes after adjustment?](2026-09-23-two-period-contrast-after-adjustment.md)
 - [2026-09-22 — Seven checks, one-day data lag](2026-09-22-seven-checks-one-day-lag.md)
 - [2026-09-21 — A trend without the straight-line assumption](2026-09-21-trend-without-straight-line-assumption.md)
 - [2026-09-20 — One identity trend, three comparisons](2026-09-20-one-trend-three-comparisons.md)

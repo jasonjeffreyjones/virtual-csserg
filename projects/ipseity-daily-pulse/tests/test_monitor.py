@@ -126,6 +126,34 @@ class MonitorTests(unittest.TestCase):
         )
         self.assertGreater(contrast["late_minus_early_cluster_se"], 0)
 
+    def test_adjusted_early_late_contrast_removes_constructed_sex_mix_shift(self):
+        rows = []
+        start = dt.date(2025, 1, 1)
+        midpoint = start + dt.timedelta(days=99)
+        for day_index in range(200):
+            date = start + dt.timedelta(days=day_index)
+            male_slots = 2 if day_index < 100 else 8
+            for slot in range(10):
+                male = slot < male_slots
+                record = row(
+                    "period-composition",
+                    date,
+                    f"{day_index * 10 + slot:012x}",
+                    int(male),
+                )
+                record.update({"age": "35", "sex": "Male" if male else "Female"})
+                rows.append(record)
+        unadjusted = monitor.fit_early_late_contrast(rows, midpoint)
+        adjusted = monitor.fit_adjusted_early_late_contrast(rows, midpoint)
+        self.assertAlmostEqual(
+            unadjusted["late_minus_early_percentage_points"], 60.0
+        )
+        self.assertAlmostEqual(
+            adjusted["adjusted_late_minus_early_percentage_points"],
+            0.0,
+            places=7,
+        )
+
     def test_within_respondent_trend_removes_turnover_only_change(self):
         stats = monitor.SignifierStats()
         start = dt.date(2025, 1, 1)
@@ -306,6 +334,22 @@ class MonitorTests(unittest.TestCase):
             summary["early_late_sensitivity"]["same_direction"],
         )
         self.assertEqual(
+            sum(
+                item["adjusted_same_direction"] == "True"
+                for item in early_late_sensitivity
+            ),
+            summary["early_late_sensitivity"]["adjusted_same_direction"],
+        )
+        self.assertEqual(
+            sum(
+                item["adjusted_same_direction_as_unadjusted_contrast"] == "True"
+                for item in early_late_sensitivity
+            ),
+            summary["early_late_sensitivity"][
+                "adjusted_same_direction_as_unadjusted_contrast"
+            ],
+        )
+        self.assertEqual(
             early_late_sensitivity[0]["midpoint_date"],
             summary["early_late_sensitivity"]["midpoint_date"],
         )
@@ -333,6 +377,16 @@ class MonitorTests(unittest.TestCase):
                 == (float(item["unadjusted_annual_change_percentage_points"]) >= 0),
                 item["same_direction"] == "True",
             )
+            self.assertAlmostEqual(
+                float(item["late_minus_early_percentage_points"])
+                + float(item["early_late_adjustment_shift_percentage_points"]),
+                float(item["adjusted_late_minus_early_percentage_points"]),
+            )
+            self.assertEqual(
+                (float(item["adjusted_late_minus_early_percentage_points"]) >= 0)
+                == (float(item["unadjusted_annual_change_percentage_points"]) >= 0),
+                item["adjusted_same_direction"] == "True",
+            )
         self.assertEqual(
             round(
                 statistics.median(
@@ -343,6 +397,18 @@ class MonitorTests(unittest.TestCase):
             ),
             summary["early_late_sensitivity"][
                 "median_absolute_prevalence_difference_percentage_points"
+            ],
+        )
+        self.assertEqual(
+            round(
+                statistics.median(
+                    abs(float(item["early_late_adjustment_shift_percentage_points"]))
+                    for item in early_late_sensitivity
+                ),
+                3,
+            ),
+            summary["early_late_sensitivity"][
+                "median_absolute_adjustment_shift_percentage_points"
             ],
         )
         with (project / "outputs/leader-within-respondent-sensitivity.csv").open(

@@ -47,8 +47,9 @@ replay. The script refuses to append a duplicate check timestamp.
   leaders before and after that adjustment.
 - `outputs/leader-early-late-sensitivity.csv` compares endorsement prevalence
   after versus on or before the full observation window's calendar midpoint
-  for the same leaders; `outputs/leader-early-late-sensitivity.svg` shows the
-  displayed contrasts with respondent-clustered intervals.
+  for the same leaders, then adjusts that contrast for observed composition
+  and calendar terms; `outputs/leader-early-late-sensitivity.svg` compares the
+  raw and adjusted contrasts with respondent-clustered intervals.
 - `outputs/leader-within-respondent-sensitivity.csv` refits those leader tails
   first as pooled trends on the repeat-respondent subset and then with
   respondent fixed effects;
@@ -89,9 +90,13 @@ calendar midpoint, uses the same cutoff for every selected signifier, and
 reports the unweighted late-half prevalence minus the early-half prevalence.
 This direct percentage-point contrast does not assume a straight-line path
 within either period. Its uncertainty uses the same respondent-clustered CR1
-sandwich correction as the primary two-term fit. The contrast can still hide
-shorter reversals, is vulnerable to changing sample composition, and is
-selected using the most extreme linear slopes. Its magnitude is not directly
+sandwich correction as the primary two-term fit. A second fit replaces the
+linear time term in the composition-and-calendar model with the common late-
+period indicator; its coefficient estimates the adjusted period contrast.
+This diagnostic addresses only the recorded age, composition, weekday, and
+month terms. Both contrasts can still hide shorter reversals, remain vulnerable
+to unobserved composition and nonrepresentative recruitment, and are selected
+using the most extreme linear slopes. Their magnitudes are not directly
 comparable with the annualized slope; only direction is compared.
 
 The within-respondent sensitivity uses the respondent–signifier sufficient

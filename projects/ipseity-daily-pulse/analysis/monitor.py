@@ -477,12 +477,17 @@ def adjusted_design(rows: list[dict[str, str]]) -> tuple[list[list[float]], list
     return matrix, names
 
 
-def fit_adjusted_trend(rows: list[dict[str, str]]) -> dict[str, object]:
-    """Fit one adjusted linear-probability trend with clustered uncertainty."""
-    full_matrix, full_names = adjusted_design(rows)
+def fit_clustered_adjusted_coefficient(
+    rows: list[dict[str, str]],
+    full_matrix: list[list[float]],
+    full_names: list[str],
+    focal_name: str,
+) -> dict[str, object]:
+    """Fit an adjusted LPM and return one clustered coefficient."""
     selected = independent_column_indexes(full_matrix)
-    if 1 not in selected:
-        raise ValueError("adjusted model could not identify the time trend")
+    focal_full_index = full_names.index(focal_name)
+    if focal_full_index not in selected:
+        raise ValueError(f"adjusted model could not identify {focal_name}")
     matrix = [[row[index] for index in selected] for row in full_matrix]
     names = [full_names[index] for index in selected]
     outcomes = [float(row["endorsed"]) for row in rows]
@@ -515,31 +520,47 @@ def fit_adjusted_trend(rows: list[dict[str, str]]) -> dict[str, object]:
     observations = len(rows)
     if clusters <= 1 or observations <= terms:
         raise ValueError("adjusted model lacks residual degrees of freedom or respondent clusters")
-    time_index = names.index("time_years")
-    inverse_time_column = [inverse[index][time_index] for index in range(terms)]
-    slope_variance = sum(
-        sum(weight * value for weight, value in zip(inverse_time_column, score)) ** 2
+    focal_index = names.index(focal_name)
+    inverse_focal_column = [inverse[index][focal_index] for index in range(terms)]
+    coefficient_variance = sum(
+        sum(weight * value for weight, value in zip(inverse_focal_column, score)) ** 2
         for score in cluster_scores.values()
     )
     correction = clusters / (clusters - 1) * (observations - 1) / (observations - terms)
-    slope_se = math.sqrt(max(0.0, correction * slope_variance))
-    annual_change = coefficients[time_index] * 100
-    annual_se = slope_se * 100
+    coefficient_se = math.sqrt(max(0.0, correction * coefficient_variance))
+    coefficient = coefficients[focal_index]
     p_value = (
-        math.erfc(abs(annual_change / annual_se) / math.sqrt(2))
-        if annual_se > 0
-        else (0.0 if annual_change else 1.0)
+        math.erfc(abs(coefficient / coefficient_se) / math.sqrt(2))
+        if coefficient_se > 0
+        else (0.0 if coefficient else 1.0)
     )
+    return {
+        "coefficient": coefficient,
+        "coefficient_cluster_se": coefficient_se,
+        "coefficient_cluster_p_value": p_value,
+        "observations": observations,
+        "respondent_clusters": clusters,
+        "model_terms": terms,
+        "dropped_collinear_terms": len(full_names) - terms,
+    }
+
+
+def fit_adjusted_trend(rows: list[dict[str, str]]) -> dict[str, object]:
+    """Fit one adjusted linear-probability trend with clustered uncertainty."""
+    full_matrix, full_names = adjusted_design(rows)
+    fitted = fit_clustered_adjusted_coefficient(
+        rows, full_matrix, full_names, "time_years"
+    )
+    annual_change = float(fitted.pop("coefficient")) * 100
+    annual_se = float(fitted.pop("coefficient_cluster_se")) * 100
+    p_value = fitted.pop("coefficient_cluster_p_value")
     return {
         "adjusted_annual_change_percentage_points": annual_change,
         "adjusted_annual_change_cluster_se": annual_se,
         "adjusted_cluster_ci95_lower": annual_change - 1.96 * annual_se,
         "adjusted_cluster_ci95_upper": annual_change + 1.96 * annual_se,
         "adjusted_cluster_p_value": p_value,
-        "observations": observations,
-        "respondent_clusters": clusters,
-        "model_terms": terms,
-        "dropped_collinear_terms": len(full_names) - terms,
+        **fitted,
     }
 
 
@@ -662,6 +683,35 @@ def fit_early_late_contrast(
     }
 
 
+def fit_adjusted_early_late_contrast(
+    rows: list[dict[str, str]], midpoint: dt.date
+) -> dict[str, object]:
+    """Adjust a late-minus-early contrast for composition and calendar terms."""
+    full_matrix, full_names = adjusted_design(rows)
+    for source_row, features in zip(rows, full_matrix):
+        features[1] = float(
+            dt.date.fromisoformat(source_row["observation_date"]) > midpoint
+        )
+    full_names[1] = "late_period"
+    fitted = fit_clustered_adjusted_coefficient(
+        rows, full_matrix, full_names, "late_period"
+    )
+    difference = float(fitted.pop("coefficient")) * 100
+    difference_se = float(fitted.pop("coefficient_cluster_se")) * 100
+    p_value = fitted.pop("coefficient_cluster_p_value")
+    return {
+        "adjusted_late_minus_early_percentage_points": difference,
+        "adjusted_late_minus_early_cluster_se": difference_se,
+        "adjusted_late_minus_early_cluster_ci95_lower": difference
+        - 1.96 * difference_se,
+        "adjusted_late_minus_early_cluster_ci95_upper": difference
+        + 1.96 * difference_se,
+        "adjusted_late_minus_early_cluster_p_value": p_value,
+        "adjusted_model_terms": fitted["model_terms"],
+        "adjusted_dropped_collinear_terms": fitted["dropped_collinear_terms"],
+    }
+
+
 def early_late_leader_sensitivity(
     path: Path,
     trends: list[dict[str, object]],
@@ -693,8 +743,14 @@ def early_late_leader_sensitivity(
     for tail, rank, trend in selections:
         signifier = str(trend["signifier"])
         fitted = fit_early_late_contrast(observations[signifier], midpoint)
+        adjusted = fit_adjusted_early_late_contrast(
+            observations[signifier], midpoint
+        )
         unadjusted = float(trend["annual_change_percentage_points"])
         contrast = float(fitted["late_minus_early_percentage_points"])
+        adjusted_contrast = float(
+            adjusted["adjusted_late_minus_early_percentage_points"]
+        )
         results.append(
             {
                 "unadjusted_tail": tail,
@@ -702,7 +758,16 @@ def early_late_leader_sensitivity(
                 "signifier": signifier,
                 "unadjusted_annual_change_percentage_points": unadjusted,
                 **fitted,
+                **adjusted,
+                "early_late_adjustment_shift_percentage_points": adjusted_contrast
+                - contrast,
                 "same_direction": (contrast >= 0) == (unadjusted >= 0),
+                "adjusted_same_direction": (adjusted_contrast >= 0)
+                == (unadjusted >= 0),
+                "adjusted_same_direction_as_unadjusted_contrast": (
+                    adjusted_contrast >= 0
+                )
+                == (contrast >= 0),
             }
         )
     return results
@@ -1244,17 +1309,18 @@ def leader_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
 
 
 def early_late_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
-    """Plot late-minus-early prevalence contrasts for displayed leaders."""
+    """Compare raw and adjusted two-period contrasts for displayed leaders."""
     displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
     width, height = 960, 660
-    left, right, top, bottom = 235, 38, 112, 66
+    left, right, top, bottom = 235, 38, 125, 66
     plot_w, plot_h = width - left - right, height - top - bottom
     values = [
         float(row[field])
         for row in displayed
         for field in (
-            "late_minus_early_cluster_ci95_lower",
-            "late_minus_early_cluster_ci95_upper",
+            "late_minus_early_percentage_points",
+            "adjusted_late_minus_early_cluster_ci95_lower",
+            "adjusted_late_minus_early_cluster_ci95_upper",
         )
     ]
     lower = math.floor(min(values) / 10) * 10
@@ -1272,10 +1338,12 @@ def early_late_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     midpoint = dt.date.fromisoformat(str(displayed[0]["midpoint_date"]))
     late_start = midpoint + dt.timedelta(days=1)
     parts = [
-        f'  <text class="title" x="{left}" y="38">Late-half versus early-half prevalence</text>',
+        f'  <text class="title" x="{left}" y="38">Two-period contrasts before and after adjustment</text>',
         f'  <text class="subtitle" x="{left}" y="66">Early ≤ {midpoint.isoformat()} · late ≥ {late_start.isoformat()} · selected leaders</text>',
-        f'  <circle cx="{left}" cy="90" r="5" fill="#4B6F44"/>',
-        f'  <text class="tick" x="{left + 12}" y="95">Late minus early; line is respondent-clustered 95% interval</text>',
+        f'  <circle cx="{left}" cy="92" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+        f'  <text class="tick" x="{left + 12}" y="97">Raw</text>',
+        f'  <circle cx="{left + 78}" cy="92" r="5" fill="#4B6F44"/>',
+        f'  <text class="tick" x="{left + 90}" y="97">Adjusted; line is clustered 95% interval</text>',
     ]
     for value in range(lower, upper + 1, 10):
         x = px(value)
@@ -1291,23 +1359,28 @@ def early_late_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     )
     for index, row in enumerate(displayed):
         y = py(index)
-        difference = float(row["late_minus_early_percentage_points"])
-        ci_low = float(row["late_minus_early_cluster_ci95_lower"])
-        ci_high = float(row["late_minus_early_cluster_ci95_upper"])
-        color = "#4B6F44" if row["same_direction"] else "#9B6A21"
+        raw_difference = float(row["late_minus_early_percentage_points"])
+        adjusted_difference = float(
+            row["adjusted_late_minus_early_percentage_points"]
+        )
+        ci_low = float(row["adjusted_late_minus_early_cluster_ci95_lower"])
+        ci_high = float(row["adjusted_late_minus_early_cluster_ci95_upper"])
+        color = "#4B6F44" if row["adjusted_same_direction"] else "#9B6A21"
         parts.extend(
             [
                 f'  <text class="tick" text-anchor="end" x="{left - 12}" y="{y + 5:.1f}">{html.escape(str(row["signifier"]))}</text>',
+                f'  <line x1="{px(raw_difference):.1f}" y1="{y:.1f}" x2="{px(adjusted_difference):.1f}" y2="{y:.1f}" stroke="#aeb9b0" stroke-width="3"/>',
                 f'  <line x1="{px(ci_low):.1f}" y1="{y:.1f}" x2="{px(ci_high):.1f}" y2="{y:.1f}" stroke="{color}" stroke-width="2"/>',
-                f'  <circle cx="{px(difference):.1f}" cy="{y:.1f}" r="5" fill="{color}"/>',
+                f'  <circle cx="{px(raw_difference):.1f}" cy="{y:.1f}" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>',
+                f'  <circle cx="{px(adjusted_difference):.1f}" cy="{y:.1f}" r="5" fill="{color}"/>',
             ]
         )
     parts.append(
         f'  <text class="tick" text-anchor="middle" x="{left + plot_w / 2:.1f}" y="{height - 16}">Late minus early endorsement prevalence (percentage points)</text>'
     )
     return svg_frame(
-        "Late-half versus early-half prevalence",
-        "Point and interval plot of late-half minus early-half endorsement prevalence for the five most positive and five most negative linear-trend leaders. Green contrasts match the direction of the selected linear slope; ochre contrasts do not.",
+        "Two-period contrasts before and after adjustment",
+        "Dumbbell plot comparing raw and composition-and-calendar-adjusted late-half minus early-half prevalence contrasts for the five most positive and five most negative linear-trend leaders. Adjusted estimates include respondent-clustered 95 percent intervals. Green adjusted contrasts match the selected linear slope's direction; ochre contrasts do not.",
         "\n".join(parts),
         width,
         height,
@@ -1456,10 +1529,30 @@ def compact_early_late_sensitivity(row: dict[str, object]) -> dict[str, object]:
         "late_minus_early_cluster_ci95_upper": round(
             float(row["late_minus_early_cluster_ci95_upper"]), 3
         ),
+        "adjusted_late_minus_early_percentage_points": round(
+            float(row["adjusted_late_minus_early_percentage_points"]), 3
+        ),
+        "adjusted_late_minus_early_cluster_ci95_lower": round(
+            float(row["adjusted_late_minus_early_cluster_ci95_lower"]), 3
+        ),
+        "adjusted_late_minus_early_cluster_ci95_upper": round(
+            float(row["adjusted_late_minus_early_cluster_ci95_upper"]), 3
+        ),
+        "early_late_adjustment_shift_percentage_points": round(
+            float(row["early_late_adjustment_shift_percentage_points"]), 3
+        ),
         "same_direction": row["same_direction"],
+        "adjusted_same_direction": row["adjusted_same_direction"],
+        "adjusted_same_direction_as_unadjusted_contrast": row[
+            "adjusted_same_direction_as_unadjusted_contrast"
+        ],
         "early_observations": row["early_observations"],
         "late_observations": row["late_observations"],
         "respondent_clusters": row["respondent_clusters"],
+        "adjusted_model_terms": row["adjusted_model_terms"],
+        "adjusted_dropped_collinear_terms": row[
+            "adjusted_dropped_collinear_terms"
+        ],
     }
 
 
@@ -1556,6 +1649,23 @@ def findings_markdown(
     largest_early_late_contrast = max(
         early_late_sensitivity,
         key=lambda row: abs(float(row["late_minus_early_percentage_points"])),
+    )
+    adjusted_early_late_same_direction = sum(
+        bool(row["adjusted_same_direction"]) for row in early_late_sensitivity
+    )
+    adjusted_matches_raw_early_late = sum(
+        bool(row["adjusted_same_direction_as_unadjusted_contrast"])
+        for row in early_late_sensitivity
+    )
+    median_early_late_adjustment_shift = statistics.median(
+        abs(float(row["early_late_adjustment_shift_percentage_points"]))
+        for row in early_late_sensitivity
+    )
+    largest_early_late_adjustment_shift = max(
+        early_late_sensitivity,
+        key=lambda row: abs(
+            float(row["early_late_adjustment_shift_percentage_points"])
+        ),
     )
     within_same_direction = sum(bool(row["same_direction"]) for row in within_sensitivity)
     median_within_absolute_shift = statistics.median(
@@ -1665,8 +1775,8 @@ def findings_markdown(
             if int(row["unadjusted_tail_rank"]) <= 5
         ]
         lines = [
-            "| Signifier | Linear slope (pp/year) | Early prevalence | Late prevalence | Late − early (pp) | Clustered 95% CI |",
-            "|---|---:|---:|---:|---:|---:|",
+            "| Signifier | Linear slope (pp/year) | Early prevalence | Late prevalence | Raw contrast (pp) | Adjusted contrast (pp) | Adjusted clustered 95% CI |",
+            "|---|---:|---:|---:|---:|---:|---:|",
         ]
         for row in displayed:
             lines.append(
@@ -1675,8 +1785,9 @@ def findings_markdown(
                 f"{float(row['early_prevalence_percent']):.1f}% | "
                 f"{float(row['late_prevalence_percent']):.1f}% | "
                 f"{float(row['late_minus_early_percentage_points']):+.1f} | "
-                f"[{float(row['late_minus_early_cluster_ci95_lower']):+.1f}, "
-                f"{float(row['late_minus_early_cluster_ci95_upper']):+.1f}] |"
+                f"{float(row['adjusted_late_minus_early_percentage_points']):+.1f} | "
+                f"[{float(row['adjusted_late_minus_early_cluster_ci95_lower']):+.1f}, "
+                f"{float(row['adjusted_late_minus_early_cluster_ci95_upper']):+.1f}] |"
             )
         return "\n".join(lines)
 
@@ -1788,15 +1899,30 @@ versus {float(largest_early_late_contrast['late_prevalence_percent']):.1f}%
 late, a {float(largest_early_late_contrast['late_minus_early_percentage_points']):+.1f}-point
 difference.
 
-![Late-half versus early-half prevalence](outputs/leader-early-late-sensitivity.svg)
+The two-period contrast was then adjusted for the same age, observed sample
+composition, weekday, and month terms as the linear sensitivity. **{adjusted_early_late_same_direction}
+of {len(early_late_sensitivity)}** adjusted contrasts retain the selected
+linear slope's direction, and **{adjusted_matches_raw_early_late} of
+{len(early_late_sensitivity)}** retain the raw contrast's direction. Adjustment
+moves a contrast by a median absolute **{median_early_late_adjustment_shift:.1f}
+percentage points**. The largest shift is for
+**{largest_early_late_adjustment_shift['signifier']}**, from
+{float(largest_early_late_adjustment_shift['late_minus_early_percentage_points']):+.1f}
+to
+{float(largest_early_late_adjustment_shift['adjusted_late_minus_early_percentage_points']):+.1f}
+points.
+
+![Raw and adjusted late-half versus early-half contrasts](outputs/leader-early-late-sensitivity.svg)
 
 {early_late_sensitivity_table(early_late_sensitivity)}
 
 This contrast does not impose a trajectory within either half, but it can hide
-shorter reversals and remains sensitive to changing respondents and selection
-of the 20 linear-trend extremes. Its percentage-point magnitude is not on the
-same scale as the annualized linear slope; only their directions are compared.
-The clustered intervals are diagnostic, not a discovery screen.
+shorter reversals. The adjusted version addresses only the recorded covariates
+and calendar terms; neither version corrects unobserved composition,
+nonrepresentative recruitment, or selection of the 20 linear-trend extremes.
+Their percentage-point magnitudes are not on the same scale as the annualized
+linear slope; only directions are compared. The clustered intervals are
+diagnostic, not a discovery screen.
 
 ## Within-respondent sensitivity
 
@@ -2075,7 +2201,8 @@ def write_outputs(
             ),
             "model": (
                 "unweighted difference in endorsement prevalence after versus "
-                "on/before the full observation window's calendar midpoint"
+                "on/before the full observation window's calendar midpoint, "
+                "then adjusted for age, observed composition, weekday, and month"
             ),
             "uncertainty": "CR1 sandwich standard errors clustered by hashed respondent",
             "midpoint_date": early_late_sensitivity[0]["midpoint_date"],
@@ -2090,9 +2217,24 @@ def write_outputs(
             "same_direction": sum(
                 bool(row["same_direction"]) for row in early_late_sensitivity
             ),
+            "adjusted_same_direction": sum(
+                bool(row["adjusted_same_direction"])
+                for row in early_late_sensitivity
+            ),
+            "adjusted_same_direction_as_unadjusted_contrast": sum(
+                bool(row["adjusted_same_direction_as_unadjusted_contrast"])
+                for row in early_late_sensitivity
+            ),
             "median_absolute_prevalence_difference_percentage_points": round(
                 statistics.median(
                     abs(float(row["late_minus_early_percentage_points"]))
+                    for row in early_late_sensitivity
+                ),
+                3,
+            ),
+            "median_absolute_adjustment_shift_percentage_points": round(
+                statistics.median(
+                    abs(float(row["early_late_adjustment_shift_percentage_points"]))
                     for row in early_late_sensitivity
                 ),
                 3,
