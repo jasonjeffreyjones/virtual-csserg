@@ -2,20 +2,22 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-22T08:18:42Z
+updated: 2026-09-23T08:19:04Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 22, 2026, all seven automated promise groups pass across
+Active. On September 23, 2026, all seven automated promise groups pass across
 26 HTML pages and six first-party stylesheets. The static-site group requires
 the first anchor itself to be a bypass link targeting `main`, an explicit `alt`
 decision for every image, and an accessible name for every navigation landmark
-on pages containing more than one. A tested post-render normalizer makes the
-bypass link first and names Quarto's repeated navigation regions in all four
-generated report pages without runtime JavaScript or hand-editing. The
+on pages containing more than one. It also requires every table header cell to
+declare a valid row or column scope. A tested post-render normalizer makes the
+bypass link first, names Quarto's repeated navigation regions, and adds column
+scope inside generated table heads on all four report pages without runtime
+JavaScript or hand-editing. The
 September 15 normal Scholar
 run reached completion only after its guarded deployment and authenticated
 inventory phase returned successfully; the September 16 public probe then found all 110
@@ -95,16 +97,18 @@ without performing the unavailable human review.
   borrow validity from a later bypass. It also requires accessible names on
   repeated navigation landmarks and resolves `aria-labelledby` targets. This
   exposed 14 unnamed Quarto navigation regions across the four generated report
-  pages. Their shared standard-library post-render normalizer now preflights the
-  whole output tree, moves the bypass before repeated navigation, validates its
-  `main` target, labels Quarto's report/chapter/on-page/previous-next navigation,
-  and refuses unknown unnamed `nav` regions before writing. Four focused
-  normalizer tests cover promotion, names, idempotence, and failure without
-  partial mutation; a generic fixture covers missing landmark names and label
-  targets. The verifier no longer accepts runtime JavaScript relocation. The
-  two NFL report figures retain detailed alternatives after rendering. These
-  static checks do not replace rendered keyboard or assistive-technology
-  review.
+  pages. The September 23 rule then exposed 60 unscoped headers in the three
+  table-bearing generated report pages. Their shared standard-library
+  post-render normalizer now preflights the whole output tree, moves the bypass
+  before repeated navigation, validates its `main` target, labels Quarto's
+  report/chapter/on-page/previous-next navigation, assigns `scope="col"` inside
+  table heads, and refuses unknown navigation or invalid remaining header scope
+  before writing. Five focused normalizer tests cover promotion, names, header
+  scopes, idempotence, and failure without partial mutation; generic fixtures
+  cover missing landmark names, label targets, and invalid header scope. The
+  verifier no longer accepts runtime JavaScript relocation. The two NFL report
+  figures retain detailed alternatives after rendering. These static checks do
+  not replace rendered keyboard or assistive-technology review.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 11 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 44 result cells, and passing rule.
@@ -127,11 +131,9 @@ without performing the unavailable human review.
 - `REPORT-ARCHIVING.md` now defines a Git-backed policy for material report
   supersession, correction, and retraction. Canonical URLs remain current while
   a full commit key preserves the outgoing three-form report, dependencies,
-  sources, and Project record. `REPORT-VERSIONS.md` records the September 15 v1
-  release, two September 16 report sets, the September 17 outgoing report before
-  substantive review, and the September 18 outgoing report before static
-  bypass-link promotion; the verifier confirms all three forms exist at each
-  recorded commit.
+  sources, and Project record. `REPORT-VERSIONS.md` records material outgoing
+  releases from September 15 through the clean September 22 report set; the
+  verifier confirms all three forms exist at each recorded commit.
 - NFL Team Fandom Identities records the PI-directed Paused lifecycle state in
   its state, dialog, public summary, Projects listing, and homepage. Its
   findings and reports remain Published; the PI confirms no Scholar schedules
@@ -150,7 +152,8 @@ without performing the unavailable human review.
   the September 20 pre-change probe found all 134 incoming files byte-identical,
   and the September 21 pre-change probe found all 142 incoming files
   byte-identical. The September 22 pre-change probe found all 150 incoming files
-  byte-identical.
+  byte-identical, and the September 23 pre-change probe found all 158 incoming
+  files byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -177,17 +180,18 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 35 routine tests pass across 26 HTML pages and six
-first-party stylesheets on September 22.
+All seven groups and all 37 routine tests pass across 26 HTML pages and six
+first-party stylesheets on September 23.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
 alternatives, repeated navigation names, resolved landmark-label references,
-and the manual-review worksheet's sample and closure boundary. One focused
-negative test guards the first-anchor/target conjunction, four tests cover the
-build-time Quarto normalizer, one covers the generic navigation-name rule, and
-three cover the manual-review record.
+valid table-header scopes, and the manual-review worksheet's sample and closure
+boundary. One focused negative test guards the first-anchor/target conjunction,
+five tests cover the build-time Quarto normalizer, one covers the generic
+navigation-name rule, one covers the generic table-header rule, and three cover
+the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -247,7 +251,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 22 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 23 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -270,11 +274,12 @@ dependencies. No package or replacement runtime was installed in this iteration.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger.
+  v1 release ledger, including the clean September 22 report set superseded by
+  this table-header update.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated
-  navigation landmarks in static HTML.
+  navigation landmarks and scopes table-head cells in static HTML.
 - `scholars.json`, `scholars/`, `python/create_scholar.py`, and
   `python/scholar_roster.py`: identity data, canonical biographies, guarded
   creation, and read-only validation.

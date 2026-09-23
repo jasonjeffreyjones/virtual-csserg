@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 20, 2026. The validated
+All seven automated promise groups pass on September 23, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -28,10 +28,11 @@ and `_template` to immutable iteration records with verified legacy hashes.
 Controlled tests now witness fail-closed Scholar and validation errors. Static
 checks also require a first-anchor bypass link and an explicit `alt` decision
 for every image. Generated Quarto pages now place that bypass link first in the
-public HTML through a tested post-render step rather than runtime JavaScript. A
-claim-to-evidence review found the infrastructure report substantively
-adequate for its stated purpose; rendered keyboard and assistive-technology
-review remains the sole open manual gate.
+public HTML through a tested post-render step rather than runtime JavaScript.
+That step also names repeated navigation landmarks and adds explicit column
+scope to generated table headers. A claim-to-evidence review found the
+infrastructure report substantively adequate for its stated purpose; rendered
+keyboard and assistive-technology review remains the sole open manual gate.
 
 This is an audit of documented infrastructure and public artifacts, not a claim
 that automation can certify research truth. Passing structural checks cannot
@@ -95,7 +96,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, explicit image alternatives, branding, complete footer links, Bootstrap, and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, named repeated navigation, scoped table headers, explicit image alternatives, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -110,8 +111,13 @@ text-browser review exposed that the four Quarto report pages relied on runtime
 JavaScript to move their source-controlled links before repeated navigation.
 Their builds now run a tested, preflight-first normalizer that makes the link
 the first anchor in generated HTML and targets the report's main content; the
-verifier no longer accepts runtime relocation as a substitute. It also became
-narrower where old rules created false
+verifier no longer accepts runtime relocation as a substitute. On September 22
+the same source audit exposed 14 unnamed Quarto navigation landmarks, and on
+September 23 it exposed 60 generated table headers without explicit scope. The
+normalizer now names the known navigation regions, assigns column scope inside
+table heads, and refuses unknown or invalid markup before it writes. The
+whole-site verifier enforces both contracts. It also became narrower where old
+rules created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
 
@@ -169,12 +175,10 @@ commit key in a Project ledger. Canonical URLs continue to present current
 evidence, while the exact commit retains all three prior forms, dependencies,
 sources, and contemporaneous Project memory. The policy distinguishes material
 supersession from cosmetic maintenance and specifies correction and retraction
-notices. The ledger preserves the September 15 release, the September 16
-pre-canary report set, and the September 16 report set before the
-static-accessibility contract expanded;
+notices. The ledger preserves the September 15 release and each later material
+outgoing report set through September 22;
 see the [archive policy](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-ARCHIVING.md)
-and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md). The ledger now also preserves the clean September 17
-outgoing report reviewed in this release.
+and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md).
 
 Dialog now uses one immutable file per Scholar iteration. The bounded
 `DIALOG.md` page links at most 20 recent records plus active guidance and open
@@ -204,10 +208,13 @@ Quarto can add automated accessibility checks to rendered HTML, but its own
 documentation cautions that conformance tooling cannot detect every issue and
 still requires manual inspection (Quarto, n.d.-b). Version 1 now rejects
 missing or late bypass links and image `alt` attributes across all public HTML.
-The build-time normalizer removes a runtime dependency from the four Quarto
-pages. Those deterministic checks narrow the gap; rendered focus behavior,
-keyboard order, and assistive-technology output remain a manual gate under the
-documented
+It also rejects unnamed repeated navigation and missing or invalid table-header
+scope. The build-time normalizer removes a runtime dependency from the four
+Quarto pages and applies explicit `scope="col"` relationships inside their table
+heads, following W3C technique H63's test procedure (World Wide Web Consortium,
+2026). Those deterministic checks narrow the gap; rendered focus behavior,
+keyboard order, table navigation, and assistive-technology output remain a
+manual gate under the documented
 [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md)
 protocol. That protocol now contains a structured environment record and four
 result cells for each sampled page. The verifier derives the sample from the
@@ -259,16 +266,16 @@ still need network access for their intended presentation.
 
 The expected-file parity probe uses ordinary public HTTP requests and no
 deployment configuration. It found all 109 files byte-identical before the
-September 15 release, all 110 byte-identical after it, and all 114 incoming
-files byte-identical before the September 18 revision. Public HTTP cannot
+September 15 release, all 110 byte-identical after it, and every later incoming
+tree byte-identical, including all 158 files before this September 23 revision.
+Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
 completion marker only after this phase returns with no difference. The
 September 15 completion marker therefore supplies host-side success evidence;
 mocked success, drift, command-failure, missing-command, port, and path-safety
-checks remain regression coverage. Before this September 20 revision, a fresh
-probe found all 134 incoming files byte-identical. Normal post-iteration
-deployment must publish and inventory the revised release.
+checks remain regression coverage. Normal post-iteration deployment must
+publish and inventory the revised release.
 
 ## Remaining work {#remaining-work}
 
@@ -327,3 +334,7 @@ Quarto. (n.d.-a). *Creating a book*. Retrieved September 11, 2026, from
 
 Quarto. (n.d.-b). *HTML accessibility checks*. Retrieved September 11, 2026,
 from <https://quarto.org/docs/output-formats/html-accessibility.html>
+
+World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
+to associate header cells with data cells in data tables*.
+<https://www.w3.org/WAI/WCAG22/Techniques/html/H63>

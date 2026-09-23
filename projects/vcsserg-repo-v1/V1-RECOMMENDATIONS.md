@@ -45,6 +45,11 @@ normalizer now names those regions, and the whole-site verifier rejects unnamed
 repeated navigation landmarks or missing `aria-labelledby` targets. This
 reduces a known screen-reader risk but does not replace the open rendered
 review.
+On September 23, the same source audit found 60 generated report table headers
+without explicit scope. The normalizer now assigns column scope inside table
+heads, refuses any remaining invalid table-header scope, and the whole-site
+verifier enforces the same contract. This makes header relationships explicit
+without claiming observed screen-reader behavior.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

@@ -8,9 +8,11 @@ requirement. Quarto renders into the ignored project-local `_book/`, then
 project lets it clean stale libraries without warnings. A standard-library
 post-render command moves the source-controlled bypass link to the beginning of
 each generated body and names Quarto's repeated navigation landmarks before
-publication, so correct source order and landmark names do not depend on
-runtime JavaScript or hand-editing generated files. The Executive Summary is
-maintained as static HTML, and `short-report.md` is the derivative PDF source.
+publication. It also gives every generated table-head cell an explicit column
+scope. Correct source order, landmark names, and header relationships therefore
+do not depend on runtime JavaScript or hand-editing generated files. The
+Executive Summary is maintained as static HTML, and `short-report.md` is the
+derivative PDF source.
 
 Quarto uses a writable temporary cache. The host has no TeX PDF engine, so the
 short-report renderer uses the optional build-only packages in
@@ -52,7 +54,9 @@ annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
 The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
-non-passing result. This record check does not perform the rendered review.
+non-passing result. The whole-site check also requires every table header cell
+to declare a valid row or column scope. These source checks do not perform the
+rendered review.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:

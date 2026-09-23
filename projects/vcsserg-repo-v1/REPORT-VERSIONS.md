@@ -6,6 +6,25 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 22, 2026 at 08:18 UTC
+
+- **Superseded:** September 23, 2026
+- **Archive key:**
+  [`60bcf794fc368495aa7fea7acacfe89c47c5b674`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/60bcf794fc368495aa7fea7acacfe89c47c5b674)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before generated table-header relationships became explicit.
+- **Reason:** The outgoing reports accurately documented first-anchor bypass
+  links, named repeated navigation, and the open rendered review. The next
+  release adds explicit column scope to 60 generated table-head cells, makes
+  the build and whole-site verifier enforce valid header scopes, and records
+  the September 23 probe of 158 incoming public files without claiming
+  screen-reader evidence.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/60bcf794fc368495aa7fea7acacfe89c47c5b674/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/60bcf794fc368495aa7fea7acacfe89c47c5b674/projects/vcsserg-repo-v1)
+
 ### Updated through September 19, 2026 at 08:21 UTC
 
 - **Superseded:** September 20, 2026

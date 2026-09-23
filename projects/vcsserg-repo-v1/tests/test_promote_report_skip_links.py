@@ -20,7 +20,9 @@ def generated_page(skip_link=PROMOTE.SKIP_LINK):
         '<nav class="page-navigation"><a href="next.html">Next</a></nav>\n'
         '<main id="quarto-document-content">\n'
         f"{skip_link}\n"
-        '<h1>Report</h1><section id="section"></section></main></body></html>\n'
+        '<h1>Report</h1><table><thead><tr><th>Result</th></tr></thead>'
+        '<tbody><tr><td>Pass</td></tr></tbody></table>'
+        '<section id="section"></section></main></body></html>\n'
     )
 
 
@@ -36,6 +38,7 @@ class PromoteReportSkipLinksTests(unittest.TestCase):
             self.assertLess(promoted.index(PROMOTE.SKIP_LINK), promoted.index("<nav"))
             for accessible_name in PROMOTE.NAVIGATION_CLASS_LABELS.values():
                 self.assertIn(f'aria-label="{accessible_name}"', promoted)
+            self.assertIn('<th scope="col">Result</th>', promoted)
             self.assertEqual(PROMOTE.promote_tree(tree), (1, 0))
             self.assertEqual(page.read_text(encoding="utf-8"), promoted)
 
@@ -78,6 +81,15 @@ class PromoteReportSkipLinksTests(unittest.TestCase):
             PROMOTE.PromotionError, "navigation landmark has no accessible name"
         ):
             PROMOTE.normalized_page(source, "unknown-navigation.html")
+
+    def test_refuses_unscoped_header_outside_table_head(self):
+        source = generated_page().replace(
+            "</tbody>", "<tr><th>Unexpected row header</th></tr></tbody>"
+        )
+        with self.assertRaisesRegex(
+            PROMOTE.PromotionError, "table header cell 2 has no valid scope"
+        ):
+            PROMOTE.normalized_page(source, "unscoped-header.html")
 
 
 if __name__ == "__main__":

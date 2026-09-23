@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Normalize generated Quarto bypass links and navigation landmarks."""
+"""Normalize generated Quarto accessibility markup."""
 
 import argparse
 from html.parser import HTMLParser
@@ -12,6 +12,11 @@ SKIP_LINK = (
 )
 BODY_PATTERN = re.compile(r"<body(?:\s[^>]*)?>", flags=re.IGNORECASE)
 NAV_PATTERN = re.compile(r"<nav(?:\s[^>]*)?>", flags=re.IGNORECASE)
+TABLE_HEAD_PATTERN = re.compile(
+    r"<thead(?:\s[^>]*)?>.*?</thead\s*>", flags=re.IGNORECASE | re.DOTALL
+)
+TABLE_HEADER_PATTERN = re.compile(r"<th(?:\s[^>]*)?>", flags=re.IGNORECASE)
+VALID_TABLE_HEADER_SCOPES = {"col", "colgroup", "row", "rowgroup"}
 NAVIGATION_CLASS_LABELS = {
     "quarto-secondary-nav": "Report navigation",
     "sidebar-navigation": "Report chapters",
@@ -35,6 +40,7 @@ class ReportParser(HTMLParser):
         self.anchor_references = []
         self.ids = set()
         self.navigation_landmarks = []
+        self.table_header_scopes = []
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -54,6 +60,10 @@ class ReportParser(HTMLParser):
                     attributes.get("aria-label", "").strip(),
                     attributes.get("aria-labelledby", "").split(),
                 )
+            )
+        elif tag == "th":
+            self.table_header_scopes.append(
+                attributes.get("scope", "").strip().lower()
             )
 
 
@@ -102,6 +112,26 @@ def label_navigation_landmarks(source: str, label: str) -> tuple[str, bool]:
     return NAV_PATTERN.sub(replacement, source), changed
 
 
+def scope_column_headers(source: str) -> tuple[str, bool]:
+    """Give generated table-head cells explicit column relationships."""
+    changed = False
+
+    def scope_table_head(match):
+        def scope_header(header_match):
+            nonlocal changed
+            tag_source = header_match.group(0)
+            parser = StartTagParser()
+            parser.feed(tag_source)
+            if "scope" in parser.attributes:
+                return tag_source
+            changed = True
+            return tag_source[:-1] + ' scope="col">'
+
+        return TABLE_HEADER_PATTERN.sub(scope_header, match.group(0))
+
+    return TABLE_HEAD_PATTERN.sub(scope_table_head, source), changed
+
+
 def normalized_page(source: str, label: str) -> tuple[str, bool]:
     """Return public HTML with an early bypass and named navigation landmarks."""
     if source.count(SKIP_LINK) != 1:
@@ -134,6 +164,7 @@ def normalized_page(source: str, label: str) -> tuple[str, bool]:
         bypass_changed = True
 
     candidate, navigation_changed = label_navigation_landmarks(candidate, label)
+    candidate, table_header_changed = scope_column_headers(candidate)
 
     parsed = ReportParser()
     parsed.feed(candidate)
@@ -161,7 +192,12 @@ def normalized_page(source: str, label: str) -> tuple[str, bool]:
                 f"{label}: navigation landmark references missing label ids: "
                 + ", ".join(missing_ids)
             )
-    return candidate, bypass_changed or navigation_changed
+    for number, scope in enumerate(parsed.table_header_scopes, start=1):
+        if scope not in VALID_TABLE_HEADER_SCOPES:
+            raise PromotionError(
+                f"{label}: table header cell {number} has no valid scope"
+            )
+    return candidate, bypass_changed or navigation_changed or table_header_changed
 
 
 def promote_tree(tree: Path) -> tuple[int, int]:

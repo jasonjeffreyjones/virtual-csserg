@@ -118,6 +118,25 @@ class StaticAccessibilityTests(unittest.TestCase):
             VERIFY.page_accessibility_problems(named, "navigation.html"), []
         )
 
+    def test_table_headers_need_valid_scope(self):
+        unscoped = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            "<table><thead><tr><th>Result</th></tr></thead></table></main>"
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(unscoped, "table.html"),
+            ["table.html: table header cell 1 has no valid scope"],
+        )
+
+        scoped = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<table><thead><tr><th scope="col">Result</th></tr></thead>'
+            '<tbody><tr><th scope="row">Project</th></tr></tbody></table></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(scoped, "table.html"), []
+        )
+
     def test_review_protocol_covers_current_manual_sample(self):
         expected = VERIFY.expected_accessibility_review_pages()
         source = (

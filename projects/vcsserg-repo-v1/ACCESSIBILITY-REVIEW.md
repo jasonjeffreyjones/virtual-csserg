@@ -38,6 +38,11 @@ accessibility evaluation.
   landmarks. The whole-site verifier rejects unnamed navigation landmarks when
   a page exposes more than one, and it rejects unresolved `aria-labelledby`
   references.
+- The shared normalizer now adds `scope="col"` to generated table-head cells.
+  The whole-site verifier requires every table header cell to declare one of
+  the four valid row or column scopes. This makes the intended relationships
+  explicit in source; rendered screen-reader navigation remains part of the
+  review below.
 - On September 19, `w3m` 0.5.3 returned successfully for all 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
@@ -46,9 +51,10 @@ accessibility evaluation.
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
   byte-identical; before the September 22 navigation-landmark revision, all 150
-  expected files were byte-identical. It cannot discover extra remote-only
-  paths, and the latest result does not describe the not-yet-deployed changes
-  in this iteration.
+  expected files were byte-identical; before the September 23 table-header
+  revision, all 158 expected files were byte-identical. It cannot discover
+  extra remote-only paths, and the latest result does not describe the
+  not-yet-deployed changes in this iteration.
 
 ## Selected production pages
 
@@ -182,6 +188,10 @@ claim.
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
+
+World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
+to associate header cells with data cells in data tables*.
+https://www.w3.org/WAI/WCAG22/Techniques/html/H63
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Easy checks:
 A first review of web accessibility*. Retrieved September 19, 2026, from

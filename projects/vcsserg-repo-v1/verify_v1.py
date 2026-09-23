@@ -43,6 +43,7 @@ ACCESSIBILITY_RESULT_FIELDS = (
     "Issues and retest evidence",
 )
 ACCESSIBILITY_RESULT_STATUSES = {"Pass", "Fail", "Not tested"}
+VALID_TABLE_HEADER_SCOPES = {"col", "colgroup", "row", "rowgroup"}
 
 
 @dataclass
@@ -79,6 +80,7 @@ class PageParser(HTMLParser):
         self.project_updates = []
         self.references = []
         self.skip_references = []
+        self.table_header_scopes = []
         self.text_parts = []
         self.title_parts = []
 
@@ -128,6 +130,10 @@ class PageParser(HTMLParser):
             self.figure_count += 1
         elif tag == "img":
             self.images.append(attributes)
+        elif tag == "th":
+            self.table_header_scopes.append(
+                attributes.get("scope", "").strip().lower()
+            )
         elif tag == "title":
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
@@ -220,6 +226,11 @@ def page_accessibility_problems(parsed, relative):
             problems.append(
                 f"{relative}: navigation landmark {number} references missing "
                 f"label ids: {', '.join(missing_ids)}"
+            )
+    for number, scope in enumerate(parsed.table_header_scopes, start=1):
+        if scope not in VALID_TABLE_HEADER_SCOPES:
+            problems.append(
+                f"{relative}: table header cell {number} has no valid scope"
             )
     return problems
 

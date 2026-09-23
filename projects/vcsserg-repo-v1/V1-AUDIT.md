@@ -16,19 +16,19 @@ does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 22, 2026 |
+| Documented promise | Evidence or test | Status on September 23, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, named repeated navigation landmarks, explicit image alternatives, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets; the first anchor itself must target `main`, and generated-report bypass order and navigation names no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, named repeated navigation landmarks, scoped table headers, explicit image alternatives, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages and 6 first-party stylesheets; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, and 150 before the September 22 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, and 158 before the September 23 revision |
 
 ## Current automated result
 
-On September 22, 2026, **all seven groups pass**. The final report-format gap
+On September 23, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -94,6 +94,12 @@ publication structure:
   unnamed repeated navigation landmarks and missing `aria-labelledby` targets.
   Focused fixtures cover both the generated normalizer and generic page rule;
   rendered screen-reader review remains open.
+- On September 23, the whole-site check exposed 60 generated report table
+  headers without explicit scope. The shared post-render normalizer now adds
+  column scope inside table heads and refuses any remaining missing or invalid
+  header scope. The generic verifier enforces valid row or column scope across
+  all public HTML. Two focused fixtures cover the generated and generic rules;
+  rendered table navigation remains part of the open screen-reader review.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -112,9 +118,11 @@ The current verifier:
 - adds a dedicated three-format report group;
 - requires every page's first anchor itself to target `main` as a bypass and
   every image to carry an explicit `alt` attribute, and requires accessible
-  names on repeated navigation landmarks, with negative fixtures for missing,
+  names on repeated navigation landmarks and valid scope on table header
+  cells, with negative fixtures for missing,
   late, wrong-target, misleading-first, and runtime-relocated bypasses, a
-  missing image alternative, unnamed navigation, and a missing label target;
+  missing image alternative, unnamed navigation, a missing label target, and
+  missing table-header scope;
 - checks the Executive Summary figure count, report cross-links, Quarto source,
   PDF signature, and the required “far beyond” phrase;
 - checks the Projects index and exact normalized charter biographies;
@@ -165,7 +173,8 @@ phase. Before the September 18 material revision, a new public probe found all
 probe found all 128 incoming files byte-identical. Before the September 20
 revision, all 134 incoming files were byte-identical. Before the September 21
 revision, all 142 incoming files were byte-identical. Before the September 22
-revision, all 150 incoming files were byte-identical; normal automation must
+revision, all 150 incoming files were byte-identical. Before the September 23
+revision, all 158 incoming files were byte-identical; normal automation must
 still deploy and inventory this revised release.
 
 ## Other current requirements
