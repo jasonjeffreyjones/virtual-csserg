@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 23, 2026. The validated
+All seven automated promise groups pass on September 24, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -30,7 +30,9 @@ checks also require a first-anchor bypass link and an explicit `alt` decision
 for every image. Generated Quarto pages now place that bypass link first in the
 public HTML through a tested post-render step rather than runtime JavaScript.
 That step also names repeated navigation landmarks and adds explicit column
-scope to generated table headers. A claim-to-evidence review found the
+scope to generated table headers. The whole-site parser now also requires
+accessible names and valid ARIA targets and expanded states on exposed links and
+buttons. A claim-to-evidence review found the
 infrastructure report substantively adequate for its stated purpose; rendered
 keyboard and assistive-technology review remains the sole open manual gate.
 
@@ -96,7 +98,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, named repeated navigation, scoped table headers, explicit image alternatives, branding, complete footer links, Bootstrap, and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, named repeated navigation, scoped table headers, explicit image alternatives, named interactive elements with valid ARIA relationships, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -116,8 +118,14 @@ the same source audit exposed 14 unnamed Quarto navigation landmarks, and on
 September 23 it exposed 60 generated table headers without explicit scope. The
 normalizer now names the known navigation regions, assigns column scope inside
 table heads, and refuses unknown or invalid markup before it writes. The
-whole-site verifier enforces both contracts. It also became narrower where old
-rules created false
+whole-site verifier enforces both contracts. On September 24, an audit found
+all 501 assistive-technology-exposed links and buttons named, all 26 hidden
+source-line anchors removed from the tab order, and no invalid
+`aria-labelledby`, `aria-controls`, or `aria-expanded` value. Two negative
+fixtures now guard those conditions, including the distinction between a
+deliberately hidden, non-tabbable source-code anchor and a focusable control
+hidden from assistive technology. It also became narrower where old rules
+created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
 
@@ -209,7 +217,9 @@ documentation cautions that conformance tooling cannot detect every issue and
 still requires manual inspection (Quarto, n.d.-b). Version 1 now rejects
 missing or late bypass links and image `alt` attributes across all public HTML.
 It also rejects unnamed repeated navigation and missing or invalid table-header
-scope. The build-time normalizer removes a runtime dependency from the four
+scope. It now rejects unnamed exposed links and buttons, broken label/control
+references, invalid expanded states, and focusable controls hidden from
+assistive technology. The build-time normalizer removes a runtime dependency from the four
 Quarto pages and applies explicit `scope="col"` relationships inside their table
 heads, following W3C technique H63's test procedure (World Wide Web Consortium,
 2026). Those deterministic checks narrow the gap; rendered focus behavior,
@@ -267,7 +277,7 @@ still need network access for their intended presentation.
 The expected-file parity probe uses ordinary public HTTP requests and no
 deployment configuration. It found all 109 files byte-identical before the
 September 15 release, all 110 byte-identical after it, and every later incoming
-tree byte-identical, including all 158 files before this September 23 revision.
+tree byte-identical, including all 166 files before this September 24 revision.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its

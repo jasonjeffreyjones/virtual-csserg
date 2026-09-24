@@ -137,6 +137,59 @@ class StaticAccessibilityTests(unittest.TestCase):
             VERIFY.page_accessibility_problems(scoped, "table.html"), []
         )
 
+    def test_interactive_elements_need_accessible_names(self):
+        unnamed = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<a href="elsewhere"><span aria-hidden="true">→</span></a>'
+            '<button aria-labelledby="empty"></button>'
+            '<span id="empty" aria-hidden="true">Menu</span></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(unnamed, "controls.html"),
+            [
+                "controls.html: interactive element 2 (a) has no accessible name",
+                "controls.html: interactive element 3 (button) references labels without text",
+                "controls.html: interactive element 3 (button) has no accessible name",
+            ],
+        )
+
+        hidden_code_anchor = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<span id="line"><a href="#line" aria-hidden="true" '
+            'tabindex="-1"></a>Code</span></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(hidden_code_anchor, "code.html"), []
+        )
+
+    def test_interactive_aria_targets_and_states_must_resolve(self):
+        broken = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<button aria-label="Menu" aria-controls="missing" '
+            'aria-expanded="mixed"></button>'
+            '<a href="elsewhere" aria-hidden="true">Hidden link</a></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(broken, "aria.html"),
+            [
+                "aria.html: interactive element 2 (button) references missing controlled ids: missing",
+                "aria.html: interactive element 2 (button) has invalid aria-expanded",
+                "aria.html: interactive element 3 (a) is hidden from assistive technology",
+            ],
+        )
+
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<span id="menu-name">Sections <span>for</span> reports</span>'
+            '<div id="menu"></div>'
+            '<button aria-labelledby="menu-name" aria-controls="menu" '
+            'aria-expanded="false"></button></main>'
+        )
+        self.assertEqual(valid.text_for_id("menu-name"), "Sections for reports")
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "aria.html"), []
+        )
+
     def test_review_protocol_covers_current_manual_sample(self):
         expected = VERIFY.expected_accessibility_review_pages()
         source = (

@@ -43,6 +43,18 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
+- The whole-site parser now audits all 527 links and buttons. Each of the 501
+  elements exposed to assistive technology has an accessible name from text,
+  image alternatives, ARIA labels, or a title fallback; the other 26 are
+  Quarto source-line anchors explicitly hidden and removed from the tab order.
+  It also requires `aria-labelledby` and `aria-controls` targets to resolve,
+  restricts `aria-expanded` to boolean values, and rejects an interactive
+  element hidden from assistive technology unless it is explicitly absent from
+  the tab order.
+  All current controls pass. Negative fixtures cover an icon-only unnamed link,
+  an empty referenced label, broken control references, invalid expanded state,
+  and a focusable hidden link. These source properties do not establish the
+  rendered name, role, state, order, or operation in a browser/screen reader.
 - On September 19, `w3m` 0.5.3 returned successfully for all 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
@@ -52,9 +64,10 @@ accessibility evaluation.
   verifier revision, the same probe found all 142 expected files
   byte-identical; before the September 22 navigation-landmark revision, all 150
   expected files were byte-identical; before the September 23 table-header
-  revision, all 158 expected files were byte-identical. It cannot discover
-  extra remote-only paths, and the latest result does not describe the
-  not-yet-deployed changes in this iteration.
+  revision, all 158 expected files were byte-identical; before the September 24
+  interactive-element revision, all 166 expected files were byte-identical. It
+  cannot discover extra remote-only paths, and the latest result does not
+  describe the not-yet-deployed changes in this iteration.
 
 ## Selected production pages
 

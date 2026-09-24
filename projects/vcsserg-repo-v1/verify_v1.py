@@ -44,6 +44,22 @@ ACCESSIBILITY_RESULT_FIELDS = (
 )
 ACCESSIBILITY_RESULT_STATUSES = {"Pass", "Fail", "Not tested"}
 VALID_TABLE_HEADER_SCOPES = {"col", "colgroup", "row", "rowgroup"}
+VOID_ELEMENTS = {
+    "area",
+    "base",
+    "br",
+    "col",
+    "embed",
+    "hr",
+    "img",
+    "input",
+    "link",
+    "meta",
+    "param",
+    "source",
+    "track",
+    "wbr",
+}
 
 
 @dataclass
@@ -66,10 +82,16 @@ class PageParser(HTMLParser):
         self.footer_references = []
         self.figure_count = 0
         self.h1_count = 0
+        self.hidden_depth = 0
         self.html_lang = ""
+        self.id_text_parts = {}
+        self.id_text_stack = []
         self.images = []
         self.ids = []
         self.in_title = False
+        self.interactive_elements = []
+        self.interactive_stack = []
+        self.open_elements = []
         self.first_anchor_is_skip = False
         self.first_anchor_reference = None
         self.anchor_count = 0
@@ -90,6 +112,12 @@ class PageParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        element_id = attributes.get("id")
+        aria_hidden = attributes.get("aria-hidden", "").strip().lower() == "true"
+        if tag not in VOID_ELEMENTS:
+            self.open_elements.append((tag, aria_hidden, element_id))
+            if aria_hidden:
+                self.hidden_depth += 1
         if tag == "footer":
             self.footer_depth += 1
         footer_group = attributes.get("data-footer-group")
@@ -115,9 +143,25 @@ class PageParser(HTMLParser):
             self.project_updates.append(
                 (attributes["data-project"], attributes.get("data-updated", ""))
             )
-        element_id = attributes.get("id")
         if element_id:
             self.ids.append(element_id)
+            self.id_text_parts.setdefault(element_id, [])
+            if tag not in VOID_ELEMENTS:
+                self.id_text_stack.append(element_id)
+        if tag in {"a", "button"}:
+            self.interactive_stack.append(
+                {
+                    "tag": tag,
+                    "aria_label": attributes.get("aria-label", ""),
+                    "labelled_by": attributes.get("aria-labelledby", "").split(),
+                    "title": attributes.get("title", ""),
+                    "text_parts": [],
+                    "hidden": self.hidden_depth > 0,
+                    "tabindex": attributes.get("tabindex", ""),
+                    "controls": attributes.get("aria-controls", "").split(),
+                    "expanded": attributes.get("aria-expanded"),
+                }
+            )
         if tag == "html":
             self.html_lang = attributes.get("lang", "")
         elif tag == "main":
@@ -130,6 +174,13 @@ class PageParser(HTMLParser):
             self.figure_count += 1
         elif tag == "img":
             self.images.append(attributes)
+            if not aria_hidden and self.hidden_depth == 0:
+                alternative = attributes.get("alt", "").strip()
+                if alternative:
+                    for control in self.interactive_stack:
+                        control["text_parts"].append(alternative)
+                    for labelled_id in self.id_text_stack:
+                        self.id_text_parts[labelled_id].append(alternative)
         elif tag == "th":
             self.table_header_scopes.append(
                 attributes.get("scope", "").strip().lower()
@@ -166,6 +217,26 @@ class PageParser(HTMLParser):
                 )
             )
             self.assignment = None
+        if tag in {"a", "button"}:
+            for index in range(len(self.interactive_stack) - 1, -1, -1):
+                if self.interactive_stack[index]["tag"] == tag:
+                    self.interactive_elements.append(
+                        self.interactive_stack.pop(index)
+                    )
+                    break
+        for index in range(len(self.open_elements) - 1, -1, -1):
+            if self.open_elements[index][0] == tag:
+                closed = self.open_elements[index:]
+                del self.open_elements[index:]
+                self.hidden_depth -= sum(hidden for _, hidden, _ in closed)
+                for _, _, closed_id in reversed(closed):
+                    if not closed_id:
+                        continue
+                    for id_index in range(len(self.id_text_stack) - 1, -1, -1):
+                        if self.id_text_stack[id_index] == closed_id:
+                            self.id_text_stack.pop(id_index)
+                            break
+                break
         if tag == self.footer_group_tag:
             self.footer_group = None
             self.footer_group_tag = None
@@ -174,6 +245,11 @@ class PageParser(HTMLParser):
 
     def handle_data(self, data):
         self.text_parts.append(data)
+        if self.hidden_depth == 0:
+            for control in self.interactive_stack:
+                control["text_parts"].append(data)
+            for labelled_id in self.id_text_stack:
+                self.id_text_parts[labelled_id].append(data)
         if self.assignment is not None:
             self.assignment["text"].append(data)
         if self.in_title:
@@ -182,6 +258,9 @@ class PageParser(HTMLParser):
     @property
     def text(self):
         return " ".join(" ".join(self.text_parts).split())
+
+    def text_for_id(self, element_id):
+        return " ".join(" ".join(self.id_text_parts.get(element_id, [])).split())
 
 
 def parse_page(path):
@@ -231,6 +310,57 @@ def page_accessibility_problems(parsed, relative):
         if scope not in VALID_TABLE_HEADER_SCOPES:
             problems.append(
                 f"{relative}: table header cell {number} has no valid scope"
+            )
+    for number, control in enumerate(parsed.interactive_elements, start=1):
+        description = f"interactive element {number} ({control['tag']})"
+        if control["hidden"]:
+            if control["tabindex"] != "-1":
+                problems.append(
+                    f"{relative}: {description} is hidden from assistive technology"
+                )
+            continue
+
+        labelled_by = control["labelled_by"]
+        missing_labels = sorted(set(labelled_by) - set(parsed.ids))
+        if missing_labels:
+            problems.append(
+                f"{relative}: {description} references missing label ids: "
+                + ", ".join(missing_labels)
+            )
+        referenced_label = " ".join(
+            parsed.text_for_id(element_id)
+            for element_id in labelled_by
+            if element_id in parsed.ids
+        ).strip()
+        if labelled_by and not missing_labels and not referenced_label:
+            problems.append(
+                f"{relative}: {description} references labels without text"
+            )
+
+        content = " ".join(" ".join(control["text_parts"]).split())
+        if labelled_by:
+            has_accessible_name = bool(referenced_label and not missing_labels)
+        else:
+            has_accessible_name = bool(
+                control["aria_label"].strip()
+                or content
+                or control["title"].strip()
+            )
+        if not has_accessible_name:
+            problems.append(f"{relative}: {description} has no accessible name")
+
+        missing_controls = sorted(set(control["controls"]) - set(parsed.ids))
+        if missing_controls:
+            problems.append(
+                f"{relative}: {description} references missing controlled ids: "
+                + ", ".join(missing_controls)
+            )
+        if control["expanded"] is not None and control["expanded"] not in {
+            "true",
+            "false",
+        }:
+            problems.append(
+                f"{relative}: {description} has invalid aria-expanded"
             )
     return problems
 

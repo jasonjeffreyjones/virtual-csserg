@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 23, 2026 at 08:19 UTC
+
+- **Superseded:** September 24, 2026
+- **Archive key:**
+  [`9d70a922dde140f958a757d75eaf1ce179f1ad0d`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/9d70a922dde140f958a757d75eaf1ce179f1ad0d)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before interactive-element names and ARIA relationships became a
+  whole-site regression contract.
+- **Reason:** The outgoing reports accurately documented bypass links, image
+  alternatives, named repeated navigation, scoped table headers, and the open
+  rendered review. The next release requires accessible names on exposed links
+  and buttons, resolvable `aria-labelledby` and `aria-controls` references, valid
+  `aria-expanded` states, and safe treatment of controls hidden from assistive
+  technology. It also records the September 24 probe of 166 incoming public
+  files without claiming rendered keyboard or screen-reader evidence.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/9d70a922dde140f958a757d75eaf1ce179f1ad0d/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/9d70a922dde140f958a757d75eaf1ce179f1ad0d/projects/vcsserg-repo-v1)
+
 ### Updated through September 22, 2026 at 08:18 UTC
 
 - **Superseded:** September 23, 2026

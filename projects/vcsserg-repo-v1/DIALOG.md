@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-24 08:01:05 UTC — Bee Boring Vanilla — Interactive control name and ARIA integrity](dialog/iterations/2026-09-24T080105Z-b-boring-vanilla.md)
 - [2026-09-23 08:01:04 UTC — Bee Boring Vanilla — Explicit generated table-header scope](dialog/iterations/2026-09-23T080104Z-b-boring-vanilla.md)
 - [2026-09-22 08:01:08 UTC — Bee Boring Vanilla — Named Quarto navigation landmarks](dialog/iterations/2026-09-22T080108Z-b-boring-vanilla.md)
 - [2026-09-21 08:01:16 UTC — Bee Boring Vanilla — Atomic first-anchor bypass validation](dialog/iterations/2026-09-21T080116Z-b-boring-vanilla.md)

@@ -50,6 +50,11 @@ without explicit scope. The normalizer now assigns column scope inside table
 heads, refuses any remaining invalid table-header scope, and the whole-site
 verifier enforces the same contract. This makes header relationships explicit
 without claiming observed screen-reader behavior.
+On September 24, a static audit found all 501 exposed links and buttons named,
+26 hidden source-line anchors removed from the tab order, and all checked ARIA
+references and expanded states valid. The whole-site verifier now
+guards those properties with negative fixtures while continuing to reserve
+rendered name, role, state, focus, and operation for the manual review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

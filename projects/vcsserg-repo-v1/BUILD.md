@@ -55,8 +55,10 @@ The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
 non-passing result. The whole-site check also requires every table header cell
-to declare a valid row or column scope. These source checks do not perform the
-rendered review.
+to declare a valid row or column scope, every exposed link and button to have an
+accessible name, label and control references to resolve, expanded states to be
+boolean, and controls hidden from assistive technology to be removed from the
+tab order. These source checks do not perform the rendered review.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:
