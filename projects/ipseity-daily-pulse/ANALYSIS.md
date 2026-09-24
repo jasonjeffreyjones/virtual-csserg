@@ -50,6 +50,11 @@ replay. The script refuses to append a duplicate check timestamp.
   for the same leaders, then adjusts that contrast for observed composition
   and calendar terms; `outputs/leader-early-late-sensitivity.svg` compares the
   raw and adjusted contrasts with respondent-clustered intervals.
+- `outputs/leader-period-trajectory.csv` divides the inclusive observation
+  window into four nearly equal-duration calendar periods and traces raw
+  prevalence for the same leaders; `outputs/leader-period-trajectory.svg`
+  shows the three adjacent changes, whether each matches the selected linear
+  direction, and the largest change's share of total absolute movement.
 - `outputs/leader-within-respondent-sensitivity.csv` refits those leader tails
   first as pooled trends on the repeat-respondent subset and then with
   respondent fixed effects;
@@ -98,6 +103,17 @@ month terms. Both contrasts can still hide shorter reversals, remain vulnerable
 to unobserved composition and nonrepresentative recruitment, and are selected
 using the most extreme linear slopes. Their magnitudes are not directly
 comparable with the annualized slope; only direction is compared.
+
+The four-period trajectory sensitivity asks whether the selected linear trend
+leaders move smoothly or concentrate their raw change in a shorter interval.
+It reports each period's unweighted prevalence, all three adjacent changes,
+the number aligned with the selected slope, and the largest absolute adjacent
+change divided by the sum of all three absolute changes. A one-third share
+means the three absolute changes are equal; a 100% share means all observed
+adjacent movement occurs in one transition. This deterministic shape
+diagnostic has no inferential interpretation, does not adjust for composition
+or repeated respondents, and remains conditioned on selecting extreme linear
+slopes.
 
 The within-respondent sensitivity uses the respondent–signifier sufficient
 statistics retained during validation. It first refits the pooled trend after

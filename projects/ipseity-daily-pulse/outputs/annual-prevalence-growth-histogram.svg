@@ -11,46 +11,47 @@
     .tick { font-size: 13px; fill: #4e5d51; }
   </style>
   <text class="title" x="92" y="38">Estimated annual prevalence change across signifiers</text>
-  <text class="subtitle" x="92" y="66">704 eligible signifiers · unweighted linear trends through 2026-09-22 · 2-point bins</text>
+  <text class="subtitle" x="92" y="66">704 eligible signifiers · unweighted linear trends through 2026-09-23 · 2-point bins</text>
   <line class="grid" x1="92" y1="466.0" x2="925" y2="466.0"/>
   <text class="tick" text-anchor="end" x="80" y="471.0">0</text>
-  <line class="grid" x1="92" y1="392.0" x2="925" y2="392.0"/>
-  <text class="tick" text-anchor="end" x="80" y="397.0">35</text>
-  <line class="grid" x1="92" y1="317.9" x2="925" y2="317.9"/>
-  <text class="tick" text-anchor="end" x="80" y="322.9">70</text>
-  <line class="grid" x1="92" y1="243.9" x2="925" y2="243.9"/>
-  <text class="tick" text-anchor="end" x="80" y="248.9">105</text>
-  <line class="grid" x1="92" y1="169.8" x2="925" y2="169.8"/>
-  <text class="tick" text-anchor="end" x="80" y="174.8">140</text>
-  <rect x="93.00" y="455.42" width="39.65" height="10.58" fill="#4B6F44"/>
-  <rect x="134.65" y="457.54" width="39.65" height="8.46" fill="#4B6F44"/>
-  <rect x="176.30" y="438.50" width="39.65" height="27.50" fill="#4B6F44"/>
-  <rect x="217.95" y="427.92" width="39.65" height="38.08" fill="#4B6F44"/>
-  <rect x="259.60" y="372.91" width="39.65" height="93.09" fill="#4B6F44"/>
-  <rect x="301.25" y="296.75" width="39.65" height="169.25" fill="#4B6F44"/>
-  <rect x="342.90" y="184.62" width="39.65" height="281.38" fill="#4B6F44"/>
-  <rect x="384.55" y="100.00" width="39.65" height="366.00" fill="#4B6F44"/>
-  <rect x="426.20" y="265.02" width="39.65" height="200.98" fill="#4B6F44"/>
-  <rect x="467.85" y="353.87" width="39.65" height="112.13" fill="#4B6F44"/>
-  <rect x="509.50" y="389.84" width="39.65" height="76.16" fill="#4B6F44"/>
-  <rect x="551.15" y="430.03" width="39.65" height="35.97" fill="#4B6F44"/>
-  <rect x="592.80" y="432.15" width="39.65" height="33.85" fill="#4B6F44"/>
-  <rect x="634.45" y="451.19" width="39.65" height="14.81" fill="#4B6F44"/>
-  <rect x="676.10" y="455.42" width="39.65" height="10.58" fill="#4B6F44"/>
-  <rect x="717.75" y="457.54" width="39.65" height="8.46" fill="#4B6F44"/>
-  <rect x="759.40" y="466.00" width="39.65" height="0.00" fill="#4B6F44"/>
-  <rect x="801.05" y="466.00" width="39.65" height="0.00" fill="#4B6F44"/>
-  <rect x="842.70" y="466.00" width="39.65" height="0.00" fill="#4B6F44"/>
-  <rect x="884.35" y="463.88" width="39.65" height="2.12" fill="#4B6F44"/>
-  <line class="axis" x1="175.3" y1="466" x2="175.3" y2="472"/>
-  <text class="tick" text-anchor="middle" x="175.3" y="493">-10</text>
-  <line class="axis" x1="383.5" y1="466" x2="383.5" y2="472"/>
-  <text class="tick" text-anchor="middle" x="383.5" y="493">+0</text>
-  <line class="axis" x1="591.8" y1="466" x2="591.8" y2="472"/>
-  <text class="tick" text-anchor="middle" x="591.8" y="493">+10</text>
-  <line class="axis" x1="800.0" y1="466" x2="800.0" y2="472"/>
-  <text class="tick" text-anchor="middle" x="800.0" y="493">+20</text>
-  <line x1="383.5" y1="100" x2="383.5" y2="466" stroke="#243128" stroke-width="2"/>
+  <line class="grid" x1="92" y1="390.6" x2="925" y2="390.6"/>
+  <text class="tick" text-anchor="end" x="80" y="395.6">35</text>
+  <line class="grid" x1="92" y1="315.3" x2="925" y2="315.3"/>
+  <text class="tick" text-anchor="end" x="80" y="320.3">70</text>
+  <line class="grid" x1="92" y1="239.9" x2="925" y2="239.9"/>
+  <text class="tick" text-anchor="end" x="80" y="244.9">105</text>
+  <line class="grid" x1="92" y1="164.6" x2="925" y2="164.6"/>
+  <text class="tick" text-anchor="end" x="80" y="169.6">140</text>
+  <rect x="93.00" y="463.85" width="37.67" height="2.15" fill="#4B6F44"/>
+  <rect x="132.67" y="457.39" width="37.67" height="8.61" fill="#4B6F44"/>
+  <rect x="172.33" y="457.39" width="37.67" height="8.61" fill="#4B6F44"/>
+  <rect x="212.00" y="435.86" width="37.67" height="30.14" fill="#4B6F44"/>
+  <rect x="251.67" y="431.55" width="37.67" height="34.45" fill="#4B6F44"/>
+  <rect x="291.33" y="364.81" width="37.67" height="101.19" fill="#4B6F44"/>
+  <rect x="331.00" y="291.61" width="37.67" height="174.39" fill="#4B6F44"/>
+  <rect x="370.67" y="175.35" width="37.67" height="290.65" fill="#4B6F44"/>
+  <rect x="410.33" y="100.00" width="37.67" height="366.00" fill="#4B6F44"/>
+  <rect x="450.00" y="257.16" width="37.67" height="208.84" fill="#4B6F44"/>
+  <rect x="489.67" y="362.66" width="37.67" height="103.34" fill="#4B6F44"/>
+  <rect x="529.33" y="386.34" width="37.67" height="79.66" fill="#4B6F44"/>
+  <rect x="569.00" y="429.40" width="37.67" height="36.60" fill="#4B6F44"/>
+  <rect x="608.67" y="433.71" width="37.67" height="32.29" fill="#4B6F44"/>
+  <rect x="648.33" y="453.08" width="37.67" height="12.92" fill="#4B6F44"/>
+  <rect x="688.00" y="448.78" width="37.67" height="17.22" fill="#4B6F44"/>
+  <rect x="727.67" y="459.54" width="37.67" height="6.46" fill="#4B6F44"/>
+  <rect x="767.33" y="466.00" width="37.67" height="0.00" fill="#4B6F44"/>
+  <rect x="807.00" y="466.00" width="37.67" height="0.00" fill="#4B6F44"/>
+  <rect x="846.67" y="466.00" width="37.67" height="0.00" fill="#4B6F44"/>
+  <rect x="886.33" y="463.85" width="37.67" height="2.15" fill="#4B6F44"/>
+  <line class="axis" x1="211.0" y1="466" x2="211.0" y2="472"/>
+  <text class="tick" text-anchor="middle" x="211.0" y="493">-10</text>
+  <line class="axis" x1="409.3" y1="466" x2="409.3" y2="472"/>
+  <text class="tick" text-anchor="middle" x="409.3" y="493">+0</text>
+  <line class="axis" x1="607.7" y1="466" x2="607.7" y2="472"/>
+  <text class="tick" text-anchor="middle" x="607.7" y="493">+10</text>
+  <line class="axis" x1="806.0" y1="466" x2="806.0" y2="472"/>
+  <text class="tick" text-anchor="middle" x="806.0" y="493">+20</text>
+  <line x1="409.3" y1="100" x2="409.3" y2="466" stroke="#243128" stroke-width="2"/>
   <line class="axis" x1="92" y1="100" x2="92" y2="466"/>
   <line class="axis" x1="92" y1="466" x2="925" y2="466"/>
   <text class="tick" x="508.5" y="522" text-anchor="middle">Estimated change (percentage points per year)</text>

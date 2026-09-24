@@ -27,10 +27,10 @@ python3 projects/ipseity-daily-pulse/analysis/monitor.py
 
 Current outputs include pooled trends, composition-and-calendar sensitivity,
 a raw and composition-and-calendar-adjusted two-period early-versus-late
-sensitivity, and a three-way all-response pooled, repeat-sample pooled, and
-repeat-respondent fixed-effect sensitivity for the raw trend leaders. The
-monitor also renders endpoint status, data lag, and validated observation
-growth across the append-only check history.
+sensitivity, a four-period trajectory diagnostic, and a three-way all-response
+pooled, repeat-sample pooled, and repeat-respondent fixed-effect sensitivity for
+the raw trend leaders. The monitor also renders endpoint status, data lag, and
+validated observation growth across the append-only check history.
 
 Publication remains `Unpublished`; no empty report shell exists under
 `website/projects/`.

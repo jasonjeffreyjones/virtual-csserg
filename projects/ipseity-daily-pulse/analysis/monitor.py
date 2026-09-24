@@ -75,6 +75,7 @@ MIN_TREND_OBSERVATIONS = 300
 MIN_TREND_SPAN_DAYS = 180
 MIN_TREND_DATES = 30
 LEADER_SENSITIVITY_PER_TAIL = 10
+TRAJECTORY_PERIODS = 4
 DAYS_PER_YEAR = 365.2425
 TREND_EPOCH_ORDINAL = dt.date(2020, 1, 1).toordinal()
 COMPOSITION_FIELDS = ["demographics_status", "sex", "ethnicity", "student", "employment"]
@@ -773,6 +774,138 @@ def early_late_leader_sensitivity(
     return results
 
 
+def equal_calendar_periods(
+    earliest: dt.date, latest: dt.date, periods: int = TRAJECTORY_PERIODS
+) -> list[tuple[dt.date, dt.date]]:
+    """Partition an inclusive calendar window into nearly equal periods."""
+    days = (latest - earliest).days + 1
+    if periods < 2 or days < periods:
+        raise ValueError("calendar window is too short for requested periods")
+    return [
+        (
+            earliest + dt.timedelta(days=days * index // periods),
+            earliest + dt.timedelta(days=days * (index + 1) // periods - 1),
+        )
+        for index in range(periods)
+    ]
+
+
+def fit_period_trajectory(
+    rows: list[dict[str, str]],
+    earliest: dt.date,
+    latest: dt.date,
+    periods: int = TRAJECTORY_PERIODS,
+) -> dict[str, object]:
+    """Describe raw prevalence across equal-duration calendar periods."""
+    boundaries = equal_calendar_periods(earliest, latest, periods)
+    days = (latest - earliest).days + 1
+    observations = [0] * periods
+    endorsements = [0] * periods
+    for row in rows:
+        date = dt.date.fromisoformat(row["observation_date"])
+        if not earliest <= date <= latest:
+            raise ValueError("trajectory observation falls outside the dataset window")
+        period_index = min(periods - 1, (date - earliest).days * periods // days)
+        observations[period_index] += 1
+        endorsements[period_index] += int(row["endorsed"])
+    if any(count == 0 for count in observations):
+        raise ValueError("trajectory requires observations in every calendar period")
+
+    prevalence = [
+        yes / count * 100 for yes, count in zip(endorsements, observations)
+    ]
+    changes = [
+        prevalence[index + 1] - prevalence[index]
+        for index in range(periods - 1)
+    ]
+    absolute_path = sum(abs(change) for change in changes)
+    largest_index = max(range(len(changes)), key=lambda index: abs(changes[index]))
+    result: dict[str, object] = {"period_count": periods}
+    for index, ((start, end), count, yes, rate) in enumerate(
+        zip(boundaries, observations, endorsements, prevalence), start=1
+    ):
+        result.update(
+            {
+                f"period_{index}_start": start.isoformat(),
+                f"period_{index}_end": end.isoformat(),
+                f"period_{index}_observations": count,
+                f"period_{index}_endorsements": yes,
+                f"period_{index}_prevalence_percent": rate,
+            }
+        )
+    for index, change in enumerate(changes, start=1):
+        result[f"period_{index}_to_{index + 1}_change_percentage_points"] = change
+    result.update(
+        {
+            "first_to_last_change_percentage_points": prevalence[-1] - prevalence[0],
+            "total_absolute_adjacent_change_percentage_points": absolute_path,
+            "largest_adjacent_change_percentage_points": changes[largest_index],
+            "largest_transition": f"period_{largest_index + 1}_to_{largest_index + 2}",
+            "largest_transition_share_of_absolute_path": (
+                abs(changes[largest_index]) / absolute_path if absolute_path else 0.0
+            ),
+        }
+    )
+    return result
+
+
+def period_trajectory_leader_sensitivity(
+    path: Path,
+    trends: list[dict[str, object]],
+    earliest: dt.date,
+    latest: dt.date,
+) -> list[dict[str, object]]:
+    """Trace selected linear-trend leaders through four shorter periods."""
+    eligible = [row for row in trends if row["eligible"]]
+    growing = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"]), reverse=True
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    shrinking = sorted(
+        eligible, key=lambda row: float(row["annual_change_percentage_points"])
+    )[:LEADER_SENSITIVITY_PER_TAIL]
+    selections = [
+        ("positive", rank, row) for rank, row in enumerate(growing, start=1)
+    ] + [("negative", rank, row) for rank, row in enumerate(shrinking, start=1)]
+    wanted = {str(row["signifier"]) for _, _, row in selections}
+    observations: dict[str, list[dict[str, str]]] = {
+        signifier: [] for signifier in wanted
+    }
+    with gzip.open(path, "rt", encoding="utf-8", newline="") as source:
+        for row in csv.DictReader(source):
+            if row["signifier"] in observations:
+                observations[row["signifier"]].append(row)
+
+    results = []
+    for tail, rank, trend in selections:
+        signifier = str(trend["signifier"])
+        fitted = fit_period_trajectory(observations[signifier], earliest, latest)
+        slope = float(trend["annual_change_percentage_points"])
+        changes = [
+            float(fitted[f"period_{index}_to_{index + 1}_change_percentage_points"])
+            for index in range(1, TRAJECTORY_PERIODS)
+        ]
+        aligned = sum(change * slope > 0 for change in changes)
+        opposing = sum(change * slope < 0 for change in changes)
+        endpoint = float(fitted["first_to_last_change_percentage_points"])
+        largest_change = float(fitted["largest_adjacent_change_percentage_points"])
+        results.append(
+            {
+                "unadjusted_tail": tail,
+                "unadjusted_tail_rank": rank,
+                "signifier": signifier,
+                "unadjusted_annual_change_percentage_points": slope,
+                **fitted,
+                "aligned_adjacent_transitions": aligned,
+                "opposing_adjacent_transitions": opposing,
+                "zero_adjacent_transitions": len(changes) - aligned - opposing,
+                "all_adjacent_transitions_aligned": aligned == len(changes),
+                "first_to_last_same_direction": endpoint * slope > 0,
+                "largest_transition_direction_aligned": largest_change * slope > 0,
+            }
+        )
+    return results
+
+
 def repeat_respondent_clusters(stats: SignifierStats) -> list[list[int]]:
     """Return clusters that identify a within-respondent date slope."""
     clusters = []
@@ -1387,6 +1520,85 @@ def early_late_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     )
 
 
+def period_trajectory_svg(trajectories: list[dict[str, object]]) -> str:
+    """Show adjacent prevalence changes across four periods for displayed leaders."""
+    displayed = [
+        row for row in trajectories if int(row["unadjusted_tail_rank"]) <= 5
+    ]
+    width, height = 1100, 720
+    left, right, top, bottom = 245, 240, 145, 62
+    plot_w, plot_h = width - left - right, height - top - bottom
+    column_width = plot_w / (TRAJECTORY_PERIODS - 1)
+    row_height = plot_h / len(displayed)
+    first = displayed[0]
+    parts = [
+        f'  <text class="title" x="{left}" y="38">How selected leader trends unfolded</text>',
+        f'  <text class="subtitle" x="{left}" y="66">Raw prevalence changes across four equal-duration calendar periods</text>',
+        f'  <rect x="{left}" y="82" width="14" height="14" rx="2" fill="#dde3d8" stroke="#4B6F44" stroke-width="2"/>',
+        f'  <text class="tick" x="{left + 22}" y="94">Matches selected linear direction (✓)</text>',
+        f'  <rect x="{left + 265}" y="82" width="14" height="14" rx="2" fill="#f3e4ce" stroke="#9B6A21" stroke-width="2"/>',
+        f'  <text class="tick" x="{left + 287}" y="94">Opposes it (↺)</text>',
+    ]
+    for transition in range(1, TRAJECTORY_PERIODS):
+        x = left + (transition - 0.5) * column_width
+        parts.append(
+            f'  <text class="subtitle" text-anchor="middle" x="{x:.1f}" y="126">P{transition} → P{transition + 1}</text>'
+        )
+        parts.append(
+            f'  <text class="tick" text-anchor="middle" x="{x:.1f}" y="{height - 19}">'
+            f'{html.escape(str(first[f"period_{transition}_end"]))} → '
+            f'{html.escape(str(first[f"period_{transition + 1}_start"]))}</text>'
+        )
+    parts.append(
+        f'  <text class="subtitle" x="{left + plot_w + 24}" y="126">Directional pattern</text>'
+    )
+    for index, row in enumerate(displayed):
+        y = top + (index + 0.5) * row_height
+        parts.append(
+            f'  <text class="tick" text-anchor="end" x="{left - 14}" y="{y + 5:.1f}">'
+            f'{html.escape(str(row["signifier"]))}</text>'
+        )
+        for transition in range(1, TRAJECTORY_PERIODS):
+            change = float(
+                row[f"period_{transition}_to_{transition + 1}_change_percentage_points"]
+            )
+            slope = float(row["unadjusted_annual_change_percentage_points"])
+            aligned = change * slope > 0
+            opposing = change * slope < 0
+            fill = "#dde3d8" if aligned else "#f3e4ce" if opposing else "#e7e9e7"
+            stroke = "#4B6F44" if aligned else "#9B6A21" if opposing else "#66736a"
+            symbol = "✓" if aligned else "↺" if opposing else "="
+            x = left + (transition - 1) * column_width + 14
+            cell_width = column_width - 28
+            parts.extend(
+                [
+                    f'  <rect x="{x:.1f}" y="{y - 16:.1f}" width="{cell_width:.1f}" height="32" rx="4" fill="{fill}" stroke="{stroke}" stroke-width="2"/>',
+                    f'  <text class="tick" text-anchor="middle" x="{x + cell_width / 2:.1f}" y="{y + 5:.1f}">{change:+.1f} {symbol}</text>',
+                ]
+            )
+        share = float(row["largest_transition_share_of_absolute_path"]) * 100
+        parts.append(
+            f'  <text class="tick" x="{left + plot_w + 24}" y="{y + 5:.1f}">'
+            f'{int(row["aligned_adjacent_transitions"])}/3 aligned · max {share:.0f}%</text>'
+        )
+    parts.append(
+        f'  <text class="tick" text-anchor="end" x="{width - 26}" y="{height - 19}">Cells show percentage-point change; max is largest share of total absolute path</text>'
+    )
+    return svg_frame(
+        "How selected leader trends unfolded",
+        (
+            "A transition matrix for ten displayed signifiers. Each row reports the "
+            "percentage-point prevalence change across three adjacent transitions "
+            "between four equal-duration calendar periods, whether each change matches "
+            "the selected linear slope's direction, and the largest transition's share "
+            "of total absolute adjacent movement."
+        ),
+        "\n".join(parts),
+        width,
+        height,
+    )
+
+
 def within_respondent_sensitivity_svg(sensitivity: list[dict[str, object]]) -> str:
     """Compare all-response, repeat-sample, and within-person leader slopes."""
     displayed = [row for row in sensitivity if int(row["unadjusted_tail_rank"]) <= 5]
@@ -1556,6 +1768,55 @@ def compact_early_late_sensitivity(row: dict[str, object]) -> dict[str, object]:
     }
 
 
+def compact_period_trajectory(row: dict[str, object]) -> dict[str, object]:
+    compact = {
+        "unadjusted_tail": row["unadjusted_tail"],
+        "unadjusted_tail_rank": row["unadjusted_tail_rank"],
+        "signifier": row["signifier"],
+        "unadjusted_annual_change_percentage_points": round(
+            float(row["unadjusted_annual_change_percentage_points"]), 3
+        ),
+    }
+    for period in range(1, TRAJECTORY_PERIODS + 1):
+        compact.update(
+            {
+                f"period_{period}_start": row[f"period_{period}_start"],
+                f"period_{period}_end": row[f"period_{period}_end"],
+                f"period_{period}_observations": row[
+                    f"period_{period}_observations"
+                ],
+                f"period_{period}_prevalence_percent": round(
+                    float(row[f"period_{period}_prevalence_percent"]), 3
+                ),
+            }
+        )
+    for period in range(1, TRAJECTORY_PERIODS):
+        field = f"period_{period}_to_{period + 1}_change_percentage_points"
+        compact[field] = round(float(row[field]), 3)
+    compact.update(
+        {
+            "first_to_last_change_percentage_points": round(
+                float(row["first_to_last_change_percentage_points"]), 3
+            ),
+            "largest_transition": row["largest_transition"],
+            "largest_transition_share_of_absolute_path": round(
+                float(row["largest_transition_share_of_absolute_path"]), 6
+            ),
+            "aligned_adjacent_transitions": row["aligned_adjacent_transitions"],
+            "opposing_adjacent_transitions": row["opposing_adjacent_transitions"],
+            "zero_adjacent_transitions": row["zero_adjacent_transitions"],
+            "all_adjacent_transitions_aligned": row[
+                "all_adjacent_transitions_aligned"
+            ],
+            "first_to_last_same_direction": row["first_to_last_same_direction"],
+            "largest_transition_direction_aligned": row[
+                "largest_transition_direction_aligned"
+            ],
+        }
+    )
+    return compact
+
+
 def compact_within_sensitivity(row: dict[str, object]) -> dict[str, object]:
     return {
         "unadjusted_tail": row["unadjusted_tail"],
@@ -1612,6 +1873,7 @@ def findings_markdown(
     trends: list[dict[str, object]],
     sensitivity: list[dict[str, object]],
     early_late_sensitivity: list[dict[str, object]],
+    period_trajectories: list[dict[str, object]],
     within_sensitivity: list[dict[str, object]],
 ) -> str:
     history_summary = monitoring_history_summary(history)
@@ -1666,6 +1928,23 @@ def findings_markdown(
         key=lambda row: abs(
             float(row["early_late_adjustment_shift_percentage_points"])
         ),
+    )
+    trajectory_endpoint_same_direction = sum(
+        bool(row["first_to_last_same_direction"]) for row in period_trajectories
+    )
+    trajectory_all_transitions_aligned = sum(
+        bool(row["all_adjacent_transitions_aligned"]) for row in period_trajectories
+    )
+    trajectory_at_least_two_aligned = sum(
+        int(row["aligned_adjacent_transitions"]) >= 2 for row in period_trajectories
+    )
+    median_largest_transition_share = statistics.median(
+        float(row["largest_transition_share_of_absolute_path"])
+        for row in period_trajectories
+    )
+    most_concentrated_trajectory = max(
+        period_trajectories,
+        key=lambda row: float(row["largest_transition_share_of_absolute_path"]),
     )
     within_same_direction = sum(bool(row["same_direction"]) for row in within_sensitivity)
     median_within_absolute_shift = statistics.median(
@@ -1788,6 +2067,26 @@ def findings_markdown(
                 f"{float(row['adjusted_late_minus_early_percentage_points']):+.1f} | "
                 f"[{float(row['adjusted_late_minus_early_cluster_ci95_lower']):+.1f}, "
                 f"{float(row['adjusted_late_minus_early_cluster_ci95_upper']):+.1f}] |"
+            )
+        return "\n".join(lines)
+
+    def period_trajectory_table(rows: list[dict[str, object]]) -> str:
+        displayed = [
+            row for row in rows if int(row["unadjusted_tail_rank"]) <= 5
+        ]
+        lines = [
+            "| Signifier | P1 | P2 | P3 | P4 | Aligned transitions | Largest share of path |",
+            "|---|---:|---:|---:|---:|---:|---:|",
+        ]
+        for row in displayed:
+            lines.append(
+                f"| {str(row['signifier']).replace('|', '&#124;')} | "
+                f"{float(row['period_1_prevalence_percent']):.1f}% | "
+                f"{float(row['period_2_prevalence_percent']):.1f}% | "
+                f"{float(row['period_3_prevalence_percent']):.1f}% | "
+                f"{float(row['period_4_prevalence_percent']):.1f}% | "
+                f"{int(row['aligned_adjacent_transitions'])}/3 | "
+                f"{float(row['largest_transition_share_of_absolute_path']) * 100:.0f}% |"
             )
         return "\n".join(lines)
 
@@ -1924,6 +2223,41 @@ Their percentage-point magnitudes are not on the same scale as the annualized
 linear slope; only directions are compared. The clustered intervals are
 diagnostic, not a discovery screen.
 
+## Four-period trajectory sensitivity
+
+The two-period contrast can still hide shorter changes, so a second shape
+diagnostic divides the inclusive observation window into four nearly equal
+calendar periods: **{period_trajectories[0]['period_1_start']}–{period_trajectories[0]['period_1_end']}**,
+**{period_trajectories[0]['period_2_start']}–{period_trajectories[0]['period_2_end']}**,
+**{period_trajectories[0]['period_3_start']}–{period_trajectories[0]['period_3_end']}**, and
+**{period_trajectories[0]['period_4_start']}–{period_trajectories[0]['period_4_end']}**.
+Among the 20 selected leaders, **{trajectory_endpoint_same_direction}** have a
+first-to-last period change matching the linear slope, but only
+**{trajectory_all_transitions_aligned}** move in that direction across all
+three adjacent transitions. **{trajectory_at_least_two_aligned}** move in the
+selected direction in at least two of three transitions.
+
+For each signifier, the largest adjacent move accounts for a median
+**{median_largest_transition_share * 100:.0f}%** of its total absolute path
+across the three transitions. The most concentrated selected path is
+**{most_concentrated_trajectory['signifier']}**: its largest move is
+{float(most_concentrated_trajectory['largest_adjacent_change_percentage_points']):+.1f}
+points across
+{str(most_concentrated_trajectory['largest_transition']).replace('_', ' ')}, or
+{float(most_concentrated_trajectory['largest_transition_share_of_absolute_path']) * 100:.0f}%
+of its total absolute adjacent movement.
+
+![Adjacent changes across four periods for selected leaders](outputs/leader-period-trajectory.svg)
+
+{period_trajectory_table(period_trajectories)}
+
+The concentration share is descriptive: one-third represents three equally
+sized absolute moves, while 100% means one transition contains all observed
+adjacent movement. Period prevalence is raw and unweighted. This diagnostic
+does not adjust for changing composition, repeated respondents, or calendar
+effects; it supplies no new discovery test and remains conditioned on selecting
+the 20 most extreme linear slopes.
+
 ## Within-respondent sensitivity
 
 A second targeted check separates two diagnostic changes. It first refits the
@@ -1966,7 +2300,8 @@ extremes. Their intervals are diagnostic rather than a discovery test.
 Full machine-readable estimates, eligibility flags, and interval bounds are in
 `outputs/signifier-growth.csv`; adjusted leader checks are in
 `outputs/leader-adjusted-sensitivity.csv`; two-period checks are in
-`outputs/leader-early-late-sensitivity.csv`; within-respondent checks are in
+`outputs/leader-early-late-sensitivity.csv`; four-period paths are in
+`outputs/leader-period-trajectory.csv`; within-respondent checks are in
 `outputs/leader-within-respondent-sensitivity.csv`; the daily and cumulative
 counts are in `outputs/daily-observation-growth.csv`.
 
@@ -2114,6 +2449,14 @@ def write_outputs(
         list(early_late_sensitivity[0]),
         early_late_sensitivity,
     )
+    period_trajectories = period_trajectory_leader_sensitivity(
+        audit.path, trends, audit.earliest, audit.latest
+    )
+    write_csv(
+        output_dir / "leader-period-trajectory.csv",
+        list(period_trajectories[0]),
+        period_trajectories,
+    )
     within_sensitivity = within_respondent_leader_sensitivity(trends, audit.signifiers)
     write_csv(
         output_dir / "leader-within-respondent-sensitivity.csv",
@@ -2125,6 +2468,9 @@ def write_outputs(
     )
     (output_dir / "leader-early-late-sensitivity.svg").write_text(
         early_late_sensitivity_svg(early_late_sensitivity), encoding="utf-8"
+    )
+    (output_dir / "leader-period-trajectory.svg").write_text(
+        period_trajectory_svg(period_trajectories), encoding="utf-8"
     )
     (output_dir / "leader-within-respondent-sensitivity.svg").write_text(
         within_respondent_sensitivity_svg(within_sensitivity), encoding="utf-8"
@@ -2244,6 +2590,47 @@ def write_outputs(
                 for row in early_late_sensitivity
             ],
         },
+        "period_trajectory_sensitivity": {
+            "selection": (
+                f"top {LEADER_SENSITIVITY_PER_TAIL} positive and top "
+                f"{LEADER_SENSITIVITY_PER_TAIL} negative linear slopes"
+            ),
+            "model": (
+                f"raw unweighted endorsement prevalence in {TRAJECTORY_PERIODS} "
+                "nearly equal-duration calendar periods"
+            ),
+            "periods": [
+                {
+                    "period": period,
+                    "start": period_trajectories[0][f"period_{period}_start"],
+                    "end": period_trajectories[0][f"period_{period}_end"],
+                }
+                for period in range(1, TRAJECTORY_PERIODS + 1)
+            ],
+            "selected_signifiers": len(period_trajectories),
+            "first_to_last_same_direction": sum(
+                bool(row["first_to_last_same_direction"])
+                for row in period_trajectories
+            ),
+            "all_adjacent_transitions_aligned": sum(
+                bool(row["all_adjacent_transitions_aligned"])
+                for row in period_trajectories
+            ),
+            "at_least_two_adjacent_transitions_aligned": sum(
+                int(row["aligned_adjacent_transitions"]) >= 2
+                for row in period_trajectories
+            ),
+            "median_largest_transition_share_of_absolute_path": round(
+                statistics.median(
+                    float(row["largest_transition_share_of_absolute_path"])
+                    for row in period_trajectories
+                ),
+                6,
+            ),
+            "results": [
+                compact_period_trajectory(row) for row in period_trajectories
+            ],
+        },
         "within_respondent_sensitivity": {
             "selection": (
                 f"top {LEADER_SENSITIVITY_PER_TAIL} positive and top "
@@ -2304,6 +2691,7 @@ def write_outputs(
             trends,
             sensitivity,
             early_late_sensitivity,
+            period_trajectories,
             within_sensitivity,
         ),
         encoding="utf-8",

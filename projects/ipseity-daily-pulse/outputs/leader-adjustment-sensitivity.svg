@@ -36,50 +36,50 @@
   <text class="tick" text-anchor="middle" x="922.0" y="620">+40</text>
   <line x1="578.5" y1="125" x2="578.5" y2="594" stroke="#243128" stroke-width="2"/>
   <text class="tick" text-anchor="end" x="223" y="153.4">beautiful</text>
-  <line x1="787.0" y1="148.4" x2="686.0" y2="148.4" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="555.4" y1="148.4" x2="816.5" y2="148.4" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="787.0" cy="148.4" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="686.0" cy="148.4" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="200.3">COVID survivor</text>
-  <line x1="732.6" y1="195.3" x2="699.7" y2="195.3" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="545.0" y1="195.3" x2="854.3" y2="195.3" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="732.6" cy="195.3" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="699.7" cy="195.3" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="247.2">romance fan</text>
-  <line x1="728.4" y1="242.2" x2="641.3" y2="242.2" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="519.6" y1="242.2" x2="763.0" y2="242.2" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="728.4" cy="242.2" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="641.3" cy="242.2" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="294.1">amateur artist</text>
-  <line x1="727.3" y1="289.1" x2="679.3" y2="289.1" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="545.0" y1="289.1" x2="813.5" y2="289.1" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="727.3" cy="289.1" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="679.3" cy="289.1" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="341.1">pretty</text>
-  <line x1="723.1" y1="336.1" x2="621.7" y2="336.1" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="483.1" y1="336.1" x2="760.4" y2="336.1" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="723.1" cy="336.1" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <line x1="789.8" y1="148.4" x2="677.8" y2="148.4" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="547.6" y1="148.4" x2="808.1" y2="148.4" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="789.8" cy="148.4" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="677.8" cy="148.4" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="200.3">pretty</text>
+  <line x1="728.6" y1="195.3" x2="622.6" y2="195.3" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="483.9" y1="195.3" x2="761.3" y2="195.3" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="728.6" cy="195.3" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="622.6" cy="195.3" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="247.2">amateur artist</text>
+  <line x1="727.3" y1="242.2" x2="679.3" y2="242.2" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="545.0" y1="242.2" x2="813.5" y2="242.2" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="727.3" cy="242.2" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="679.3" cy="242.2" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="294.1">COVID survivor</text>
+  <line x1="725.5" y1="289.1" x2="699.7" y2="289.1" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="545.1" y1="289.1" x2="854.3" y2="289.1" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="725.5" cy="289.1" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="699.7" cy="289.1" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="341.1">romance fan</text>
+  <line x1="714.8" y1="336.1" x2="621.7" y2="336.1" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="500.4" y1="336.1" x2="743.0" y2="336.1" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="714.8" cy="336.1" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
   <circle cx="621.7" cy="336.1" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="387.9">star wars fan</text>
-  <line x1="459.1" y1="382.9" x2="491.6" y2="382.9" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="353.6" y1="382.9" x2="629.5" y2="382.9" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="459.1" cy="382.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="491.6" cy="382.9" r="5" fill="#4B6F44"/>
-  <text class="tick" text-anchor="end" x="223" y="434.9">nba fan</text>
-  <line x1="461.7" y1="429.9" x2="537.4" y2="429.9" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="398.9" y1="429.9" x2="675.8" y2="429.9" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="461.7" cy="429.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="537.4" cy="429.9" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="387.9">nba fan</text>
+  <line x1="456.7" y1="382.9" x2="536.7" y2="382.9" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="399.0" y1="382.9" x2="674.4" y2="382.9" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="456.7" cy="382.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="536.7" cy="382.9" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="434.9">star wars fan</text>
+  <line x1="459.1" y1="429.9" x2="491.6" y2="429.9" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="353.6" y1="429.9" x2="629.5" y2="429.9" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="459.1" cy="429.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="491.6" cy="429.9" r="5" fill="#4B6F44"/>
   <text class="tick" text-anchor="end" x="223" y="481.8">social conservative</text>
-  <line x1="465.6" y1="476.8" x2="489.0" y2="476.8" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="358.5" y1="476.8" x2="619.4" y2="476.8" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="465.6" cy="476.8" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="489.0" cy="476.8" r="5" fill="#4B6F44"/>
+  <line x1="463.8" y1="476.8" x2="487.3" y2="476.8" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="357.2" y1="476.8" x2="617.4" y2="476.8" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="463.8" cy="476.8" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="487.3" cy="476.8" r="5" fill="#4B6F44"/>
   <text class="tick" text-anchor="end" x="223" y="528.6">2a supporter</text>
-  <line x1="469.2" y1="523.6" x2="438.7" y2="523.6" stroke="#aeb9b0" stroke-width="3"/>
-  <line x1="305.0" y1="523.6" x2="572.5" y2="523.6" stroke="#4B6F44" stroke-width="2"/>
-  <circle cx="469.2" cy="523.6" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
-  <circle cx="438.7" cy="523.6" r="5" fill="#4B6F44"/>
+  <line x1="467.2" y1="523.6" x2="433.1" y2="523.6" stroke="#aeb9b0" stroke-width="3"/>
+  <line x1="299.3" y1="523.6" x2="566.9" y2="523.6" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="467.2" cy="523.6" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="433.1" cy="523.6" r="5" fill="#4B6F44"/>
   <text class="tick" text-anchor="end" x="223" y="575.5">Reddit user</text>
   <line x1="470.1" y1="570.5" x2="408.6" y2="570.5" stroke="#aeb9b0" stroke-width="3"/>
   <line x1="274.3" y1="570.5" x2="542.8" y2="570.5" stroke="#4B6F44" stroke-width="2"/>
