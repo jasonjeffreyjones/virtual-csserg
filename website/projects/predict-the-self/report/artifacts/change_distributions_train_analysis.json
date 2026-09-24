@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_change_distribution_forecasting",
+  "cases": 150,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "00d5e2805082986b00f2716808ee12d4cff70ec900a5e47636e893217368f020",
+    "change_volume_implementation_sha256": "59b1a48b9b4e7194bbe260b497c5463cb1e4ce984c544e58a404f913046d6c09",
+    "retrieval_feature_implementation_sha256": "05f64bb95440dcea8125358441878612e71ba19b898a791a0d3a200511a5077e"
+  },
+  "design": {
+    "training_cases_per_fold": 149,
+    "neighbor_count": 30,
+    "neighbor_effective_weight": 30.0,
+    "fold_prior_effective_weight": 30.0,
+    "source_representation": "text and field-qualified 2024 demographics with fold-fit TF-IDF",
+    "probabilistic_score": "weighted empirical CRPS",
+    "central_interval": {
+      "nominal_coverage": 0.8,
+      "quantiles": [
+        0.1,
+        0.9
+      ],
+      "quantile_definition": "left-continuous inverse empirical CDF"
+    },
+    "future_information_used_for_prediction": "none",
+    "warning": "This forecasts distributions of revision volume and response form, not correct future lexical content."
+  },
+  "mean_selected_neighbor_cosine_similarity": {
+    "mean": 0.169564,
+    "median": 0.17436
+  },
+  "outcomes": {
+    "add_count": {
+      "source_calibrated_marginal": {
+        "mean_crps": 14.650556,
+        "central_80_interval_coverage": 0.8,
+        "mean_central_80_interval_width": 67.8,
+        "mean_central_80_interval_score": 92.533333
+      },
+      "regularized_neighborhood": {
+        "mean_crps": 14.438038,
+        "central_80_interval_coverage": 0.82,
+        "mean_central_80_interval_width": 66.62,
+        "mean_central_80_interval_score": 91.553333
+      },
+      "paired_crps_comparison": {
+        "effect_definition": "marginal_crps_minus_neighborhood_crps",
+        "mean_effect_positive_favors_neighborhood": 0.212518,
+        "paired_case_bootstrap_95_ci_low": -0.07103,
+        "paired_case_bootstrap_95_ci_high": 0.497525,
+        "neighborhood_case_wins": 88,
+        "case_ties": 0,
+        "neighborhood_case_losses": 62
+      },
+      "paired_central_80_interval_score_comparison": {
+        "effect_definition": "marginal_interval_score_minus_neighborhood_interval_score",
+        "mean_effect_positive_favors_neighborhood": 0.98,
+        "paired_case_bootstrap_95_ci_low": -2.606667,
+        "paired_case_bootstrap_95_ci_high": 4.406833,
+        "neighborhood_case_wins": 88,
+        "case_ties": 11,
+        "neighborhood_case_losses": 51
+      }
+    },
+    "delete_count": {
+      "source_calibrated_marginal": {
+        "mean_crps": 3.926457,
+        "central_80_interval_coverage": 0.8,
+        "mean_central_80_interval_width": 18.368984,
+        "mean_central_80_interval_score": 23.187111
+      },
+      "regularized_neighborhood": {
+        "mean_crps": 3.853656,
+        "central_80_interval_coverage": 0.76,
+        "mean_central_80_interval_width": 18.36638,
+        "mean_central_80_interval_score": 23.226577
+      },
+      "paired_crps_comparison": {
+        "effect_definition": "marginal_crps_minus_neighborhood_crps",
+        "mean_effect_positive_favors_neighborhood": 0.072801,
+        "paired_case_bootstrap_95_ci_low": -0.036356,
+        "paired_case_bootstrap_95_ci_high": 0.178244,
+        "neighborhood_case_wins": 84,
+        "case_ties": 0,
+        "neighborhood_case_losses": 66
+      },
+      "paired_central_80_interval_score_comparison": {
+        "effect_definition": "marginal_interval_score_minus_neighborhood_interval_score",
+        "mean_effect_positive_favors_neighborhood": -0.039467,
+        "paired_case_bootstrap_95_ci_low": -0.730974,
+        "paired_case_bootstrap_95_ci_high": 0.642544,
+        "neighborhood_case_wins": 60,
+        "case_ties": 0,
+        "neighborhood_case_losses": 90
+      }
+    },
+    "word_count": {
+      "source_calibrated_marginal": {
+        "mean_crps": 40.672695,
+        "central_80_interval_coverage": 0.806667,
+        "mean_central_80_interval_width": 149.96,
+        "mean_central_80_interval_score": 264.626667
+      },
+      "regularized_neighborhood": {
+        "mean_crps": 38.156852,
+        "central_80_interval_coverage": 0.846667,
+        "mean_central_80_interval_width": 154.526667,
+        "mean_central_80_interval_score": 244.926667
+      },
+      "paired_crps_comparison": {
+        "effect_definition": "marginal_crps_minus_neighborhood_crps",
+        "mean_effect_positive_favors_neighborhood": 2.515843,
+        "paired_case_bootstrap_95_ci_low": 1.008212,
+        "paired_case_bootstrap_95_ci_high": 4.059792,
+        "neighborhood_case_wins": 83,
+        "case_ties": 0,
+        "neighborhood_case_losses": 67
+      },
+      "paired_central_80_interval_score_comparison": {
+        "effect_definition": "marginal_interval_score_minus_neighborhood_interval_score",
+        "mean_effect_positive_favors_neighborhood": 19.7,
+        "paired_case_bootstrap_95_ci_low": 3.873167,
+        "paired_case_bootstrap_95_ci_high": 37.193333,
+        "neighborhood_case_wins": 80,
+        "case_ties": 6,
+        "neighborhood_case_losses": 64
+      }
+    },
+    "line_count": {
+      "source_calibrated_marginal": {
+        "mean_crps": 4.910848,
+        "central_80_interval_coverage": 0.966667,
+        "mean_central_80_interval_width": 26.106667,
+        "mean_central_80_interval_score": 26.773333
+      },
+      "regularized_neighborhood": {
+        "mean_crps": 4.922609,
+        "central_80_interval_coverage": 0.926667,
+        "mean_central_80_interval_width": 25.246667,
+        "mean_central_80_interval_score": 28.846667
+      },
+      "paired_crps_comparison": {
+        "effect_definition": "marginal_crps_minus_neighborhood_crps",
+        "mean_effect_positive_favors_neighborhood": -0.011761,
+        "paired_case_bootstrap_95_ci_low": -0.097952,
+        "paired_case_bootstrap_95_ci_high": 0.081212,
+        "neighborhood_case_wins": 62,
+        "case_ties": 0,
+        "neighborhood_case_losses": 88
+      },
+      "paired_central_80_interval_score_comparison": {
+        "effect_definition": "marginal_interval_score_minus_neighborhood_interval_score",
+        "mean_effect_positive_favors_neighborhood": -2.073333,
+        "paired_case_bootstrap_95_ci_low": -4.84,
+        "paired_case_bootstrap_95_ci_high": 0.06,
+        "neighborhood_case_wins": 32,
+        "case_ties": 112,
+        "neighborhood_case_losses": 6
+      }
+    },
+    "source_similarity": {
+      "source_calibrated_marginal": {
+        "mean_crps": 0.077171,
+        "central_80_interval_coverage": 0.8,
+        "mean_central_80_interval_width": 0.348132,
+        "mean_central_80_interval_score": 0.484805
+      },
+      "regularized_neighborhood": {
+        "mean_crps": 0.074684,
+        "central_80_interval_coverage": 0.806667,
+        "mean_central_80_interval_width": 0.354706,
+        "mean_central_80_interval_score": 0.449941
+      },
+      "paired_crps_comparison": {
+        "effect_definition": "marginal_crps_minus_neighborhood_crps",
+        "mean_effect_positive_favors_neighborhood": 0.002486,
+        "paired_case_bootstrap_95_ci_low": -0.000106,
+        "paired_case_bootstrap_95_ci_high": 0.00518,
+        "neighborhood_case_wins": 78,
+        "case_ties": 0,
+        "neighborhood_case_losses": 72
+      },
+      "paired_central_80_interval_score_comparison": {
+        "effect_definition": "marginal_interval_score_minus_neighborhood_interval_score",
+        "mean_effect_positive_favors_neighborhood": 0.034864,
+        "paired_case_bootstrap_95_ci_low": 0.008622,
+        "paired_case_bootstrap_95_ci_high": 0.064987,
+        "neighborhood_case_wins": 82,
+        "case_ties": 1,
+        "neighborhood_case_losses": 67
+      }
+    }
+  },
+  "bootstrap": {
+    "unit": "paired training case",
+    "resamples": 20000,
+    "seed_restarted_for_each_outcome_and_score": 20260924,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to training-case composition; it is not a population-generalization interval."
+  },
+  "claim_boundary": "This is a locked training-cohort diagnostic using a previously selected representation and hyperparameters, not untouched confirmation, development performance, or private-test performance."
+}

@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-24 09:01:06 UTC — Aleph Initial Alpha — probabilistic revision-
+  volume forecasting](dialog/iterations/2026-09-24T090106Z-aleph-initial-alpha.md)
 - [2026-09-23 09:01:16 UTC — Aleph Initial Alpha — prospective revision-
   volume forecasting](dialog/iterations/2026-09-23T090116Z-aleph-initial-alpha.md)
 - [2026-09-22 09:01:07 UTC — Aleph Initial Alpha — frozen-projection

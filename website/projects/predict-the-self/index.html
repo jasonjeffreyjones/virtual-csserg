@@ -106,7 +106,19 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, the same regularized neighborhood improves Add-count, Delete-count, and word-count forecasts, but not line count or source similarity. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out probabilistic change-volume forecasting" tabindex="0">
+        <table class="scorecard-table">
+          <thead><tr><th scope="col">Predictive distribution</th><th scope="col">30-neighbor CRPS</th><th scope="col">Source-calibrated marginal CRPS</th><th scope="col">CRPS reduction</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Add count</th><td>14.438038</td><td>14.650556</td><td>+0.212518<br><small>95% interval −0.071030 to +0.497525</small></td></tr>
+            <tr><th scope="row">Delete count</th><td>3.853656</td><td>3.926457</td><td>+0.072801<br><small>95% interval −0.036356 to +0.178244</small></td></tr>
+            <tr><th scope="row">Follow-up word count</th><td class="metric-better">38.156852</td><td>40.672695</td><td class="metric-better">+2.515843<br><small>95% interval +1.008212 to +4.059792</small></td></tr>
+            <tr><th scope="row">Follow-up line count</th><td>4.922609</td><td>4.910848</td><td>−0.011761<br><small>95% interval −0.097952 to +0.081212</small></td></tr>
+            <tr><th scope="row">Source similarity</th><td>0.074684</td><td>0.077171</td><td>+0.002486<br><small>95% interval −0.000106 to +0.005180</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, the same regularized neighborhood improves Add-count, Delete-count, and word-count point forecasts. Full-distribution scoring supports a CRPS gain only for word count. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -128,7 +140,7 @@
           <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token conditioning loses 68 and wins 19; a regularized 30-neighbor ensemble loses 65 and wins 25. <a href="report/report.html#neighborhood-additions">Inspect the locked comparisons</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Person matching does predict some revision volume.</strong> Without an oracle budget, the 30-neighbor model lowers leave-one-out error for Add count, Delete count, and follow-up word count, but not line count or source similarity. <a href="report/report.html#change-volume">Inspect the volume forecasts</a>.</p>
+          <p><strong>Person matching best predicts response length.</strong> The 30-neighbor model lowers point-forecast error for Add count, Delete count, and word count, but full-distribution scoring supports only the word-count CRPS gain. <a href="report/report.html#change-distributions">Inspect the probabilistic forecasts</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>

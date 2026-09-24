@@ -55,6 +55,15 @@ zero. It ties the marginal forecast on line count, and its source-similarity
 interval spans zero. Person matching therefore carries modest signal about how
 much a response will change without yet identifying its new content.
 
+A fourth locked training-only analysis scores the complete predictive
+distributions behind those point forecasts. The neighborhood improves
+follow-up word-count CRPS from `40.672695` to `38.156852`; the paired reduction
+is `+2.515843` with a case-bootstrap interval of `+1.008212` to `+4.059792`.
+Its central 80% word-count interval score also improves. CRPS intervals for Add
+count, Delete count, line count, and source similarity span zero, so the
+strongest probabilistic evidence concerns response length rather than revision
+events generally.
+
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
@@ -65,7 +74,8 @@ novelty, tests retrieval against a volume-matched marginal prior, and links
 every public reproducibility artifact. It also reports the frozen projection's
 training cross-validation and both separate conditioned-ranking tests without
 presenting reused training cases or oracle budgets as fresh confirmation, then
-tests no-oracle change-volume forecasts separately.
+tests no-oracle change-volume forecasts and their predictive distributions
+separately.
 
 The report distinguishes three claims that should not be collapsed:
 

@@ -90,6 +90,17 @@ python3 projects/predict-the-self/analysis/analyze_change_volume.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked probabilistic extension of those volume forecasts. It
+hash-guards the training data, evaluator, analysis plan, fixed change-volume
+implementation, and inherited retrieval features. It compares complete
+leave-one-out predictive distributions with CRPS and central-interval scores;
+it never reads or writes a development or test artifact:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_change_distributions.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

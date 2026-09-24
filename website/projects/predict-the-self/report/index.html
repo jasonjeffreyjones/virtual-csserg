@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aleph Initial Alpha, Virtual CSSERG">
-<meta name="dcterms.date" content="2026-09-22">
+<meta name="dcterms.date" content="2026-09-24">
 
 <title>Predict the Self</title>
 <style>
@@ -171,7 +171,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 22, 2026</p>
+      <p class="date">September 24, 2026</p>
     </div>
   </div>
 
@@ -194,10 +194,11 @@ ul.task-list li input[type="checkbox"] {
 <p>A locked leave-one-out analysis of all 150 training trajectories now tests the unchanged projection without fitting on each held-out person’s follow-up. It repeats the mixed pattern: normalized edit similarity improves slightly (<code>+0.004147</code>) while token-overlap F1 worsens slightly (<code>−0.003493</code>); the other non-exact agreement intervals span zero. Word-count and source-similarity error fall, line-count error rises, and predicted responses remain far too similar to their sources (<code>0.929231</code> versus <code>0.200017</code> observed).</p>
 <p>A new locked exploratory comparison asks whether borrowing the complete follow-up of the most similar training participant can supply that missing novelty. The retrieval forecast nearly matches the amount of change: 80.2% of its unique token types are new to the focal person’s source, versus 73.2% in the observed follow-up. Yet only 7.0% of its introduced token types are correct on an average case, and every non-exact agreement metric is lower than for the stable projection. At the same case-level prediction volume, a training-only marginal-addition prior reaches 17.7% precision and wins 40 of 50 cases. Thus retrieval does not demonstrate person-specific lexical advantage over common additions. A locked leave-one-out test then conditions Add rankings directly on the held-out person’s source tokens. It recovers 14.5% of training-case novel types versus 16.1% for the marginal ranking. A second locked test pools 30 similar source descriptions and demographics with strong shrinkage; it recovers 14.9% versus 16.1%, losing 65 cases and winning 25. Predicting that language will change remains far beyond predicting which new identity signifiers this person will express.</p>
 <p>A third locked training-only test removes the oracle novelty budget and asks whether the same neighborhood can forecast revision volume prospectively. It reduces mean absolute error for Add count from <code>21.340000</code> to <code>20.126667</code>, Delete count from <code>5.614935</code> to <code>5.336275</code>, and follow-up word count from <code>56.080000</code> to <code>52.940000</code>; all three paired case-bootstrap intervals exclude zero. It ties the marginal forecast on line count, and its source-similarity interval spans zero. Person matching therefore carries modest signal about how much a response will change without yet identifying its new content.</p>
+<p>A fourth locked training-only analysis scores the complete predictive distributions behind those point forecasts. The neighborhood improves follow-up word-count CRPS from <code>40.672695</code> to <code>38.156852</code>; the paired reduction is <code>+2.515843</code> with a case-bootstrap interval of <code>+1.008212</code> to <code>+4.059792</code>. Its central 80% word-count interval score also improves. CRPS intervals for Add count, Delete count, line count, and source similarity span zero, so the strongest probabilistic evidence concerns response length rather than revision events generally.</p>
 </section>
 <section id="how-to-read-this-report" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-read-this-report">How to read this report</h2>
-<p>The <a href="report.html">evidence, method, and development results</a> chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and two transparent methods, reports the complete development scorecard, quantifies paired case uncertainty and lexical novelty, tests retrieval against a volume-matched marginal prior, and links every public reproducibility artifact. It also reports the frozen projection’s training cross-validation and both separate conditioned-ranking tests without presenting reused training cases or oracle budgets as fresh confirmation, then tests no-oracle change-volume forecasts separately.</p>
+<p>The <a href="report.html">evidence, method, and development results</a> chapter explains the challenge for a new reader, defines the ipseological prediction target, documents the frozen benchmark and two transparent methods, reports the complete development scorecard, quantifies paired case uncertainty and lexical novelty, tests retrieval against a volume-matched marginal prior, and links every public reproducibility artifact. It also reports the frozen projection’s training cross-validation and both separate conditioned-ranking tests without presenting reused training cases or oracle budgets as fresh confirmation, then tests no-oracle change-volume forecasts and their predictive distributions separately.</p>
 <p>The report distinguishes three claims that should not be collapsed:</p>
 <ol type="1">
 <li><strong>Submission validity:</strong> all 81 required IDs have nonblank predictions in the required order.</li>

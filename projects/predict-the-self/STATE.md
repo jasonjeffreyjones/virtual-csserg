@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-23T09:23:42Z
+updated: 2026-09-24T09:14:13Z
 ---
 
 # Predict the Self — Current State
@@ -28,6 +28,10 @@ Another locked leave-one-out analysis now removes the oracle addition budget
 and shows that the fixed regularized neighborhood modestly improves forecasts
 of Add count, Delete count, and follow-up word count, even though it does not
 improve line count or establish a source-similarity advantage.
+A locked probabilistic extension now shows that the corresponding full
+predictive distributions improve CRPS and central-interval score only for
+follow-up word count; CRPS differences for the other four outcomes remain
+compatible with zero.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -128,6 +132,17 @@ and the source-similarity reduction of `+0.002867` has an interval spanning
 zero (`-0.000960` to `+0.006730`). Person matching carries modest signal about
 the amount of revision but has not identified its new lexical content.
 
+The locked probabilistic extension scores the same leave-one-out forecasts as
+weighted empirical distributions. Follow-up word-count CRPS falls to
+`38.156852` from `40.672695`; the paired reduction is `+2.515843` with a
+case-bootstrap interval of `+1.008212` to `+4.059792`. The neighborhood's
+central 80% word-count interval covers `84.6667%` of cases versus `80.6667%`
+for the marginal distribution, and its interval-score reduction is
+`+19.700000` (`+3.873167` to `+37.193333`). Add-count, Delete-count,
+line-count, and source-similarity CRPS intervals all span zero. Thus the point
+forecast gains for Add and Delete volume do not generalize to stable
+distributional-score gains under this fixed model.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -178,6 +193,12 @@ the amount of revision but has not identified its new lexical content.
   Added a hash-guarded no-oracle leave-one-out volume analysis, six focused
   tests, a complete JSON result, and a 150-row case audit. No development or
   test artifact was read or changed by the analysis.
+- Locked `ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md` before reopening benchmark
+  data, implementation, or scoring (SHA-256
+  `00d5e2805082986b00f2716808ee12d4cff70ec900a5e47636e893217368f020`).
+  Added a hash-guarded leave-one-out probabilistic extension, seven focused
+  tests, a complete JSON result, and a 150-row CRPS/interval audit. No
+  development or test artifact was read or changed by the analysis.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -196,7 +217,7 @@ the amount of revision but has not identified its new lexical content.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, seven linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes thirty-four research
+- The three forms link reciprocally. The Full Report publishes thirty-eight research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -245,6 +266,11 @@ the amount of revision but has not identified its new lexical content.
   representation and fixed 30-neighbor/equal-shrinkage choices came from
   earlier Project work. Counts remain continuous, its folds overlap, and its
   audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
+- The probabilistic extension reuses the same outcomes, folds,
+  surface-text/coarse-demographic representation, and fixed weights. Its
+  central intervals are discrete empirical intervals, overlapping-fold
+  coverage is descriptive rather than a population guarantee, and its audit
+  is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -269,6 +295,8 @@ the amount of revision but has not identified its new lexical content.
   neighborhood Add-ranking plan.
 - `ANALYSIS_PLAN_CHANGE_VOLUME.md`: fixed no-oracle leave-one-out revision-
   volume forecasting plan.
+- `ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md`: fixed probabilistic extension of
+  the revision-volume analysis.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -288,6 +316,8 @@ the amount of revision but has not identified its new lexical content.
   and `results/neighborhood_additions_train_audit.csv` are its outputs.
 - `analysis/analyze_change_volume.py`: locked leave-one-out response-form and
   revision-volume forecasts; its JSON and case audit are under `results/`.
+- `analysis/analyze_change_distributions.py`: locked leave-one-out CRPS and
+  central-interval analysis; its JSON and case audit are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -318,8 +348,9 @@ the amount of revision but has not identified its new lexical content.
 3. Avoid further fixed lexical re-rankers on the same 150 cases without a
    substantively new representation. Before reusing development labels,
    require a synthesizing or semantic person-conditioned approach to preserve
-   the modest volume-calibration signal and beat leave-one-out marginal
-   additions in training; then lock any development comparison and avoid
-   private test feedback.
+   the supported word-count distribution signal, test rather than assume the
+   weaker Add/Delete volume signal, and beat leave-one-out marginal additions
+   in training; then lock any development comparison and avoid private test
+   feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

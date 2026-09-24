@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-23"
+date: "2026-09-24"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -41,8 +41,12 @@ change. The same regularized neighborhood lowers MAE relative to source-
 calibrated fold medians for Add count (`20.126667` versus `21.340000`), Delete
 count (`5.336275` versus `5.614935`), and word count (`52.940000` versus
 `56.080000`); all three paired intervals exclude zero. It ties on line count,
-while the source-similarity interval spans zero. A separately locked leave-one-out
-cross-validation of the frozen stable projection repeats its central mixed
+while the source-similarity interval spans zero. A fourth lock evaluates the
+complete predictive distributions rather than only their medians. The
+neighborhood improves word-count CRPS (`38.156852` versus `40.672695`; paired
+reduction `+2.515843`, interval `+1.008212` to `+4.059792`) and its central 80%
+interval score, while CRPS intervals for the other four outcomes span zero. A
+separately locked leave-one-out cross-validation of the frozen stable projection repeats its central mixed
 pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
 `0.003493`, word-count and source-similarity error fall, and line-count error
 rises. The other non-exact agreement intervals span zero.
@@ -85,6 +89,9 @@ rises. The other non-exact agreement intervals span zero.
   leave-one-out forecasts of Add count, Delete count, and follow-up word count
   over source-calibrated fold medians. It does not improve line count or show a
   stable source-similarity advantage.
+- Full predictive distributions sharpen that result: neighborhood word-count
+  CRPS and central 80% interval score improve, but Add count, Delete count, line
+  count, and source-similarity CRPS differences remain compatible with zero.
 
 # Introduction {#introduction}
 
@@ -314,6 +321,26 @@ error, so positive values favor person conditioning. Twenty thousand paired
 case-bootstrap resamples use seed `20260923`, restarted for each outcome. This
 lock cannot undo earlier use of the training corpus or earlier selection of
 the representation and hyperparameters.
+
+## Locked probabilistic change-volume forecasting
+
+A fourth training-only plan extends that fixed volume model from point
+forecasts to complete predictive distributions. It was locked before reopening
+the benchmark in this iteration, implementation, or scoring at SHA-256
+`00d5e2805082986b00f2716808ee12d4cff70ec900a5e47636e893217368f020`.
+For each held-out case and outcome, the marginal distribution gives equal
+weight to all 149 fold observations. The neighborhood distribution combines a
+30-case fold-wide prior with the same 30 cosine-weighted neighbors used above.
+Every support point is transformed to the held-out source scale before scoring.
+
+The primary score is the continuous ranked probability score (CRPS), a proper
+score that rewards predictive distributions concentrated near the observation
+(Gneiting & Raftery, 2007); lower values are better. Secondary diagnostics use central 80% intervals and
+report inclusive coverage, width, and interval score, which penalizes both
+width and misses. Positive paired effects are marginal score minus neighborhood
+score. Twenty thousand paired case-bootstrap resamples use seed `20260924`,
+restarted for each outcome and score. Representation, neighborhood size, and
+shrinkage remain unchanged and untuned.
 
 # Results {#results}
 
@@ -576,6 +603,37 @@ be revised, even though the same representation makes worse choices about
 selected training cohort, not full-text forecasts or evidence that demographic
 similarity is an ipseological mechanism.
 
+## Neighborhood distributions improve only word-count forecasts {#change-distributions}
+
+Scoring complete predictive distributions narrows the point-forecast result.
+Only follow-up word count has a paired CRPS interval that excludes zero in the
+direction favoring the neighborhood:
+
+| Training leave-one-out outcome | Neighborhood CRPS | Source-calibrated marginal CRPS | CRPS reduction | Paired case-bootstrap 95% interval |
+| --- | ---: | ---: | ---: | ---: |
+| Add count | 14.438038 | 14.650556 | +0.212518 | −0.071030 to +0.497525 |
+| Delete count | 3.853656 | 3.926457 | +0.072801 | −0.036356 to +0.178244 |
+| Follow-up word count | 38.156852 | 40.672695 | +2.515843 | +1.008212 to +4.059792 |
+| Follow-up line count | 4.922609 | 4.910848 | −0.011761 | −0.097952 to +0.081212 |
+| Source similarity | 0.074684 | 0.077171 | +0.002486 | −0.000106 to +0.005180 |
+
+The word-count neighborhood wins 83 cases and loses 67 on CRPS. Its central
+80% interval covers 84.7% of cases, compared with 80.7% for the marginal
+distribution, while mean width rises from `149.960000` to `154.526667` words.
+Despite that modest widening, mean interval score improves from `264.626667`
+to `244.926667`: the paired reduction is `+19.700000` with interval
+`+3.873167` to `+37.193333`. Source-similarity interval score also improves,
+but its primary CRPS interval spans zero. The other interval-score comparisons
+span zero as well.
+
+These distributional scores do not overturn the point-forecast findings.
+Rather, they locate their strongest probabilistic support in follow-up length.
+The Add and Delete medians improve absolute error, but their empirical
+distributions do not establish stable CRPS gains. Line-count intervals are
+substantially over-covering (96.7% marginal and 92.7% neighborhood against 80%
+nominal), showing that apparent uncertainty can be broad without being
+informative. None of these quantities identifies the future signifiers.
+
 ## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
@@ -639,12 +697,17 @@ oracle-budget lexical ranking loses to marginal additions. Person conditioning
 therefore is not uniformly uninformative: it helps estimate the extent of
 revision but has not identified its future signifiers. A synthesizing model
 should preserve that modest calibration signal while demonstrating content
-value beyond marginal prevalence.
+value beyond marginal prevalence. The probabilistic extension further
+qualifies the claim: the clearest distributional gain is for follow-up word
+count, while Add and Delete improvements are limited to point forecasts under
+the current evidence.
 
 ## Reproducibility {#reproducibility}
 
 The complete open materials are:
 
+- [`ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md`](ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md)
+  — pre-analysis lock for probabilistic revision-volume forecasts;
 - [`ANALYSIS_PLAN_CHANGE_VOLUME.md`](ANALYSIS_PLAN_CHANGE_VOLUME.md)
   — pre-analysis lock for prospective revision-volume forecasts;
 - [`ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`](ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md)
@@ -657,6 +720,8 @@ The complete open materials are:
   — pre-prediction method and evaluation lock;
 - [`analysis/analyze_dev_diagnostics.py`](analysis/analyze_dev_diagnostics.py)
   — hash-guarded paired bootstrap and extractive-limit analysis;
+- [`analysis/analyze_change_distributions.py`](analysis/analyze_change_distributions.py)
+  — hash-guarded leave-one-out predictive-distribution evaluation;
 - [`analysis/analyze_change_volume.py`](analysis/analyze_change_volume.py)
   — hash-guarded leave-one-out response-form and revision-volume forecasts;
 - [`analysis/analyze_novelty_prior.py`](analysis/analyze_novelty_prior.py)
@@ -675,6 +740,10 @@ The complete open materials are:
   — standard-library matched-trajectory generator;
 - [`results/stable_signifier_dev_diagnostics.json`](results/stable_signifier_dev_diagnostics.json)
   — complete machine-readable post hoc diagnostic results;
+- [`results/change_distributions_train_analysis.json`](results/change_distributions_train_analysis.json)
+  — complete machine-readable probabilistic-forecast result;
+- [`results/change_distributions_train_audit.csv`](results/change_distributions_train_audit.csv)
+  — all 150 cases' CRPS and central-interval diagnostics;
 - [`results/change_volume_train_analysis.json`](results/change_volume_train_analysis.json)
   — complete machine-readable change-volume result;
 - [`results/change_volume_train_audit.csv`](results/change_volume_train_audit.csv)
@@ -719,6 +788,10 @@ retrieval pipeline separately hash-guards its inputs and fixed analysis plan.
 
 ## Sources {#sources}
 
+- Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules,
+  prediction, and estimation. *Journal of the American Statistical
+  Association, 102*(477), 359–378.
+  [https://doi.org/10.1198/016214506000001437](https://doi.org/10.1198/016214506000001437)
 - Jones, J. J. (2023). [*Ipseology—A new science of the
   self*](https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/).
 - Jones, J. J. (2024). [*Predicting the self with generative
@@ -780,6 +853,13 @@ overlapping folds and case-bootstrap intervals characterize this selected
 training cohort, not a population. Count forecasts remain continuous to avoid
 an arbitrary rounding rule, Add/Delete tokens need not all be identity
 signifiers, and the derived case audit is governed by CC BY-NC-SA 4.0.
+
+The probabilistic extension inherits all of those design constraints. Its
+weighted empirical distributions reuse the same outcomes, folds,
+representation, and fixed weights; they are not independently selected models.
+Central 80% intervals are discrete empirical quantiles, and coverage in 150
+overlapping leave-one-out folds is descriptive rather than a population
+guarantee. Its derived case audit is also governed by CC BY-NC-SA 4.0.
 
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.

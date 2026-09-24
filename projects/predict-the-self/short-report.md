@@ -24,6 +24,8 @@ A second locked test pools Add events from 30 text-and-demographically similar t
 
 A third locked training-only test removes the oracle addition budget and forecasts revision volume. Against source-calibrated fold medians, the same 30-neighbor representation lowers mean absolute error for Add count (20.126667 versus 21.340000), Delete count (5.336275 versus 5.614935), and follow-up word count (52.940000 versus 56.080000); all three paired intervals exclude zero. It ties on line count, while the source-similarity interval spans zero.
 
+A fourth lock scores the complete predictive distributions. The neighborhood improves word-count CRPS from 40.672695 to 38.156852; the paired reduction is +2.515843 (interval +1.008212 to +4.059792), and its central 80% interval score also improves. CRPS intervals for Add count, Delete count, line count, and source similarity span zero. The strongest probabilistic evidence is therefore about later response length, not revision volume generally.
+
 ## Question and benchmark
 
 The larger project asks how predictable human lives are. Its first tractable task is Dr. Jason Jeffrey Jones' Predict Future Selves challenge: predict later personally expressed identity from an earlier self-description. The target is an individual's later expression of identity, not a latent true self or a complete life outcome.
@@ -64,6 +66,10 @@ The second training-only plan was also fixed before implementation and scoring. 
 
 The third training-only plan was locked before benchmark retrieval in this iteration, implementation, or scoring. It reuses the fixed 30-neighbor representation and equal neighborhood/prior weights but gives neither method future-derived volume. Fold medians forecast Add count, Delete fraction, word-count change, line-count change, and source similarity. The neighborhood uses a regularized weighted median of those same quantities. Source-relative quantities are transformed back using only the held-out 2024 response. Twenty thousand paired case resamples use seed 20260923.
 
+## Probabilistic change-volume forecasting
+
+The fourth training-only plan was locked before reopening benchmark data, implementation, or scoring. For each outcome, the marginal distribution weights all 149 fold observations equally. The neighborhood distribution combines a 30-case fold-wide prior with the same 30 cosine-weighted neighbors. Weighted empirical CRPS is primary (Gneiting & Raftery, 2007); central 80% coverage, width, and interval score are secondary. Twenty thousand paired case resamples use seed 20260924. No representation or weight was tuned.
+
 ## Complete result pattern
 
 The projection improves three of six text-agreement measures, worsens two, and ties exact match. Its word-count mean absolute error falls from 56.68 to 41.64 words, a +15.04 error reduction with paired case-bootstrap interval +1.18 to +32.36. Source-similarity error falls from 0.774317 to 0.678215; its +0.096102 reduction has interval +0.066064 to +0.129348. Line-count error rises from 6.80 to 9.76; its −2.96 error reduction has interval −5.54 to −0.42. These mixed directions are why no single headline score summarizes the method.
@@ -82,17 +88,21 @@ The regularized neighborhood changes about 26.0% of the marginal top-set guesses
 
 The no-oracle volume result is more favorable. Add-count MAE falls by 1.213333 (interval 0.680000 to 1.740000), Delete-count MAE by 0.278660 (0.022274 to 0.545876), and word-count MAE by 3.140000 (1.093333 to 5.213333). Line-count forecasts are identical in every case, and the 0.002867 source-similarity error reduction has an interval of −0.000960 to 0.006730. Similarity therefore helps predict some quantities of revision, even while it fails to select the correct new signifiers.
 
+Distributional scoring qualifies that conclusion. Word-count CRPS falls by 2.515843, with an interval excluding zero. Its neighborhood 80% interval covers 84.7% of cases versus 80.7% for the marginal distribution; mean width rises from 149.960000 to 154.526667 words, but interval score improves by 19.700000 (interval 3.873167 to 37.193333). Add- and Delete-count point forecasts improve, yet their CRPS reductions of 0.212518 and 0.072801 have intervals spanning zero. Line-count intervals substantially over-cover against their 80% target. Predictive uncertainty does not identify future content.
+
 The submission contains one nonblank prediction for every required test ID in order. Its SHA-256 is a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3. Only the organizer can run the private evaluator. Validation establishes artifact shape, not predictive performance.
 
 ## Interpretation and limits
 
-Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. The marginal control further shows that retrieval's few correct novel tokens are not evidence of person-specific advantage over common additions. The conditioned rankings share an oracle future-token budget, and coarse demographic or lexical similarity is not an ipseological mechanism. Their units include function words, so all are diagnostics rather than independent predictions. Cross-validation folds overlap and reuse method-development data; repeated tuning on 50 development cases would further risk overfitting. Neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
+Token recurrence is not equivalent to identity-signifier endurance. Common wording may recur without representing a stable identity, while genuinely new identities, experiences, and reframings are impossible for an extractive method to produce. Retrieval introduces novelty without establishing that another participant's future—demographically similar or otherwise—is factual or plausible for the focal person. The marginal control further shows that retrieval's few correct novel tokens are not evidence of person-specific advantage over common additions. The conditioned rankings share an oracle future-token budget, and coarse demographic or lexical similarity is not an ipseological mechanism. Their units include function words, so all are diagnostics rather than independent predictions. The probabilistic analysis reuses the same folds, outcomes, representation, and fixed weights; empirical interval coverage is descriptive, not a population guarantee. Cross-validation folds overlap and reuse method-development data; repeated tuning on 50 development cases would further risk overfitting. Neither analysis lock nor bootstrap can make previously inspected data unseen or repair the cohort's nonprobability sampling.
 
 The next research step is to submit the frozen CSV and method card and publish the organizer's complete private scorecard unchanged. Further fixed lexical re-rankers on the same 150 cases are unlikely to be informative without a substantively new representation. Before reusing development labels, a later method should synthesize rather than copy new signifiers, preserve the modest volume-calibration signal, and beat leave-one-out marginal additions in training. Any development comparison should then be locked and avoid private test feedback for tuning.
 
 ## Reproducibility and references
 
-The public repository contains both deterministic standard-library generators, five analysis locks, hash-guarded diagnostic scripts, complete development and training audits, machine-readable scorecards, all 150 stable-projection fold predictions, the frozen 81-case test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
+The public repository contains both deterministic standard-library generators, six analysis locks, hash-guarded diagnostic scripts, complete development and training audits, machine-readable scorecards, all 150 stable-projection fold predictions, the frozen 81-case test artifact, its method card, and benchmark provenance. The Full Report links each artifact directly.
+
+Gneiting, T., & Raftery, A. E. (2007). Strictly proper scoring rules, prediction, and estimation. <i>Journal of the American Statistical Association, 102</i>(477), 359–378. [https://doi.org/10.1198/016214506000001437](https://doi.org/10.1198/016214506000001437)
 
 Jones, J. J. (2023). <i>Ipseology—A new science of the self.</i> https://jasonjones.ninja/ipseology-a-new-science-of-the-self-book/
 

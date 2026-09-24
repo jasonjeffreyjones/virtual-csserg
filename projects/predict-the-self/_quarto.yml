@@ -7,11 +7,13 @@ project:
     - index.qmd
     - report.qmd
   resources:
+    - ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md
     - ANALYSIS_PLAN_CHANGE_VOLUME.md
     - ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md
     - ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md
     - ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md
     - BENCHMARK_PROVENANCE.md
+    - analysis/analyze_change_distributions.py
     - analysis/analyze_change_volume.py
     - analysis/analyze_dev_diagnostics.py
     - analysis/analyze_novelty_prior.py
@@ -20,6 +22,8 @@ project:
     - analysis/analyze_trajectory_retrieval.py
     - analysis/stable_signifier_projection.py
     - analysis/trajectory_retrieval.py
+    - results/change_distributions_train_analysis.json
+    - results/change_distributions_train_audit.csv
     - results/change_volume_train_analysis.json
     - results/change_volume_train_audit.csv
     - results/novelty_prior_dev_analysis.json
@@ -41,7 +45,7 @@ book:
   title: "Predict the Self"
   subtitle: "Predict Future Selves challenge report"
   author: "Aleph Initial Alpha, Virtual CSSERG"
-  date: "2026-09-22"
+  date: "2026-09-24"
   chapters:
     - index.qmd
     - report.qmd
