@@ -51,10 +51,14 @@ replay. The script refuses to append a duplicate check timestamp.
   and calendar terms; `outputs/leader-early-late-sensitivity.svg` compares the
   raw and adjusted contrasts with respondent-clustered intervals.
 - `outputs/leader-period-trajectory.csv` divides the inclusive observation
-  window into four nearly equal-duration calendar periods and traces raw
-  prevalence for the same leaders; `outputs/leader-period-trajectory.svg`
-  shows the three adjacent changes, whether each matches the selected linear
-  direction, and the largest change's share of total absolute movement.
+  window into four nearly equal-duration calendar periods and traces both raw
+  prevalence and model-standardized prevalence for the same leaders;
+  `outputs/leader-period-trajectory.svg` shows the three raw adjacent changes,
+  whether each matches the selected linear direction, and the largest change's
+  share of total absolute movement.
+- `outputs/leader-period-adjustment-sensitivity.svg` compares the raw and
+  standardized largest-transition shares and identifies whether adjustment
+  changes which transition is largest.
 - `outputs/leader-within-respondent-sensitivity.csv` refits those leader tails
   first as pooled trends on the repeat-respondent subset and then with
   respondent fixed effects;
@@ -105,15 +109,21 @@ using the most extreme linear slopes. Their magnitudes are not directly
 comparable with the annualized slope; only direction is compared.
 
 The four-period trajectory sensitivity asks whether the selected linear trend
-leaders move smoothly or concentrate their raw change in a shorter interval.
-It reports each period's unweighted prevalence, all three adjacent changes,
-the number aligned with the selected slope, and the largest absolute adjacent
-change divided by the sum of all three absolute changes. A one-third share
-means the three absolute changes are equal; a 100% share means all observed
-adjacent movement occurs in one transition. This deterministic shape
-diagnostic has no inferential interpretation, does not adjust for composition
-or repeated respondents, and remains conditioned on selecting extreme linear
-slopes.
+leaders move smoothly or concentrate their change in a shorter interval. The
+raw path reports each period's unweighted prevalence, all three adjacent
+changes, the number aligned with the selected slope, and the largest absolute
+adjacent change divided by the sum of all three absolute changes. A second
+additive linear-probability model replaces linear time with three period
+indicators, retains the same age, missing-age, observed-composition, weekday,
+and month controls as the other adjusted sensitivities, and predicts each
+period after setting every other model column to its full-sample mean. This
+standardizes the four estimates to one observed covariate distribution. A
+one-third concentration share means the three absolute changes are equal; a
+100% share means all adjacent movement occurs in one transition. Both shape
+paths are descriptive, have no new inferential interpretation, do not adjust
+for repeated respondents or unobserved composition, and remain conditioned on
+selecting extreme linear slopes. The adjusted path is additionally sensitive
+to additive-model form and overlap between calendar and period terms.
 
 The within-respondent sensitivity uses the respondent–signifier sufficient
 statistics retained during validation. It first refits the pooled trend after

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="680" viewBox="0 0 1050 680" role="img" aria-labelledby="title desc">
+  <title id="title">Raw and adjusted concentration of four-period change</title>
+  <desc id="desc">Dumbbell plot for ten displayed signifiers comparing the largest adjacent transition&#x27;s share of total absolute four-period movement before and after age, observed-composition, weekday, and month standardization. Labels identify the largest raw and adjusted transitions; ochre adjusted points mark a changed transition.</desc>
+  <rect width="1050" height="680" fill="#ffffff"/>
+  <style>
+    text { font-family: system-ui, -apple-system, sans-serif; fill: #243128; }
+    .title { font-size: 25px; font-weight: 700; }
+    .subtitle { font-size: 15px; fill: #4e5d51; }
+    .axis { stroke: #66736a; stroke-width: 1; }
+    .grid { stroke: #dde3d8; stroke-width: 1; }
+    .tick { font-size: 13px; fill: #4e5d51; }
+  </style>
+  <text class="title" x="235" y="38">Is the largest short-period move composition-sensitive?</text>
+  <text class="subtitle" x="235" y="66">Largest transition share of each selected leader's total absolute four-period path</text>
+  <circle cx="235" cy="92" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <text class="tick" x="247" y="97">Raw</text>
+  <circle cx="305" cy="92" r="5" fill="#4B6F44"/>
+  <text class="tick" x="317" y="97">Adjusted to a common observed covariate mix</text>
+  <line class="grid" x1="235.0" y1="125" x2="235.0" y2="608"/>
+  <text class="tick" text-anchor="middle" x="235.0" y="634">0%</text>
+  <line class="grid" x1="387.5" y1="125" x2="387.5" y2="608"/>
+  <text class="tick" text-anchor="middle" x="387.5" y="634">25%</text>
+  <line class="grid" x1="540.0" y1="125" x2="540.0" y2="608"/>
+  <text class="tick" text-anchor="middle" x="540.0" y="634">50%</text>
+  <line class="grid" x1="692.5" y1="125" x2="692.5" y2="608"/>
+  <text class="tick" text-anchor="middle" x="692.5" y="634">75%</text>
+  <line class="grid" x1="845.0" y1="125" x2="845.0" y2="608"/>
+  <text class="tick" text-anchor="middle" x="845.0" y="634">100%</text>
+  <text class="tick" text-anchor="end" x="223" y="154.2">beautiful</text>
+  <line x1="556.4" y1="149.2" x2="565.4" y2="149.2" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="556.4" cy="149.2" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="565.4" cy="149.2" r="5" fill="#4B6F44"/>
+  <text class="tick" x="861" y="154.2">P2→P3 → P2→P3</text>
+  <text class="tick" text-anchor="end" x="223" y="202.4">COVID survivor</text>
+  <line x1="591.4" y1="197.4" x2="650.2" y2="197.4" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="591.4" cy="197.4" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="650.2" cy="197.4" r="5" fill="#9B6A21"/>
+  <text class="tick" x="861" y="202.4">P3→P4 → P1→P2</text>
+  <text class="tick" text-anchor="end" x="223" y="250.8">pretty</text>
+  <line x1="548.6" y1="245.8" x2="562.9" y2="245.8" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="548.6" cy="245.8" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="562.9" cy="245.8" r="5" fill="#4B6F44"/>
+  <text class="tick" x="861" y="250.8">P2→P3 → P2→P3</text>
+  <text class="tick" text-anchor="end" x="223" y="299.1">amateur artist</text>
+  <line x1="646.9" y1="294.1" x2="499.0" y2="294.1" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="646.9" cy="294.1" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="499.0" cy="294.1" r="5" fill="#9B6A21"/>
+  <text class="tick" x="861" y="299.1">P3→P4 → P2→P3</text>
+  <text class="tick" text-anchor="end" x="223" y="347.4">romance fan</text>
+  <line x1="602.0" y1="342.4" x2="584.5" y2="342.4" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="602.0" cy="342.4" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="584.5" cy="342.4" r="5" fill="#9B6A21"/>
+  <text class="tick" x="861" y="347.4">P2→P3 → P1→P2</text>
+  <text class="tick" text-anchor="end" x="223" y="395.6">star wars fan</text>
+  <line x1="817.8" y1="390.6" x2="561.8" y2="390.6" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="817.8" cy="390.6" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="561.8" cy="390.6" r="5" fill="#9B6A21"/>
+  <text class="tick" x="861" y="395.6">P2→P3 → P1→P2</text>
+  <text class="tick" text-anchor="end" x="223" y="443.9">nba fan</text>
+  <line x1="726.2" y1="438.9" x2="557.1" y2="438.9" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="726.2" cy="438.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="557.1" cy="438.9" r="5" fill="#9B6A21"/>
+  <text class="tick" x="861" y="443.9">P2→P3 → P1→P2</text>
+  <text class="tick" text-anchor="end" x="223" y="492.2">social conservative</text>
+  <line x1="596.8" y1="487.2" x2="533.9" y2="487.2" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="596.8" cy="487.2" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="533.9" cy="487.2" r="5" fill="#9B6A21"/>
+  <text class="tick" x="861" y="492.2">P3→P4 → P1→P2</text>
+  <text class="tick" text-anchor="end" x="223" y="540.5">2a supporter</text>
+  <line x1="555.2" y1="535.5" x2="599.6" y2="535.5" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="555.2" cy="535.5" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="599.6" cy="535.5" r="5" fill="#4B6F44"/>
+  <text class="tick" x="861" y="540.5">P2→P3 → P2→P3</text>
+  <text class="tick" text-anchor="end" x="223" y="588.9">planner</text>
+  <line x1="570.2" y1="583.9" x2="450.0" y2="583.9" stroke="#aeb9b0" stroke-width="3"/>
+  <circle cx="570.2" cy="583.9" r="5" fill="#ffffff" stroke="#66736a" stroke-width="2"/>
+  <circle cx="450.0" cy="583.9" r="5" fill="#4B6F44"/>
+  <text class="tick" x="861" y="588.9">P1→P2 → P1→P2</text>
+  <text class="tick" text-anchor="middle" x="540.0" y="661">Largest adjacent move as share of total absolute path</text>
+  <text class="tick" x="861" y="111">Raw → adjusted transition</text>
+  <text class="tick" text-anchor="end" x="1026" y="661">Ochre means the largest transition changed</text>
+</svg>

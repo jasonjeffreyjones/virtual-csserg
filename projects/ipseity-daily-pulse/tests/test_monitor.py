@@ -195,6 +195,44 @@ class MonitorTests(unittest.TestCase):
             fitted["largest_transition_share_of_absolute_path"], 4 / 7
         )
 
+    def test_adjusted_four_period_trajectory_removes_constructed_mix_lurch(self):
+        rows = []
+        start = dt.date(2025, 7, 8)
+        male_slots_by_period = (2, 2, 8, 8)
+        for period, male_slots in enumerate(male_slots_by_period):
+            for day_in_period in range(111):
+                day_index = period * 111 + day_in_period
+                date = start + dt.timedelta(days=day_index)
+                for slot in range(10):
+                    male = slot < male_slots
+                    record = row(
+                        "adjusted-trajectory",
+                        date,
+                        f"{day_index * 10 + slot:012x}",
+                        int(male),
+                    )
+                    record.update(
+                        {"age": "35", "sex": "Male" if male else "Female"}
+                    )
+                    rows.append(record)
+        end = start + dt.timedelta(days=443)
+        raw = monitor.fit_period_trajectory(rows, start, end)
+        adjusted = monitor.fit_adjusted_period_trajectory(rows, start, end)
+        self.assertAlmostEqual(
+            raw["period_2_to_3_change_percentage_points"], 60.0
+        )
+        for period in range(1, monitor.TRAJECTORY_PERIODS + 1):
+            self.assertAlmostEqual(
+                adjusted[f"adjusted_period_{period}_prevalence_percent"],
+                50.0,
+                places=6,
+            )
+        self.assertAlmostEqual(
+            adjusted["adjusted_total_absolute_adjacent_change_percentage_points"],
+            0.0,
+            places=6,
+        )
+
     def test_within_respondent_trend_removes_turnover_only_change(self):
         stats = monitor.SignifierStats()
         start = dt.date(2025, 1, 1)
@@ -558,6 +596,79 @@ class MonitorTests(unittest.TestCase):
             ),
             period_summary["median_largest_transition_share_of_absolute_path"],
         )
+        self.assertEqual(
+            sum(
+                item["adjusted_first_to_last_same_direction"] == "True"
+                for item in period_trajectories
+            ),
+            period_summary["adjusted_first_to_last_same_direction"],
+        )
+        self.assertEqual(
+            sum(
+                item["adjusted_all_adjacent_transitions_aligned"] == "True"
+                for item in period_trajectories
+            ),
+            period_summary["adjusted_all_adjacent_transitions_aligned"],
+        )
+        self.assertEqual(
+            sum(
+                int(item["adjusted_aligned_adjacent_transitions"]) >= 2
+                for item in period_trajectories
+            ),
+            period_summary[
+                "adjusted_at_least_two_adjacent_transitions_aligned"
+            ],
+        )
+        self.assertEqual(
+            sum(
+                item["same_largest_transition_after_adjustment"] == "True"
+                for item in period_trajectories
+            ),
+            period_summary["same_largest_transition_after_adjustment"],
+        )
+        for item in period_trajectories:
+            adjusted_prevalence = [
+                float(item[f"adjusted_period_{period}_prevalence_percent"])
+                for period in range(1, monitor.TRAJECTORY_PERIODS + 1)
+            ]
+            adjusted_changes = [
+                float(
+                    item[
+                        f"adjusted_period_{period}_to_{period + 1}_change_percentage_points"
+                    ]
+                )
+                for period in range(1, monitor.TRAJECTORY_PERIODS)
+            ]
+            for period, change in enumerate(adjusted_changes):
+                self.assertAlmostEqual(
+                    adjusted_prevalence[period + 1]
+                    - adjusted_prevalence[period],
+                    change,
+                )
+            self.assertAlmostEqual(
+                sum(abs(change) for change in adjusted_changes),
+                float(
+                    item[
+                        "adjusted_total_absolute_adjacent_change_percentage_points"
+                    ]
+                ),
+            )
+        self.assertEqual(
+            round(
+                statistics.median(
+                    float(
+                        item[
+                            "adjusted_largest_transition_share_of_absolute_path"
+                        ]
+                    )
+                    for item in period_trajectories
+                ),
+                6,
+            ),
+            period_summary[
+                "adjusted_median_largest_transition_share_of_absolute_path"
+            ],
+        )
         for name in (
             "observation-growth.svg",
             "monitoring-history.svg",
@@ -565,6 +676,7 @@ class MonitorTests(unittest.TestCase):
             "leader-adjustment-sensitivity.svg",
             "leader-early-late-sensitivity.svg",
             "leader-period-trajectory.svg",
+            "leader-period-adjustment-sensitivity.svg",
             "leader-within-respondent-sensitivity.svg",
         ):
             root = ET.parse(project / "outputs" / name).getroot()
