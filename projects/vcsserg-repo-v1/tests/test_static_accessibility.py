@@ -162,6 +162,38 @@ class StaticAccessibilityTests(unittest.TestCase):
             VERIFY.page_accessibility_problems(hidden_code_anchor, "code.html"), []
         )
 
+    def test_names_native_form_disclosures_and_custom_focus_targets(self):
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<details><summary><span aria-hidden="true">+</span>Code output</summary>'
+            '<p>Result</p></details>'
+            '<div tabindex="0" role="region" aria-label="Scrollable results"></div>'
+            '<label for="query">Search reports</label>'
+            '<input id="query" type="search" placeholder="Search">'
+            '<label>Topic<textarea></textarea></label>'
+            '<input type="submit" value="Run">'
+            '<input type="hidden" value="internal">'
+            '<map><area href="details" alt="Detailed results"></map></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "controls.html"), []
+        )
+
+        unnamed = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<details><summary><span aria-hidden="true">+</span></summary></details>'
+            '<div tabindex="0"><span aria-hidden="true">Scrollable</span></div>'
+            '<input type="search" placeholder="Search"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(unnamed, "controls.html"),
+            [
+                "controls.html: interactive element 2 (summary) has no accessible name",
+                "controls.html: interactive element 3 (div) has no accessible name",
+                "controls.html: interactive element 4 (input) has no accessible name",
+            ],
+        )
+
     def test_interactive_aria_targets_and_states_must_resolve(self):
         broken = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'

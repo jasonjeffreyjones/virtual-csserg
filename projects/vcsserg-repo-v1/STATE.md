@@ -2,23 +2,27 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-24T08:15:10Z
+updated: 2026-09-25T08:09:30Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 24, 2026, all seven automated promise groups pass across
-26 HTML pages, 527 links and buttons, and six first-party stylesheets. The
+Active. On September 25, 2026, all seven automated promise groups pass across
+26 HTML pages, 542 interactive or keyboard-focusable elements, and six
+first-party stylesheets. The
 static-site group requires
 the first anchor itself to be a bypass link targeting `main`, an explicit `alt`
 decision for every image, and an accessible name for every navigation landmark
 on pages containing more than one. It also requires every table header cell to
-declare a valid row or column scope, every exposed interactive element to have an
-accessible name, label/control references to resolve, expanded states to be
-boolean, and assistive-technology-hidden controls to be absent from the tab
-order. A tested post-render normalizer makes the
+declare a valid row or column scope, every exposed interactive or
+keyboard-focusable element to have an accessible name, label/control
+references to resolve, expanded states to be boolean, and
+assistive-technology-hidden controls to be absent from the tab order. This
+includes links, buttons, native form and disclosure controls, interactive ARIA
+roles, media controls, and custom nonnegative-`tabindex` targets. A tested
+post-render normalizer makes the
 bypass link first, names Quarto's repeated navigation regions, and adds column
 scope inside generated table heads on all four report pages without runtime
 JavaScript or hand-editing. The
@@ -110,13 +114,18 @@ without performing the unavailable human review.
   before writing. Five focused normalizer tests cover promotion, names, header
   scopes, idempotence, and failure without partial mutation; generic fixtures
   cover missing landmark names, label targets, and invalid header scope. A
-  September 24 audit then found all 501 assistive-technology-exposed links and
-  buttons named with valid checked `aria-labelledby`, `aria-controls`, and
-  `aria-expanded` relationships; the other 26 are Quarto source-line anchors
-  explicitly hidden and removed from the tab order. The parser rejects a
-  focusable hidden control. Two focused fixtures cover unnamed icon-only
-  controls, empty/missing labels, broken control targets, invalid expanded
-  state, and hidden-control handling. The verifier no longer accepts runtime
+  September 24 audit then found all exposed links and buttons named with valid
+  checked `aria-labelledby`, `aria-controls`, and `aria-expanded`
+  relationships. The September 25 coverage audit found that two native
+  disclosure summaries and six custom focusable scroll regions fell outside
+  that link/button-only implementation; all eight were already named. The
+  parser now checks 542 interactive or keyboard-focusable elements: all 516
+  exposed elements are named and the other 26 are Quarto source-line anchors
+  explicitly hidden and removed from the tab order. Three focused fixtures
+  cover unnamed icon-only links, disclosures, custom focus targets and
+  placeholder-only inputs; explicit and implicit form labels; input values;
+  empty/missing labels; broken control targets; invalid expanded state; and
+  hidden-control handling. The verifier no longer accepts runtime
   JavaScript relocation. The two NFL report
   figures retain detailed alternatives after rendering. These static checks do
   not replace rendered keyboard or assistive-technology review.
@@ -165,7 +174,8 @@ without performing the unavailable human review.
   byte-identical. The September 22 pre-change probe found all 150 incoming files
   byte-identical, and the September 23 pre-change probe found all 158 incoming
   files byte-identical. The September 24 pre-change probe found all 166 incoming
-  files byte-identical.
+  files byte-identical, and the September 25 pre-change probe found all 174
+  incoming files byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -192,19 +202,22 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 39 routine tests pass across 26 HTML pages, 527 links
-and buttons, and six first-party stylesheets on September 24.
+All seven groups and all 40 routine tests pass across 26 HTML pages, 542
+interactive or keyboard-focusable elements, and six first-party stylesheets on
+September 25.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
 alternatives, repeated navigation names, resolved landmark-label references,
-valid table-header scopes, interactive names and ARIA relationships, and the
+valid table-header scopes, interactive and keyboard-focusable element names and
+ARIA relationships, and the
 manual-review worksheet's sample and closure boundary. One focused negative
 test guards the first-anchor/target conjunction, five tests cover the build-time
 Quarto normalizer, one covers the generic navigation-name rule, one covers the
-generic table-header rule, two cover interactive names and ARIA relationships,
-and three cover the manual-review record.
+generic table-header rule, three cover interactive names and ARIA relationships
+across links, buttons, forms, disclosures, roles, media, and custom focus
+targets, and three cover the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -264,7 +277,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 24 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 25 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -287,8 +300,8 @@ dependencies. No package or replacement runtime was installed in this iteration.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean September 23 report set superseded by
-  this interactive-element contract.
+  v1 release ledger, including the clean September 24 report set superseded by
+  this broader interactive/focusable-element contract.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

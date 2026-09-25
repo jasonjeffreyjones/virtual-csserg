@@ -44,6 +44,35 @@ ACCESSIBILITY_RESULT_FIELDS = (
 )
 ACCESSIBILITY_RESULT_STATUSES = {"Pass", "Fail", "Not tested"}
 VALID_TABLE_HEADER_SCOPES = {"col", "colgroup", "row", "rowgroup"}
+NATIVE_INTERACTIVE_ELEMENTS = {
+    "a",
+    "area",
+    "button",
+    "input",
+    "select",
+    "summary",
+    "textarea",
+}
+INTERACTIVE_ROLES = {
+    "button",
+    "checkbox",
+    "combobox",
+    "link",
+    "menuitem",
+    "menuitemcheckbox",
+    "menuitemradio",
+    "option",
+    "radio",
+    "scrollbar",
+    "searchbox",
+    "slider",
+    "spinbutton",
+    "switch",
+    "tab",
+    "textbox",
+    "treeitem",
+}
+FORM_CONTROL_ELEMENTS = {"input", "select", "textarea"}
 VOID_ELEMENTS = {
     "area",
     "base",
@@ -91,6 +120,8 @@ class PageParser(HTMLParser):
         self.in_title = False
         self.interactive_elements = []
         self.interactive_stack = []
+        self.label_records = []
+        self.label_stack = []
         self.open_elements = []
         self.first_anchor_is_skip = False
         self.first_anchor_reference = None
@@ -148,20 +179,57 @@ class PageParser(HTMLParser):
             self.id_text_parts.setdefault(element_id, [])
             if tag not in VOID_ELEMENTS:
                 self.id_text_stack.append(element_id)
-        if tag in {"a", "button"}:
-            self.interactive_stack.append(
-                {
-                    "tag": tag,
-                    "aria_label": attributes.get("aria-label", ""),
-                    "labelled_by": attributes.get("aria-labelledby", "").split(),
-                    "title": attributes.get("title", ""),
-                    "text_parts": [],
-                    "hidden": self.hidden_depth > 0,
-                    "tabindex": attributes.get("tabindex", ""),
-                    "controls": attributes.get("aria-controls", "").split(),
-                    "expanded": attributes.get("aria-expanded"),
-                }
+        if tag == "label":
+            label_record = {
+                "for": attributes.get("for", ""),
+                "text_parts": [],
+            }
+            self.label_records.append(label_record)
+            self.label_stack.append(label_record)
+        tabindex = attributes.get("tabindex")
+        try:
+            keyboard_focusable = tabindex is not None and int(tabindex) >= 0
+        except (TypeError, ValueError):
+            keyboard_focusable = False
+        role = attributes.get("role", "").strip().lower()
+        interactive = (
+            (
+                tag in NATIVE_INTERACTIVE_ELEMENTS
+                and not (
+                    tag == "input"
+                    and attributes.get("type", "").strip().lower() == "hidden"
+                )
             )
+            or role in INTERACTIVE_ROLES
+            or keyboard_focusable
+            or (tag in {"audio", "video"} and "controls" in attributes)
+        )
+        if interactive:
+            control = {
+                "tag": tag,
+                "role": role,
+                "element_id": element_id or "",
+                "aria_label": attributes.get("aria-label", ""),
+                "labelled_by": attributes.get("aria-labelledby", "").split(),
+                "title": attributes.get("title", ""),
+                "text_parts": [],
+                "hidden": aria_hidden or self.hidden_depth > 0,
+                "tabindex": tabindex or "",
+                "controls": attributes.get("aria-controls", "").split(),
+                "expanded": attributes.get("aria-expanded"),
+                "input_type": attributes.get("type", "").strip().lower(),
+                "value": attributes.get("value", ""),
+                "alt": attributes.get("alt", ""),
+                "implicit_label": (
+                    self.label_stack[-1]
+                    if tag in FORM_CONTROL_ELEMENTS and self.label_stack
+                    else None
+                ),
+            }
+            if tag in VOID_ELEMENTS:
+                self.interactive_elements.append(control)
+            else:
+                self.interactive_stack.append(control)
         if tag == "html":
             self.html_lang = attributes.get("lang", "")
         elif tag == "main":
@@ -217,13 +285,15 @@ class PageParser(HTMLParser):
                 )
             )
             self.assignment = None
-        if tag in {"a", "button"}:
+        if any(control["tag"] == tag for control in self.interactive_stack):
             for index in range(len(self.interactive_stack) - 1, -1, -1):
                 if self.interactive_stack[index]["tag"] == tag:
                     self.interactive_elements.append(
                         self.interactive_stack.pop(index)
                     )
                     break
+        if tag == "label" and self.label_stack:
+            self.label_stack.pop()
         for index in range(len(self.open_elements) - 1, -1, -1):
             if self.open_elements[index][0] == tag:
                 closed = self.open_elements[index:]
@@ -250,6 +320,8 @@ class PageParser(HTMLParser):
                 control["text_parts"].append(data)
             for labelled_id in self.id_text_stack:
                 self.id_text_parts[labelled_id].append(data)
+            for label in self.label_stack:
+                label["text_parts"].append(data)
         if self.assignment is not None:
             self.assignment["text"].append(data)
         if self.in_title:
@@ -261,6 +333,13 @@ class PageParser(HTMLParser):
 
     def text_for_id(self, element_id):
         return " ".join(" ".join(self.id_text_parts.get(element_id, [])).split())
+
+    def label_text_for_id(self, element_id):
+        parts = []
+        for label in self.label_records:
+            if label["for"] == element_id:
+                parts.extend(label["text_parts"])
+        return " ".join(" ".join(parts).split())
 
 
 def parse_page(path):
@@ -338,12 +417,38 @@ def page_accessibility_problems(parsed, relative):
             )
 
         content = " ".join(" ".join(control["text_parts"]).split())
+        explicit_label = parsed.label_text_for_id(control["element_id"])
+        implicit_label = control["implicit_label"]
+        implicit_label_text = ""
+        if implicit_label is not None:
+            implicit_label_text = " ".join(
+                " ".join(implicit_label["text_parts"]).split()
+            )
+        native_label = explicit_label or implicit_label_text
+        input_value_name = (
+            control["value"].strip()
+            if control["tag"] == "input"
+            and control["input_type"] in {"button", "reset", "submit"}
+            else ""
+        )
+        input_image_name = (
+            control["alt"].strip()
+            if control["tag"] == "input" and control["input_type"] == "image"
+            else ""
+        )
+        area_name = (
+            control["alt"].strip() if control["tag"] == "area" else ""
+        )
         if labelled_by:
             has_accessible_name = bool(referenced_label and not missing_labels)
         else:
             has_accessible_name = bool(
                 control["aria_label"].strip()
-                or content
+                or native_label
+                or (content if control["tag"] not in FORM_CONTROL_ELEMENTS else "")
+                or input_value_name
+                or input_image_name
+                or area_name
                 or control["title"].strip()
             )
         if not has_accessible_name:

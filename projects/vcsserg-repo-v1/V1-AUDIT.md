@@ -16,19 +16,19 @@ does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 24, 2026 |
+| Documented promise | Evidence or test | Status on September 25, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, named repeated navigation landmarks, scoped table headers, explicit image alternatives, named exposed links/buttons with valid ARIA relationships and safely hidden source-line anchors, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages, 527 interactive elements, and 6 first-party stylesheets; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, named repeated navigation landmarks, scoped table headers, explicit image alternatives, named exposed interactive and keyboard-focusable elements with valid ARIA relationships and safely hidden source-line anchors, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages, 542 interactive or keyboard-focusable elements, and 6 first-party stylesheets; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, and 166 before the September 24 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, and 174 before the September 25 revision |
 
 ## Current automated result
 
-On September 24, 2026, **all seven groups pass**. The final report-format gap
+On September 25, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -108,6 +108,16 @@ publication structure:
   unnamed icon-only controls, empty or missing label targets, missing controlled
   targets, invalid expanded states, and hidden-control handling. Rendered name,
   role, state, focus order, and operation remain in the manual review.
+- On September 25, a coverage audit found that the implementation behind the
+  broader phrase “interactive elements” still included only links and buttons.
+  It omitted two native disclosure summaries and six custom focusable scroll
+  regions; all eight were already named. The parser now audits 542 elements:
+  516 exposed and named, plus 26 deliberately hidden source-line anchors. It
+  covers links, buttons, disclosure and form controls, interactive ARIA roles,
+  media controls, and custom nonnegative-`tabindex` targets. A focused fixture
+  accepts text, explicit and implicit labels, applicable input values, and ARIA
+  names while rejecting unnamed summaries and focus targets and a
+  placeholder-only input. Rendered behavior remains in the manual review.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -126,7 +136,8 @@ The current verifier:
 - adds a dedicated three-format report group;
 - requires every page's first anchor itself to target `main` as a bypass and
   every image to carry an explicit `alt` attribute, and requires accessible
-  names on repeated navigation landmarks and interactive elements, valid ARIA
+  names on repeated navigation landmarks and exposed interactive or
+  keyboard-focusable elements, valid ARIA
   label/control/state relationships, and valid scope on table header cells,
   with negative fixtures for missing,
   late, wrong-target, misleading-first, and runtime-relocated bypasses, a
@@ -185,7 +196,8 @@ revision, all 134 incoming files were byte-identical. Before the September 21
 revision, all 142 incoming files were byte-identical. Before the September 22
 revision, all 150 incoming files were byte-identical. Before the September 23
 revision, all 158 incoming files were byte-identical. Before the September 24
-revision, all 166 incoming files were byte-identical; normal automation must
+revision, all 166 incoming files were byte-identical. Before the September 25
+revision, all 174 incoming files were byte-identical; normal automation must
 still deploy and inventory this revised release.
 
 ## Other current requirements

@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 24, 2026 at 08:15 UTC
+
+- **Superseded:** September 25, 2026
+- **Archive key:**
+  [`798752777e9955640468bad1a32c82e2983a9a11`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/798752777e9955640468bad1a32c82e2983a9a11)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before interactive-name coverage extended beyond links and buttons.
+- **Reason:** The outgoing reports accurately documented their September 24
+  snapshot of 501 exposed links and buttons, plus 26 hidden source-line
+  anchors; subsequent Project work brought the incoming link/button count to
+  508. The next release also audits native disclosure summaries, form controls,
+  interactive ARIA roles, and custom keyboard-focus targets. It records that
+  the eight newly covered current elements were already named and the September
+  25 probe found all 174 incoming public files byte-identical, without claiming
+  rendered keyboard or screen-reader evidence.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/798752777e9955640468bad1a32c82e2983a9a11/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/798752777e9955640468bad1a32c82e2983a9a11/projects/vcsserg-repo-v1)
+
 ### Updated through September 23, 2026 at 08:19 UTC
 
 - **Superseded:** September 24, 2026

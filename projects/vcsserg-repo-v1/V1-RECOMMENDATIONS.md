@@ -55,6 +55,15 @@ On September 24, a static audit found all 501 exposed links and buttons named,
 references and expanded states valid. The whole-site verifier now
 guards those properties with negative fixtures while continuing to reserve
 rendered name, role, state, focus, and operation for the manual review.
+On September 25, a coverage audit found that the phrase “interactive elements”
+was broader than the implementation: the parser did not include two native
+disclosure summaries or six custom keyboard-focus targets. All eight were
+already named. The parser now also covers disclosure summaries, form controls,
+interactive ARIA roles, media controls, and elements with a nonnegative
+`tabindex`; a focused fixture verifies text, explicit and implicit labels,
+input values, and ARIA names while rejecting placeholder-only and
+assistive-technology-hidden names. Rendered behavior remains in the manual
+review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
