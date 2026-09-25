@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-24"
+date: "2026-09-25"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -46,6 +46,11 @@ complete predictive distributions rather than only their medians. The
 neighborhood improves word-count CRPS (`38.156852` versus `40.672695`; paired
 reduction `+2.515843`, interval `+1.008212` to `+4.059792`) and its central 80%
 interval score, while CRPS intervals for the other four outcomes span zero. A
+fifth locked analysis separates the combined source representation. Text-only
+matching improves word-count CRPS over the marginal by `+2.298139` (interval
+`+0.816444` to `+3.865823`); demographics-only matching does not, although
+adding demographics to text yields a smaller incremental gain of `+0.217704`
+(`+0.024229` to `+0.420871`). A
 separately locked leave-one-out cross-validation of the frozen stable projection repeats its central mixed
 pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
 `0.003493`, word-count and source-similarity error fall, and line-count error
@@ -92,6 +97,9 @@ rises. The other non-exact agreement intervals span zero.
 - Full predictive distributions sharpen that result: neighborhood word-count
   CRPS and central 80% interval score improve, but Add count, Delete count, line
   count, and source-similarity CRPS differences remain compatible with zero.
+- A locked ablation locates most of that word-count signal in earlier
+  self-description text. Demographics alone do not improve over the marginal,
+  although they add a small incremental gain when combined with text.
 
 # Introduction {#introduction}
 
@@ -341,6 +349,26 @@ width and misses. Positive paired effects are marginal score minus neighborhood
 score. Twenty thousand paired case-bootstrap resamples use seed `20260924`,
 restarted for each outcome and score. Representation, neighborhood size, and
 shrinkage remain unchanged and untuned.
+
+## Locked source-feature ablation
+
+A fifth training-only plan was locked before reopening the benchmark in this
+iteration, implementation, or scoring at SHA-256
+`ed9fa67b2cc1265f3710471f96d7ffbfd16986b8295ef5072da26c263d8b7da4`.
+It asks whether the previously observed word-count distribution gain comes
+from the earlier self-description, the ten 2024 demographic fields, or their
+combination. It splits the unchanged TF-IDF representation into text-only,
+demographics-only, and combined feature sets without changing any field,
+neighbor, weighting, shrinkage, transformation, or scoring rule.
+
+Follow-up word-count CRPS is primary because it was the only outcome with a
+supported combined-neighborhood CRPS gain in the preceding lock. The four
+other outcomes are prespecified secondary diagnostics. Four paired contrasts
+compare each ablation with the marginal distribution and the combined model.
+Twenty thousand case-bootstrap resamples use seed `20260925`, restarted for
+each outcome and contrast. Before any ablation result is accepted, the script
+must numerically reproduce every marginal and combined case-level CRPS value
+in the preceding locked audit.
 
 # Results {#results}
 
@@ -634,6 +662,35 @@ substantially over-covering (96.7% marginal and 92.7% neighborhood against 80%
 nominal), showing that apparent uncertainty can be broad without being
 informative. None of these quantities identifies the future signifiers.
 
+## Earlier self-description carries most word-count signal {#feature-ablation}
+
+The required replication passed for all 150 cases and five outcomes. For the
+primary follow-up word-count outcome, text-only matching preserves most of the
+combined neighborhood's advantage, while demographics-only matching does not
+establish an improvement over the marginal distribution:
+
+| Word-count predictive distribution | Mean CRPS | Locked paired contrast | CRPS reduction | Paired case-bootstrap 95% interval |
+| --- | ---: | --- | ---: | ---: |
+| Source-calibrated marginal | 40.672695 | — | — | — |
+| Text only | 38.374556 | Marginal minus text only | +2.298139 | +0.816444 to +3.865823 |
+| Demographics only | 40.471984 | Marginal minus demographics only | +0.200711 | −0.479832 to +0.861529 |
+| Combined | 38.156852 | Text only minus combined | +0.217704 | +0.024229 to +0.420871 |
+
+Text-only matching wins 84 cases and loses 66 against the marginal. The
+combined model wins 85 and loses 65 against text-only. Thus the earlier
+self-description carries nearly all of the supported response-length signal;
+the ten coarse demographic fields alone do not beat the source-calibrated
+marginal. Their small incremental benefit conditional on text is compatible
+with weak complementary information, not a stand-alone demographic mechanism.
+
+The secondary diagnostics do not support a general feature-family conclusion.
+For Add count, Delete count, and line count, every fixed ablation contrast has
+an interval spanning zero. Text-only matching improves source-similarity CRPS
+over the marginal by `+0.002964`, but its repeated-analysis interval barely
+excludes zero (`+0.000051` to `+0.006065`), and adding demographics to text
+does not improve that outcome. The primary result remains about response
+length, not future signifiers or revision volume generally.
+
 ## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
@@ -700,7 +757,11 @@ should preserve that modest calibration signal while demonstrating content
 value beyond marginal prevalence. The probabilistic extension further
 qualifies the claim: the clearest distributional gain is for follow-up word
 count, while Add and Delete improvements are limited to point forecasts under
-the current evidence.
+the current evidence. The ablation now locates most of the supported
+word-count distribution signal in the earlier self-description itself.
+Demographics alone do not improve the marginal forecast; their much smaller
+incremental gain appears only in combination with text and does not establish
+that demographic resemblance is an ipseological mechanism.
 
 ## Reproducibility {#reproducibility}
 
@@ -708,6 +769,8 @@ The complete open materials are:
 
 - [`ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md`](ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md)
   — pre-analysis lock for probabilistic revision-volume forecasts;
+- [`ANALYSIS_PLAN_FEATURE_ABLATION.md`](ANALYSIS_PLAN_FEATURE_ABLATION.md)
+  — pre-analysis lock for separating text and demographic source features;
 - [`ANALYSIS_PLAN_CHANGE_VOLUME.md`](ANALYSIS_PLAN_CHANGE_VOLUME.md)
   — pre-analysis lock for prospective revision-volume forecasts;
 - [`ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`](ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md)
@@ -724,6 +787,8 @@ The complete open materials are:
   — hash-guarded leave-one-out predictive-distribution evaluation;
 - [`analysis/analyze_change_volume.py`](analysis/analyze_change_volume.py)
   — hash-guarded leave-one-out response-form and revision-volume forecasts;
+- [`analysis/analyze_feature_ablation.py`](analysis/analyze_feature_ablation.py)
+  — hash-guarded leave-one-out source-feature ablation;
 - [`analysis/analyze_novelty_prior.py`](analysis/analyze_novelty_prior.py)
   — volume-matched marginal-addition diagnostic;
 - [`analysis/analyze_neighborhood_additions.py`](analysis/analyze_neighborhood_additions.py)
@@ -748,6 +813,10 @@ The complete open materials are:
   — complete machine-readable change-volume result;
 - [`results/change_volume_train_audit.csv`](results/change_volume_train_audit.csv)
   — all 150 cases' observed quantities, predictions, errors, and paired effects;
+- [`results/feature_ablation_train_analysis.json`](results/feature_ablation_train_analysis.json)
+  — complete machine-readable feature-ablation result;
+- [`results/feature_ablation_train_audit.csv`](results/feature_ablation_train_audit.csv)
+  — all 150 cases' marginal and ablated CRPS values;
 - [`results/novelty_prior_dev_analysis.json`](results/novelty_prior_dev_analysis.json)
   — complete marginal-prior comparison and paired uncertainty;
 - [`results/novelty_prior_token_audit.csv`](results/novelty_prior_token_audit.csv)
@@ -860,6 +929,13 @@ representation, and fixed weights; they are not independently selected models.
 Central 80% intervals are discrete empirical quantiles, and coverage in 150
 overlapping leave-one-out folds is descriptive rather than a population
 guarantee. Its derived case audit is also governed by CC BY-NC-SA 4.0.
+
+The source-feature ablation is a dependent extension chosen after the combined
+word-count gain was known. It preserves the existing exact-value demographic
+features, so sparse categories and missing values can weaken demographics-only
+similarity. Its unadjusted secondary contrasts are repeated-analysis
+diagnostics, not an independent family of confirmatory tests. The derived case
+audit remains governed by CC BY-NC-SA 4.0.
 
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.

@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_source_feature_ablation",
+  "cases": 150,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "ed9fa67b2cc1265f3710471f96d7ffbfd16986b8295ef5072da26c263d8b7da4",
+    "change_distributions_implementation_sha256": "22b68061f875c789009918c4984f4fc36ce7cd172131688fdaccff4eda87d68a",
+    "change_volume_implementation_sha256": "59b1a48b9b4e7194bbe260b497c5463cb1e4ce984c544e58a404f913046d6c09",
+    "retrieval_feature_implementation_sha256": "05f64bb95440dcea8125358441878612e71ba19b898a791a0d3a200511a5077e",
+    "existing_distribution_audit_sha256": "0c257335a92538e2e0eb223c39c10c49d3f8204888e77590a0bcf7e23a8edff7"
+  },
+  "design": {
+    "primary_outcome": "word_count",
+    "secondary_outcomes": [
+      "add_count",
+      "delete_count",
+      "line_count",
+      "source_similarity"
+    ],
+    "representations": {
+      "text_only": "case-folded word tokens from tst_2024",
+      "demographics_only": "ten field-qualified normalized 2024 demographic values",
+      "combined": "unchanged union of text and demographic features"
+    },
+    "training_cases_per_fold": 149,
+    "neighbor_count": 30,
+    "neighbor_effective_weight": 30.0,
+    "fold_prior_effective_weight": 30.0,
+    "probabilistic_score": "weighted empirical CRPS",
+    "future_information_used_for_prediction": "none"
+  },
+  "mean_selected_neighbor_cosine_similarity": {
+    "text_only": {
+      "mean": 0.165432,
+      "median": 0.173199
+    },
+    "demographics_only": {
+      "mean": 0.419823,
+      "median": 0.42229
+    },
+    "combined": {
+      "mean": 0.169564,
+      "median": 0.17436
+    }
+  },
+  "existing_combined_and_marginal_audit_reproduced": true,
+  "outcomes": {
+    "add_count": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 14.650556,
+        "text_only": 14.496435,
+        "demographics_only": 14.679802,
+        "combined": 14.438038
+      },
+      "paired_comparisons": {
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.154122,
+          "paired_case_bootstrap_95_ci_low": -0.146253,
+          "paired_case_bootstrap_95_ci_high": 0.443328,
+          "second_method_case_wins": 86,
+          "case_ties": 0,
+          "second_method_case_losses": 64
+        },
+        "marginal_minus_demographics_only": {
+          "effect_definition": "marginal_crps_minus_demographics_only_crps",
+          "mean_effect_positive_favors_second_method": -0.029245,
+          "paired_case_bootstrap_95_ci_low": -0.326383,
+          "paired_case_bootstrap_95_ci_high": 0.254053,
+          "second_method_case_wins": 79,
+          "case_ties": 0,
+          "second_method_case_losses": 71
+        },
+        "text_only_minus_combined": {
+          "effect_definition": "text_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.058397,
+          "paired_case_bootstrap_95_ci_low": -0.036299,
+          "paired_case_bootstrap_95_ci_high": 0.142915,
+          "second_method_case_wins": 83,
+          "case_ties": 0,
+          "second_method_case_losses": 67
+        },
+        "demographics_only_minus_combined": {
+          "effect_definition": "demographics_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.241764,
+          "paired_case_bootstrap_95_ci_low": -0.160162,
+          "paired_case_bootstrap_95_ci_high": 0.655555,
+          "second_method_case_wins": 86,
+          "case_ties": 0,
+          "second_method_case_losses": 64
+        }
+      }
+    },
+    "delete_count": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 3.926457,
+        "text_only": 3.840046,
+        "demographics_only": 3.950908,
+        "combined": 3.853656
+      },
+      "paired_comparisons": {
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.086411,
+          "paired_case_bootstrap_95_ci_low": -0.018794,
+          "paired_case_bootstrap_95_ci_high": 0.188597,
+          "second_method_case_wins": 89,
+          "case_ties": 0,
+          "second_method_case_losses": 61
+        },
+        "marginal_minus_demographics_only": {
+          "effect_definition": "marginal_crps_minus_demographics_only_crps",
+          "mean_effect_positive_favors_second_method": -0.024451,
+          "paired_case_bootstrap_95_ci_low": -0.124947,
+          "paired_case_bootstrap_95_ci_high": 0.071196,
+          "second_method_case_wins": 63,
+          "case_ties": 0,
+          "second_method_case_losses": 87
+        },
+        "text_only_minus_combined": {
+          "effect_definition": "text_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": -0.01361,
+          "paired_case_bootstrap_95_ci_low": -0.035968,
+          "paired_case_bootstrap_95_ci_high": 0.00885,
+          "second_method_case_wins": 67,
+          "case_ties": 0,
+          "second_method_case_losses": 83
+        },
+        "demographics_only_minus_combined": {
+          "effect_definition": "demographics_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.097253,
+          "paired_case_bootstrap_95_ci_low": -0.040558,
+          "paired_case_bootstrap_95_ci_high": 0.235576,
+          "second_method_case_wins": 89,
+          "case_ties": 0,
+          "second_method_case_losses": 61
+        }
+      }
+    },
+    "word_count": {
+      "role": "primary",
+      "mean_crps": {
+        "marginal": 40.672695,
+        "text_only": 38.374556,
+        "demographics_only": 40.471984,
+        "combined": 38.156852
+      },
+      "paired_comparisons": {
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 2.298139,
+          "paired_case_bootstrap_95_ci_low": 0.816444,
+          "paired_case_bootstrap_95_ci_high": 3.865823,
+          "second_method_case_wins": 84,
+          "case_ties": 0,
+          "second_method_case_losses": 66
+        },
+        "marginal_minus_demographics_only": {
+          "effect_definition": "marginal_crps_minus_demographics_only_crps",
+          "mean_effect_positive_favors_second_method": 0.200711,
+          "paired_case_bootstrap_95_ci_low": -0.479832,
+          "paired_case_bootstrap_95_ci_high": 0.861529,
+          "second_method_case_wins": 87,
+          "case_ties": 0,
+          "second_method_case_losses": 63
+        },
+        "text_only_minus_combined": {
+          "effect_definition": "text_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.217704,
+          "paired_case_bootstrap_95_ci_low": 0.024229,
+          "paired_case_bootstrap_95_ci_high": 0.420871,
+          "second_method_case_wins": 85,
+          "case_ties": 0,
+          "second_method_case_losses": 65
+        },
+        "demographics_only_minus_combined": {
+          "effect_definition": "demographics_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 2.315132,
+          "paired_case_bootstrap_95_ci_low": 0.827946,
+          "paired_case_bootstrap_95_ci_high": 3.904357,
+          "second_method_case_wins": 82,
+          "case_ties": 0,
+          "second_method_case_losses": 68
+        }
+      }
+    },
+    "line_count": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 4.910848,
+        "text_only": 4.937849,
+        "demographics_only": 4.971339,
+        "combined": 4.922609
+      },
+      "paired_comparisons": {
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": -0.027,
+          "paired_case_bootstrap_95_ci_low": -0.121506,
+          "paired_case_bootstrap_95_ci_high": 0.073362,
+          "second_method_case_wins": 63,
+          "case_ties": 0,
+          "second_method_case_losses": 87
+        },
+        "marginal_minus_demographics_only": {
+          "effect_definition": "marginal_crps_minus_demographics_only_crps",
+          "mean_effect_positive_favors_second_method": -0.060491,
+          "paired_case_bootstrap_95_ci_low": -0.133267,
+          "paired_case_bootstrap_95_ci_high": 0.00786,
+          "second_method_case_wins": 79,
+          "case_ties": 0,
+          "second_method_case_losses": 71
+        },
+        "text_only_minus_combined": {
+          "effect_definition": "text_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.015239,
+          "paired_case_bootstrap_95_ci_low": -0.009745,
+          "paired_case_bootstrap_95_ci_high": 0.039847,
+          "second_method_case_wins": 79,
+          "case_ties": 0,
+          "second_method_case_losses": 71
+        },
+        "demographics_only_minus_combined": {
+          "effect_definition": "demographics_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.048729,
+          "paired_case_bootstrap_95_ci_low": -0.043716,
+          "paired_case_bootstrap_95_ci_high": 0.147475,
+          "second_method_case_wins": 71,
+          "case_ties": 0,
+          "second_method_case_losses": 79
+        }
+      }
+    },
+    "source_similarity": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 0.077171,
+        "text_only": 0.074207,
+        "demographics_only": 0.076564,
+        "combined": 0.074684
+      },
+      "paired_comparisons": {
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.002964,
+          "paired_case_bootstrap_95_ci_low": 5.1e-05,
+          "paired_case_bootstrap_95_ci_high": 0.006065,
+          "second_method_case_wins": 86,
+          "case_ties": 0,
+          "second_method_case_losses": 64
+        },
+        "marginal_minus_demographics_only": {
+          "effect_definition": "marginal_crps_minus_demographics_only_crps",
+          "mean_effect_positive_favors_second_method": 0.000607,
+          "paired_case_bootstrap_95_ci_low": -0.001041,
+          "paired_case_bootstrap_95_ci_high": 0.00222,
+          "second_method_case_wins": 72,
+          "case_ties": 0,
+          "second_method_case_losses": 78
+        },
+        "text_only_minus_combined": {
+          "effect_definition": "text_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": -0.000478,
+          "paired_case_bootstrap_95_ci_low": -0.001336,
+          "paired_case_bootstrap_95_ci_high": 0.000248,
+          "second_method_case_wins": 76,
+          "case_ties": 0,
+          "second_method_case_losses": 74
+        },
+        "demographics_only_minus_combined": {
+          "effect_definition": "demographics_only_crps_minus_combined_crps",
+          "mean_effect_positive_favors_second_method": 0.001879,
+          "paired_case_bootstrap_95_ci_low": -0.000716,
+          "paired_case_bootstrap_95_ci_high": 0.004592,
+          "second_method_case_wins": 86,
+          "case_ties": 0,
+          "second_method_case_losses": 64
+        }
+      }
+    }
+  },
+  "bootstrap": {
+    "unit": "paired training case",
+    "resamples": 20000,
+    "seed_restarted_for_each_outcome_and_comparison": 20260925,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "multiplicity_adjustment": "none; secondary outcomes are diagnostic"
+  },
+  "claim_boundary": "This dependent, locked training-cohort diagnostic decomposes a previously observed revision-volume result. It is not untouched confirmation, population evidence, development performance, private-test performance, or a forecast of correct future content."
+}

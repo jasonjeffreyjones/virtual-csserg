@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-24T09:14:13Z
+updated: 2026-09-25T09:13:22Z
 ---
 
 # Predict the Self — Current State
@@ -32,6 +32,10 @@ A locked probabilistic extension now shows that the corresponding full
 predictive distributions improve CRPS and central-interval score only for
 follow-up word count; CRPS differences for the other four outcomes remain
 compatible with zero.
+A locked source-feature ablation now locates most of that word-count signal in
+earlier self-description text. Demographics alone do not improve on the
+source-calibrated marginal distribution, although they add a small incremental
+gain when combined with text.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -143,6 +147,17 @@ line-count, and source-similarity CRPS intervals all span zero. Thus the point
 forecast gains for Add and Delete volume do not generalize to stable
 distributional-score gains under this fixed model.
 
+The locked source-feature ablation reproduces every marginal and combined
+case-level CRPS value before separating the fixed representation. Text-only
+word-count CRPS is `38.374556` versus `40.672695` for the marginal; the paired
+reduction is `+2.298139` with interval `+0.816444` to `+3.865823`.
+Demographics-only CRPS is `40.471984`; its `+0.200711` reduction has an
+interval spanning zero (`-0.479832` to `+0.861529`). Adding demographics to
+text supplies a smaller incremental reduction of `+0.217704` (`+0.024229` to
+`+0.420871`). Add-count, Delete-count, and line-count ablation contrasts all
+span zero. Earlier self-description carries most of the supported
+response-length signal; demographics alone do not.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -199,6 +214,13 @@ distributional-score gains under this fixed model.
   Added a hash-guarded leave-one-out probabilistic extension, seven focused
   tests, a complete JSON result, and a 150-row CRPS/interval audit. No
   development or test artifact was read or changed by the analysis.
+- Locked `ANALYSIS_PLAN_FEATURE_ABLATION.md` before reopening benchmark data,
+  implementation, or scoring (SHA-256
+  `ed9fa67b2cc1265f3710471f96d7ffbfd16986b8295ef5072da26c263d8b7da4`).
+  Added a hash-guarded three-representation leave-one-out ablation, six focused
+  tests, a complete JSON result, and a 150-row case audit. Clean regeneration
+  reproduced both outputs byte for byte; no development or test artifact was
+  read or changed by the analysis.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -215,9 +237,9 @@ distributional-score gains under this fixed model.
   two-column PDF. Validation permits any nonempty length through the actual
   ten-page ceiling.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
-  question/status, exactly one dense quantitative figure, seven linked findings,
+  question/status, exactly one dense quantitative figure, eight linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes thirty-eight research
+- The three forms link reciprocally. The Full Report publishes forty-two research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -271,6 +293,11 @@ distributional-score gains under this fixed model.
   central intervals are discrete empirical intervals, overlapping-fold
   coverage is descriptive rather than a population guarantee, and its audit
   is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
+- The source-feature ablation is a dependent extension chosen after the
+  combined word-count gain was known. It retains sparse exact-value
+  demographic features, uses unadjusted secondary contrasts as diagnostics,
+  and does not establish that demographic categories are mechanisms. Its case
+  audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -297,6 +324,8 @@ distributional-score gains under this fixed model.
   volume forecasting plan.
 - `ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md`: fixed probabilistic extension of
   the revision-volume analysis.
+- `ANALYSIS_PLAN_FEATURE_ABLATION.md`: fixed text-only, demographics-only, and
+  combined source-feature comparison.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -318,6 +347,8 @@ distributional-score gains under this fixed model.
   revision-volume forecasts; its JSON and case audit are under `results/`.
 - `analysis/analyze_change_distributions.py`: locked leave-one-out CRPS and
   central-interval analysis; its JSON and case audit are under `results/`.
+- `analysis/analyze_feature_ablation.py`: locked source-feature ablation; its
+  JSON and complete case audit are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -348,7 +379,8 @@ distributional-score gains under this fixed model.
 3. Avoid further fixed lexical re-rankers on the same 150 cases without a
    substantively new representation. Before reusing development labels,
    require a synthesizing or semantic person-conditioned approach to preserve
-   the supported word-count distribution signal, test rather than assume the
+   the primarily text-driven word-count distribution signal, treat the small
+   conditional demographic increment cautiously, test rather than assume the
    weaker Add/Delete volume signal, and beat leave-one-out marginal additions
    in training; then lock any development comparison and avoid private test
    feedback.

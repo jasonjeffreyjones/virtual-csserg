@@ -101,6 +101,17 @@ python3 projects/predict-the-self/analysis/analyze_change_distributions.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked source-feature ablation. It hash-guards the training
+data, evaluator, analysis plan, inherited implementations, and preceding
+case-level distribution audit. It separates text-only, demographics-only, and
+combined neighborhoods without reading or writing a development or test
+artifact:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_feature_ablation.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

@@ -118,7 +118,18 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, the same regularized neighborhood improves Add-count, Delete-count, and word-count point forecasts. Full-distribution scoring supports a CRPS gain only for word count. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out word-count feature ablation" tabindex="0">
+        <table class="scorecard-table">
+          <thead><tr><th scope="col">Word-count distribution</th><th scope="col">Mean CRPS</th><th scope="col">Locked paired contrast</th><th scope="col">CRPS reduction</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Source-calibrated marginal</th><td>40.672695</td><td>—</td><td>—</td></tr>
+            <tr><th scope="row">Text only</th><td class="metric-better">38.374556</td><td>Marginal minus text only</td><td class="metric-better">+2.298139<br><small>95% interval +0.816444 to +3.865823</small></td></tr>
+            <tr><th scope="row">Demographics only</th><td>40.471984</td><td>Marginal minus demographics only</td><td>+0.200711<br><small>95% interval −0.479832 to +0.861529</small></td></tr>
+            <tr><th scope="row">Text + demographics</th><td class="metric-better">38.156852</td><td>Text only minus combined</td><td class="metric-better">+0.217704<br><small>95% interval +0.024229 to +0.420871</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, the same regularized neighborhood improves Add-count, Delete-count, and word-count point forecasts. Full-distribution scoring supports a CRPS gain only for word count; ablation locates most of that signal in earlier self-description text, with a smaller incremental gain from demographics only when combined with text. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -141,6 +152,9 @@
         </article>
         <article class="finding">
           <p><strong>Person matching best predicts response length.</strong> The 30-neighbor model lowers point-forecast error for Add count, Delete count, and word count, but full-distribution scoring supports only the word-count CRPS gain. <a href="report/report.html#change-distributions">Inspect the probabilistic forecasts</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>Earlier text carries most of the length signal.</strong> Text-only neighborhoods improve word-count CRPS; demographics alone do not, although adding demographics to text yields a smaller incremental gain. <a href="report/report.html#feature-ablation">Inspect the locked ablation</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>
