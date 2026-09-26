@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-25"
+date: "2026-09-26"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -50,8 +50,13 @@ fifth locked analysis separates the combined source representation. Text-only
 matching improves word-count CRPS over the marginal by `+2.298139` (interval
 `+0.816444` to `+3.865823`); demographics-only matching does not, although
 adding demographics to text yields a smaller incremental gain of `+0.217704`
-(`+0.024229` to `+0.420871`). A
-separately locked leave-one-out cross-validation of the frozen stable projection repeats its central mixed
+(`+0.024229` to `+0.420871`). A sixth lock compares text-only matching with a
+count-only neighborhood based on the earlier response's word, distinct-token,
+and line counts. Source-form-only CRPS is `37.427386` versus `38.374556` for
+text only. The direct form-minus-text effect is `−0.947170`, but its interval
+spans zero (`−1.943737` to `+0.035874`), so this fixed comparison does not
+establish a lexical advantage beyond response form. A separately locked
+leave-one-out cross-validation of the frozen stable projection repeats its central mixed
 pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
 `0.003493`, word-count and source-similarity error fall, and line-count error
 rises. The other non-exact agreement intervals span zero.
@@ -100,6 +105,9 @@ rises. The other non-exact agreement intervals span zero.
 - A locked ablation locates most of that word-count signal in earlier
   self-description text. Demographics alone do not improve over the marginal,
   although they add a small incremental gain when combined with text.
+- A second locked ablation finds that three source-response counts improve
+  word-count CRPS over the marginal and are not stably worse than text-only
+  matching. The current evidence does not isolate a lexical mechanism.
 
 # Introduction {#introduction}
 
@@ -369,6 +377,24 @@ Twenty thousand case-bootstrap resamples use seed `20260925`, restarted for
 each outcome and contrast. Before any ablation result is accepted, the script
 must numerically reproduce every marginal and combined case-level CRPS value
 in the preceding locked audit.
+
+## Locked source-form comparison
+
+A sixth training-only plan was locked before reading the benchmark rows in
+this iteration, implementation, or scoring at SHA-256
+`5ffaf6b8289a360926da3ae3b1398a336949e698c6157f8ba94ef316ec63c5ad`.
+It compares the text-only distribution with a count-only source-form
+neighborhood. Each source is represented by log word-token count, log
+distinct-token count, and log line count. Fold-fit population standard
+deviations scale Euclidean distance; similarity is `1 / (1 + distance)`.
+
+The neighborhood size, weights, prior, outcome transformations, and CRPS
+scoring remain fixed. Follow-up word-count CRPS is primary, and source-form
+CRPS minus text-only CRPS is the primary paired contrast. Twenty thousand
+case-bootstrap resamples use seed `20260926`. The script must reproduce every
+preceding marginal and text-only case score before accepting a result. A text
+advantage would identify lexical composition—not necessarily semantic
+identity—because TF-IDF can encode style and template wording.
 
 # Results {#results}
 
@@ -680,7 +706,7 @@ substantially over-covering (96.7% marginal and 92.7% neighborhood against 80%
 nominal), showing that apparent uncertainty can be broad without being
 informative. None of these quantities identifies the future signifiers.
 
-## Earlier self-description carries most word-count signal {#feature-ablation}
+## Earlier text outperforms demographics for word-count skill {#feature-ablation}
 
 The required replication passed for all 150 cases and five outcomes. For the
 primary follow-up word-count outcome, text-only matching preserves most of the
@@ -710,6 +736,40 @@ over the marginal by `+0.002964`, but its repeated-analysis interval barely
 excludes zero (`+0.000051` to `+0.006065`), and adding demographics to text
 does not improve that outcome. The primary result remains about response
 length, not future signifiers or revision volume generally.
+
+## Simple source form matches text-only word-count skill {#source-form-ablation}
+
+The required replication again passed for all 150 cases and five outcomes.
+Matching on only the earlier response's word-token, distinct-token, and line
+counts improves the primary word-count forecast over the source-calibrated
+marginal:
+
+| Word-count predictive distribution | Mean CRPS | Locked paired contrast | CRPS reduction | Paired case-bootstrap 95% interval |
+| --- | ---: | --- | ---: | ---: |
+| Source-calibrated marginal | 40.672695 | — | — | — |
+| Text only | 38.374556 | Marginal minus text only | +2.298139 | +0.826598 to +3.834257 |
+| Source form only | 37.427386 | Marginal minus source form | +3.245309 | +1.839350 to +4.784335 |
+| Direct comparison | — | Source form minus text only | −0.947170 | −1.943737 to +0.035874 |
+
+: Word-count lexical-versus-source-form comparison
+
+The source-form neighborhood wins 96 cases and loses 54 against the marginal.
+Text-only matching wins 65 and loses 85 in the direct comparison, but the
+prespecified primary interval narrowly includes zero. Under the locked
+interpretation rule, this analysis does not separate the two methods' primary
+skill. It therefore supplies no stable evidence that lexical composition adds
+word-count information beyond three simple counts. Nor does the lower mean for
+source form prove it is generally superior: the direct interval also prevents
+that claim.
+
+The secondary pattern reinforces the narrow measurement interpretation.
+Source-form matching improves line-count CRPS by `+0.445157` over the marginal
+(interval `+0.206291` to `+0.701574`) and by `+0.472157` over text only
+(`+0.235305` to `+0.721005`). Add-count and Delete-count comparisons span
+zero. Source-form matching's source-similarity reduction is `+0.001969`, with
+a repeated-analysis interval barely above zero (`+0.000017` to `+0.003880`).
+These unadjusted secondary diagnostics concern response form, not future
+identity content.
 
 ## Frozen test submission {#submission}
 
@@ -778,10 +838,14 @@ value beyond marginal prevalence. The probabilistic extension further
 qualifies the claim: the clearest distributional gain is for follow-up word
 count, while Add and Delete improvements are limited to point forecasts under
 the current evidence. The ablation now locates most of the supported
-word-count distribution signal in the earlier self-description itself.
-Demographics alone do not improve the marginal forecast; their much smaller
-incremental gain appears only in combination with text and does not establish
-that demographic resemblance is an ipseological mechanism.
+word-count distribution signal in the earlier self-description rather than
+demographics. The second prevents a stronger lexical interpretation: three
+simple source-response counts improve on the marginal and are not stably
+distinguishable from text-only matching. Demographics alone do not improve the
+marginal forecast; their much smaller incremental gain appears only in
+combination with text and does not establish that demographic resemblance is
+an ipseological mechanism. None of these surface predictors establishes an
+ipseological mechanism.
 
 ## Reproducibility {#reproducibility}
 
@@ -791,6 +855,8 @@ The complete open materials are:
   — pre-analysis lock for probabilistic revision-volume forecasts;
 - [`ANALYSIS_PLAN_FEATURE_ABLATION.md`](ANALYSIS_PLAN_FEATURE_ABLATION.md)
   — pre-analysis lock for separating text and demographic source features;
+- [`ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md`](ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md)
+  — pre-analysis lock for comparing lexical and count-only source matching;
 - [`ANALYSIS_PLAN_CHANGE_VOLUME.md`](ANALYSIS_PLAN_CHANGE_VOLUME.md)
   — pre-analysis lock for prospective revision-volume forecasts;
 - [`ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md`](ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md)
@@ -809,6 +875,8 @@ The complete open materials are:
   — hash-guarded leave-one-out response-form and revision-volume forecasts;
 - [`analysis/analyze_feature_ablation.py`](analysis/analyze_feature_ablation.py)
   — hash-guarded leave-one-out source-feature ablation;
+- [`analysis/analyze_source_form_ablation.py`](analysis/analyze_source_form_ablation.py)
+  — hash-guarded lexical-versus-source-form comparison;
 - [`analysis/analyze_novelty_prior.py`](analysis/analyze_novelty_prior.py)
   — volume-matched marginal-addition diagnostic;
 - [`analysis/analyze_neighborhood_additions.py`](analysis/analyze_neighborhood_additions.py)
@@ -837,6 +905,10 @@ The complete open materials are:
   — complete machine-readable feature-ablation result;
 - [`results/feature_ablation_train_audit.csv`](results/feature_ablation_train_audit.csv)
   — all 150 cases' marginal and ablated CRPS values;
+- [`results/source_form_ablation_train_analysis.json`](results/source_form_ablation_train_analysis.json)
+  — complete machine-readable source-form comparison;
+- [`results/source_form_ablation_train_audit.csv`](results/source_form_ablation_train_audit.csv)
+  — all 150 cases' marginal, source-form, and text-only CRPS values;
 - [`results/novelty_prior_dev_analysis.json`](results/novelty_prior_dev_analysis.json)
   — complete marginal-prior comparison and paired uncertainty;
 - [`results/novelty_prior_token_audit.csv`](results/novelty_prior_token_audit.csv)
@@ -956,6 +1028,14 @@ features, so sparse categories and missing values can weaken demographics-only
 similarity. Its unadjusted secondary contrasts are repeated-analysis
 diagnostics, not an independent family of confirmatory tests. The derived case
 audit remains governed by CC BY-NC-SA 4.0.
+
+The source-form comparison is another dependent extension chosen after the
+text-only word-count gain was known. Its three counts and fixed distance rule
+test one narrow alternative, not every nonlexical representation. A direct
+interval spanning zero is evidence that this analysis does not distinguish
+the methods, not proof that their predictive distributions are equivalent.
+Its unadjusted secondary contrasts are repeated-analysis diagnostics, and its
+case audit remains governed by CC BY-NC-SA 4.0.
 
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.

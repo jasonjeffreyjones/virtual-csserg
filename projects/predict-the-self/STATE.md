@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-25T09:13:22Z
+updated: 2026-09-26T09:13:37Z
 ---
 
 # Predict the Self — Current State
@@ -36,6 +36,11 @@ A locked source-feature ablation now locates most of that word-count signal in
 earlier self-description text. Demographics alone do not improve on the
 source-calibrated marginal distribution, although they add a small incremental
 gain when combined with text.
+A locked count-only comparison now qualifies that interpretation: matching on
+source word-token, distinct-token, and line counts improves word-count CRPS
+over the marginal and is not stably distinguishable from text-only matching.
+The current evidence therefore locates signal in the earlier response but does
+not isolate a lexical mechanism.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -156,7 +161,18 @@ interval spanning zero (`-0.479832` to `+0.861529`). Adding demographics to
 text supplies a smaller incremental reduction of `+0.217704` (`+0.024229` to
 `+0.420871`). Add-count, Delete-count, and line-count ablation contrasts all
 span zero. Earlier self-description carries most of the supported
-response-length signal; demographics alone do not.
+response-length signal relative to demographics; demographics alone do not.
+
+The locked source-form comparison also reproduces every inherited marginal
+and text-only case score. Count-only matching lowers word-count CRPS to
+`37.427386` from `40.672695` for the marginal; the paired reduction is
+`+3.245309` with a case-bootstrap interval of `+1.839350` to `+4.784335`.
+Text-only CRPS is `38.374556`. The prespecified source-form-minus-text effect
+is `-0.947170`, with an interval spanning zero (`-1.943737` to `+0.035874`),
+so this fixed comparison does not distinguish their primary skill or support a
+lexical advantage. Source form also improves line-count CRPS by `+0.445157`
+over the marginal (`+0.206291` to `+0.701574`); this is an unadjusted secondary
+response-form diagnostic, not evidence about future identity content.
 
 ## Completed research and artifacts
 
@@ -221,6 +237,13 @@ response-length signal; demographics alone do not.
   tests, a complete JSON result, and a 150-row case audit. Clean regeneration
   reproduced both outputs byte for byte; no development or test artifact was
   read or changed by the analysis.
+- Locked `ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md` before reading benchmark rows,
+  implementation, or scoring (SHA-256
+  `5ffaf6b8289a360926da3ae3b1398a336949e698c6157f8ba94ef316ec63c5ad`).
+  Added a hash-guarded count-only leave-one-out comparison, six focused tests,
+  a complete JSON result, and a 150-row case audit. It reproduced the preceding
+  marginal and text-only scores before accepting results and did not read or
+  change development or test artifacts.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -298,6 +321,12 @@ response-length signal; demographics alone do not.
   demographic features, uses unadjusted secondary contrasts as diagnostics,
   and does not establish that demographic categories are mechanisms. Its case
   audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
+- The source-form comparison is a dependent extension chosen after the
+  text-only word-count gain was known. Its three counts and fixed distance rule
+  test one narrow nonlexical representation, not every response-form model. An
+  interval spanning zero does not establish method equivalence. Its unadjusted
+  secondary contrasts are diagnostics, and its case audit is a derived
+  benchmark-data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -326,6 +355,8 @@ response-length signal; demographics alone do not.
   the revision-volume analysis.
 - `ANALYSIS_PLAN_FEATURE_ABLATION.md`: fixed text-only, demographics-only, and
   combined source-feature comparison.
+- `ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md`: fixed lexical-versus-count-only
+  source-response comparison.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -349,6 +380,8 @@ response-length signal; demographics alone do not.
   central-interval analysis; its JSON and case audit are under `results/`.
 - `analysis/analyze_feature_ablation.py`: locked source-feature ablation; its
   JSON and complete case audit are under `results/`.
+- `analysis/analyze_source_form_ablation.py`: locked source-form comparison;
+  its JSON and complete case audit are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -376,13 +409,13 @@ response-length signal; demographics alone do not.
    development data to limit repeated tuning; preferably reserve new evidence
    or use training-only nested evaluation because development labels are now
    heavily reused.
-3. Avoid further fixed lexical re-rankers on the same 150 cases without a
-   substantively new representation. Before reusing development labels,
-   require a synthesizing or semantic person-conditioned approach to preserve
-   the primarily text-driven word-count distribution signal, treat the small
-   conditional demographic increment cautiously, test rather than assume the
-   weaker Add/Delete volume signal, and beat leave-one-out marginal additions
-   in training; then lock any development comparison and avoid private test
-   feedback.
+3. Avoid further fixed lexical re-rankers or post hoc decompositions on the
+   same 150 cases without a substantively new representation or new evidence.
+   Before reusing development labels, require a synthesizing or semantic
+   person-conditioned approach to preserve the response-form calibration
+   signal, demonstrate value beyond simple source counts, treat the small
+   conditional demographic increment cautiously, and beat leave-one-out
+   marginal additions in training; then lock any development comparison and
+   avoid private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

@@ -10,6 +10,7 @@ project:
     - ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md
     - ANALYSIS_PLAN_CHANGE_VOLUME.md
     - ANALYSIS_PLAN_FEATURE_ABLATION.md
+    - ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md
     - ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md
     - ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md
     - ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md
@@ -17,6 +18,7 @@ project:
     - analysis/analyze_change_distributions.py
     - analysis/analyze_change_volume.py
     - analysis/analyze_feature_ablation.py
+    - analysis/analyze_source_form_ablation.py
     - analysis/analyze_dev_diagnostics.py
     - analysis/analyze_novelty_prior.py
     - analysis/analyze_source_conditioned_additions.py
@@ -30,6 +32,8 @@ project:
     - results/change_volume_train_audit.csv
     - results/feature_ablation_train_analysis.json
     - results/feature_ablation_train_audit.csv
+    - results/source_form_ablation_train_analysis.json
+    - results/source_form_ablation_train_audit.csv
     - results/novelty_prior_dev_analysis.json
     - results/novelty_prior_token_audit.csv
     - results/source_conditioned_additions_train_analysis.json
@@ -49,7 +53,7 @@ book:
   title: "Predict the Self"
   subtitle: "Predict Future Selves challenge report"
   author: "Aleph Initial Alpha, Virtual CSSERG"
-  date: "2026-09-24"
+  date: "2026-09-26"
   chapters:
     - index.qmd
     - report.qmd

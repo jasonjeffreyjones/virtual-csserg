@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_source_form_ablation",
+  "cases": 150,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "5ffaf6b8289a360926da3ae3b1398a336949e698c6157f8ba94ef316ec63c5ad",
+    "feature_ablation_implementation_sha256": "5d745bad7af9e1498e494e841a9bceb08945a068789de8410dfcdbf899e0d3d3",
+    "feature_ablation_audit_sha256": "423582b332c74841347c763f2638aed1a22e4a9036b0f30175b7b74348aa6987"
+  },
+  "design": {
+    "primary_outcome": "word_count",
+    "primary_comparison": "source_form_only_minus_text_only",
+    "secondary_outcomes": [
+      "add_count",
+      "delete_count",
+      "line_count",
+      "source_similarity"
+    ],
+    "source_form_features": [
+      "log_word_count",
+      "log_unique_token_count",
+      "log_line_count"
+    ],
+    "source_form_scaling": "fold-fit population standard deviation",
+    "source_form_similarity": "1 / (1 + standardized Euclidean distance)",
+    "text_representation": "case-folded word-token TF-IDF from tst_2024",
+    "training_cases_per_fold": 149,
+    "neighbor_count": 30,
+    "neighbor_effective_weight": 30.0,
+    "fold_prior_effective_weight": 30.0,
+    "probabilistic_score": "weighted empirical CRPS",
+    "future_information_used_for_prediction": "none"
+  },
+  "mean_selected_neighbor_similarity": {
+    "source_form_only": {
+      "mean": 0.626956,
+      "median": 0.653655
+    },
+    "text_only_cosine": {
+      "mean": 0.165432,
+      "median": 0.173199
+    }
+  },
+  "existing_marginal_and_text_only_audit_reproduced": true,
+  "outcomes": {
+    "add_count": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 14.650556,
+        "source_form_only": 14.700468,
+        "text_only": 14.496435
+      },
+      "paired_comparisons": {
+        "marginal_minus_source_form_only": {
+          "effect_definition": "marginal_crps_minus_source_form_only_crps",
+          "mean_effect_positive_favors_second_method": -0.049911,
+          "paired_case_bootstrap_95_ci_low": -0.306297,
+          "paired_case_bootstrap_95_ci_high": 0.206683,
+          "second_method_case_wins": 82,
+          "case_ties": 0,
+          "second_method_case_losses": 68
+        },
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.154122,
+          "paired_case_bootstrap_95_ci_low": -0.148694,
+          "paired_case_bootstrap_95_ci_high": 0.443148,
+          "second_method_case_wins": 86,
+          "case_ties": 0,
+          "second_method_case_losses": 64
+        },
+        "source_form_only_minus_text_only": {
+          "effect_definition": "source_form_only_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.204033,
+          "paired_case_bootstrap_95_ci_low": -0.074776,
+          "paired_case_bootstrap_95_ci_high": 0.473373,
+          "second_method_case_wins": 82,
+          "case_ties": 0,
+          "second_method_case_losses": 68
+        }
+      }
+    },
+    "delete_count": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 3.926457,
+        "source_form_only": 3.90558,
+        "text_only": 3.840046
+      },
+      "paired_comparisons": {
+        "marginal_minus_source_form_only": {
+          "effect_definition": "marginal_crps_minus_source_form_only_crps",
+          "mean_effect_positive_favors_second_method": 0.020877,
+          "paired_case_bootstrap_95_ci_low": -0.073161,
+          "paired_case_bootstrap_95_ci_high": 0.112661,
+          "second_method_case_wins": 74,
+          "case_ties": 0,
+          "second_method_case_losses": 76
+        },
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.086411,
+          "paired_case_bootstrap_95_ci_low": -0.018069,
+          "paired_case_bootstrap_95_ci_high": 0.187892,
+          "second_method_case_wins": 89,
+          "case_ties": 0,
+          "second_method_case_losses": 61
+        },
+        "source_form_only_minus_text_only": {
+          "effect_definition": "source_form_only_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.065534,
+          "paired_case_bootstrap_95_ci_low": -0.015335,
+          "paired_case_bootstrap_95_ci_high": 0.143476,
+          "second_method_case_wins": 81,
+          "case_ties": 0,
+          "second_method_case_losses": 69
+        }
+      }
+    },
+    "word_count": {
+      "role": "primary",
+      "mean_crps": {
+        "marginal": 40.672695,
+        "source_form_only": 37.427386,
+        "text_only": 38.374556
+      },
+      "paired_comparisons": {
+        "marginal_minus_source_form_only": {
+          "effect_definition": "marginal_crps_minus_source_form_only_crps",
+          "mean_effect_positive_favors_second_method": 3.245309,
+          "paired_case_bootstrap_95_ci_low": 1.83935,
+          "paired_case_bootstrap_95_ci_high": 4.784335,
+          "second_method_case_wins": 96,
+          "case_ties": 0,
+          "second_method_case_losses": 54
+        },
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 2.298139,
+          "paired_case_bootstrap_95_ci_low": 0.826598,
+          "paired_case_bootstrap_95_ci_high": 3.834257,
+          "second_method_case_wins": 84,
+          "case_ties": 0,
+          "second_method_case_losses": 66
+        },
+        "source_form_only_minus_text_only": {
+          "effect_definition": "source_form_only_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": -0.94717,
+          "paired_case_bootstrap_95_ci_low": -1.943737,
+          "paired_case_bootstrap_95_ci_high": 0.035874,
+          "second_method_case_wins": 65,
+          "case_ties": 0,
+          "second_method_case_losses": 85
+        }
+      }
+    },
+    "line_count": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 4.910848,
+        "source_form_only": 4.465691,
+        "text_only": 4.937849
+      },
+      "paired_comparisons": {
+        "marginal_minus_source_form_only": {
+          "effect_definition": "marginal_crps_minus_source_form_only_crps",
+          "mean_effect_positive_favors_second_method": 0.445157,
+          "paired_case_bootstrap_95_ci_low": 0.206291,
+          "paired_case_bootstrap_95_ci_high": 0.701574,
+          "second_method_case_wins": 57,
+          "case_ties": 0,
+          "second_method_case_losses": 93
+        },
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": -0.027,
+          "paired_case_bootstrap_95_ci_low": -0.121015,
+          "paired_case_bootstrap_95_ci_high": 0.071857,
+          "second_method_case_wins": 63,
+          "case_ties": 0,
+          "second_method_case_losses": 87
+        },
+        "source_form_only_minus_text_only": {
+          "effect_definition": "source_form_only_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": -0.472157,
+          "paired_case_bootstrap_95_ci_low": -0.721005,
+          "paired_case_bootstrap_95_ci_high": -0.235305,
+          "second_method_case_wins": 91,
+          "case_ties": 0,
+          "second_method_case_losses": 59
+        }
+      }
+    },
+    "source_similarity": {
+      "role": "secondary",
+      "mean_crps": {
+        "marginal": 0.077171,
+        "source_form_only": 0.075202,
+        "text_only": 0.074207
+      },
+      "paired_comparisons": {
+        "marginal_minus_source_form_only": {
+          "effect_definition": "marginal_crps_minus_source_form_only_crps",
+          "mean_effect_positive_favors_second_method": 0.001969,
+          "paired_case_bootstrap_95_ci_low": 1.7e-05,
+          "paired_case_bootstrap_95_ci_high": 0.00388,
+          "second_method_case_wins": 84,
+          "case_ties": 0,
+          "second_method_case_losses": 66
+        },
+        "marginal_minus_text_only": {
+          "effect_definition": "marginal_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.002964,
+          "paired_case_bootstrap_95_ci_low": 5.6e-05,
+          "paired_case_bootstrap_95_ci_high": 0.006038,
+          "second_method_case_wins": 86,
+          "case_ties": 0,
+          "second_method_case_losses": 64
+        },
+        "source_form_only_minus_text_only": {
+          "effect_definition": "source_form_only_crps_minus_text_only_crps",
+          "mean_effect_positive_favors_second_method": 0.000995,
+          "paired_case_bootstrap_95_ci_low": -0.001881,
+          "paired_case_bootstrap_95_ci_high": 0.004063,
+          "second_method_case_wins": 81,
+          "case_ties": 0,
+          "second_method_case_losses": 69
+        }
+      }
+    }
+  },
+  "bootstrap": {
+    "unit": "paired training case",
+    "resamples": 20000,
+    "seed_restarted_for_each_outcome_and_comparison": 20260926,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "multiplicity_adjustment": "none; secondary outcomes are diagnostic"
+  },
+  "claim_boundary": "This dependent, locked training-cohort diagnostic compares one lexical neighborhood with one count-only source-form neighborhood. It is not untouched confirmation, evidence of a semantic or causal mechanism, population evidence, development performance, private-test performance, or a forecast of correct future content."
+}

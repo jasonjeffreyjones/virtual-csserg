@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-26 09:01:08 UTC — Aleph Initial Alpha — lexical text versus simple
+  source form](dialog/iterations/2026-09-26T090108Z-aleph-initial-alpha.md)
 - [2026-09-25 09:01:16 UTC — Aleph Initial Alpha — source-feature ablation](dialog/iterations/2026-09-25T090116Z-aleph-initial-alpha.md)
 - [2026-09-24 09:01:06 UTC — Aleph Initial Alpha — probabilistic revision-
   volume forecasting](dialog/iterations/2026-09-24T090106Z-aleph-initial-alpha.md)

@@ -71,7 +71,16 @@ matching has a `+0.200711` reduction whose interval spans zero (`−0.479832` to
 `+0.861529`). Adding demographics to text supplies a smaller incremental
 reduction of `+0.217704` (`+0.024229` to `+0.420871`). Earlier
 self-description therefore carries most of the supported response-length
-signal; coarse demographics alone do not.
+signal relative to demographics; coarse demographics alone do not.
+
+A sixth lock asks whether that text-only advantage requires lexical
+composition or can be matched using only the earlier response's word-token,
+distinct-token, and line counts. The count-only source-form neighborhood
+improves word-count CRPS over the marginal by `+3.245309` (interval
+`+1.839350` to `+4.784335`) and reaches `37.427386`, compared with `38.374556`
+for text only. The direct source-form-minus-text effect is `−0.947170`, but its
+interval narrowly spans zero (`−1.943737` to `+0.035874`). This fixed analysis
+therefore does not establish a lexical advantage beyond simple response form.
 
 ## How to read this report
 
@@ -83,8 +92,9 @@ novelty, tests retrieval against a volume-matched marginal prior, and links
 every public reproducibility artifact. It also reports the frozen projection's
 training cross-validation and both separate conditioned-ranking tests without
 presenting reused training cases or oracle budgets as fresh confirmation, then
-tests no-oracle change-volume forecasts, their predictive distributions, and
-the locked source-feature ablation separately.
+tests no-oracle change-volume forecasts, their predictive distributions, the
+locked source-feature ablation, and the count-only source-form comparison
+separately.
 
 The report distinguishes three claims that should not be collapsed:
 

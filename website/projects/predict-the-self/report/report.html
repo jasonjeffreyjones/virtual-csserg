@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aleph Initial Alpha, Virtual CSSERG">
-<meta name="dcterms.date" content="2026-09-25">
+<meta name="dcterms.date" content="2026-09-26">
 
 <title>1&nbsp; Predict the Self – Predict the Self</title>
 <style>
@@ -159,6 +159,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#locked-prospective-change-volume-forecasting" id="toc-locked-prospective-change-volume-forecasting" class="nav-link" data-scroll-target="#locked-prospective-change-volume-forecasting"><span class="header-section-number">5.9</span> Locked prospective change-volume forecasting</a></li>
   <li><a href="#locked-probabilistic-change-volume-forecasting" id="toc-locked-probabilistic-change-volume-forecasting" class="nav-link" data-scroll-target="#locked-probabilistic-change-volume-forecasting"><span class="header-section-number">5.10</span> Locked probabilistic change-volume forecasting</a></li>
   <li><a href="#locked-source-feature-ablation" id="toc-locked-source-feature-ablation" class="nav-link" data-scroll-target="#locked-source-feature-ablation"><span class="header-section-number">5.11</span> Locked source-feature ablation</a></li>
+  <li><a href="#locked-source-form-comparison" id="toc-locked-source-form-comparison" class="nav-link" data-scroll-target="#locked-source-form-comparison"><span class="header-section-number">5.12</span> Locked source-form comparison</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results"><span class="header-section-number">6</span> Results</a>
   <ul class="collapse">
@@ -172,8 +173,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#neighborhood-additions" id="toc-neighborhood-additions" class="nav-link" data-scroll-target="#neighborhood-additions"><span class="header-section-number">6.8</span> Regularized neighborhoods still lose to common additions</a></li>
   <li><a href="#change-volume" id="toc-change-volume" class="nav-link" data-scroll-target="#change-volume"><span class="header-section-number">6.9</span> Neighborhoods predict some revision volume</a></li>
   <li><a href="#change-distributions" id="toc-change-distributions" class="nav-link" data-scroll-target="#change-distributions"><span class="header-section-number">6.10</span> Neighborhood distributions improve only word-count forecasts</a></li>
-  <li><a href="#feature-ablation" id="toc-feature-ablation" class="nav-link" data-scroll-target="#feature-ablation"><span class="header-section-number">6.11</span> Earlier self-description carries most word-count signal</a></li>
-  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.12</span> Frozen test submission</a></li>
+  <li><a href="#feature-ablation" id="toc-feature-ablation" class="nav-link" data-scroll-target="#feature-ablation"><span class="header-section-number">6.11</span> Earlier text outperforms demographics for word-count skill</a></li>
+  <li><a href="#source-form-ablation" id="toc-source-form-ablation" class="nav-link" data-scroll-target="#source-form-ablation"><span class="header-section-number">6.12</span> Simple source form matches text-only word-count skill</a></li>
+  <li><a href="#submission" id="toc-submission" class="nav-link" data-scroll-target="#submission"><span class="header-section-number">6.13</span> Frozen test submission</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">7</span> Discussion</a>
   <ul class="collapse">
@@ -208,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 25, 2026</p>
+      <p class="date">September 26, 2026</p>
     </div>
   </div>
 
@@ -224,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
 <p><a href="../index.html">Executive Summary</a> · <a href="../short-report.pdf">Short two-column report</a> · <a href="index.html">report landing page</a></p>
 <section id="abstract" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Abstract</h1>
-<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast. A locked exploratory baseline retrieves the complete follow-up of the most similar training participant. It approximates how much new vocabulary will appear but not which vocabulary: predicted unique-token novelty is 80.2% versus 73.2% observed, while mean novel-token precision is 7.0%, recall is 8.5%, and agreement is lower than both continuity baselines. A post hoc volume-matched control sharpens the result: simply choosing the most frequent training-set additions reaches 17.7% precision and 14.3% F1, versus 7.0% and 6.7% for person-matched retrieval. A locked training-only leave-one-out test then asks whether earlier source tokens can improve that marginal ranking. The fixed source-conditioned rule recovers 14.5% of held-out additions versus 16.1% for the marginal prior. A second locked test pools and regularizes 30 similar text-and-demographic trajectories; it recovers 14.9% versus the same 16.1% marginal result, a paired difference of −1.20 percentage points (95% case-bootstrap interval: −1.84 to −0.57). Neither individualized ranking demonstrates incremental content advantage. A third locked leave-one-out test removes the oracle budget and forecasts how much each held-out response will change. The same regularized neighborhood lowers MAE relative to source- calibrated fold medians for Add count (<code>20.126667</code> versus <code>21.340000</code>), Delete count (<code>5.336275</code> versus <code>5.614935</code>), and word count (<code>52.940000</code> versus <code>56.080000</code>); all three paired intervals exclude zero. It ties on line count, while the source-similarity interval spans zero. A fourth lock evaluates the complete predictive distributions rather than only their medians. The neighborhood improves word-count CRPS (<code>38.156852</code> versus <code>40.672695</code>; paired reduction <code>+2.515843</code>, interval <code>+1.008212</code> to <code>+4.059792</code>) and its central 80% interval score, while CRPS intervals for the other four outcomes span zero. A fifth locked analysis separates the combined source representation. Text-only matching improves word-count CRPS over the marginal by <code>+2.298139</code> (interval <code>+0.816444</code> to <code>+3.865823</code>); demographics-only matching does not, although adding demographics to text yields a smaller incremental gain of <code>+0.217704</code> (<code>+0.024229</code> to <code>+0.420871</code>). A separately locked leave-one-out cross-validation of the frozen stable projection repeats its central mixed pattern: edit similarity improves by <code>0.004147</code>, token-overlap F1 worsens by <code>0.003493</code>, word-count and source-similarity error fall, and line-count error rises. The other non-exact agreement intervals span zero.</p>
+<p>An 81-case test submission is frozen and passes the official format validator. Because test answers are private, this report does not claim a test score. On 50 public development cases, a deterministic stable-signifier projection has mixed agreement results relative to repeating the 2024 response verbatim. A new post hoc analysis finds that the small agreement differences are sensitive to which development cases are included, while improvements in word-count and source-similarity error are more stable. More fundamentally, 73.2% of distinct tokens in an average observed follow-up did not appear in that person’s earlier response, exposing a severe limit for any strictly extractive forecast. A locked exploratory baseline retrieves the complete follow-up of the most similar training participant. It approximates how much new vocabulary will appear but not which vocabulary: predicted unique-token novelty is 80.2% versus 73.2% observed, while mean novel-token precision is 7.0%, recall is 8.5%, and agreement is lower than both continuity baselines. A post hoc volume-matched control sharpens the result: simply choosing the most frequent training-set additions reaches 17.7% precision and 14.3% F1, versus 7.0% and 6.7% for person-matched retrieval. A locked training-only leave-one-out test then asks whether earlier source tokens can improve that marginal ranking. The fixed source-conditioned rule recovers 14.5% of held-out additions versus 16.1% for the marginal prior. A second locked test pools and regularizes 30 similar text-and-demographic trajectories; it recovers 14.9% versus the same 16.1% marginal result, a paired difference of −1.20 percentage points (95% case-bootstrap interval: −1.84 to −0.57). Neither individualized ranking demonstrates incremental content advantage. A third locked leave-one-out test removes the oracle budget and forecasts how much each held-out response will change. The same regularized neighborhood lowers MAE relative to source- calibrated fold medians for Add count (<code>20.126667</code> versus <code>21.340000</code>), Delete count (<code>5.336275</code> versus <code>5.614935</code>), and word count (<code>52.940000</code> versus <code>56.080000</code>); all three paired intervals exclude zero. It ties on line count, while the source-similarity interval spans zero. A fourth lock evaluates the complete predictive distributions rather than only their medians. The neighborhood improves word-count CRPS (<code>38.156852</code> versus <code>40.672695</code>; paired reduction <code>+2.515843</code>, interval <code>+1.008212</code> to <code>+4.059792</code>) and its central 80% interval score, while CRPS intervals for the other four outcomes span zero. A fifth locked analysis separates the combined source representation. Text-only matching improves word-count CRPS over the marginal by <code>+2.298139</code> (interval <code>+0.816444</code> to <code>+3.865823</code>); demographics-only matching does not, although adding demographics to text yields a smaller incremental gain of <code>+0.217704</code> (<code>+0.024229</code> to <code>+0.420871</code>). A sixth lock compares text-only matching with a count-only neighborhood based on the earlier response’s word, distinct-token, and line counts. Source-form-only CRPS is <code>37.427386</code> versus <code>38.374556</code> for text only. The direct form-minus-text effect is <code>−0.947170</code>, but its interval spans zero (<code>−1.943737</code> to <code>+0.035874</code>), so this fixed comparison does not establish a lexical advantage beyond response form. A separately locked leave-one-out cross-validation of the frozen stable projection repeats its central mixed pattern: edit similarity improves by <code>0.004147</code>, token-overlap F1 worsens by <code>0.003493</code>, word-count and source-similarity error fall, and line-count error rises. The other non-exact agreement intervals span zero.</p>
 </section>
 <section id="findings" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Findings at a glance</h1>
@@ -244,6 +246,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Without an oracle future-token budget, that fixed neighborhood does improve leave-one-out forecasts of Add count, Delete count, and follow-up word count over source-calibrated fold medians. It does not improve line count or show a stable source-similarity advantage.</li>
 <li>Full predictive distributions sharpen that result: neighborhood word-count CRPS and central 80% interval score improve, but Add count, Delete count, line count, and source-similarity CRPS differences remain compatible with zero.</li>
 <li>A locked ablation locates most of that word-count signal in earlier self-description text. Demographics alone do not improve over the marginal, although they add a small incremental gain when combined with text.</li>
+<li>A second locked ablation finds that three source-response counts improve word-count CRPS over the marginal and are not stably worse than text-only matching. The current evidence does not isolate a lexical mechanism.</li>
 </ul>
 </section>
 <section id="introduction" class="level1" data-number="4">
@@ -331,6 +334,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="5.11" class="anchored" data-anchor-id="locked-source-feature-ablation"><span class="header-section-number">5.11</span> Locked source-feature ablation</h2>
 <p>A fifth training-only plan was locked before reopening the benchmark in this iteration, implementation, or scoring at SHA-256 <code>ed9fa67b2cc1265f3710471f96d7ffbfd16986b8295ef5072da26c263d8b7da4</code>. It asks whether the previously observed word-count distribution gain comes from the earlier self-description, the ten 2024 demographic fields, or their combination. It splits the unchanged TF-IDF representation into text-only, demographics-only, and combined feature sets without changing any field, neighbor, weighting, shrinkage, transformation, or scoring rule.</p>
 <p>Follow-up word-count CRPS is primary because it was the only outcome with a supported combined-neighborhood CRPS gain in the preceding lock. The four other outcomes are prespecified secondary diagnostics. Four paired contrasts compare each ablation with the marginal distribution and the combined model. Twenty thousand case-bootstrap resamples use seed <code>20260925</code>, restarted for each outcome and contrast. Before any ablation result is accepted, the script must numerically reproduce every marginal and combined case-level CRPS value in the preceding locked audit.</p>
+</section>
+<section id="locked-source-form-comparison" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="locked-source-form-comparison"><span class="header-section-number">5.12</span> Locked source-form comparison</h2>
+<p>A sixth training-only plan was locked before reading the benchmark rows in this iteration, implementation, or scoring at SHA-256 <code>5ffaf6b8289a360926da3ae3b1398a336949e698c6157f8ba94ef316ec63c5ad</code>. It compares the text-only distribution with a count-only source-form neighborhood. Each source is represented by log word-token count, log distinct-token count, and log line count. Fold-fit population standard deviations scale Euclidean distance; similarity is <code>1 / (1 + distance)</code>.</p>
+<p>The neighborhood size, weights, prior, outcome transformations, and CRPS scoring remain fixed. Follow-up word-count CRPS is primary, and source-form CRPS minus text-only CRPS is the primary paired contrast. Twenty thousand case-bootstrap resamples use seed <code>20260926</code>. The script must reproduce every preceding marginal and text-only case score before accepting a result. A text advantage would identify lexical composition—not necessarily semantic identity—because TF-IDF can encode style and template wording.</p>
 </section>
 </section>
 <section id="results" class="level1" data-number="6">
@@ -1012,7 +1020,7 @@ ul.task-list li input[type="checkbox"] {
 <p>These distributional scores do not overturn the point-forecast findings. Rather, they locate their strongest probabilistic support in follow-up length. The Add and Delete medians improve absolute error, but their empirical distributions do not establish stable CRPS gains. Line-count intervals are substantially over-covering (96.7% marginal and 92.7% neighborhood against 80% nominal), showing that apparent uncertainty can be broad without being informative. None of these quantities identifies the future signifiers.</p>
 </section>
 <section id="feature-ablation" class="level2" data-number="6.11">
-<h2 data-number="6.11" class="anchored" data-anchor-id="feature-ablation"><span class="header-section-number">6.11</span> Earlier self-description carries most word-count signal</h2>
+<h2 data-number="6.11" class="anchored" data-anchor-id="feature-ablation"><span class="header-section-number">6.11</span> Earlier text outperforms demographics for word-count skill</h2>
 <p>The required replication passed for all 150 cases and five outcomes. For the primary follow-up word-count outcome, text-only matching preserves most of the combined neighborhood’s advantage, while demographics-only matching does not establish an improvement over the marginal distribution:</p>
 <table class="caption-top table">
 <caption>Word-count predictive-distribution feature ablation</caption>
@@ -1066,8 +1074,63 @@ ul.task-list li input[type="checkbox"] {
 <p>Text-only matching wins 84 cases and loses 66 against the marginal. The combined model wins 85 and loses 65 against text-only. Thus the earlier self-description carries nearly all of the supported response-length signal; the ten coarse demographic fields alone do not beat the source-calibrated marginal. Their small incremental benefit conditional on text is compatible with weak complementary information, not a stand-alone demographic mechanism.</p>
 <p>The secondary diagnostics do not support a general feature-family conclusion. For Add count, Delete count, and line count, every fixed ablation contrast has an interval spanning zero. Text-only matching improves source-similarity CRPS over the marginal by <code>+0.002964</code>, but its repeated-analysis interval barely excludes zero (<code>+0.000051</code> to <code>+0.006065</code>), and adding demographics to text does not improve that outcome. The primary result remains about response length, not future signifiers or revision volume generally.</p>
 </section>
-<section id="submission" class="level2" data-number="6.12">
-<h2 data-number="6.12" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.12</span> Frozen test submission</h2>
+<section id="source-form-ablation" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="source-form-ablation"><span class="header-section-number">6.12</span> Simple source form matches text-only word-count skill</h2>
+<p>The required replication again passed for all 150 cases and five outcomes. Matching on only the earlier response’s word-token, distinct-token, and line counts improves the primary word-count forecast over the source-calibrated marginal:</p>
+<table class="caption-top table">
+<caption>Word-count lexical-versus-source-form comparison</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th scope="col">Word-count predictive distribution</th>
+<th style="text-align: right;" scope="col">Mean CRPS</th>
+<th scope="col">Locked paired contrast</th>
+<th style="text-align: right;" scope="col">CRPS reduction</th>
+<th style="text-align: right;" scope="col">Paired case-bootstrap 95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Source-calibrated marginal</td>
+<td style="text-align: right;">40.672695</td>
+<td>—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="even">
+<td>Text only</td>
+<td style="text-align: right;">38.374556</td>
+<td>Marginal minus text only</td>
+<td style="text-align: right;">+2.298139</td>
+<td style="text-align: right;">+0.826598 to +3.834257</td>
+</tr>
+<tr class="odd">
+<td>Source form only</td>
+<td style="text-align: right;">37.427386</td>
+<td>Marginal minus source form</td>
+<td style="text-align: right;">+3.245309</td>
+<td style="text-align: right;">+1.839350 to +4.784335</td>
+</tr>
+<tr class="even">
+<td>Direct comparison</td>
+<td style="text-align: right;">—</td>
+<td>Source form minus text only</td>
+<td style="text-align: right;">−0.947170</td>
+<td style="text-align: right;">−1.943737 to +0.035874</td>
+</tr>
+</tbody>
+</table>
+<p>The source-form neighborhood wins 96 cases and loses 54 against the marginal. Text-only matching wins 65 and loses 85 in the direct comparison, but the prespecified primary interval narrowly includes zero. Under the locked interpretation rule, this analysis does not separate the two methods’ primary skill. It therefore supplies no stable evidence that lexical composition adds word-count information beyond three simple counts. Nor does the lower mean for source form prove it is generally superior: the direct interval also prevents that claim.</p>
+<p>The secondary pattern reinforces the narrow measurement interpretation. Source-form matching improves line-count CRPS by <code>+0.445157</code> over the marginal (interval <code>+0.206291</code> to <code>+0.701574</code>) and by <code>+0.472157</code> over text only (<code>+0.235305</code> to <code>+0.721005</code>). Add-count and Delete-count comparisons span zero. Source-form matching’s source-similarity reduction is <code>+0.001969</code>, with a repeated-analysis interval barely above zero (<code>+0.000017</code> to <code>+0.003880</code>). These unadjusted secondary diagnostics concern response form, not future identity content.</p>
+</section>
+<section id="submission" class="level2" data-number="6.13">
+<h2 data-number="6.13" class="anchored" data-anchor-id="submission"><span class="header-section-number">6.13</span> Frozen test submission</h2>
 <p>The method generated one nonblank prediction for every test ID in the required order. The pinned official validator returned <code>VALID: 81 predictions</code>. The frozen CSV has SHA-256:</p>
 <pre class="text"><code>a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3</code></pre>
 <p>The organizer must run the private test evaluator. Until that happens, the private-test performance remains unknown; neither public-development results nor the training-only ranking diagnostic substitutes for it.</p>
@@ -1080,13 +1143,14 @@ ul.task-list li input[type="checkbox"] {
 <p>Matched-trajectory retrieval sharpens this inference. It supplies deletion and creation in approximately the observed proportions, but the transferred novel content is rarely person-correct. The problem is not merely calibrating how different the next self-description will be. A useful forecast must condition new signifiers on the individual without collapsing back into verbatim continuity.</p>
 <p>The marginal control tightens that conclusion. Retrieval not only recovers little new vocabulary; it recovers less than a person-agnostic training prior given the same number of guesses. The diagnostic also disciplines the language of the report: token recovery is not automatically signifier recovery, because many high-base-rate additions are connective or generic words. Future person-specific models need to demonstrate value beyond both continuity and marginal lexical prevalence.</p>
 <p>The two leave-one-out conditioned results make that requirement more specific. Merely finding the strongest smoothed source-token-to-Add association is not enough, and replacing that maximum with a strongly regularized 30-neighbor ensemble still sacrifices 1.20 percentage points relative to marginal prevalence. Surface lexical and coarse demographic similarity have now failed in both single-trajectory and pooled forms. Better individualization will need richer context, genuinely semantic synthesis, or new longitudinal evidence; it should establish an incremental training-only advantage before reopening the heavily reused development comparison.</p>
-<p>The prospective volume analysis qualifies that negative content result. The fixed neighborhood improves three no-oracle quantity forecasts even while its oracle-budget lexical ranking loses to marginal additions. Person conditioning therefore is not uniformly uninformative: it helps estimate the extent of revision but has not identified its future signifiers. A synthesizing model should preserve that modest calibration signal while demonstrating content value beyond marginal prevalence. The probabilistic extension further qualifies the claim: the clearest distributional gain is for follow-up word count, while Add and Delete improvements are limited to point forecasts under the current evidence. The ablation now locates most of the supported word-count distribution signal in the earlier self-description itself. Demographics alone do not improve the marginal forecast; their much smaller incremental gain appears only in combination with text and does not establish that demographic resemblance is an ipseological mechanism.</p>
+<p>The prospective volume analysis qualifies that negative content result. The fixed neighborhood improves three no-oracle quantity forecasts even while its oracle-budget lexical ranking loses to marginal additions. Person conditioning therefore is not uniformly uninformative: it helps estimate the extent of revision but has not identified its future signifiers. A synthesizing model should preserve that modest calibration signal while demonstrating content value beyond marginal prevalence. The probabilistic extension further qualifies the claim: the clearest distributional gain is for follow-up word count, while Add and Delete improvements are limited to point forecasts under the current evidence. The ablation now locates most of the supported word-count distribution signal in the earlier self-description rather than demographics. The second prevents a stronger lexical interpretation: three simple source-response counts improve on the marginal and are not stably distinguishable from text-only matching. Demographics alone do not improve the marginal forecast; their much smaller incremental gain appears only in combination with text and does not establish that demographic resemblance is an ipseological mechanism. None of these surface predictors establishes an ipseological mechanism.</p>
 <section id="reproducibility" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="reproducibility"><span class="header-section-number">7.1</span> Reproducibility</h2>
 <p>The complete open materials are:</p>
 <ul>
 <li><a href="ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md"><code>ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md</code></a> — pre-analysis lock for probabilistic revision-volume forecasts;</li>
 <li><a href="ANALYSIS_PLAN_FEATURE_ABLATION.md"><code>ANALYSIS_PLAN_FEATURE_ABLATION.md</code></a> — pre-analysis lock for separating text and demographic source features;</li>
+<li><a href="ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md"><code>ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md</code></a> — pre-analysis lock for comparing lexical and count-only source matching;</li>
 <li><a href="ANALYSIS_PLAN_CHANGE_VOLUME.md"><code>ANALYSIS_PLAN_CHANGE_VOLUME.md</code></a> — pre-analysis lock for prospective revision-volume forecasts;</li>
 <li><a href="ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md"><code>ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md</code></a> — pre-analysis lock for the regularized-neighborhood comparison;</li>
 <li><a href="ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md"><code>ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md</code></a> — pre-analysis lock for the training-only ranking comparison;</li>
@@ -1096,6 +1160,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="analysis/analyze_change_distributions.py"><code>analysis/analyze_change_distributions.py</code></a> — hash-guarded leave-one-out predictive-distribution evaluation;</li>
 <li><a href="analysis/analyze_change_volume.py"><code>analysis/analyze_change_volume.py</code></a> — hash-guarded leave-one-out response-form and revision-volume forecasts;</li>
 <li><a href="analysis/analyze_feature_ablation.py"><code>analysis/analyze_feature_ablation.py</code></a> — hash-guarded leave-one-out source-feature ablation;</li>
+<li><a href="analysis/analyze_source_form_ablation.py"><code>analysis/analyze_source_form_ablation.py</code></a> — hash-guarded lexical-versus-source-form comparison;</li>
 <li><a href="analysis/analyze_novelty_prior.py"><code>analysis/analyze_novelty_prior.py</code></a> — volume-matched marginal-addition diagnostic;</li>
 <li><a href="analysis/analyze_neighborhood_additions.py"><code>analysis/analyze_neighborhood_additions.py</code></a> — hash-guarded regularized-neighborhood leave-one-out comparison;</li>
 <li><a href="analysis/analyze_source_conditioned_additions.py"><code>analysis/analyze_source_conditioned_additions.py</code></a> — hash-guarded leave-one-out source-conditioned comparison;</li>
@@ -1110,6 +1175,8 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="results/change_volume_train_audit.csv"><code>results/change_volume_train_audit.csv</code></a> — all 150 cases’ observed quantities, predictions, errors, and paired effects;</li>
 <li><a href="results/feature_ablation_train_analysis.json"><code>results/feature_ablation_train_analysis.json</code></a> — complete machine-readable feature-ablation result;</li>
 <li><a href="results/feature_ablation_train_audit.csv"><code>results/feature_ablation_train_audit.csv</code></a> — all 150 cases’ marginal and ablated CRPS values;</li>
+<li><a href="results/source_form_ablation_train_analysis.json"><code>results/source_form_ablation_train_analysis.json</code></a> — complete machine-readable source-form comparison;</li>
+<li><a href="results/source_form_ablation_train_audit.csv"><code>results/source_form_ablation_train_audit.csv</code></a> — all 150 cases’ marginal, source-form, and text-only CRPS values;</li>
 <li><a href="results/novelty_prior_dev_analysis.json"><code>results/novelty_prior_dev_analysis.json</code></a> — complete marginal-prior comparison and paired uncertainty;</li>
 <li><a href="results/novelty_prior_token_audit.csv"><code>results/novelty_prior_token_audit.csv</code></a> — token ranks, frequencies, prediction counts, and correct-recovery counts;</li>
 <li><a href="results/neighborhood_additions_train_analysis.json"><code>results/neighborhood_additions_train_analysis.json</code></a> — complete regularized-neighborhood result;</li>
@@ -1150,6 +1217,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The change-volume comparison removes that oracle budget, but its surface-text and coarse-demographic representation and its 30-neighbor, equal-shrinkage choices came from prior Project work rather than untouched selection. Its overlapping folds and case-bootstrap intervals characterize this selected training cohort, not a population. Count forecasts remain continuous to avoid an arbitrary rounding rule, Add/Delete tokens need not all be identity signifiers, and the derived case audit is governed by CC BY-NC-SA 4.0.</p>
 <p>The probabilistic extension inherits all of those design constraints. Its weighted empirical distributions reuse the same outcomes, folds, representation, and fixed weights; they are not independently selected models. Central 80% intervals are discrete empirical quantiles, and coverage in 150 overlapping leave-one-out folds is descriptive rather than a population guarantee. Its derived case audit is also governed by CC BY-NC-SA 4.0.</p>
 <p>The source-feature ablation is a dependent extension chosen after the combined word-count gain was known. It preserves the existing exact-value demographic features, so sparse categories and missing values can weaken demographics-only similarity. Its unadjusted secondary contrasts are repeated-analysis diagnostics, not an independent family of confirmatory tests. The derived case audit remains governed by CC BY-NC-SA 4.0.</p>
+<p>The source-form comparison is another dependent extension chosen after the text-only word-count gain was known. Its three counts and fixed distance rule test one narrow alternative, not every nonlexical representation. A direct interval spanning zero is evidence that this analysis does not distinguish the methods, not proof that their predictive distributions are equivalent. Its unadjusted secondary contrasts are repeated-analysis diagnostics, and its case audit remains governed by CC BY-NC-SA 4.0.</p>
 <p>The paired bootstrap treats development cases as the resampling unit, but the benchmark is a selected longitudinal cohort rather than a probability sample. Its intervals describe sensitivity to the composition of these 50 cases, not uncertainty for people in general. The lexical oracles use observed follow-ups and are deliberately unattainable; they must not be read as test predictions or achievable prospective scores.</p>
 <p>The immediate next step is to submit the two prepared artifacts to the challenge organizer and add the complete private test scorecard, unchanged, to this report. Further fixed lexical re-rankers on the same 150 cases are unlikely to be informative without a substantively new representation. A later method should synthesize rather than copy novel content, show an incremental advantage over leave-one-out marginal additions before any additional development comparison, lock that comparison, and avoid private test feedback for tuning.</p>
 

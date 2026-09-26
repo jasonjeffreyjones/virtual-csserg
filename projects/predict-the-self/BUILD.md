@@ -112,6 +112,17 @@ python3 projects/predict-the-self/analysis/analyze_feature_ablation.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked lexical-versus-source-form comparison. It hash-guards
+the training data, evaluator, plan, preceding feature-ablation implementation,
+and preceding case audit. It matches only on source word-token,
+distinct-token, and line counts and never reads or writes a development or
+test artifact:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_source_form_ablation.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt
