@@ -71,6 +71,8 @@ observations through August 27, 2026.
 | Earlier saved result; inputs unavailable this iteration | 677,121 | 8,253 | 2026-08-28 | 1.088 |
 | Primary-host retrieval this iteration | 10,570 | 142 | 2025-07-14 | 1.192 |
 
+: Data-provenance snapshots and descriptive prevalence ratios
+
 The earlier result is retained as historical evidence, not an independently
 reproduced result. The short primary-host subset has a wide clustered interval
 (0.938–1.413) and is not a conflicting estimate of the same observation window.
@@ -103,7 +105,7 @@ tab <- data.frame(
 )
 tab$Total <- rowSums(tab[, 2:3])
 tab$`Prevalence (%)` <- round(100 * tab[[2]] / tab$Total, 2)
-knitr::kable(tab)
+knitr::kable(tab, caption = "Exact eligible respondent-day counts")
 ```
 
 ```{r}
@@ -131,7 +133,11 @@ beyond this descriptive comparison.
 ```{r}
 #| echo: false
 m <- primary$temporal_sensitivity$by_month
-knitr::kable(m[, c("month", "fandom_yes_n", "fandom_no_n", "prevalence_ratio")], digits = 3)
+knitr::kable(
+  m[, c("month", "fandom_yes_n", "fandom_no_n", "prevalence_ratio")],
+  digits = 3,
+  caption = "Monthly respondent-day counts and prevalence ratios"
+)
 ```
 
 ![Monthly prevalence ratios with point size proportional to Browns-fan respondent-day counts.](../images/monthly-prevalence-ratio.png){fig-alt="Line chart of fourteen monthly happy prevalence ratios from July 2025 through August 2026. Ratios range from 0.963 to 1.209 around the pooled estimate of 1.087; point size represents Browns-fan respondent-day counts."}
@@ -177,8 +183,16 @@ sens <- data.frame(
   `Difference (pp)` = 100*c(e$prevalence_difference, cc$prevalence_difference, pooled$prevalence_difference, direct$prevalence_difference),
   check.names = FALSE
 )
-knitr::kable(sens, digits = 3)
-knitr::kable(weighted$cell_diagnostics[, c("sex", "age_group", "fandom_yes_records", "fandom_no_records", "pooled_poststratification_weight")], digits = 3)
+knitr::kable(
+  sens,
+  digits = 3,
+  caption = "Unweighted and age-sex weighted sensitivity estimates"
+)
+knitr::kable(
+  weighted$cell_diagnostics[, c("sex", "age_group", "fandom_yes_records", "fandom_no_records", "pooled_poststratification_weight")],
+  digits = 3,
+  caption = "Age-sex calibration cell diagnostics"
+)
 ```
 
 Pooled calibration gives each cell weight equal to its ACS adult share divided
@@ -205,8 +219,13 @@ are downloadable. Source code, tests, and build instructions are in the
 
 ```{r}
 #| echo: false
-knitr::kable(data.frame(Input = c("Archive responses", "Archive demographics"),
-  SHA256 = c(primary$inputs$responses_sha256, primary$inputs$demographics_sha256)))
+knitr::kable(
+  data.frame(
+    Input = c("Archive responses", "Archive demographics"),
+    SHA256 = c(primary$inputs$responses_sha256, primary$inputs$demographics_sha256)
+  ),
+  caption = "Published input-file SHA-256 digests"
+)
 ```
 
 This report was prepared by Aleph Initial Alpha, recovering and extending

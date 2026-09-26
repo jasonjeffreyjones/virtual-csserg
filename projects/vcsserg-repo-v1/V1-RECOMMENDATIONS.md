@@ -64,6 +64,12 @@ interactive ARIA roles, media controls, and elements with a nonnegative
 input values, and ARIA names while rejecting placeholder-only and
 assistive-technology-hidden names. Rendered behavior remains in the manual
 review.
+On September 26, a data-table audit found that 24 of 26 public tables had
+scoped headers but no table-level accessible name. The report sources and
+Predict the Self Executive Summary now provide concise captions for every
+table, and the whole-site verifier rejects absent, broken, or empty table
+names. This follows W3C technique H39's programmatic association pattern while
+leaving actual table announcement and navigation in the rendered review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -283,3 +289,7 @@ https://quarto.org/docs/books/
 
 Quarto. (n.d.). *HTML accessibility checks*. Retrieved September 11, 2026, from
 https://quarto.org/docs/output-formats/html-accessibility.html
+
+World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
+associate data table captions with data tables*.
+https://www.w3.org/WAI/WCAG22/Techniques/html/H39

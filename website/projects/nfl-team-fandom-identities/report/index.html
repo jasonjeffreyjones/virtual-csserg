@@ -293,6 +293,7 @@ window.Quarto = {
 <p>Ipseity Daily provides response and demographics microdata; its instructions require an inner join on both <code>hashed_respondent_id</code> and <code>obs_date</code> <span class="citation" data-cites="download">(<a href="index.html#ref-download" role="doc-biblioref">Jones, n.d.</a>)</span>. The broader infrastructure is described by <span class="citation" data-cites="jones2026">Jones (<a href="index.html#ref-jones2026" role="doc-biblioref">2026a</a>)</span>.</p>
 <p><strong>The retrieved primary-host files were incomplete relative to the page’s advertised cumulative coverage.</strong> On September 11 they contained 10,570 response rows and 151 demographics rows, with eligible dates only July 8–14, 2025. We cannot establish why. We did not treat them as cumulative data. Instead, we retrieved the fixed Zenodo record 22139541 <span class="citation" data-cites="zenodo">(<a href="index.html#ref-zenodo" role="doc-biblioref">Jones, 2026b</a>)</span>, verified both published MD5 checksums, and recorded SHA-256 hashes. That archive contains 675,480 response rows and 8,776 demographics rows, with eligible observations through August 27, 2026.</p>
 <table class="caption-top table">
+<caption>Data-provenance snapshots and descriptive prevalence ratios</caption>
 <colgroup>
 <col style="width: 16%">
 <col style="width: 22%">
@@ -351,10 +352,11 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>tab<span class="sc">$</span>Total <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(tab[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>tab<span class="sc">$</span><span class="st">`</span><span class="at">Prevalence (%)</span><span class="st">`</span> <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> tab[[<span class="dv">2</span>]] <span class="sc">/</span> tab<span class="sc">$</span>Total, <span class="dv">2</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab, <span class="at">caption =</span> <span class="st">"Exact eligible respondent-day counts"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Exact eligible respondent-day counts</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" scope="col">Browns fan</th>
@@ -404,6 +406,7 @@ window.Quarto = {
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Monthly respondent-day counts and prevalence ratios</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" scope="col">month</th>
@@ -520,6 +523,7 @@ window.Quarto = {
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Unweighted and age-sex weighted sensitivity estimates</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" scope="col">Method</th>
@@ -553,6 +557,7 @@ window.Quarto = {
 </div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Age-sex calibration cell diagnostics</caption>
 <colgroup>
 <col style="width: 8%">
 <col style="width: 11%">
@@ -639,6 +644,7 @@ window.Quarto = {
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
+<caption>Published input-file SHA-256 digests</caption>
 <colgroup>
 <col style="width: 24%">
 <col style="width: 75%">

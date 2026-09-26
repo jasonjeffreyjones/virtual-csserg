@@ -339,6 +339,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.1" class="anchored" data-anchor-id="aggregate-scorecard"><span class="header-section-number">6.1</span> Aggregate scorecard</h2>
 <p>The authoritative shared evaluator reports fifteen measures in three groups. The table reports every measure; arrows indicate the evaluator’s direction where one exists.</p>
 <table class="caption-top table">
+<caption>Development-set aggregate scorecard</caption>
 <colgroup>
 <col style="width: 14%">
 <col style="width: 14%">
@@ -487,6 +488,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.2" class="anchored" data-anchor-id="paired-pattern"><span class="header-section-number">6.2</span> Paired development-case pattern</h2>
 <p>Positive effects favor stable-signifier projection. For agreement measures, the effect is projection minus repeat-2024; for errors, it is repeat-2024 error minus projection error. Exact match is omitted because all 50 cases tie at zero. A win, tie, or loss is evaluated within a person before averaging.</p>
 <table class="caption-top table">
+<caption>Paired development-case comparison with the repeat-2024 baseline</caption>
 <colgroup>
 <col style="width: 20%">
 <col style="width: 26%">
@@ -558,6 +560,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.3" class="anchored" data-anchor-id="stable-projection-cv"><span class="header-section-number">6.3</span> Training cross-validation repeats the mixed pattern</h2>
 <p>The locked leave-one-out analysis refits the frozen projection 150 times. As in the development analysis, positive paired effects favor the projection; for error measures they are repeat-2024 error minus projection error.</p>
 <table class="caption-top table">
+<caption>Stable-projection training cross-validation results</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 21%">
@@ -652,6 +655,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.5" class="anchored" data-anchor-id="trajectory-retrieval"><span class="header-section-number">6.5</span> Retrieval predicts novelty volume, not novel content</h2>
 <p>Positive paired effects favor trajectory retrieval. For errors, the effect is stable-projection error minus retrieval error. Retrieval loses agreement and word-count accuracy, modestly improves line-count error with an interval that spans zero, and dramatically improves source-similarity error.</p>
 <table class="caption-top table">
+<caption>Trajectory-retrieval comparison with the stable projection</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 21%">
@@ -741,6 +745,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.6" class="anchored" data-anchor-id="novelty-prior"><span class="header-section-number">6.6</span> Person matching does not beat common additions</h2>
 <p>The volume-matched marginal prior predicts a mean 46.94 novel token types per case, exactly equal to retrieval by construction. Despite lacking any person-matching rule, it recovers more of the observed novel vocabulary:</p>
 <table class="caption-top table">
+<caption>Volume-matched novel-token recovery comparison</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 21%">
@@ -788,6 +793,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.7" class="anchored" data-anchor-id="source-conditioned-additions"><span class="header-section-number">6.7</span> Source-token conditioning also loses to common additions</h2>
 <p>The fixed source-conditioned ranking does not clear that baseline in its training-only leave-one-out test. Across all 150 held-out training cases, the mean recovered fraction is <code>0.145238</code>, compared with <code>0.160992</code> for the marginal-addition ranking:</p>
 <table class="caption-top table">
+<caption>Source-conditioned ranking compared with marginal additions</caption>
 <colgroup>
 <col style="width: 20%">
 <col style="width: 26%">
@@ -836,6 +842,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.8" class="anchored" data-anchor-id="neighborhood-additions"><span class="header-section-number">6.8</span> Regularized neighborhoods still lose to common additions</h2>
 <p>Pooling rather than maximizing person-conditioned evidence narrows the deficit but does not clear the marginal baseline:</p>
 <table class="caption-top table">
+<caption>Regularized-neighborhood ranking compared with marginal additions</caption>
 <colgroup>
 <col style="width: 20%">
 <col style="width: 26%">
@@ -884,6 +891,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.9" class="anchored" data-anchor-id="change-volume"><span class="header-section-number">6.9</span> Neighborhoods predict some revision volume</h2>
 <p>When the oracle addition budget is removed, the same neighborhood has a more limited but positive role. It improves absolute-error forecasts for how many distinct token types are added and deleted and for follow-up word count:</p>
 <table class="caption-top table">
+<caption>Training leave-one-out change-volume forecasts</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 21%">
@@ -945,6 +953,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.10" class="anchored" data-anchor-id="change-distributions"><span class="header-section-number">6.10</span> Neighborhood distributions improve only word-count forecasts</h2>
 <p>Scoring complete predictive distributions narrows the point-forecast result. Only follow-up word count has a paired CRPS interval that excludes zero in the direction favoring the neighborhood:</p>
 <table class="caption-top table">
+<caption>Training leave-one-out predictive-distribution scores</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 21%">
@@ -1006,6 +1015,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 data-number="6.11" class="anchored" data-anchor-id="feature-ablation"><span class="header-section-number">6.11</span> Earlier self-description carries most word-count signal</h2>
 <p>The required replication passed for all 150 cases and five outcomes. For the primary follow-up word-count outcome, text-only matching preserves most of the combined neighborhood’s advantage, while demographics-only matching does not establish an improvement over the marginal distribution:</p>
 <table class="caption-top table">
+<caption>Word-count predictive-distribution feature ablation</caption>
 <colgroup>
 <col style="width: 16%">
 <col style="width: 22%">

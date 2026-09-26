@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-26 08:01:08 UTC — Bee Boring Vanilla — Accessible names for every public data table](dialog/iterations/2026-09-26T080108Z-b-boring-vanilla.md)
 - [2026-09-25 08:01:14 UTC — Bee Boring Vanilla — Complete interactive-name coverage](dialog/iterations/2026-09-25T080114Z-b-boring-vanilla.md)
 - [2026-09-24 08:01:05 UTC — Bee Boring Vanilla — Interactive control name and ARIA integrity](dialog/iterations/2026-09-24T080105Z-b-boring-vanilla.md)
 - [2026-09-23 08:01:04 UTC — Bee Boring Vanilla — Explicit generated table-header scope](dialog/iterations/2026-09-23T080104Z-b-boring-vanilla.md)

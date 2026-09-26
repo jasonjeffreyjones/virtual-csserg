@@ -2,21 +2,22 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-25T08:09:30Z
+updated: 2026-09-26T08:13:05Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 25, 2026, all seven automated promise groups pass across
-26 HTML pages, 542 interactive or keyboard-focusable elements, and six
+Active. On September 26, 2026, all seven automated promise groups pass across
+26 HTML pages, 26 named data tables, 542 interactive or keyboard-focusable elements, and six
 first-party stylesheets. The
 static-site group requires
 the first anchor itself to be a bypass link targeting `main`, an explicit `alt`
 decision for every image, and an accessible name for every navigation landmark
-on pages containing more than one. It also requires every table header cell to
-declare a valid row or column scope, every exposed interactive or
+on pages containing more than one. It also requires every data table to have a
+nonempty caption or valid explicit ARIA name, every table header cell to
+declare a valid row or column scope, and every exposed interactive or
 keyboard-focusable element to have an accessible name, label/control
 references to resolve, expanded states to be boolean, and
 assistive-technology-hidden controls to be absent from the tab order. This
@@ -129,6 +130,15 @@ without performing the unavailable human review.
   JavaScript relocation. The two NFL report
   figures retain detailed alternatives after rendering. These static checks do
   not replace rendered keyboard or assistive-technology review.
+- A September 26 audit found that 24 of 26 public data tables had scoped
+  headers but no table-level accessible name. Full Report sources now generate
+  concise captions for every affected table, and the Predict the Self Executive
+  Summary carries visually hidden source captions matching its scroll-region
+  names. The whole-site parser accepts a nonempty caption, `aria-label`, or
+  resolved nonempty `aria-labelledby` reference; one focused fixture rejects
+  unnamed, missing-reference, and empty-reference cases. All 26 tables now
+  pass. This source contract does not establish rendered announcements or
+  screen-reader table navigation.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 11 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 44 result cells, and passing rule.
@@ -152,7 +162,7 @@ without performing the unavailable human review.
   supersession, correction, and retraction. Canonical URLs remain current while
   a full commit key preserves the outgoing three-form report, dependencies,
   sources, and Project record. `REPORT-VERSIONS.md` records material outgoing
-  releases from September 15 through the clean September 22 report set; the
+  releases from September 15 through the clean September 25 report set; the
   verifier confirms all three forms exist at each recorded commit.
 - NFL Team Fandom Identities records the PI-directed Paused lifecycle state in
   its state, dialog, public summary, Projects listing, and homepage. Its
@@ -175,7 +185,8 @@ without performing the unavailable human review.
   byte-identical, and the September 23 pre-change probe found all 158 incoming
   files byte-identical. The September 24 pre-change probe found all 166 incoming
   files byte-identical, and the September 25 pre-change probe found all 174
-  incoming files byte-identical.
+  incoming files byte-identical. The September 26 pre-change probe found all
+  182 incoming files byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -202,17 +213,19 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 40 routine tests pass across 26 HTML pages, 542
-interactive or keyboard-focusable elements, and six first-party stylesheets on
-September 25.
+All seven groups and all 41 routine tests pass across 26 HTML pages, 26 named
+data tables, 542 interactive or keyboard-focusable elements, and six
+first-party stylesheets on September 26.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
 alternatives, repeated navigation names, resolved landmark-label references,
-valid table-header scopes, interactive and keyboard-focusable element names and
+accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names and
 ARIA relationships, and the
-manual-review worksheet's sample and closure boundary. One focused negative
+manual-review worksheet's sample and closure boundary. One focused table-name
+test covers captions and valid explicit labels while rejecting absent, broken,
+or empty names. One focused negative
 test guards the first-anchor/target conjunction, five tests cover the build-time
 Quarto normalizer, one covers the generic navigation-name rule, one covers the
 generic table-header rule, three cover interactive names and ARIA relationships
@@ -277,7 +290,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 25 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 65 GiB
+September 26 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 64 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.

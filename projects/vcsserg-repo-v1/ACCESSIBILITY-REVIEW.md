@@ -43,6 +43,14 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
+- All 26 public data tables now have source-owned names: 24 captions added on
+  September 26 plus the two captions already present in archived design pages.
+  The whole-site parser accepts a nonempty `caption`, `aria-label`, or resolved
+  nonempty `aria-labelledby` reference, and a focused fixture rejects unnamed,
+  missing-reference, and empty-reference cases. W3C technique H39 describes a
+  caption as a programmatically associated table identifier; the rendered
+  screen-reader check below still determines whether the names and header
+  relationships work in the recorded pairing.
 - The whole-site parser now audits all 542 interactive or keyboard-focusable
   elements. Each of the 516 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
@@ -74,8 +82,10 @@ accessibility evaluation.
   revision, all 158 expected files were byte-identical; before the September 24
   interactive-element revision, all 166 expected files were byte-identical;
   before the September 25 coverage revision, all 174 expected files were
-  byte-identical. It cannot discover extra remote-only paths, and the latest
-  result does not describe the not-yet-deployed changes in this iteration.
+  byte-identical; before the September 26 table-name revision, all 182 expected
+  files were byte-identical. It cannot discover extra remote-only paths, and
+  the latest result does not describe the not-yet-deployed changes in this
+  iteration.
 
 ## Selected production pages
 
@@ -213,6 +223,10 @@ Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
 World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.
 https://www.w3.org/WAI/WCAG22/Techniques/html/H63
+
+World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
+associate data table captions with data tables*.
+https://www.w3.org/WAI/WCAG22/Techniques/html/H39
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Easy checks:
 A first review of web accessibility*. Retrieved September 19, 2026, from

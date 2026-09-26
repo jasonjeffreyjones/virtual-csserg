@@ -134,6 +134,9 @@ class PageParser(HTMLParser):
         self.references = []
         self.skip_references = []
         self.table_header_scopes = []
+        self.table_records = []
+        self.table_stack = []
+        self.caption_table = None
         self.text_parts = []
         self.title_parts = []
 
@@ -253,6 +256,16 @@ class PageParser(HTMLParser):
             self.table_header_scopes.append(
                 attributes.get("scope", "").strip().lower()
             )
+        elif tag == "table":
+            table_record = {
+                "aria_label": attributes.get("aria-label", ""),
+                "labelled_by": attributes.get("aria-labelledby", "").split(),
+                "caption_parts": [],
+            }
+            self.table_records.append(table_record)
+            self.table_stack.append(table_record)
+        elif tag == "caption" and self.table_stack:
+            self.caption_table = self.table_stack[-1]
         elif tag == "title":
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
@@ -277,6 +290,8 @@ class PageParser(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "title":
             self.in_title = False
+        elif tag == "caption":
+            self.caption_table = None
         elif tag == "a" and self.assignment is not None:
             self.assignments.append(
                 (
@@ -312,10 +327,14 @@ class PageParser(HTMLParser):
             self.footer_group_tag = None
         elif tag == "footer":
             self.footer_depth = max(0, self.footer_depth - 1)
+        if tag == "table" and self.table_stack:
+            self.table_stack.pop()
 
     def handle_data(self, data):
         self.text_parts.append(data)
         if self.hidden_depth == 0:
+            if self.caption_table is not None:
+                self.caption_table["caption_parts"].append(data)
             for control in self.interactive_stack:
                 control["text_parts"].append(data)
             for labelled_id in self.id_text_stack:
@@ -390,6 +409,28 @@ def page_accessibility_problems(parsed, relative):
             problems.append(
                 f"{relative}: table header cell {number} has no valid scope"
             )
+    for number, table in enumerate(parsed.table_records, start=1):
+        labelled_by = table["labelled_by"]
+        missing_labels = sorted(set(labelled_by) - set(parsed.ids))
+        if missing_labels:
+            problems.append(
+                f"{relative}: table {number} references missing label ids: "
+                + ", ".join(missing_labels)
+            )
+        referenced_label = " ".join(
+            parsed.text_for_id(element_id)
+            for element_id in labelled_by
+            if element_id in parsed.ids
+        ).strip()
+        if labelled_by and not missing_labels and not referenced_label:
+            problems.append(f"{relative}: table {number} references labels without text")
+        caption = " ".join(" ".join(table["caption_parts"]).split())
+        if not (
+            caption
+            or table["aria_label"].strip()
+            or (referenced_label and not missing_labels)
+        ):
+            problems.append(f"{relative}: table {number} has no accessible name")
     for number, control in enumerate(parsed.interactive_elements, start=1):
         description = f"interactive element {number} ({control['tag']})"
         if control["hidden"]:
@@ -1097,7 +1138,10 @@ def check_html_and_css():
     return Result(
         "Static HTML/CSS site",
         not problems,
-        f"{len(html_pages)} HTML page(s) and {len(first_party_css)} first-party stylesheet(s) passed structural and local-link checks"
+        f"{len(html_pages)} HTML page(s), "
+        f"{sum(len(parsed.table_records) for parsed in parsed_pages.values())} "
+        f"named data table(s), and {len(first_party_css)} first-party "
+        "stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),
     )
 

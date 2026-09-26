@@ -396,6 +396,8 @@ where one exists.
 | Change | Mean prediction-to-source similarity | 0.903898 | 0.175191 | 1.000000 | Descriptive |
 | Change | Mean observed follow-up-to-source similarity | 0.225683 | 0.225683 | 0.225683 | Descriptive |
 
+: Development-set aggregate scorecard
+
 The projection improves three of six agreement measures, worsens two, and ties
 on exact match. Its clearest gains concern form and amount of change:
 word-count MAE falls by 15.04 words, and source-similarity MAE falls by 0.096102.
@@ -428,6 +430,8 @@ zero. A win, tie, or loss is evaluated within a person before averaging.
 | Line-count error reduction | −2.960000 | −5.540000 to −0.420000 | 15 / 12 / 23 |
 | Source-similarity error reduction | +0.096102 | +0.066064 to +0.129348 | 30 / 20 / 0 |
 
+: Paired development-case comparison with the repeat-2024 baseline
+
 The table changes the emphasis of the aggregate scorecard. None of the small
 agreement differences has an interval that excludes zero. In contrast, the
 projection's lower word-count and source-similarity errors persist across the
@@ -452,6 +456,8 @@ for error measures they are repeat-2024 error minus projection error.
 | Word-count MAE | 46.986667 | 55.580000 | +8.593333 | +2.573333 to +15.266667 |
 | Line-count MAE | 9.066667 | 6.160000 | −2.906667 | −4.346833 to −1.480000 |
 | Source-similarity MAE | 0.729214 | 0.799983 | +0.070769 | +0.054503 to +0.088484 |
+
+: Stable-projection training cross-validation results
 
 Only two nonzero agreement intervals exclude zero, and they point in opposite
 directions: normalized edit similarity improves slightly while token-overlap
@@ -504,6 +510,8 @@ spans zero, and dramatically improves source-similarity error.
 | Line-count MAE | 8.340000 | 9.760000 | +1.420000 | −1.860000 to +4.640000 |
 | Source-similarity MAE | 0.136074 | 0.678215 | +0.542141 | +0.463332 to +0.616781 |
 
+: Trajectory-retrieval comparison with the stable projection
+
 The locked novelty criterion tells the same story more precisely. Retrieval's
 mean predicted unique-token novelty (`0.801727`) is much closer to the observed
 mean (`0.731727`) than either stable projection or repeat-2024 (`0` for both),
@@ -529,6 +537,8 @@ person-matching rule, it recovers more of the observed novel vocabulary:
 | Precision | 0.176545 | 0.070466 | +0.106079 | +0.068782 to +0.154891 |
 | Recall | 0.172611 | 0.085362 | +0.087249 | +0.062210 to +0.113649 |
 | F1 | 0.142637 | 0.067109 | +0.075528 | +0.055927 to +0.094990 |
+
+: Volume-matched novel-token recovery comparison
 
 Positive differences favor the marginal prior. It wins 40 cases, ties 6, and
 loses 4 on each measure. The common additions include syntactic vocabulary
@@ -558,6 +568,8 @@ marginal-addition ranking:
 | Case wins / ties / losses | 19 / 63 / 68 | — | — |
 | Paired case-bootstrap 95% interval | — | — | −0.020829 to −0.010736 |
 
+: Source-conditioned ranking compared with marginal additions
+
 The interval excludes zero in the direction favoring the marginal ranking.
 Thus, under the locked interpretation rule, the source-conditioned method
 provides no incremental advantage. One plausible explanation is that choosing
@@ -585,6 +597,8 @@ but does not clear the marginal baseline:
 | Median novel-type recovered fraction | 0.148542 | 0.156250 | — |
 | Case wins / ties / losses | 25 / 60 / 65 | — | — |
 | Paired case-bootstrap 95% interval | — | — | −0.018426 to −0.005693 |
+
+: Regularized-neighborhood ranking compared with marginal additions
 
 The interval again excludes zero in the direction favoring common additions.
 The neighborhood and marginal top sets overlap by `0.739706` on average, so
@@ -614,6 +628,8 @@ distinct token types are added and deleted and for follow-up word count:
 | Follow-up word count | 52.940000 | 56.080000 | +3.140000 | +1.093333 to +5.213333 |
 | Follow-up line count | 6.160000 | 6.160000 | 0.000000 | 0.000000 to 0.000000 |
 | Source similarity | 0.106781 | 0.109648 | +0.002867 | −0.000960 to +0.006730 |
+
+: Training leave-one-out change-volume forecasts
 
 Positive reductions favor the regularized neighborhood. Its Add-count forecast
 wins 79 cases, ties 17, and loses 54; Delete count wins 88, ties 5, and loses
@@ -645,6 +661,8 @@ direction favoring the neighborhood:
 | Follow-up line count | 4.922609 | 4.910848 | −0.011761 | −0.097952 to +0.081212 |
 | Source similarity | 0.074684 | 0.077171 | +0.002486 | −0.000106 to +0.005180 |
 
+: Training leave-one-out predictive-distribution scores
+
 The word-count neighborhood wins 83 cases and loses 67 on CRPS. Its central
 80% interval covers 84.7% of cases, compared with 80.7% for the marginal
 distribution, while mean width rises from `149.960000` to `154.526667` words.
@@ -675,6 +693,8 @@ establish an improvement over the marginal distribution:
 | Text only | 38.374556 | Marginal minus text only | +2.298139 | +0.816444 to +3.865823 |
 | Demographics only | 40.471984 | Marginal minus demographics only | +0.200711 | −0.479832 to +0.861529 |
 | Combined | 38.156852 | Text only minus combined | +0.217704 | +0.024229 to +0.420871 |
+
+: Word-count predictive-distribution feature ablation
 
 Text-only matching wins 84 cases and loses 66 against the marginal. The
 combined model wins 85 and loses 65 against text-only. Thus the earlier

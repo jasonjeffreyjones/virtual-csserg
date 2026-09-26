@@ -6,6 +6,25 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 25, 2026 at 08:09 UTC
+
+- **Superseded:** September 26, 2026
+- **Archive key:**
+  [`94c7ebbc5e99636ae0b9183af104d5be6d8b76e9`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/94c7ebbc5e99636ae0b9183af104d5be6d8b76e9)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before accessible names became a whole-site data-table contract.
+- **Reason:** The outgoing reports accurately documented scoped table headers,
+  complete interactive-name coverage, and the open rendered review. The next
+  release adds source-owned names to all 24 previously unnamed public data
+  tables, requires every table to have a caption or valid ARIA name, and
+  records that all 182 incoming public files were byte-identical without
+  claiming observed screen-reader table navigation.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/94c7ebbc5e99636ae0b9183af104d5be6d8b76e9/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/94c7ebbc5e99636ae0b9183af104d5be6d8b76e9/projects/vcsserg-repo-v1)
+
 ### Updated through September 24, 2026 at 08:15 UTC
 
 - **Superseded:** September 25, 2026

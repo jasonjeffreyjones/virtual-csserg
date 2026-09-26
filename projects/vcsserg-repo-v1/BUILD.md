@@ -9,7 +9,9 @@ project lets it clean stale libraries without warnings. A standard-library
 post-render command moves the source-controlled bypass link to the beginning of
 each generated body and names Quarto's repeated navigation landmarks before
 publication. It also gives every generated table-head cell an explicit column
-scope. Correct source order, landmark names, and header relationships therefore
+scope. Table captions are maintained in report sources, while the whole-site
+verifier accepts a nonempty caption or a valid explicit ARIA name. Correct
+source order, landmark names, table names, and header relationships therefore
 do not depend on runtime JavaScript or hand-editing generated files. The
 Executive Summary is maintained as static HTML, and `short-report.md` is the
 derivative PDF source.
@@ -54,8 +56,9 @@ annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
 The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
-non-passing result. The whole-site check also requires every table header cell
-to declare a valid row or column scope and every exposed interactive or
+non-passing result. The whole-site check also requires every data table to have
+an accessible name, every table header cell to declare a valid row or column
+scope, and every exposed interactive or
 keyboard-focusable element to have an accessible name. Coverage includes links,
 buttons, native form and disclosure controls, interactive ARIA roles, media
 controls, and custom nonnegative-`tabindex` targets. Label and control

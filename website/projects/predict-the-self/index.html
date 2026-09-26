@@ -53,6 +53,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Development agreement comparison" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Development agreement comparison</caption>
           <thead><tr><th scope="col">Agreement metric</th><th scope="col">Stable projection</th><th scope="col">Trajectory retrieval</th><th scope="col">Repeat 2024</th></tr></thead>
           <tbody>
             <tr><th scope="row">Edit similarity</th><td>0.298061</td><td class="metric-worse">0.253360</td><td>0.291966</td></tr>
@@ -65,6 +66,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Stable projection training cross-validation" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Stable projection training cross-validation</caption>
           <thead><tr><th scope="col">150-case leave-one-out</th><th scope="col">Stable projection</th><th scope="col">Repeat 2024</th><th scope="col">Paired effect</th></tr></thead>
           <tbody>
             <tr><th scope="row">Edit similarity</th><td class="metric-better">0.276809</td><td>0.272662</td><td>+0.004147<br><small>95% interval +0.000652 to +0.007753</small></td></tr>
@@ -77,6 +79,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Volume-matched novel-token recovery comparison" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Volume-matched novel-token recovery comparison</caption>
           <thead><tr><th scope="col">Novel-token recovery</th><th scope="col">Marginal prior</th><th scope="col">Trajectory retrieval</th><th scope="col">Paired difference</th></tr></thead>
           <tbody>
             <tr><th scope="row">Precision</th><td class="metric-better">0.176545</td><td>0.070466</td><td>+0.106079</td></tr>
@@ -87,6 +90,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out novel-token ranking comparison" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Training leave-one-out novel-token ranking comparison</caption>
           <thead><tr><th scope="col">Training leave-one-out</th><th scope="col">Individualized ranking</th><th scope="col">Marginal additions</th><th scope="col">Paired difference</th></tr></thead>
           <tbody>
             <tr><th scope="row">Source-token recovered fraction</th><td>0.145238</td><td class="metric-better">0.160992</td><td>−0.015754<br><small>95% interval −0.020829 to −0.010736</small></td></tr>
@@ -96,6 +100,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out change-volume forecasting" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Training leave-one-out change-volume forecasting</caption>
           <thead><tr><th scope="col">No-oracle quantity forecast</th><th scope="col">30-neighbor MAE</th><th scope="col">Source-calibrated marginal MAE</th><th scope="col">Error reduction</th></tr></thead>
           <tbody>
             <tr><th scope="row">Add count</th><td class="metric-better">20.126667</td><td>21.340000</td><td>+1.213333<br><small>95% interval +0.680000 to +1.740000</small></td></tr>
@@ -108,6 +113,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out probabilistic change-volume forecasting" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Training leave-one-out probabilistic change-volume forecasting</caption>
           <thead><tr><th scope="col">Predictive distribution</th><th scope="col">30-neighbor CRPS</th><th scope="col">Source-calibrated marginal CRPS</th><th scope="col">CRPS reduction</th></tr></thead>
           <tbody>
             <tr><th scope="row">Add count</th><td>14.438038</td><td>14.650556</td><td>+0.212518<br><small>95% interval −0.071030 to +0.497525</small></td></tr>
@@ -120,6 +126,7 @@
       </div>
       <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out word-count feature ablation" tabindex="0">
         <table class="scorecard-table">
+          <caption class="visually-hidden">Training leave-one-out word-count feature ablation</caption>
           <thead><tr><th scope="col">Word-count distribution</th><th scope="col">Mean CRPS</th><th scope="col">Locked paired contrast</th><th scope="col">CRPS reduction</th></tr></thead>
           <tbody>
             <tr><th scope="row">Source-calibrated marginal</th><td>40.672695</td><td>—</td><td>—</td></tr>

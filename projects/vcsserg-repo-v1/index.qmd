@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 25, 2026. The validated
+All seven automated promise groups pass on September 26, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -30,7 +30,8 @@ checks also require a first-anchor bypass link and an explicit `alt` decision
 for every image. Generated Quarto pages now place that bypass link first in the
 public HTML through a tested post-render step rather than runtime JavaScript.
 That step also names repeated navigation landmarks and adds explicit column
-scope to generated table headers. The whole-site parser now also requires
+scope to generated table headers. Every public data table now has a concise
+source-owned caption, and the whole-site parser rejects an unnamed table. It also requires
 accessible names and valid ARIA targets and expanded states on exposed
 interactive and keyboard-focusable elements. A claim-to-evidence review found the
 infrastructure report substantively adequate for its stated purpose; rendered
@@ -98,11 +99,13 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, named repeated navigation, scoped table headers, explicit image alternatives, named interactive elements with valid ARIA relationships, branding, complete footer links, Bootstrap, and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, named repeated navigation and data tables, scoped table headers, explicit image alternatives, named interactive elements with valid ARIA relationships, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
 | Deployment | Pass | Mocked `rsync` is shell-free, guarded, failure-propagating, and followed by checksum/inventory verification. |
+
+: Current result for each Version 1 promise group
 
 The verifier became stricter where earlier checks could pass incomplete work:
 it now covers the three report forms, exact Executive Summary figure count,
@@ -129,7 +132,10 @@ native disclosure summaries and six custom focusable scroll regions outside
 that link/button-only implementation; all eight were already named. The parser
 now checks 542 elements—516 exposed and named plus the 26 hidden anchors—and a
 focused fixture covers native form and disclosure controls, interactive ARIA
-roles, and custom keyboard-focus targets. It also became narrower where old rules
+roles, and custom keyboard-focus targets. On September 26, the same audit found 24 of 26 data
+tables lacked a table-level accessible name even though every header was
+scoped. Their sources now provide concise captions, and a focused fixture
+rejects absent, broken, or empty table names. It also became narrower where old rules
 created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
@@ -221,13 +227,14 @@ Quarto can add automated accessibility checks to rendered HTML, but its own
 documentation cautions that conformance tooling cannot detect every issue and
 still requires manual inspection (Quarto, n.d.-b). Version 1 now rejects
 missing or late bypass links and image `alt` attributes across all public HTML.
-It also rejects unnamed repeated navigation and missing or invalid table-header
-scope. It now rejects unnamed exposed interactive and keyboard-focusable
+It also rejects unnamed repeated navigation, unnamed data tables, and missing
+or invalid table-header scope. It now rejects unnamed exposed interactive and keyboard-focusable
 elements, broken label/control references, invalid expanded states, and focusable controls hidden from
 assistive technology. The build-time normalizer removes a runtime dependency from the four
 Quarto pages and applies explicit `scope="col"` relationships inside their table
 heads, following W3C technique H63's test procedure (World Wide Web Consortium,
-2026). Those deterministic checks narrow the gap; rendered focus behavior,
+2026b). Source-owned captions follow W3C technique H39's table-identifier
+pattern (World Wide Web Consortium, 2026a). Those deterministic checks narrow the gap; rendered focus behavior,
 keyboard order, table navigation, and assistive-technology output remain a
 manual gate under the documented
 [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md)
@@ -282,7 +289,7 @@ still need network access for their intended presentation.
 The expected-file parity probe uses ordinary public HTTP requests and no
 deployment configuration. It found all 109 files byte-identical before the
 September 15 release, all 110 byte-identical after it, and every later incoming
-tree byte-identical, including all 174 files before this September 25 revision.
+tree byte-identical, including all 182 files before this September 26 revision.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
@@ -349,6 +356,10 @@ Quarto. (n.d.-a). *Creating a book*. Retrieved September 11, 2026, from
 
 Quarto. (n.d.-b). *HTML accessibility checks*. Retrieved September 11, 2026,
 from <https://quarto.org/docs/output-formats/html-accessibility.html>
+
+World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
+associate data table captions with data tables*.
+<https://www.w3.org/WAI/WCAG22/Techniques/html/H39>
 
 World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.

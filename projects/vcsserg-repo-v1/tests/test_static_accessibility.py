@@ -121,7 +121,8 @@ class StaticAccessibilityTests(unittest.TestCase):
     def test_table_headers_need_valid_scope(self):
         unscoped = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'
-            "<table><thead><tr><th>Result</th></tr></thead></table></main>"
+            '<table aria-label="Results"><thead><tr><th>Result</th>'
+            "</tr></thead></table></main>"
         )
         self.assertEqual(
             VERIFY.page_accessibility_problems(unscoped, "table.html"),
@@ -130,11 +131,47 @@ class StaticAccessibilityTests(unittest.TestCase):
 
         scoped = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'
-            '<table><thead><tr><th scope="col">Result</th></tr></thead>'
+            '<table><caption>Results</caption><thead><tr>'
+            '<th scope="col">Result</th></tr></thead>'
             '<tbody><tr><th scope="row">Project</th></tr></tbody></table></main>'
         )
         self.assertEqual(
             VERIFY.page_accessibility_problems(scoped, "table.html"), []
+        )
+
+    def test_data_tables_need_accessible_names(self):
+        unnamed = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<table><thead><tr><th scope="col">Result</th></tr></thead>'
+            '<tbody><tr><td>Pass</td></tr></tbody></table>'
+            '<h2 id="empty"></h2><table aria-labelledby="empty">'
+            '<tr><th scope="row">Result</th><td>Pass</td></tr></table>'
+            '<table aria-labelledby="missing"><tr>'
+            '<th scope="row">Result</th><td>Pass</td></tr></table></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(unnamed, "tables.html"),
+            [
+                "tables.html: table 1 has no accessible name",
+                "tables.html: table 2 references labels without text",
+                "tables.html: table 2 has no accessible name",
+                "tables.html: table 3 references missing label ids: missing",
+                "tables.html: table 3 has no accessible name",
+            ],
+        )
+
+        named = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<table><caption>Promise-group results</caption><tr>'
+            '<th scope="row">Static site</th><td>Pass</td></tr></table>'
+            '<table aria-label="Development scorecard"><tr>'
+            '<th scope="row">Edit similarity</th><td>0.30</td></tr></table>'
+            '<h2 id="comparison">Forecast comparison</h2>'
+            '<table aria-labelledby="comparison"><tr>'
+            '<th scope="row">Word count</th><td>53</td></tr></table></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(named, "tables.html"), []
         )
 
     def test_interactive_elements_need_accessible_names(self):
