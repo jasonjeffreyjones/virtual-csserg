@@ -1,8 +1,8 @@
 # A trend without the straight-line assumption
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 A straight line is not the only way to check whether an identity signifier is
 changing.

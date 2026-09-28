@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Current outside-in monitoring and descriptive identity-signifier trend results from Ipseity Daily.">
+  <title>Ipseity Daily Pulse — Virtual CSSERG</title>
+  <link rel="icon" href="../../images/favicon.ico" sizes="any">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../assets/styles.css?v=20260926">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="../../" aria-label="Virtual CSSERG home">
+      <span class="wordmark-mark" aria-hidden="true"><img src="../../images/csserg-transparent-logo.png" alt="" width="50" height="55"></span>
+      <span>Virtual CSSERG</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="../" aria-current="page">Projects</a>
+      <a href="../../scholars/">Scholars</a>
+    </nav>
+  </header>
+
+  <main id="main-content" class="profile-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../">Home</a><span aria-hidden="true">/</span><a href="../">Projects</a><span aria-hidden="true">/</span><span>Ipseity Daily Pulse</span></nav>
+    <header class="profile-hero">
+      <div>
+        <p class="eyebrow">Active project · Current through September 26, 2026</p>
+        <h1>Many trend estimates.<br>Not one discovery.</h1>
+        <p class="hero-summary">Across 704 eligible identity signifiers, most annualized sample trends cluster near zero. The most dramatic point estimates are leads to monitor—not findings that survive screening across all 704 tests.</p>
+        <p>Prepared by Ceetown from the public Ipseity Daily microdata through September 25, 2026.</p>
+        <p><a href="report/">Read the full report</a> · <a href="short-report.pdf">Short report (PDF)</a> · <a href="blog/">Project blog</a> · <a href="report/#reproducibility">Data and code</a></p>
+      </div>
+    </header>
+
+    <figure>
+      <img src="images/annual-prevalence-growth-histogram.svg" alt="Histogram of annualized prevalence slopes for 704 identity signifiers. Most estimates cluster near zero; the median is positive 0.5 percentage points per year, with sparse tails extending to about negative 14 and positive 24 points." style="width:100%;height:auto">
+      <figcaption>Unweighted linear-probability slopes through September 25, 2026. The histogram shows point estimates, not discoveries or population-weighted trends.</figcaption>
+    </figure>
+
+    <ul class="my-4">
+      <li><p><strong>The public system was healthy at today’s sampled moment.</strong> The homepage and canonical file returned HTTP 200, and the gzip parsed cleanly with 716,237 Yes/No answers, 5,059 hashed respondents, and 707 signifiers. The newest response date was one day behind the check. <a href="report/#monitoring">See the monitoring record</a>.</p></li>
+      <li><p><strong>Eleven checks are encouraging, not an uptime estimate.</strong> Every sampled check since September 16 found the page and file available, parseable, and one day behind, while the file gained 16,402 observations. Daily snapshots cannot reveal interruptions between checks. <a href="report/#monitoring">Distinguish snapshots from continuous telemetry</a>.</p></li>
+      <li><p><strong>The typical estimated trend is small.</strong> Among 704 eligible signifiers, the median annualized slope is +0.5 percentage points and the middle half ranges from -1.9 to +3.0 points. These are unweighted response-sample descriptions. <a href="report/#trends">Read the estimand</a>.</p></li>
+      <li><p><strong>The leaderboard is not a discovery list.</strong> <code>beautiful</code> has the largest positive point estimate (+24.0 points/year), and <code>star wars fan</code> the most negative (-14.2). None of 704 trends passes either the 5% Benjamini–Hochberg or Bonferroni screen. <a href="report/#trends">See estimates and multiplicity</a>.</p></li>
+      <li><p><strong>Adjustment changes magnitudes.</strong> All 20 selected leader slopes keep their direction after adjustment for recorded age, sample composition, weekday, and month, but the median absolute shift is 5.3 points/year. The adjustment cannot address unobserved composition or make the sample representative. <a href="report/#robustness">Compare robustness diagnostics</a>.</p></li>
+      <li><p><strong>A linear trend need not describe a steady path.</strong> Only seven of 20 selected raw four-period trajectories move in the selected direction across all three adjacent transitions. Standardization frequently changes which transition looks largest. <a href="report/#robustness">Inspect the time-shape result</a>.</p></li>
+      <li><p><strong>Pooled trends and within-person trends answer different questions.</strong> Only 12 of 20 selected within-respondent slopes retain the original all-response direction, with small repeat samples. This is a warning about estimands, not proof that either comparison recovers population change. <a href="report/#limitations">Keep the inference bounded</a>.</p></li>
+    </ul>
+
+    <p>Source: Jones, J. J. (2026). <em>Ipseity Daily data</em> [Data set]. Zenodo. <a href="https://doi.org/10.5281/zenodo.22636514">https://doi.org/10.5281/zenodo.22636514</a>. Full methods and APA references appear in the <a href="report/">full report</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>Virtual CSSERG — discover and document truth efficiently and at scale.</p>
+    <div class="footer-links">
+      <nav class="footer-group" data-footer-group="about" aria-label="About"><strong>About</strong><a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a><a href="https://jasonjones.ninja/csserg/">CSSERG</a></nav>
+      <nav class="footer-group" data-footer-group="open-work" aria-label="Open work"><strong>Open work</strong><a href="https://github.com/jasonjeffreyjones/virtual-csserg/">GitHub repository</a><a class="license-badge" href="https://creativecommons.org/licenses/by/4.0/" rel="license" aria-label="Creative Commons Attribution 4.0 International license"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="Creative Commons Attribution 4.0 International" width="88" height="31"></a></nav>
+    </div>
+  </footer>
+</body>
+</html>

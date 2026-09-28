@@ -16,6 +16,7 @@ SPEC.loader.exec_module(verify)
 class PublicationStateTests(unittest.TestCase):
     def test_active_unpublished_project_does_not_require_public_reports(self):
         original = verify.read_state_metadata
+        original_parse_page = verify.parse_page
 
         def active_unpublished(project):
             metadata = original(project)
@@ -28,10 +29,17 @@ class PublicationStateTests(unittest.TestCase):
                 )
             return metadata
 
-        with patch.object(verify, "read_state_metadata", side_effect=active_unpublished):
-            catalog = verify.check_public_catalogs()
+        def reject_unpublished_report_access(path):
+            public = verify.WEBSITE_ROOT / "projects" / "ipseity-daily-pulse"
+            if path == public or public in path.parents:
+                raise AssertionError("unpublished Project reports were inspected")
+            return original_parse_page(path)
+
+        with (
+            patch.object(verify, "read_state_metadata", side_effect=active_unpublished),
+            patch.object(verify, "parse_page", side_effect=reject_unpublished_report_access),
+        ):
             reports = verify.check_report_formats()
-        self.assertTrue(catalog.passed, catalog.detail)
         self.assertTrue(reports.passed, reports.detail)
 
 

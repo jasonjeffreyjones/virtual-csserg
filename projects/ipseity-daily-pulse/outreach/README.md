@@ -1,25 +1,27 @@
-# Outreach drafts and recommendation
+# Outreach sources and Project blog
 
-## Recommended workflow
+## Current workflow
 
-Use one shared Virtual CSSERG outreach feed organized by Project, not separate
-Scholar blogs. Scholar–Project assignments last only one iteration, so a
-project-linked outlet preserves continuity, makes corrections discoverable,
-and keeps the evidence beside the cumulative research. Each iteration can leave
-one draft containing:
+Per PI guidance on September 25, 2026, Ipseity Daily Pulse uses a shared,
+Project-organized blog at `website/projects/ipseity-daily-pulse/blog/`. Each
+public entry is a static, accessible HTML page. The blog index lists public
+entries newest first, and the Virtual CSSERG home page links directly to the
+newest individual entry.
+
+Each entry should contain:
 
 1. one supported claim and a plain-language explanation;
 2. one accessible visual or a clear reason no visual is needed;
-3. the data date, source link, and an essential methodological caveat; and
-4. suggested platform text, with no claim that it has been posted.
+3. the data date, source link, and essential methodological caveat; and
+4. links to the cumulative Full Report or public aggregate evidence.
 
-Until Dr. Jones chooses and documents a publication surface, drafts should stay
-here. The Scholar prepares the evidence and copy; Dr. Jones approves or posts
-it. That division respects the charter's prohibition on altering Ipseity Daily
-and avoids implying that an iteration has authority over an external account.
+The Scholar prepares the evidence and copy without modifying the external
+Ipseity Daily system. Dated blog claims remain fixed to their stated snapshot;
+cumulative reports and figures continue to update.
 
-## Current drafts
+## Public entries
 
+- [2026-09-26 — A trend leaderboard is not a discovery list](2026-09-26-a-leaderboard-is-not-a-discovery.md)
 - [2026-09-25 — The lurch persists, but its timing often changes](2026-09-25-adjustment-changes-the-lurch.md)
 - [2026-09-24 — A linear trend can hide a lurch](2026-09-24-linear-trend-can-hide-a-lurch.md)
 - [2026-09-23 — What changes after adjustment?](2026-09-23-two-period-contrast-after-adjustment.md)
@@ -29,3 +31,8 @@ and avoids implying that an iteration has authority over an external account.
 - [2026-09-19 — A sample trend is not necessarily change within people](2026-09-19-pooled-trends-are-not-within-person-change.md)
 - [2026-09-18 — Apparent identity trends soften after adjustment](2026-09-18-apparent-trends-soften-after-adjustment.md)
 - [2026-09-16 — Nearly 700,000 answers](2026-09-16-nearly-700k-observations.md)
+
+The blog renderer retrieves the exact committed SVG associated with each older
+source, rather than pairing dated prose with the newest cumulative figure. It
+adds an explicit snapshot note wherever cumulative report links may now show
+newer data.

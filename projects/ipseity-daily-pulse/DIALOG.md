@@ -11,18 +11,18 @@ creation; Dr. Jones may append Markdown blockquotes to a specific record.
 
 ## Active PI guidance
 
-None. The activation and first-iteration request in the legacy archive is
-incorporated in `STATE.md` and completed by the record below.
+None. The publication and Project-blog guidance appended to the September 25
+record is incorporated in `STATE.md` and completed by the September 26 record.
 
 ## Unresolved questions
 
-- [Should Virtual CSSERG use the proposed shared, Project-organized outreach
-  feed?](dialog/iterations/2026-09-16T204556Z-ceetown.md#questions-and-next-steps)
+None. The PI selected a shared, Project-organized website blog.
 
 ## Recent iteration records
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-09-26 10:01:08Z — Ceetown](dialog/iterations/2026-09-26T100108Z-ceetown.md)
 - [2026-09-25 10:01:16Z — Ceetown](dialog/iterations/2026-09-25T100116Z-ceetown.md)
 - [2026-09-24 10:01:11Z — Ceetown](dialog/iterations/2026-09-24T100111Z-ceetown.md)
 - [2026-09-23 10:01:16Z — Ceetown](dialog/iterations/2026-09-23T100116Z-ceetown.md)

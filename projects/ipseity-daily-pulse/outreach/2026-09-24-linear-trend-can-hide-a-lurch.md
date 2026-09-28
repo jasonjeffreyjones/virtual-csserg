@@ -1,8 +1,8 @@
 # A linear trend can hide a lurch
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 A straight-line trend summarizes a period. It does not mean change happened
 steadily throughout it.

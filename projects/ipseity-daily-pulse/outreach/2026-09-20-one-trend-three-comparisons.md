@@ -1,8 +1,8 @@
 # One identity trend, three comparisons
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 The same Ipseity Daily signifier can tell three very different trend stories.
 

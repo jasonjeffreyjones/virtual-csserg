@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Ipseity Daily outside-in monitoring history</title>
+  <desc id="desc">Across 7 checks from 2026-09-16 through 2026-09-22, 7 had a reachable homepage, retrievable and parseable canonical dataset, and no anomaly. The latest data lag was 1 day, and validated observations grew by 9,824.</desc>
+  <rect width="960" height="720" fill="#ffffff"/>
+  <style>
+    text { font-family: system-ui, -apple-system, sans-serif; fill: #243128; }
+    .title { font-size: 25px; font-weight: 700; }
+    .subtitle { font-size: 15px; fill: #4e5d51; }
+    .axis { stroke: #66736a; stroke-width: 1; }
+    .grid { stroke: #dde3d8; stroke-width: 1; }
+    .tick { font-size: 13px; fill: #4e5d51; }
+  </style>
+  <text class="title" x="150" y="38">Ipseity Daily outside-in monitoring history</text>
+  <text class="subtitle" x="150" y="66">7 checks · 7 fully healthy · 2026-09-16 through 2026-09-22</text>
+  <text class="subtitle" x="150" y="99">Endpoint and parse status</text>
+  <text class="tick" text-anchor="end" x="132" y="135">Homepage</text>
+  <text class="tick" text-anchor="end" x="132" y="171">Dataset</text>
+  <text class="tick" text-anchor="end" x="132" y="207">CSV parse</text>
+  <circle cx="150.0" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="150.0" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="150.0" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="150.0" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="150.0" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="150.0" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="277.5" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="277.5" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="277.5" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="277.5" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="277.5" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="277.5" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="405.0" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="405.0" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="405.0" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="405.0" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="405.0" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="405.0" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="532.5" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="532.5" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="532.5" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="532.5" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="532.5" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="532.5" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="660.0" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="660.0" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="660.0" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="660.0" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="660.0" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="660.0" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="787.5" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="787.5" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="787.5" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="787.5" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="787.5" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="787.5" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="915.0" cy="130" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="915.0" y="134" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="915.0" cy="166" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="915.0" y="170" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="915.0" cy="202" r="8" fill="#4B6F44" stroke="#243128" stroke-width="1"/>
+  <text x="915.0" y="206" text-anchor="middle" font-size="11" font-weight="700" style="fill:#ffffff">✓</text>
+  <circle cx="150" cy="244" r="7" fill="#4B6F44"/><text class="tick" x="164" y="249">Healthy</text>
+  <circle cx="240" cy="244" r="7" fill="#b43c32"/><text class="tick" x="254" y="249">Failed</text>
+  <text class="subtitle" x="150" y="278">Newest-observation lag (days)</text>
+  <line class="grid" x1="150" y1="420.0" x2="915" y2="420.0"/>
+  <text class="tick" text-anchor="end" x="132" y="425.0">0</text>
+  <line class="grid" x1="150" y1="388.5" x2="915" y2="388.5"/>
+  <text class="tick" text-anchor="end" x="132" y="393.5">1</text>
+  <line class="grid" x1="150" y1="357.0" x2="915" y2="357.0"/>
+  <text class="tick" text-anchor="end" x="132" y="362.0">2</text>
+  <line class="grid" x1="150" y1="325.5" x2="915" y2="325.5"/>
+  <text class="tick" text-anchor="end" x="132" y="330.5">3</text>
+  <line class="grid" x1="150" y1="294.0" x2="915" y2="294.0"/>
+  <text class="tick" text-anchor="end" x="132" y="299.0">4</text>
+  <polyline points="150.0,388.5 277.5,388.5 405.0,388.5 532.5,388.5 660.0,388.5 787.5,388.5 915.0,388.5" fill="none" stroke="#4B6F44" stroke-width="3"/>
+  <circle cx="150.0" cy="388.5" r="5" fill="#243128"/>
+  <circle cx="277.5" cy="388.5" r="5" fill="#243128"/>
+  <circle cx="405.0" cy="388.5" r="5" fill="#243128"/>
+  <circle cx="532.5" cy="388.5" r="5" fill="#243128"/>
+  <circle cx="660.0" cy="388.5" r="5" fill="#243128"/>
+  <circle cx="787.5" cy="388.5" r="5" fill="#243128"/>
+  <circle cx="915.0" cy="388.5" r="5" fill="#243128"/>
+  <text class="subtitle" x="150" y="470">Validated observations in canonical file</text>
+  <line class="grid" x1="150" y1="612.0" x2="915" y2="612.0"/>
+  <text class="tick" text-anchor="end" x="132" y="617.0">699.0k</text>
+  <line class="grid" x1="150" y1="549.0" x2="915" y2="549.0"/>
+  <text class="tick" text-anchor="end" x="132" y="554.0">704.7k</text>
+  <line class="grid" x1="150" y1="486.0" x2="915" y2="486.0"/>
+  <text class="tick" text-anchor="end" x="132" y="491.0">710.4k</text>
+  <polyline points="150.0,603.3 277.5,584.9 405.0,566.8 532.5,548.4 660.0,530.4 787.5,513.1 915.0,494.7" fill="none" stroke="#4B6F44" stroke-width="4"/>
+  <circle cx="150.0" cy="603.3" r="5" fill="#243128"/>
+  <circle cx="277.5" cy="584.9" r="5" fill="#243128"/>
+  <circle cx="405.0" cy="566.8" r="5" fill="#243128"/>
+  <circle cx="532.5" cy="548.4" r="5" fill="#243128"/>
+  <circle cx="660.0" cy="530.4" r="5" fill="#243128"/>
+  <circle cx="787.5" cy="513.1" r="5" fill="#243128"/>
+  <circle cx="915.0" cy="494.7" r="5" fill="#243128"/>
+  <line class="axis" x1="150.0" y1="612" x2="150.0" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(154.0 636) rotate(-35)">2026-09-16</text>
+  <line class="axis" x1="277.5" y1="612" x2="277.5" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(281.5 636) rotate(-35)">2026-09-17</text>
+  <line class="axis" x1="405.0" y1="612" x2="405.0" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(409.0 636) rotate(-35)">2026-09-18</text>
+  <line class="axis" x1="532.5" y1="612" x2="532.5" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(536.5 636) rotate(-35)">2026-09-19</text>
+  <line class="axis" x1="660.0" y1="612" x2="660.0" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(664.0 636) rotate(-35)">2026-09-20</text>
+  <line class="axis" x1="787.5" y1="612" x2="787.5" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(791.5 636) rotate(-35)">2026-09-21</text>
+  <line class="axis" x1="915.0" y1="612" x2="915.0" y2="618"/>
+  <text class="tick" text-anchor="end" transform="translate(919.0 636) rotate(-35)">2026-09-22</text>
+  <text class="tick" text-anchor="middle" x="532.5" y="702">UTC check date</text>
+</svg>

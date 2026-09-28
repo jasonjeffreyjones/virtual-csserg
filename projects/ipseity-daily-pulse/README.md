@@ -14,6 +14,8 @@ From the repository root, run the project checks with:
 
 ```bash
 python3 -m unittest discover -s projects/ipseity-daily-pulse/tests -v
+PYTHONPATH=/tmp/ipseity-pulse-publishing-deps python3 \
+  projects/ipseity-daily-pulse/analysis/verify_publication.py
 python3 projects/vcsserg-repo-v1/verify_v1.py
 ```
 
@@ -33,5 +35,6 @@ pooled, and repeat-respondent fixed-effect sensitivity for the raw trend
 leaders. The monitor also renders endpoint status, data lag, and validated
 observation growth across the append-only check history.
 
-Publication remains `Unpublished`; no empty report shell exists under
-`website/projects/`.
+Publication is `Published`. The source-controlled Quarto Full Report,
+Executive Summary, two-column short PDF, aggregate public artifacts, and
+Project blog build are documented in [`BUILD.md`](BUILD.md).

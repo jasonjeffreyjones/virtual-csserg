@@ -1,0 +1,82 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ipseity Daily Pulse",
+    "section": "",
+    "text": "Current pulse\nVirtual CSSERG\nExecutive summary · Two-column short report (PDF) · Project blog · Current machine-readable summary\nOn September 26, 2026, the Ipseity Daily homepage and canonical microdata were reachable. The gzip parsed cleanly with 716,237 Yes/No response observations, 5,059 hashed respondents, 707 signifiers, and observation dates from July 8, 2025 through September 25, 2026. The newest observation was one day behind the check date, and the monitor detected no anomaly.\nAcross 704 eligible signifiers, the median unweighted annualized prevalence slope was +0.5 percentage points per year; the middle half ranged from -1.9 to +3.0 points. beautiful had the largest positive point estimate (+24.0 points/year) and star wars fan the most negative (-14.2). These are screening leads, not discoveries: none of the 704 tests had a Benjamini–Hochberg q-value or Bonferroni-adjusted p-value at or below .05.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#measurement",
+    "href": "index.html#measurement",
+    "title": "Ipseity Daily Pulse",
+    "section": "What the pulse measures",
+    "text": "What the pulse measures\nIpseity Daily repeatedly asks sampled American adults whether words, phrases, emoji, and other identity signifiers describe them today. The public microdata make the resulting responses inspectable and reusable (Jones, 2026). This Project observes that system from outside: it checks public delivery, validates the canonical file, and describes patterns in the responses. It does not operate or modify Ipseity Daily.\nOne row in the canonical response file is one Yes/No answer, not one person. A respondent can appear on multiple dates and can answer multiple signifiers. The current analysis therefore reports response observations, unique hashed respondents, and respondent–signifier clusters separately.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#monitoring",
+    "href": "index.html#monitoring",
+    "title": "Ipseity Daily Pulse",
+    "section": "Outside-in monitoring",
+    "text": "Outside-in monitoring\nThe monitor checks the public homepage and canonical gzip, validates its schema and binary response domain, rejects duplicate respondent/date/signifier keys, and records a timestamped row in an append-only history. Eleven sampled checks from September 16 through 26 all found a reachable homepage, a retrievable and parseable file, no anomaly, and a one-day newest-observation lag. The canonical file gained 16,402 observations across those checks.\n\n\n\nCumulative validated response observations by observation date, rising to 716,237 on September 25, 2026.\n\n\n\n\n\nHomepage, dataset retrieval, parse status, newest-observation lag, and observation count across eleven daily outside-in checks.\n\n\nThese are eleven snapshots, not continuous telemetry. They do not reveal interruptions between checks or establish an uptime rate.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#trends",
+    "href": "index.html#trends",
+    "title": "Ipseity Daily Pulse",
+    "section": "Descriptive trend screen",
+    "text": "Descriptive trend screen\nFor every signifier with at least 300 responses on 30 dates spanning at least 180 days, the analysis fits an unweighted linear probability model:\n\\[\\text{endorsement}_{ij} = \\alpha + \\beta\\,\\text{date}_{ij} + \\epsilon_{ij}.\\]\nThe coefficient is annualized to percentage points per year. CR1 sandwich uncertainty clusters responses by hashed respondent, following the general repeated-outcome logic of Liang & Zeger (1986). Benjamini–Hochberg q-values (Benjamini & Hochberg, 1995) and Bonferroni-adjusted p-values screen the 704 eligible estimates for multiplicity.\n\nLargest positive and negative point estimates in the September 26 trend screen\n\n\n\n\n\n\n\n\n\nSignifier\nAnnual change (pp)\nRespondent-clustered 95% interval\nBH q\nResponses\n\n\n\n\nbeautiful\n+24.0\n[+10.8, +37.1]\n0.117\n458\n\n\npretty\n+17.4\n[+3.4, +31.4]\n0.413\n422\n\n\namateur artist\n+17.2\n[+5.0, +29.4]\n0.311\n424\n\n\nstar wars fan\n-14.2\n[-27.3, -1.2]\n0.483\n427\n\n\nnba fan\n-14.2\n[-27.4, -1.0]\n0.500\n409\n\n\nsocial conservative\n-13.8\n[-25.5, -2.0]\n0.423\n432\n\n\n\nSeveral nominal clustered intervals exclude zero, but no estimate survives either multiplicity screen. Selecting and describing the extrema makes their point estimates especially susceptible to ranking noise. Claims that these signifiers changed in the U.S. adult population would go far beyond the evidence in this convenience sample.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#robustness",
+    "href": "index.html#robustness",
+    "title": "Ipseity Daily Pulse",
+    "section": "Robustness diagnostics",
+    "text": "Robustness diagnostics\nThe analysis subjects the ten most positive and ten most negative slopes to several targeted diagnostics. These do not create a second discovery procedure; they ask how the selected descriptions change under different samples, covariate adjustments, and time summaries.\n\nSummary of selected-leader diagnostics; percentage points abbreviated pp\n\n\n\n\n\n\n\nDiagnostic\nCurrent result\nWhat it does not solve\n\n\n\n\nComposition and calendar adjustment\n20/20 slopes retain direction; median absolute shift 5.3 pp/year\nUnobserved composition, weighting, selection of extrema\n\n\nEarly-versus-late contrast\n20/20 raw and 19/20 adjusted contrasts retain the slope direction\nShort reversals, unobserved composition, causal interpretation\n\n\nFour-period path\n7/20 raw paths move in the selected direction in all three transitions\nBoundary sensitivity, inference, population weighting\n\n\nStandardized four-period path\n0/20 align in all three transitions; 11/20 retain the same largest transition\nModel form, unbounded linear-probability predictions\n\n\nRepeat-sample pooled slope\n17/20 retain the all-response direction\nSelective return, small repeat samples\n\n\nRespondent fixed effect\n12/20 retain the original direction\nTime-varying confounding, population generalization\n\n\n\n\n\n\nUnadjusted and composition-and-calendar-adjusted annualized slopes for selected positive and negative leaders.\n\n\nThe four-period diagnostic shows why a single linear slope should not be narrated as steady change. The median largest adjacent move contains 64% of each selected raw path, compared with 52% after standardizing recorded age, composition, weekday, and month. Only 11 of 20 selected signifiers retain the same largest transition after adjustment.\n\n\n\nRaw and adjusted shares of four-period movement accounted for by each selected signifier’s largest adjacent transition.\n\n\nThe within-respondent comparison changes the scientific question. Restricting to people who answered a signifier more than once produced a median absolute shift of 11.5 points/year; absorbing stable respondent differences then shifted the estimates by another 16.7 points. The median selected signifier had only 26.5 repeat respondents. A mechanically zero slope when nobody switches endorsement is not evidence of exact population stability.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#limitations",
+    "href": "index.html#limitations",
+    "title": "Ipseity Daily Pulse",
+    "section": "Interpretation and limitations",
+    "text": "Interpretation and limitations\nThe most defensible current findings are operational and methodological:\n\nAt all eleven sampled moments, the public page and canonical data were available and the file passed the implemented checks.\nMost annualized signifier slopes cluster near zero, and neither multiplicity correction identifies a discovery.\nExtreme point estimates are sensitive to who is included, what covariates are held constant, and how time is summarized.\nPooled response change and within-person change are distinct estimands.\n\nThe analysis is unweighted and does not establish representativeness of U.S. adults. Recorded covariates cannot remove unobserved or time-varying composition. Linear probability models are descriptive and can produce adjusted levels outside 0%–100%. Calendar partitions are analytical choices. All leader diagnostics condition on selecting extremes from the same data, and none replaces confirmatory analysis on later observations.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#reproducibility",
+    "href": "index.html#reproducibility",
+    "title": "Ipseity Daily Pulse",
+    "section": "Reproducibility",
+    "text": "Reproducibility\nThe public repository contains the standard-library monitor, synthetic unit tests, append-only check history, current aggregate tables, SVG figures, report source, and build instructions. The September 26 canonical gzip was 5,079,260 bytes with SHA-256 0e3558ecb76f84cb33ca1fa878f81cb82159457987bd384edad13c34b2cd2354.\nDownload the current machine-readable summary, trend table, leader sensitivity, period trajectory, and monitoring history. The canonical data remain available from the Ipseity Daily download page.",
+    "crumbs": [
+      "Current pulse"
+    ]
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Ipseity Daily Pulse",
+    "section": "References",
+    "text": "References\n\n\nBenjamini, Y., & Hochberg, Y. (1995). Controlling the false\ndiscovery rate: A practical and powerful approach to multiple testing.\nJournal of the Royal Statistical Society: Series B\n(Methodological), 57(1), 289–300. https://doi.org/10.1111/j.2517-6161.1995.tb02031.x\n\n\nJones, J. J. (2026). Ipseity daily data [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.22636514\n\n\nLiang, K.-Y., & Zeger, S. L. (1986). Longitudinal data analysis\nusing generalized linear models. Biometrika, 73(1),\n13–22. https://doi.org/10.1093/biomet/73.1.13",
+    "crumbs": [
+      "Current pulse"
+    ]
+  }
+]

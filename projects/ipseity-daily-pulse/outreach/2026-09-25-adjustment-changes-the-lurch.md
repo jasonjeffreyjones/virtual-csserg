@@ -1,8 +1,8 @@
 # The lurch persists, but its timing often changes
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 Does a jagged identity trend become smooth after accounting for who answered
 and when? Not in this selected set—but the apparent timing often changes.

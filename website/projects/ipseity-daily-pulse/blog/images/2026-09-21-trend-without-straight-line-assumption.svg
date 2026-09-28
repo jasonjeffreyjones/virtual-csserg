@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="660" viewBox="0 0 960 660" role="img" aria-labelledby="title desc">
+  <title id="title">Late-half versus early-half prevalence</title>
+  <desc id="desc">Point and interval plot of late-half minus early-half endorsement prevalence for the five most positive and five most negative linear-trend leaders. Green contrasts match the direction of the selected linear slope; ochre contrasts do not.</desc>
+  <rect width="960" height="660" fill="#ffffff"/>
+  <style>
+    text { font-family: system-ui, -apple-system, sans-serif; fill: #243128; }
+    .title { font-size: 25px; font-weight: 700; }
+    .subtitle { font-size: 15px; fill: #4e5d51; }
+    .axis { stroke: #66736a; stroke-width: 1; }
+    .grid { stroke: #dde3d8; stroke-width: 1; }
+    .tick { font-size: 13px; fill: #4e5d51; }
+  </style>
+  <text class="title" x="235" y="38">Late-half versus early-half prevalence</text>
+  <text class="subtitle" x="235" y="66">Early ≤ 2026-02-12 · late ≥ 2026-02-13 · selected leaders</text>
+  <circle cx="235" cy="90" r="5" fill="#4B6F44"/>
+  <text class="tick" x="247" y="95">Late minus early; line is respondent-clustered 95% interval</text>
+  <line class="grid" x1="235.0" y1="112" x2="235.0" y2="594"/>
+  <text class="tick" text-anchor="middle" x="235.0" y="620">-30</text>
+  <line class="grid" x1="349.5" y1="112" x2="349.5" y2="594"/>
+  <text class="tick" text-anchor="middle" x="349.5" y="620">-20</text>
+  <line class="grid" x1="464.0" y1="112" x2="464.0" y2="594"/>
+  <text class="tick" text-anchor="middle" x="464.0" y="620">-10</text>
+  <line class="grid" x1="578.5" y1="112" x2="578.5" y2="594"/>
+  <text class="tick" text-anchor="middle" x="578.5" y="620">+0</text>
+  <line class="grid" x1="693.0" y1="112" x2="693.0" y2="594"/>
+  <text class="tick" text-anchor="middle" x="693.0" y="620">+10</text>
+  <line class="grid" x1="807.5" y1="112" x2="807.5" y2="594"/>
+  <text class="tick" text-anchor="middle" x="807.5" y="620">+20</text>
+  <line class="grid" x1="922.0" y1="112" x2="922.0" y2="594"/>
+  <text class="tick" text-anchor="middle" x="922.0" y="620">+30</text>
+  <line x1="578.5" y1="112" x2="578.5" y2="594" stroke="#243128" stroke-width="2"/>
+  <text class="tick" text-anchor="end" x="223" y="141.1">beautiful</text>
+  <line x1="674.2" y1="136.1" x2="883.9" y2="136.1" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="779.1" cy="136.1" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="189.3">amateur artist</text>
+  <line x1="611.1" y1="184.3" x2="803.6" y2="184.3" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="707.3" cy="184.3" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="237.5">romance fan</text>
+  <line x1="608.3" y1="232.5" x2="814.6" y2="232.5" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="711.4" cy="232.5" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="285.7">pretty</text>
+  <line x1="621.7" y1="280.7" x2="834.8" y2="280.7" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="728.3" cy="280.7" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="333.9">COVID survivor</text>
+  <line x1="549.6" y1="328.9" x2="782.0" y2="328.9" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="665.8" cy="328.9" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="382.1">nba fan</text>
+  <line x1="343.1" y1="377.1" x2="551.0" y2="377.1" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="447.0" cy="377.1" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="430.3">star wars fan</text>
+  <line x1="338.9" y1="425.3" x2="553.9" y2="425.3" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="446.4" cy="425.3" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="478.5">social conservative</text>
+  <line x1="425.0" y1="473.5" x2="618.1" y2="473.5" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="521.5" cy="473.5" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="526.7">planner</text>
+  <line x1="407.7" y1="521.7" x2="609.1" y2="521.7" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="508.4" cy="521.7" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="end" x="223" y="574.9">2a supporter</text>
+  <line x1="346.4" y1="569.9" x2="547.0" y2="569.9" stroke="#4B6F44" stroke-width="2"/>
+  <circle cx="446.7" cy="569.9" r="5" fill="#4B6F44"/>
+  <text class="tick" text-anchor="middle" x="578.5" y="644">Late minus early endorsement prevalence (percentage points)</text>
+</svg>

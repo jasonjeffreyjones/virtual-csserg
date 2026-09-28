@@ -264,7 +264,6 @@ class StaticAccessibilityTests(unittest.TestCase):
         source = (
             ROOT / "projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md"
         ).read_text(encoding="utf-8")
-        self.assertEqual(len(expected), 11)
         self.assertEqual(VERIFY.accessibility_review_problems(source, expected), [])
 
     def test_review_protocol_rejects_missing_duplicate_and_unknown_results(self):

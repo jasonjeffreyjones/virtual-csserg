@@ -1,8 +1,8 @@
 # Apparent identity trends soften after comparing like with like
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 The most dramatic trend in Ipseity Daily's current sample looks less dramatic
 after a basic like-with-like comparison.

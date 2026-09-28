@@ -1,8 +1,8 @@
 # A sample trend is not necessarily change within people
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 Ipseity Daily's largest current sample trend changes sharply when the question
 changes from “Are later answers different?” to “Did the same people answer

@@ -70,7 +70,7 @@ accessibility evaluation.
   referenced labels, broken control references, invalid expanded state, and a
   focusable hidden link. These source properties do not establish the rendered
   name, role, state, order, or operation in a browser/screen reader.
-- On September 19, `w3m` 0.5.3 returned successfully for all 11 selected
+- On September 19, `w3m` 0.5.3 returned successfully for the then-current 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
   focus, responsive-layout, or screen-reader evidence.
@@ -89,8 +89,8 @@ accessibility evaluation.
 
 ## Selected production pages
 
-These 11 pages cover the live homepage, both catalogs, the shared Scholar
-profile pattern, all three Executive Summaries, and every Full Report page.
+These 13 pages cover the live homepage, both catalogs, the shared Scholar
+profile pattern, all four Executive Summaries, and every Full Report page.
 The 15 dated design alternatives are decision archives, not selected layouts;
 they retain whole-site static coverage but are outside this manual release
 sample.
@@ -104,10 +104,12 @@ sample.
 | `website/projects/vcsserg-repo-v1/index.html` | Evidence brief and promise-map figure |
 | `website/projects/predict-the-self/index.html` | Evidence brief with results table |
 | `website/projects/nfl-team-fandom-identities/index.html` | Paused-project summary and citations |
+| `website/projects/ipseity-daily-pulse/index.html` | Monitoring and trend-screen evidence brief |
 | `website/projects/vcsserg-repo-v1/report/index.html` | One-chapter Quarto book |
 | `website/projects/predict-the-self/report/index.html` | Multi-chapter Quarto book landing page |
 | `website/projects/predict-the-self/report/report.html` | Quarto chapter with dense tables and code |
 | `website/projects/nfl-team-fandom-identities/report/index.html` | Quarto report with figures, math, and tables |
+| `website/projects/ipseity-daily-pulse/report/index.html` | Quarto report with longitudinal figures and robustness tables |
 
 ## Test environment and result record
 
@@ -152,10 +154,12 @@ Issues and retest evidence: Not recorded
 | `website/projects/vcsserg-repo-v1/index.html` | Not tested | Not tested | Not tested | Not tested | — |
 | `website/projects/predict-the-self/index.html` | Not tested | Not tested | Not tested | Not tested | — |
 | `website/projects/nfl-team-fandom-identities/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/ipseity-daily-pulse/index.html` | Not tested | Not tested | Not tested | Not tested | — |
 | `website/projects/vcsserg-repo-v1/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
 | `website/projects/predict-the-self/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
 | `website/projects/predict-the-self/report/report.html` | Not tested | Not tested | Not tested | Not tested | — |
 | `website/projects/nfl-team-fandom-identities/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
+| `website/projects/ipseity-daily-pulse/report/index.html` | Not tested | Not tested | Not tested | Not tested | — |
 <!-- accessibility-results:end -->
 
 ## Checks on every selected page

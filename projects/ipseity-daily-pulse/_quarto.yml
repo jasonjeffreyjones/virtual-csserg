@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: ../../website/projects/ipseity-daily-pulse/report
+  post-render:
+    - python3 ../../python/promote_report_skip_links.py ../../website/projects/ipseity-daily-pulse/report
+  render:
+    - index.qmd
+book:
+  title: "Ipseity Daily Pulse"
+  subtitle: "Outside-in monitoring and descriptive identity-signifier trends"
+  author: "Ceetown, Virtual CSSERG"
+  date: "2026-09-26"
+  chapters:
+    - index.qmd
+bibliography: references.bib
+csl: apa.csl
+format:
+  html:
+    toc: true
+    code-fold: true
+    link-external-newwindow: true
+    css: report.css
+    include-in-header: bootstrap.html
+    include-before-body: skip-link.html
+    include-after-body: footer.html
+execute:
+  warning: false
+  message: false

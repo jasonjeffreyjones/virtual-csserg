@@ -1,74 +1,73 @@
 ---
 title: "Ipseity Daily Pulse"
 status: Active
-publication: Unpublished
-updated: 2026-09-25T10:11:43Z
+publication: Published
+updated: 2026-09-26T10:10:52Z
 ---
 
 # Ipseity Daily Pulse — Current state
 
 ## Status
 
-Active and Unpublished. Research artifacts remain under `projects/`; no empty
-public report has been created.
+Active and Published. Per PI guidance appended to the September 25 iteration,
+the production-ready static publication now includes an Executive Summary,
+Quarto Full Report, two-column short PDF, and Project blog under
+`website/projects/ipseity-daily-pulse/`. The home page links the newest
+individual blog entry.
 
 ## Current findings and completed work
 
-- Ten daily outside-in checks are recorded. At `2026-09-25T10:07:47Z`, the
-  homepage and canonical microdata returned HTTP 200. The 5,067,464-byte gzip
-  parsed with the documented schema: 714,574 response observations from
-  2025-07-08 through 2026-09-24, 5,053 hashed respondents, 707 signifiers, no
+- Eleven daily outside-in checks are recorded. At `2026-09-26T10:02:00Z`, the
+  homepage and canonical microdata returned HTTP 200. The 5,079,260-byte gzip
+  parsed with the documented schema: 716,237 response observations from
+  2025-07-08 through 2026-09-25, 5,059 hashed respondents, 707 signifiers, no
   malformed rows or duplicate canonical keys, and a one-day data lag. No
-  anomaly was detected. Since the prior check, the file gained 1,621
-  observations and eight respondents, and its latest observation date advanced
+  anomaly was detected. Since the prior check, the file gained 1,663
+  observations and six respondents, and its latest observation date advanced
   one day. Its SHA-256 is
-  `f914207cd3626c6bd8197cb90509b95d6bdd05eca17c21cbe017908de19ffdb8`.
-- The current growth table and accessible SVG rise to 714,574 observations
-  across 444 observation dates. The accessible monitoring-history SVG aligns
-  endpoint and parse status, data lag, and observation count across checks.
-  All ten checks were healthy, lag was one day each time, and the canonical
-  file gained 14,739 observations from the first check to the latest. This is
-  a short operational view, not an uptime or long-run reliability estimate.
+  `0e3558ecb76f84cb33ca1fa878f81cb82159457987bd384edad13c34b2cd2354`.
+- All eleven sampled checks were healthy, lag was one day at each, and the
+  canonical file gained 16,402 observations from the first check to the
+  latest. The accessible history figure aligns endpoint and parse status, data
+  lag, and observations. This is an operational snapshot sequence, not an
+  uptime or long-run reliability estimate.
 - Unweighted linear probability trends remain estimable for 704 signifiers
   meeting the prespecified 300-response, 30-date, and 180-day thresholds. The
   median annualized estimate is +0.5 percentage points; the middle half ranges
   from -1.9 to +3.0 points. `beautiful` is the most positive pooled leader
-  (+24.6 points/year), and `star wars fan` is the most negative (-14.2).
-- Respondent-clustered inference and both multiplicity screens still yield no
+  (+24.0 points/year), and `star wars fan` is the most negative (-14.2).
+- Respondent-clustered inference and both multiplicity screens yield no
   discovery among 704 tests: zero Benjamini–Hochberg q-values and zero
   Bonferroni-adjusted p-values are at or below .05.
-- The two-period sensitivity compares prevalence through 2026-02-14 with
-  prevalence from 2026-02-15 onward for the 20 selected linear-trend leaders.
-  All 20 raw and all 20 adjusted contrasts retain the linear slope's direction.
-  The median absolute raw difference is 10.2 percentage points, and observed
+- The selected two-period diagnostic has all 20 raw contrasts retaining the
+  linear slope's direction and 19 of 20 adjusted contrasts doing so. The
+  median absolute raw difference is 10.0 percentage points, and recorded
   composition and calendar adjustment moves a contrast by a median absolute
-  4.8 points. This is a selected diagnostic, not a discovery test, and its
-  point difference is not directly comparable with an annualized slope.
-- The four-period shape diagnostic shows that all 20 selected leaders have
-  first-to-last raw changes matching their linear slope, but only six move in
-  that direction across all three adjacent transitions; 17 align in at least
-  two transitions. The largest adjacent move accounts for a median 58% of each
-  raw absolute path. `star wars fan` is most concentrated at 96%.
-- A new composition-and-calendar-adjusted four-period path standardizes each
-  period to the same full-sample observed covariate distribution. All 20
-  adjusted endpoints retain the selected slope direction, none aligns in all
-  three transitions, and 13 align in at least two. The median largest-move
-  share remains 54%, but only eight leaders retain the same largest transition;
-  `singer` is most concentrated after adjustment at 80%. Concentration persists
-  in aggregate while its apparent timing is composition-sensitive.
-- The refreshed composition-and-calendar sensitivity retains the direction of
-  all 20 pooled leaders; the median absolute slope shift is 5.3 points/year.
-- The three-way leader panel now has 16 of 20 repeat-sample slopes retaining
-  the all-response direction, 14 of 20 within-person slopes retaining the
+  4.7 points. `single` moves from -7.9 raw to approximately zero (+0.05)
+  adjusted. This is not a discovery test.
+- All 20 selected four-period raw paths retain the first-to-last linear
+  direction, but only seven align across all three adjacent transitions; 17
+  align in at least two. The median largest-transition share is 64%, and
+  `star wars fan` is most concentrated at 91%.
+- All 20 standardized four-period paths retain the selected first-to-last
+  direction, none aligns across all three transitions, and 14 align in at
+  least two. The median largest-transition share is 52%; 11 of 20 retain the
+  same largest transition after adjustment. `2a supporter` has the most
+  concentrated adjusted path at 82%.
+- Composition-and-calendar adjustment retains the direction of all 20 pooled
+  leaders; the median absolute slope shift is 5.3 points/year.
+- The three-way leader panel has 17 of 20 repeat-sample slopes retaining the
+  all-response direction, 15 of 20 within-person slopes retaining the
   repeat-sample direction, and 12 of 20 retaining the original direction. The
-  median absolute shifts are 12.4 points/year for sample restriction, 15.0 for
-  absorbing respondent effects, and 13.3 end to end; the median signifier has
-  26 repeat respondents. Three signifiers have no endorsement switchers, so
-  their zero within slopes and intervals are mechanical rather than precise
-  population evidence.
-- A new internal outreach draft explains that adjustment preserves average
-  path concentration but often changes which transition appears largest. It
-  remains unpublished pending PI guidance.
+  median absolute shifts are 11.5 points/year for sample restriction, 16.7
+  for absorbing respondent effects, and 12.9 end to end; the median selected
+  signifier has 26.5 repeat respondents. Two signifiers have no endorsement
+  switchers, so their zero within slopes are mechanical rather than evidence
+  of population precision.
+- The Project blog publishes all ten dated outreach entries as HTML pages. Each
+  older entry uses the exact SVG from the commit that created its source and
+  carries a snapshot note; the new entry, “A trend leaderboard is not a
+  discovery list,” explains why the two 704-test multiplicity screens matter.
 
 ## Decisions and constraints
 
@@ -81,25 +80,22 @@ public report has been created.
   point estimate. Use respondent-clustered intervals and both BH and Bonferroni
   adjustments for the primary screen.
 - Treat the composition-and-calendar, raw and adjusted early-versus-late, raw
-  and standardized adjusted four-period trajectory, repeat-sample pooled, and
+  and standardized four-period trajectory, repeat-sample pooled, and
   respondent-fixed-effect models as selected-leader sensitivities, not
-  replacement estimands or multiplicity corrections. The early/late contrast relaxes straight-line form
-  but can hide shorter reversals; its adjusted version addresses recorded
-  composition and calendar terms only. The raw four-period path is unweighted;
-  its adjusted counterpart standardizes non-period model columns to full-sample
-  means. Both are noninferential, and their concentration share describes the
-  largest adjacent move relative to total absolute movement. Unbounded adjusted
-  linear-probability levels are model diagnostics rather than literal
-  prevalences when outside 0%–100%. The repeat-sample and fixed-effect shifts
-  are not a causal turnover decomposition.
+  replacement estimands or multiplicity corrections. Their shifts are not a
+  causal decomposition, and unbounded adjusted linear-probability levels are
+  model diagnostics rather than literal prevalences when outside 0%–100%.
 - Do not interpret nominal intervals excluding zero as discoveries when none
   of the 704 primary tests passes either multiplicity screen. Do not interpret
   a zero sandwich interval as precision when repeat respondents never change
   their outcome.
-- Treat the ten-check history view as evidence about the sampled moments,
-  not continuous availability or a service-level estimate.
-- Keep outreach material internal until the PI establishes a publication
-  surface and approval/posting workflow.
+- Treat the eleven-check history as evidence about sampled moments, not
+  continuous availability or a service-level estimate.
+- The PI chose a shared, Project-organized website blog and authorized
+  publication. New entries should be accessible HTML pages, appear newest
+  first in the blog index, and keep the home-page link pointed to the newest
+  individual entry. Publish only claims supported by the current cumulative
+  report and preserve dated provenance.
 
 ## Important files
 
@@ -108,39 +104,44 @@ public report has been created.
 - `ANALYSIS.md` and `analysis/monitor.py`: method, reproduction, live monitor,
   clustered inference, multiplicity adjustment, leader sensitivities, and
   artifact generation.
+- `index.qmd`, `_quarto.yml`, `short-report.md`, and `BUILD.md`: publication
+  sources and reproduction instructions.
+- `analysis/render_short_report.py`, `analysis/render_blog.py`, and
+  `analysis/verify_publication.py`: derivative renderers and Project-specific
+  publication checks. The blog renderer pins older figures to their source
+  commits.
 - `data/monitoring-history.csv`: append-only outside-in check history.
 - `outputs/`: current summary, growth tables, full trend estimates, four
   leader sensitivity tables, and eight accessible SVGs.
+- `website/projects/ipseity-daily-pulse/`: the public Executive Summary, Full
+  Report, short PDF, blog, aggregate artifacts, and figures.
 - `tests/test_monitor.py`: synthetic validation, inference, sensitivity, and
   artifact consistency tests.
-- `outreach/`: workflow recommendation and internal content drafts.
+- `outreach/`: the ten dated source entries for the public Project blog.
 - `DIALOG.md`, `dialog/iterations/`, and `dialog/indexes/`: bounded handoff and
   immutable iteration history.
 
 ## Problems and unresolved PI questions
 
-- Ten history rows establish nine healthy daily intervals and a useful first
-  operational view, but not enough evidence to characterize service
-  reliability or interruptions between checks.
+- Eleven daily snapshots establish ten healthy intervals but cannot reveal
+  outages between checks or characterize long-run reliability.
 - No signifier slope survives either multiplicity adjustment. Leader
   sensitivities use small, selected subsets and do not address population
-  weighting, time-varying confounding, selective retention, or changing
-  unobserved composition. The raw and adjusted four-period patterns also depend
-  on the chosen calendar partition; the adjusted timing result is
-  model-sensitive and supplies no new inferential test.
-- Should Virtual CSSERG adopt the proposed shared, Project-organized outreach
-  feed in which Scholars leave evidence-linked drafts and Dr. Jones approves or
-  posts them? Until guidance arrives, drafts remain internal and unpublished.
+  weighting, time-varying confounding, selective retention, changing
+  unobserved composition, or the dependence of four-period findings on chosen
+  boundaries and model form.
+- No PI question is currently unresolved. The publication and shared Project
+  blog instructions are incorporated.
 
 ## Likely next steps
 
 1. On the next UTC day, run the live monitor once; investigate only if its
    anomaly field is not `none`.
-2. Continue the check history so the operational view can eventually
+2. Refresh all three report forms and public aggregate artifacts after a
+   materially changed result, while retaining dated provenance for blog posts.
+3. Continue the check history so the operational view can eventually
    distinguish isolated from continuing failures and summarize longer-run lag.
-3. Assess whether the dominant-transition and concentration conclusions are
+4. Assess whether the dominant-transition and concentration conclusions are
    robust to reasonable alternative period boundaries or segment counts,
    while retaining the linear primary estimand and all selection and
    multiplicity cautions.
-4. Incorporate PI outreach guidance and keep public trend claims deferred until
-   robustness evidence is stronger.

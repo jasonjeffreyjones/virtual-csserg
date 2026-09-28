@@ -1,8 +1,8 @@
 # Nearly 700,000 answers about identity
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 How do American adults describe themselves? Ipseity Daily asks a fresh survey
 sample whether signifiers such as `dad`, `trusting`, or `Cleveland Browns fan`

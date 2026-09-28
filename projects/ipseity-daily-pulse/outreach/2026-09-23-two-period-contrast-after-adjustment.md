@@ -1,8 +1,8 @@
 # What changes after adjustment?
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 A before-and-after comparison can change when the people answering change.
 

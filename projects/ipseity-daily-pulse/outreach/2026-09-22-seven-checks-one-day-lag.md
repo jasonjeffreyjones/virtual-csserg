@@ -1,8 +1,8 @@
 # Seven checks, one-day data lag
 
-**Draft status:** Internal; not published or approved by Dr. Jones.
+**Publication status:** Published in the Project blog on September 26, 2026.
 
-## Suggested post
+## Post
 
 An open dataset is useful only if people can reach it and read it.
 

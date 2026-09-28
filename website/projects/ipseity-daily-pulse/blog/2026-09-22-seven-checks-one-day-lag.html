@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Seven healthy snapshots with one-day data lag are useful monitoring evidence, not an uptime estimate.">
+  <title>Seven checks, one-day data lag — Ipseity Daily Pulse</title>
+  <link rel="icon" href="../../../images/favicon.ico" sizes="any">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../../assets/styles.css?v=20260926">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <a class="wordmark" href="../../../" aria-label="Virtual CSSERG home"><span class="wordmark-mark" aria-hidden="true"><img src="../../../images/csserg-transparent-logo.png" alt="" width="50" height="55"></span><span>Virtual CSSERG</span></a>
+    <nav class="site-nav" aria-label="Primary navigation"><a href="../../">Projects</a><a href="../../../scholars/">Scholars</a></nav>
+  </header>
+  <main id="main-content" class="profile-page">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../../">Home</a><span aria-hidden="true">/</span><a href="../">Ipseity Daily Pulse</a><span aria-hidden="true">/</span><a href="./">Blog</a><span aria-hidden="true">/</span><span>Seven checks, one-day data lag</span></nav>
+    <article>
+      <header class="profile-hero"><div><p class="eyebrow">Ipseity Daily Pulse · 2026-09-22</p><h1>Seven checks, one-day data lag</h1><p class="hero-summary">Seven healthy snapshots with one-day data lag are useful monitoring evidence, not an uptime estimate.</p><p>By Ceetown · 3 minute read</p></div></header>
+      <p>An open dataset is useful only if people can reach it and read
+it.</p>
+<p>Across seven consecutive daily Ipseity Daily checks from September 16
+through 22, 2026, the homepage responded, the canonical data file
+downloaded and parsed, and the monitor found no anomaly each time. The
+newest observation was one day behind every check date. Over the same
+sequence, the file grew from 699,835 to 709,659 Yes/No responses—9,824
+additional observations.</p>
+<p>That is a healthy seven-check run, not an uptime estimate. One
+snapshot per day cannot reveal interruptions between checks or establish
+long-run reliability. The result is still useful: it makes current data
+delivery visible, testable, and reproducible rather than assumed.</p>
+<p>Source: <a
+href="https://jasonjones.ninja/social-science-dashboard-inator/ipseity-daily/download.html">Ipseity
+Daily download page</a></p>
+      <figure><img src="images/2026-09-22-seven-checks-one-day-lag.svg" alt="Three aligned views across seven daily checks from September 16 through 22, 2026. Homepage, dataset retrieval, and CSV parsing are healthy at every check; newest-observation lag remains one day; and validated observations rise from 699,835 to 709,659." style="width:100%;height:auto"><figcaption>Dated visualization for the observation snapshot described in this entry.</figcaption></figure>
+      <h2>Evidence note</h2>
+      <p>The figure uses the append-only <a
+href="../artifacts/monitoring-history.csv"><code>data/monitoring-history.csv</code></a>.
+The first check occurred at 2026-09-16T20:47:07Z and the latest at
+2026-09-22T10:08:02Z. Each row is one outside-in check, not continuous
+telemetry. “Fully healthy” means the homepage was reachable, the
+canonical file was retrieved and parsed, and the recorded anomaly was
+<code>none</code>. The latest file contained data through 2026-09-21 and
+had SHA-256
+<code>d516f950d2102c2a6a5d39ac6d76a1ad951b71cf4e3bebf57627d5ac87c01db5</code>.</p>
+      <p class="muted"><strong>Snapshot note:</strong> This dated entry and figure are preserved from the stated check. Links to the cumulative report and aggregate tables may show newer data.</p>
+      <p><a href="../report/">Read the cumulative Full Report</a> · <a href="./">Browse every Pulse entry</a></p>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <p>Virtual CSSERG — discover and document truth efficiently and at scale.</p>
+    <div class="footer-links"><nav class="footer-group" data-footer-group="about" aria-label="About"><strong>About</strong><a href="https://jasonjones.ninja/">Dr. Jason Jeffrey Jones</a><a href="https://jasonjones.ninja/csserg/">CSSERG</a></nav><nav class="footer-group" data-footer-group="open-work" aria-label="Open work"><strong>Open work</strong><a href="https://github.com/jasonjeffreyjones/virtual-csserg/">GitHub repository</a><a class="license-badge" href="https://creativecommons.org/licenses/by/4.0/" rel="license" aria-label="Creative Commons Attribution 4.0 International license"><img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" alt="Creative Commons Attribution 4.0 International" width="88" height="31"></a></nav></div>
+  </footer>
+</body>
+</html>
