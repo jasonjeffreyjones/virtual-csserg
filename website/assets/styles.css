@@ -534,6 +534,10 @@ a:focus-visible > .card-arrow {
   padding: 3rem 0;
 }
 
+.profile-hero > :only-child {
+  grid-column: 1 / -1;
+}
+
 .profile-hero h1,
 .project-hero h1 {
   margin-bottom: 1.5rem;
