@@ -82,6 +82,15 @@ for text only. The direct source-form-minus-text effect is `−0.947170`, but it
 interval narrowly spans zero (`−1.943737` to `+0.035874`). This fixed analysis
 therefore does not establish a lexical advantage beyond simple response form.
 
+A seventh lock treats the no-oracle forecast results as one 16-contrast family
+and uses synchronized studentized case resampling. Six simultaneous directions
+remain: Add-count and word-count point-error reductions, the word-count CRPS
+reduction, text-only and source-form word-count gains over the marginal, and
+combined matching over demographics alone. The smaller Delete-count point
+gain and the `+0.217704` demographics-over-text increment become
+inconclusive. This post hoc stress test narrows the current claim; it is not
+retroactive preregistration or population evidence.
+
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
@@ -94,7 +103,8 @@ training cross-validation and both separate conditioned-ranking tests without
 presenting reused training cases or oracle budgets as fresh confirmation, then
 tests no-oracle change-volume forecasts, their predictive distributions, the
 locked source-feature ablation, and the count-only source-form comparison
-separately.
+separately. It then reports the bounded 16-contrast multiplicity stress test
+without recasting earlier dependent analyses as confirmation.
 
 The report distinguishes three claims that should not be collapsed:
 

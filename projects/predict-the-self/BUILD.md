@@ -123,6 +123,16 @@ python3 projects/predict-the-self/analysis/analyze_source_form_ablation.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked cross-analysis multiplicity stress test. It reads only
+the four existing 150-case training audits, verifies their hashes and inherited
+means, and applies one synchronized studentized max-|t| bootstrap to the fixed
+16-contrast no-oracle forecast family. It never reads benchmark, development,
+or private-test rows:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_multiplicity_stress_test.py
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

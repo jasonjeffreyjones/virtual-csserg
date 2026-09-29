@@ -1,0 +1,17 @@
+contrast,family_group,outcome,effect_definition,direction,mean_effect,standard_error,simultaneous_95_ci_low,simultaneous_95_ci_high,simultaneous_status
+point_mae_add_count,point_forecast,add_count,marginal absolute error minus neighborhood absolute error,positive favors neighborhood,1.213333,0.275565,0.397788,2.028879,positive
+point_mae_delete_count,point_forecast,delete_count,marginal absolute error minus neighborhood absolute error,positive favors neighborhood,0.278660,0.133682,-0.116978,0.674298,includes_zero
+point_mae_word_count,point_forecast,word_count,marginal absolute error minus neighborhood absolute error,positive favors neighborhood,3.140000,1.044899,0.047580,6.232420,positive
+point_mae_line_count,point_forecast,line_count,marginal absolute error minus neighborhood absolute error,positive favors neighborhood,0.000000,0.000000,0.000000,0.000000,exact_zero
+point_mae_source_similarity,point_forecast,source_similarity,marginal absolute error minus neighborhood absolute error,positive favors neighborhood,0.002867,0.001943,-0.002885,0.008619,includes_zero
+distribution_crps_add_count,distribution_forecast,add_count,marginal CRPS minus neighborhood CRPS,positive favors neighborhood,0.212518,0.145435,-0.217903,0.642939,includes_zero
+distribution_crps_delete_count,distribution_forecast,delete_count,marginal CRPS minus neighborhood CRPS,positive favors neighborhood,0.072801,0.054925,-0.089750,0.235353,includes_zero
+distribution_crps_word_count,distribution_forecast,word_count,marginal CRPS minus neighborhood CRPS,positive favors neighborhood,2.515843,0.774477,0.223750,4.807936,positive
+distribution_crps_line_count,distribution_forecast,line_count,marginal CRPS minus neighborhood CRPS,positive favors neighborhood,-0.011761,0.046210,-0.148523,0.125000,includes_zero
+distribution_crps_source_similarity,distribution_forecast,source_similarity,marginal CRPS minus neighborhood CRPS,positive favors neighborhood,0.002486,0.001352,-0.001516,0.006488,includes_zero
+word_crps_marginal_minus_text_only,word_count_ablation,word_count,marginal CRPS minus text-only CRPS,positive favors text only,2.298139,0.768421,0.023968,4.572310,positive
+word_crps_marginal_minus_demographics_only,word_count_ablation,word_count,marginal CRPS minus demographics-only CRPS,positive favors demographics only,0.200711,0.341957,-0.811325,1.212747,includes_zero
+word_crps_text_only_minus_combined,word_count_ablation,word_count,text-only CRPS minus combined CRPS,positive favors combined,0.217704,0.102101,-0.084469,0.519876,includes_zero
+word_crps_demographics_only_minus_combined,word_count_ablation,word_count,demographics-only CRPS minus combined CRPS,positive favors combined,2.315132,0.778270,0.011811,4.618453,positive
+word_crps_marginal_minus_source_form,word_count_ablation,word_count,marginal CRPS minus source-form CRPS,positive favors source form,3.245309,0.758441,1.000674,5.489943,positive
+word_crps_source_form_minus_text_only,word_count_ablation,word_count,source-form CRPS minus text-only CRPS,positive favors text only,-0.947170,0.507554,-2.449295,0.554956,includes_zero

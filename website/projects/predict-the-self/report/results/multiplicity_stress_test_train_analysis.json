@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "analysis": "training_cross_analysis_multiplicity_stress_test",
+  "cases": 150,
+  "contrast_count": 16,
+  "inputs": {
+    "analysis_plan_sha256": "d3c31e1bd77df8da0d5b7017438f2b9ff04ba5f39c4dfcb803c1c38f294fb9ac",
+    "case_audit_sha256": {
+      "change_volume": "0c400f1a060d5d390f22ccf8691c6e6266705846c48d50307d7d1a619570db6e",
+      "change_distributions": "0c257335a92538e2e0eb223c39c10c49d3f8204888e77590a0bcf7e23a8edff7",
+      "feature_ablation": "423582b332c74841347c763f2638aed1a22e4a9036b0f30175b7b74348aa6987",
+      "source_form_ablation": "b2de65f50f20584c866a113b84cf98b40aa4ed0e972e9db36494753dbcee0c0e"
+    }
+  },
+  "family": {
+    "point_forecast_outcomes": [
+      "add_count",
+      "delete_count",
+      "word_count",
+      "line_count",
+      "source_similarity"
+    ],
+    "distribution_forecast_outcomes": [
+      "add_count",
+      "delete_count",
+      "word_count",
+      "line_count",
+      "source_similarity"
+    ],
+    "unique_word_count_ablation_comparisons": 6,
+    "excluded": "central-interval scores, secondary ablation outcomes, oracle-budget rankings, full-text scorecards, development analyses, and duplicate inherited contrasts"
+  },
+  "resampling": {
+    "unit": "paired derived leave-one-out training case",
+    "resamples": 20000,
+    "seed": 20260929,
+    "synchronization": "one shared index resample across all contrasts",
+    "statistic": "maximum absolute studentized mean deviation",
+    "confidence_level": 0.95,
+    "critical_quantile": "nearest-rank",
+    "common_critical_value": 2.959538
+  },
+  "contrasts": {
+    "point_mae_add_count": {
+      "contrast": "point_mae_add_count",
+      "family_group": "point_forecast",
+      "outcome": "add_count",
+      "effect_definition": "marginal absolute error minus neighborhood absolute error",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 1.213333,
+      "standard_error": 0.275565,
+      "simultaneous_95_ci_low": 0.397788,
+      "simultaneous_95_ci_high": 2.028879,
+      "simultaneous_status": "positive"
+    },
+    "point_mae_delete_count": {
+      "contrast": "point_mae_delete_count",
+      "family_group": "point_forecast",
+      "outcome": "delete_count",
+      "effect_definition": "marginal absolute error minus neighborhood absolute error",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 0.27866,
+      "standard_error": 0.133682,
+      "simultaneous_95_ci_low": -0.116978,
+      "simultaneous_95_ci_high": 0.674298,
+      "simultaneous_status": "includes_zero"
+    },
+    "point_mae_word_count": {
+      "contrast": "point_mae_word_count",
+      "family_group": "point_forecast",
+      "outcome": "word_count",
+      "effect_definition": "marginal absolute error minus neighborhood absolute error",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 3.14,
+      "standard_error": 1.044899,
+      "simultaneous_95_ci_low": 0.04758,
+      "simultaneous_95_ci_high": 6.23242,
+      "simultaneous_status": "positive"
+    },
+    "point_mae_line_count": {
+      "contrast": "point_mae_line_count",
+      "family_group": "point_forecast",
+      "outcome": "line_count",
+      "effect_definition": "marginal absolute error minus neighborhood absolute error",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 0.0,
+      "standard_error": 0.0,
+      "simultaneous_95_ci_low": 0.0,
+      "simultaneous_95_ci_high": 0.0,
+      "simultaneous_status": "exact_zero"
+    },
+    "point_mae_source_similarity": {
+      "contrast": "point_mae_source_similarity",
+      "family_group": "point_forecast",
+      "outcome": "source_similarity",
+      "effect_definition": "marginal absolute error minus neighborhood absolute error",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 0.002867,
+      "standard_error": 0.001943,
+      "simultaneous_95_ci_low": -0.002885,
+      "simultaneous_95_ci_high": 0.008619,
+      "simultaneous_status": "includes_zero"
+    },
+    "distribution_crps_add_count": {
+      "contrast": "distribution_crps_add_count",
+      "family_group": "distribution_forecast",
+      "outcome": "add_count",
+      "effect_definition": "marginal CRPS minus neighborhood CRPS",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 0.212518,
+      "standard_error": 0.145435,
+      "simultaneous_95_ci_low": -0.217903,
+      "simultaneous_95_ci_high": 0.642939,
+      "simultaneous_status": "includes_zero"
+    },
+    "distribution_crps_delete_count": {
+      "contrast": "distribution_crps_delete_count",
+      "family_group": "distribution_forecast",
+      "outcome": "delete_count",
+      "effect_definition": "marginal CRPS minus neighborhood CRPS",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 0.072801,
+      "standard_error": 0.054925,
+      "simultaneous_95_ci_low": -0.08975,
+      "simultaneous_95_ci_high": 0.235353,
+      "simultaneous_status": "includes_zero"
+    },
+    "distribution_crps_word_count": {
+      "contrast": "distribution_crps_word_count",
+      "family_group": "distribution_forecast",
+      "outcome": "word_count",
+      "effect_definition": "marginal CRPS minus neighborhood CRPS",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 2.515843,
+      "standard_error": 0.774477,
+      "simultaneous_95_ci_low": 0.22375,
+      "simultaneous_95_ci_high": 4.807936,
+      "simultaneous_status": "positive"
+    },
+    "distribution_crps_line_count": {
+      "contrast": "distribution_crps_line_count",
+      "family_group": "distribution_forecast",
+      "outcome": "line_count",
+      "effect_definition": "marginal CRPS minus neighborhood CRPS",
+      "direction": "positive favors neighborhood",
+      "mean_effect": -0.011761,
+      "standard_error": 0.04621,
+      "simultaneous_95_ci_low": -0.148523,
+      "simultaneous_95_ci_high": 0.125,
+      "simultaneous_status": "includes_zero"
+    },
+    "distribution_crps_source_similarity": {
+      "contrast": "distribution_crps_source_similarity",
+      "family_group": "distribution_forecast",
+      "outcome": "source_similarity",
+      "effect_definition": "marginal CRPS minus neighborhood CRPS",
+      "direction": "positive favors neighborhood",
+      "mean_effect": 0.002486,
+      "standard_error": 0.001352,
+      "simultaneous_95_ci_low": -0.001516,
+      "simultaneous_95_ci_high": 0.006488,
+      "simultaneous_status": "includes_zero"
+    },
+    "word_crps_marginal_minus_text_only": {
+      "contrast": "word_crps_marginal_minus_text_only",
+      "family_group": "word_count_ablation",
+      "outcome": "word_count",
+      "effect_definition": "marginal CRPS minus text-only CRPS",
+      "direction": "positive favors text only",
+      "mean_effect": 2.298139,
+      "standard_error": 0.768421,
+      "simultaneous_95_ci_low": 0.023968,
+      "simultaneous_95_ci_high": 4.57231,
+      "simultaneous_status": "positive"
+    },
+    "word_crps_marginal_minus_demographics_only": {
+      "contrast": "word_crps_marginal_minus_demographics_only",
+      "family_group": "word_count_ablation",
+      "outcome": "word_count",
+      "effect_definition": "marginal CRPS minus demographics-only CRPS",
+      "direction": "positive favors demographics only",
+      "mean_effect": 0.200711,
+      "standard_error": 0.341957,
+      "simultaneous_95_ci_low": -0.811325,
+      "simultaneous_95_ci_high": 1.212747,
+      "simultaneous_status": "includes_zero"
+    },
+    "word_crps_text_only_minus_combined": {
+      "contrast": "word_crps_text_only_minus_combined",
+      "family_group": "word_count_ablation",
+      "outcome": "word_count",
+      "effect_definition": "text-only CRPS minus combined CRPS",
+      "direction": "positive favors combined",
+      "mean_effect": 0.217704,
+      "standard_error": 0.102101,
+      "simultaneous_95_ci_low": -0.084469,
+      "simultaneous_95_ci_high": 0.519876,
+      "simultaneous_status": "includes_zero"
+    },
+    "word_crps_demographics_only_minus_combined": {
+      "contrast": "word_crps_demographics_only_minus_combined",
+      "family_group": "word_count_ablation",
+      "outcome": "word_count",
+      "effect_definition": "demographics-only CRPS minus combined CRPS",
+      "direction": "positive favors combined",
+      "mean_effect": 2.315132,
+      "standard_error": 0.77827,
+      "simultaneous_95_ci_low": 0.011811,
+      "simultaneous_95_ci_high": 4.618453,
+      "simultaneous_status": "positive"
+    },
+    "word_crps_marginal_minus_source_form": {
+      "contrast": "word_crps_marginal_minus_source_form",
+      "family_group": "word_count_ablation",
+      "outcome": "word_count",
+      "effect_definition": "marginal CRPS minus source-form CRPS",
+      "direction": "positive favors source form",
+      "mean_effect": 3.245309,
+      "standard_error": 0.758441,
+      "simultaneous_95_ci_low": 1.000674,
+      "simultaneous_95_ci_high": 5.489943,
+      "simultaneous_status": "positive"
+    },
+    "word_crps_source_form_minus_text_only": {
+      "contrast": "word_crps_source_form_minus_text_only",
+      "family_group": "word_count_ablation",
+      "outcome": "word_count",
+      "effect_definition": "source-form CRPS minus text-only CRPS",
+      "direction": "positive favors text only",
+      "mean_effect": -0.94717,
+      "standard_error": 0.507554,
+      "simultaneous_95_ci_low": -2.449295,
+      "simultaneous_95_ci_high": 0.554956,
+      "simultaneous_status": "includes_zero"
+    }
+  },
+  "simultaneously_stable_contrast_count": 6,
+  "simultaneously_stable_contrasts": [
+    "point_mae_add_count",
+    "point_mae_word_count",
+    "distribution_crps_word_count",
+    "word_crps_marginal_minus_text_only",
+    "word_crps_demographics_only_minus_combined",
+    "word_crps_marginal_minus_source_form"
+  ],
+  "claim_boundary": "This dependent post hoc robustness audit describes simultaneous sensitivity to case composition for one fixed 16-contrast family within the selected cohort. It is not retroactive preregistration, population-generalization evidence, development performance, or private-test performance; overlapping fitted folds are not refit."
+}

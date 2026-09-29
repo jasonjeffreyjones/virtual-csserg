@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-26T09:13:37Z
+updated: 2026-09-29T09:14:56Z
 ---
 
 # Predict the Self — Current State
@@ -41,6 +41,11 @@ source word-token, distinct-token, and line counts improves word-count CRPS
 over the marginal and is not stably distinguishable from text-only matching.
 The current evidence therefore locates signal in the earlier response but does
 not isolate a lexical mechanism.
+A locked cross-analysis multiplicity stress test now treats 16 no-oracle
+point, distributional, and primary word-count contrasts as one fixed family.
+Six directions retain simultaneous intervals, centering the robust pattern on
+Add volume and later response length; the Delete-count point gain and the
+small demographics-over-text increment become inconclusive.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -174,6 +179,20 @@ lexical advantage. Source form also improves line-count CRPS by `+0.445157`
 over the marginal (`+0.206291` to `+0.701574`); this is an unadjusted secondary
 response-form diagnostic, not evidence about future identity content.
 
+The locked cross-analysis stress test applies one synchronized 20,000-
+resample studentized max-|t| case bootstrap to 16 unique no-oracle contrasts.
+Its common critical value is `2.959538`. Six simultaneous 95% intervals exclude
+zero: Add-count point-error reduction (`+0.397788` to `+2.028879`), word-count
+point-error reduction (`+0.047580` to `+6.232420`), word-count CRPS reduction
+(`+0.223750` to `+4.807936`), text-only versus marginal word-count CRPS
+(`+0.023968` to `+4.572310`), combined versus demographics-only word-count CRPS
+(`+0.011811` to `+4.618453`), and source-form versus marginal word-count CRPS
+(`+1.000674` to `+5.489943`). Delete-count point error (`-0.116978` to
+`+0.674298`) and combined versus text-only word-count CRPS (`-0.084469` to
+`+0.519876`) now span zero. This is a post hoc sensitivity audit of stored
+scores from overlapping folds, not retroactive preregistration, formal
+population familywise control, or fresh confirmation.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -244,6 +263,13 @@ response-form diagnostic, not evidence about future identity content.
   a complete JSON result, and a 150-row case audit. It reproduced the preceding
   marginal and text-only scores before accepting results and did not read or
   change development or test artifacts.
+- Locked `ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md` before cross-analysis
+  resampling (SHA-256
+  `d3c31e1bd77df8da0d5b7017438f2b9ff04ba5f39c4dfcb803c1c38f294fb9ac`).
+  Added a hash-guarded synchronized studentized max-|t| bootstrap, six focused
+  tests, a complete JSON result, and a 16-row contrast audit. The calculation
+  reads only four existing training-case audits, verifies their hashes and
+  inherited means, and never reads benchmark, development, or test rows.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -262,7 +288,7 @@ response-form diagnostic, not evidence about future identity content.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, eight linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes forty-two research
+- The three forms link reciprocally. The Full Report publishes fifty research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -327,6 +353,12 @@ response-form diagnostic, not evidence about future identity content.
   interval spanning zero does not establish method equivalence. Its unadjusted
   secondary contrasts are diagnostics, and its case audit is a derived
   benchmark-data adaptation under CC BY-NC-SA 4.0.
+- The multiplicity family was fixed only after the constituent analyses and
+  aggregate results were known. Synchronized resampling preserves empirical
+  dependence among the stored case effects, but it does not refit overlapping
+  folds, undo sequential research choices, or support population inference.
+  Its 16-row audit is a derived benchmark-data adaptation under CC BY-NC-SA
+  4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -357,6 +389,8 @@ response-form diagnostic, not evidence about future identity content.
   combined source-feature comparison.
 - `ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md`: fixed lexical-versus-count-only
   source-response comparison.
+- `ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md`: fixed 16-contrast family and
+  simultaneous-interval sensitivity procedure.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -382,6 +416,9 @@ response-form diagnostic, not evidence about future identity content.
   JSON and complete case audit are under `results/`.
 - `analysis/analyze_source_form_ablation.py`: locked source-form comparison;
   its JSON and complete case audit are under `results/`.
+- `analysis/analyze_multiplicity_stress_test.py`: locked cross-analysis
+  robustness audit; its complete JSON result and flat contrast audit are under
+  `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -413,8 +450,8 @@ response-form diagnostic, not evidence about future identity content.
    same 150 cases without a substantively new representation or new evidence.
    Before reusing development labels, require a synthesizing or semantic
    person-conditioned approach to preserve the response-form calibration
-   signal, demonstrate value beyond simple source counts, treat the small
-   conditional demographic increment cautiously, and beat leave-one-out
+   signal, demonstrate value beyond simple source counts, treat the now-
+   inconclusive conditional demographic increment cautiously, and beat leave-one-out
    marginal additions in training; then lock any development comparison and
    avoid private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks

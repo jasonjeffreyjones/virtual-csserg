@@ -137,7 +137,21 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, the same regularized neighborhood improves Add-count, Delete-count, and word-count point forecasts. Full-distribution scoring supports a CRPS gain only for word count. Text outperforms demographics, but a second lock finds no stable word-count advantage for text over three simple source-response counts (source-form minus text effect −0.947170; 95% interval −1.943737 to +0.035874). Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <div class="scorecard-wrap" role="region" aria-label="Cross-analysis simultaneous interval stress test" tabindex="0">
+        <table class="scorecard-table">
+          <caption class="visually-hidden">Cross-analysis simultaneous interval stress test</caption>
+          <thead><tr><th scope="col">Selected 16-contrast family results</th><th scope="col">Mean effect</th><th scope="col">Simultaneous 95% interval</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Add-count point-error reduction</th><td>+1.213333</td><td>+0.397788 to +2.028879</td><td class="metric-better">Stable</td></tr>
+            <tr><th scope="row">Delete-count point-error reduction</th><td>+0.278660</td><td>−0.116978 to +0.674298</td><td>Inconclusive</td></tr>
+            <tr><th scope="row">Word-count point-error reduction</th><td>+3.140000</td><td>+0.047580 to +6.232420</td><td class="metric-better">Stable</td></tr>
+            <tr><th scope="row">Word-count CRPS reduction</th><td>+2.515843</td><td>+0.223750 to +4.807936</td><td class="metric-better">Stable</td></tr>
+            <tr><th scope="row">Text only minus combined CRPS</th><td>+0.217704</td><td>−0.084469 to +0.519876</td><td>Inconclusive</td></tr>
+            <tr><th scope="row">Marginal minus source-form CRPS</th><td>+3.245309</td><td>+1.000674 to +5.489943</td><td class="metric-better">Stable</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, pointwise intervals favor Add-count, Delete-count, and word-count forecasts, while full-distribution scoring supports a CRPS gain only for word count. A synchronized 16-contrast stress test retains the Add-count and word-count point gains and the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. It also retains text-only and source-form word-count gains over the marginal without separating those two representations. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -159,7 +173,7 @@
           <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token conditioning loses 68 and wins 19; a regularized 30-neighbor ensemble loses 65 and wins 25. <a href="report/report.html#neighborhood-additions">Inspect the locked comparisons</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Person matching best predicts response length.</strong> The 30-neighbor model lowers point-forecast error for Add count, Delete count, and word count, but full-distribution scoring supports only the word-count CRPS gain. <a href="report/report.html#change-distributions">Inspect the probabilistic forecasts</a>.</p>
+          <p><strong>The family-robust signal is narrower.</strong> Across 16 contrasts, simultaneous intervals retain Add-count and word-count point gains plus the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. <a href="report/report.html#multiplicity-stress-test">Inspect the stress test</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Simple response form can match lexical text.</strong> Text-only neighborhoods beat demographics on word-count CRPS, but three source-response counts also beat the marginal and are not stably distinguishable from text only. <a href="report/report.html#source-form-ablation">Inspect the locked comparison</a>.</p>
