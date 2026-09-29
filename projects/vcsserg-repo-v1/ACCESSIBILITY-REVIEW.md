@@ -30,7 +30,7 @@ accessibility evaluation.
   bypass, preventing the two anchors from jointly satisfying that one-link
   requirement. The verifier also checks explicit image alternatives, page
   language and title, local references, and duplicate IDs.
-- All four generated Quarto report pages now receive a source-controlled bypass
+- All five generated Quarto report pages now receive a source-controlled bypass
   link through a tested post-render normalizer. The public HTML contains that
   link first in body order; it no longer depends on JavaScript to move the link
   ahead of repeated navigation. The same normalizer now gives stable accessible
@@ -43,24 +43,28 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
-- All 26 public data tables now have source-owned names: 24 captions added on
-  September 26 plus the two captions already present in archived design pages.
+- All 29 current public data tables have source-owned names. The September 26
+  audit added captions to 24 of the then-current 26 tables; the restored
+  Ipseity Daily Pulse publication subsequently added three named tables.
   The whole-site parser accepts a nonempty `caption`, `aria-label`, or resolved
   nonempty `aria-labelledby` reference, and a focused fixture rejects unnamed,
   missing-reference, and empty-reference cases. W3C technique H39 describes a
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 542 interactive or keyboard-focusable
-  elements. Each of the 516 elements exposed to assistive technology has an
+- The whole-site parser now audits all 800 interactive or keyboard-focusable
+  elements. Each of the 774 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
   and removed from the tab order. The total includes all links and buttons,
   native form and disclosure controls, interactive ARIA roles, media controls,
   and custom nonnegative-`tabindex` targets. The September 25 coverage audit
-  added two disclosure summaries and six focusable scroll regions that the
-  prior link/button-only implementation omitted; all eight were already named.
+  expanded the original 542-element inventory to include two disclosure
+  summaries and six focusable scroll regions that the prior link/button-only
+  implementation omitted; all eight were already named. The September 28
+  recovery of Ipseity Daily Pulse increased the current inventory without
+  weakening the rule.
   It also requires `aria-labelledby` and `aria-controls` targets to resolve,
   restricts `aria-expanded` to boolean values, and rejects an interactive
   element hidden from assistive technology unless it is explicitly absent from
@@ -74,6 +78,9 @@ accessibility evaluation.
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
   focus, responsive-layout, or screen-reader evidence.
+- On September 29, the same supplemental pass returned successfully for all 13
+  current selected pages at both widths. All 26 linearized views began with
+  “Skip to content.” The evidence boundary is unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -83,7 +90,9 @@ accessibility evaluation.
   interactive-element revision, all 166 expected files were byte-identical;
   before the September 25 coverage revision, all 174 expected files were
   byte-identical; before the September 26 table-name revision, all 182 expected
-  files were byte-identical. It cannot discover extra remote-only paths, and
+  files were byte-identical; before the September 29 v1 synchronization, all
+  249 expected files were byte-identical. It cannot discover extra remote-only
+  paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
 

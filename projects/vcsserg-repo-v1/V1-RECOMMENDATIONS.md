@@ -34,7 +34,8 @@ claim-to-evidence review closes the substantive report gate and documents its
 internal-review boundary; rendered keyboard and assistive-technology usability
 remains the sole manual gate. On September 19, the generated-report build made
 every bypass link first in static HTML without runtime relocation, and
-`ACCESSIBILITY-REVIEW.md` made the remaining 11-page manual gate reproducible.
+`ACCESSIBILITY-REVIEW.md` made the remaining manual gate reproducible. Its
+metadata-derived sample now contains 13 pages and 52 result cells.
 On September 20, its summary record became a page-by-page worksheet with four
 results per page, and the verifier began deriving the required sample from
 current Published summaries and Full Reports. Automated checks now prevent an
@@ -70,6 +71,14 @@ Predict the Self Executive Summary now provide concise captions for every
 table, and the whole-site verifier rejects absent, broken, or empty table
 names. This follows W3C technique H39's programmatic association pattern while
 leaving actual table announcement and navigation in the rendered review.
+On September 29, the evidence snapshot was synchronized after Ipseity Daily
+Pulse returned to Published status. The unchanged whole-site contract passes
+across 39 HTML pages, 29 named tables, and 800 interactive or
+keyboard-focusable elements. All 774 exposed elements are named, the same 26
+Quarto source-line anchors are safely hidden, and the manual sample expanded
+automatically from 11 pages and 44 results to 13 pages and 52 results. That
+growth validates the metadata-derived coverage mechanism without substituting
+for the still-open rendered review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

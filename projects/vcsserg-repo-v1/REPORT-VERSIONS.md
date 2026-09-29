@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 26, 2026 at 08:13 UTC
+
+- **Superseded:** September 29, 2026
+- **Archive key:**
+  [`656aa3075fc14c18bf00f7802bd7f45c987abbbf`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/656aa3075fc14c18bf00f7802bd7f45c987abbbf)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the v1 evidence snapshot incorporated a fourth Published
+  Project.
+- **Reason:** The outgoing reports accurately documented the September 26
+  three-Project snapshot and its table-name contract. Ipseity Daily Pulse
+  subsequently returned to Published status, expanding the checked site to 39
+  HTML pages, 29 named tables, and 800 interactive or keyboard-focusable
+  elements, and expanding the derived manual sample from 11 pages and 44
+  results to 13 pages and 52 results. The next release records that scale
+  change and the September 29 probe of 249 incoming public files without
+  claiming rendered keyboard or screen-reader evidence.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/656aa3075fc14c18bf00f7802bd7f45c987abbbf/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/656aa3075fc14c18bf00f7802bd7f45c987abbbf/projects/vcsserg-repo-v1)
+
 ### Updated through September 25, 2026 at 08:09 UTC
 
 - **Superseded:** September 26, 2026

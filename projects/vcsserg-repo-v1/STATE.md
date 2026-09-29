@@ -2,16 +2,17 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-26T08:13:05Z
+updated: 2026-09-29T08:13:05Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 26, 2026, all seven automated promise groups pass across
-26 HTML pages, 26 named data tables, 542 interactive or keyboard-focusable elements, and six
-first-party stylesheets. The
+Active. On September 29, 2026, all seven automated promise groups pass across
+39 HTML pages, 29 named data tables, 800 interactive or keyboard-focusable
+elements, and seven first-party stylesheets. All 774 exposed controls are named
+and the other 26 are safely hidden Quarto source-line anchors. The
 static-site group requires
 the first anchor itself to be a bypass link targeting `main`, an explicit `alt`
 decision for every image, and an accessible name for every navigation landmark
@@ -25,7 +26,7 @@ includes links, buttons, native form and disclosure controls, interactive ARIA
 roles, media controls, and custom nonnegative-`tabindex` targets. A tested
 post-render normalizer makes the
 bypass link first, names Quarto's repeated navigation regions, and adds column
-scope inside generated table heads on all four report pages without runtime
+scope inside generated table heads on all five report pages without runtime
 JavaScript or hand-editing. The
 September 15 normal Scholar
 run reached completion only after its guarded deployment and authenticated
@@ -38,7 +39,7 @@ Scholar and validation failures without commit, push, or deployment. Version 1.0
 complete: a September 18 claim-to-evidence review closes the substantive report
 gate, while rendered desktop/phone keyboard and assistive-technology review
 remains open under the explicit `ACCESSIBILITY-REVIEW.md` protocol. Its
-11-page, 44-result worksheet and environment record are now machine-checked so
+13-page, 52-result worksheet and environment record are now machine-checked so
 an incomplete record cannot be marked **Closed**; this guards evidence capture
 without performing the unavailable human review.
 
@@ -55,7 +56,7 @@ without performing the unavailable human review.
   rule. All five prior dialogs are byte-preserved under `dialog/legacy/` with
   verified SHA-256 digests. The tested standard-library migration command
   dry-runs by default, refuses overwrite, and preflights the whole Project set.
-- The public homepage and Projects directory link all three Published
+- The public homepage and Projects directory link all four Published
   Projects, while the Scholar directory links four rostered Scholars. The three
   initial profiles contain the
   complete charter biographies; Disciple Dee Duplo's profile contains the exact
@@ -83,6 +84,12 @@ without performing the unavailable human review.
   evidence brief, linked short PDF, build guide, five tests, and a project
   publication verifier. Its empirical claims and frozen test artifact were not
   changed during this structural adaptation.
+- Ipseity Daily Pulse returned to Published status on September 28 with a
+  one-chapter Quarto book, one-figure Executive Summary, linked short PDF, and
+  Project-specific verifier. The generic v1 contracts incorporated it without
+  special casing: the catalogs now expose four Published Projects and the
+  accessibility worksheet derives two additional pages and eight additional
+  result cells.
 - `python/create_project.py` atomically creates a personalized private scaffold,
   validates lowercase hyphenated slugs, refuses overwrite, and initializes a
   clean immutable-dialog tree instead of copying the template's migration
@@ -97,8 +104,9 @@ without performing the unavailable human review.
   by the resulting immutable iteration, not as durable roster state.
 - Every public HTML footer now groups Dr. Jones and CSSERG under **About**, and
   GitHub and CC BY 4.0 under **Open work**. The system is synchronized across
-  direct HTML, all three Quarto footer sources/generated reports, and archived
-  design pages; the verifier rejects missing groups and misplaced links.
+  direct HTML, all four Quarto footer sources and five generated report pages,
+  and archived design pages; the verifier rejects missing groups and misplaced
+  links.
 - Every public HTML page now exposes a first-anchor bypass link, and every image
   has an explicit `alt` attribute (including empty alternatives for decorative
   images). The verifier records the first anchor's own target and requires that
@@ -120,7 +128,7 @@ without performing the unavailable human review.
   relationships. The September 25 coverage audit found that two native
   disclosure summaries and six custom focusable scroll regions fell outside
   that link/button-only implementation; all eight were already named. The
-  parser now checks 542 interactive or keyboard-focusable elements: all 516
+  parser now checks 800 interactive or keyboard-focusable elements: all 774
   exposed elements are named and the other 26 are Quarto source-line anchors
   explicitly hidden and removed from the tab order. Three focused fixtures
   cover unnamed icon-only links, disclosures, custom focus targets and
@@ -136,19 +144,21 @@ without performing the unavailable human review.
   Summary carries visually hidden source captions matching its scroll-region
   names. The whole-site parser accepts a nonempty caption, `aria-label`, or
   resolved nonempty `aria-labelledby` reference; one focused fixture rejects
-  unnamed, missing-reference, and empty-reference cases. All 26 tables now
-  pass. This source contract does not establish rendered announcements or
-  screen-reader table navigation.
-- `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 11 production pages,
+  unnamed, missing-reference, and empty-reference cases. All 26 tables in that
+  snapshot passed. Ipseity Daily Pulse subsequently returned to Published status with
+  three additional named tables, so all 29 current tables pass. This source
+  contract does not establish rendered announcements or screen-reader table
+  navigation.
+- `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
-  checks, structured environment record, 44 result cells, and passing rule.
+  checks, structured environment record, 52 result cells, and passing rule.
   The verifier derives the sample from current Published summaries and Full
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass
-  returned zero at 40 and 120 columns for every selected page and showed “Skip
-  to content” first. It is linearized text evidence, not a graphical-browser or
+  supplemental `w3m` 0.5.3 pass on September 29 returned zero at 40 and 120
+  columns for all 13 current pages; each of the 26 linearized views began with
+  “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
 - The Full Report publisher replaces a complete generated tree so stale Quarto
   libraries cannot survive; two unit tests cover replacement and preservation
@@ -187,6 +197,8 @@ without performing the unavailable human review.
   files byte-identical, and the September 25 pre-change probe found all 174
   incoming files byte-identical. The September 26 pre-change probe found all
   182 incoming files byte-identical.
+  The September 29 pre-change probe found all 249 incoming files
+  byte-identical after Ipseity Daily Pulse returned to the public catalog.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -213,9 +225,11 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 41 routine tests pass across 26 HTML pages, 26 named
-data tables, 542 interactive or keyboard-focusable elements, and six
-first-party stylesheets on September 26.
+All seven groups and all 41 routine tests pass across 39 HTML pages, 29 named
+data tables, 800 interactive or keyboard-focusable elements, and seven
+first-party stylesheets on September 29. The verifier's success detail now
+reports exposed and safely hidden control counts directly, rather than leaving
+that coverage implicit.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
@@ -279,9 +293,9 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Current problems and manual gates
 
-- Follow `ACCESSIBILITY-REVIEW.md` on a browser-equipped host: inspect all 11
+- Follow `ACCESSIBILITY-REVIEW.md` on a browser-equipped host: inspect all 13
   selected production pages at desktop and phone widths with keyboard and a
-  recorded screen-reader pairing, complete all 44 result cells and environment
+  recorded screen-reader pairing, complete all 52 result cells and environment
   fields, and close the record only after every result passes. No installed
   Chromium, Chrome, or Firefox executable or supported screen-reader/browser
   pairing is available on this host.
@@ -290,13 +304,15 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 26 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 64 GiB
+September 29 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 63 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
 ReportLab/pypdf are not installed in the base Python environment; any PDF build
 uses the existing documented temporary build-only packages, not production
-dependencies. No package or replacement runtime was installed in this iteration.
+dependencies. The pinned PDF packages were installed under `/tmp` for this
+build; no system package, replacement runtime, or production dependency was
+installed.
 
 ## Important files
 
@@ -313,8 +329,8 @@ dependencies. No package or replacement runtime was installed in this iteration.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean September 24 report set superseded by
-  this broader interactive/focusable-element contract.
+  v1 release ledger, including the clean September 29 incoming report set
+  superseded by the current four-Project synchronization.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated
@@ -346,6 +362,6 @@ dependencies. No package or replacement runtime was installed in this iteration.
 No blocking PI question. Controlled runner failure paths now pass without
 commit, push, or deployment, and the PI confirms no schedules are enabled.
 Next execute `ACCESSIBILITY-REVIEW.md` on a browser/screen-reader-equipped host,
-record the environment and all 44 page-level results, repair and retest any
+record the environment and all 52 page-level results, repair and retest any
 failure, and then assess the charter and PI authority before changing lifecycle
 state.

@@ -1022,6 +1022,15 @@ def check_html_and_css():
     html_pages = sorted(WEBSITE_ROOT.rglob("*.html"))
     css_files = sorted(WEBSITE_ROOT.rglob("*.css"))
     parsed_pages = {page: parse_page(page) for page in html_pages}
+    interactive_elements = [
+        element
+        for parsed in parsed_pages.values()
+        for element in parsed.interactive_elements
+    ]
+    exposed_interactive = sum(
+        not element["hidden"] for element in interactive_elements
+    )
+    hidden_interactive = len(interactive_elements) - exposed_interactive
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1140,7 +1149,9 @@ def check_html_and_css():
         not problems,
         f"{len(html_pages)} HTML page(s), "
         f"{sum(len(parsed.table_records) for parsed in parsed_pages.values())} "
-        f"named data table(s), and {len(first_party_css)} first-party "
+        f"named data table(s), {exposed_interactive} exposed interactive or "
+        f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
+        f"control(s), and {len(first_party_css)} first-party "
         "stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),
     )

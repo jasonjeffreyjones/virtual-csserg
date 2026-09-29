@@ -16,19 +16,19 @@ does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 26, 2026 |
+| Documented promise | Evidence or test | Status on September 29, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, named repeated navigation landmarks, named data tables with scoped headers, explicit image alternatives, named exposed interactive and keyboard-focusable elements with valid ARIA relationships and safely hidden source-line anchors, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 26 HTML pages, 26 named data tables, 542 interactive or keyboard-focusable elements, and 6 first-party stylesheets; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, named repeated navigation landmarks, named data tables with scoped headers, explicit image alternatives, named exposed interactive and keyboard-focusable elements with valid ARIA relationships and safely hidden source-line anchors, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 39 HTML pages, 29 named data tables, 800 interactive or keyboard-focusable elements, and 7 first-party stylesheets; all 774 exposed elements are named and 26 source-line anchors are safely hidden; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, and 182 before the September 26 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, and 249 before the September 29 revision |
 
 ## Current automated result
 
-On September 26, 2026, **all seven groups pass**. The final report-format gap
+On September 29, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -38,6 +38,11 @@ publication structure:
   pipeline, one-figure evidence brief, and linked two-column PDF. Its book and
   short report explicitly allow content-driven chapter/page counts within the
   documented constraints.
+- Ipseity Daily Pulse has returned to `publication: Published` with a
+  one-chapter Quarto book, one-figure evidence brief, linked two-column PDF,
+  and Project-specific publication verifier. Its restoration demonstrates that
+  metadata-derived catalogs, report checks, and the accessibility worksheet
+  expand with the set of Published Projects.
 - NFL Team Fandom Identities supplies all three forms. Its Quarto footer source
   and rendered report now retain the PI-requested GitHub link.
 - `scholars.json` is now the validated identity source for names, slugs, and
@@ -126,6 +131,15 @@ publication structure:
   valid explicit ARIA name and rejects unnamed, missing-reference, and
   empty-reference cases. This deterministic contract does not establish how a
   screen reader announces or navigates the tables.
+- On September 29, the v1 snapshot was synchronized after Ipseity Daily Pulse
+  returned to Published status. The unchanged contracts pass across 39 HTML
+  pages, 29 named tables, and 800 interactive or keyboard-focusable elements:
+  774 exposed and named plus 26 safely hidden source-line anchors. The derived
+  manual sample expanded from 11 pages and 44 results to 13 pages and 52
+  results. This is evidence that the checks scale with publication growth, not
+  evidence that the new pages passed rendered review. A supplemental `w3m`
+  pass returned zero for all 26 current 40- and 120-column views and placed
+  “Skip to content” first; this remains linearized text-order evidence only.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -169,9 +183,9 @@ still a **promise regression report**, not a Version 1 completion oracle. See
 
 ## Manual review
 
-- Execute `ACCESSIBILITY-REVIEW.md` across its 11 selected production pages at
+- Execute `ACCESSIBILITY-REVIEW.md` across its 13 selected production pages at
   desktop and phone widths with keyboard and a recorded screen-reader pairing;
-  complete all 44 page-level results and the environment record in place.
+  complete all 52 page-level results and the environment record in place.
 
 The substantive report review is complete. On September 18, a documented
 internal review mapped the charter and material report claims to current or
@@ -180,7 +194,7 @@ state timestamp that preceded its iteration finish and explicitly limits the
 finding to this infrastructure report—not the empirical validity of other
 Projects or independent peer review. See `SUBSTANTIVE-REVIEW.md`.
 
-The generic v1 verifier checks only each PDF signature. All three
+The generic v1 verifier checks only each PDF signature. All four
 Project-specific publication tests separately confirm nonempty pages, two-column
 format, links, and the ten-page ceiling; visual legibility remains part of the
 rendered review.
@@ -208,7 +222,8 @@ revision, all 150 incoming files were byte-identical. Before the September 23
 revision, all 158 incoming files were byte-identical. Before the September 24
 revision, all 166 incoming files were byte-identical. Before the September 25
 revision, all 174 incoming files were byte-identical. Before the September 26
-revision, all 182 incoming files were byte-identical; normal automation must
+revision, all 182 incoming files were byte-identical. Before the September 29
+revision, all 249 incoming files were byte-identical; normal automation must
 still deploy and inventory this revised release.
 
 ## Other current requirements
