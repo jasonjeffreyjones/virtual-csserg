@@ -2,21 +2,23 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-09-29T08:13:05Z
+updated: 2026-09-30T08:27:31Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On September 29, 2026, all seven automated promise groups pass across
-39 HTML pages, 29 named data tables, 800 interactive or keyboard-focusable
-elements, and seven first-party stylesheets. All 774 exposed controls are named
-and the other 26 are safely hidden Quarto source-line anchors. The
+Active. On September 30, 2026, all seven automated promise groups pass across
+39 HTML pages, 31 named data tables, 196 exposed headings, 809 interactive or
+keyboard-focusable elements, and seven first-party stylesheets. All 783
+exposed interactive elements are named and the other 26 are safely hidden
+Quarto source-line anchors. The
 static-site group requires
 the first anchor itself to be a bypass link targeting `main`, an explicit `alt`
 decision for every image, and an accessible name for every navigation landmark
-on pages containing more than one. It also requires every data table to have a
+on pages containing more than one. It requires every exposed heading to
+contain text without skipping forward over a rank. It also requires every data table to have a
 nonempty caption or valid explicit ARIA name, every table header cell to
 declare a valid row or column scope, and every exposed interactive or
 keyboard-focusable element to have an accessible name, label/control
@@ -128,7 +130,7 @@ without performing the unavailable human review.
   relationships. The September 25 coverage audit found that two native
   disclosure summaries and six custom focusable scroll regions fell outside
   that link/button-only implementation; all eight were already named. The
-  parser now checks 800 interactive or keyboard-focusable elements: all 774
+  parser now checks 809 interactive or keyboard-focusable elements: all 783
   exposed elements are named and the other 26 are Quarto source-line anchors
   explicitly hidden and removed from the tab order. Three focused fixtures
   cover unnamed icon-only links, disclosures, custom focus targets and
@@ -146,9 +148,16 @@ without performing the unavailable human review.
   resolved nonempty `aria-labelledby` reference; one focused fixture rejects
   unnamed, missing-reference, and empty-reference cases. All 26 tables in that
   snapshot passed. Ipseity Daily Pulse subsequently returned to Published status with
-  three additional named tables, so all 29 current tables pass. This source
+  three additional named tables, and later Predict the Self work added two;
+  all 31 current tables pass. This source
   contract does not establish rendered announcements or screen-reader table
   navigation.
+- A September 30 audit found all 196 exposed headings nonempty and free of
+  forward rank skips. The page parser now records `h1` through `h6`, rejects an
+  empty heading and a jump such as `h2` to `h4`, and permits multiple
+  first-level headings and returns to higher ranks in the Quarto book
+  structure. One focused fixture covers both failures. This source contract
+  does not establish rendered heading order or announced names.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -156,7 +165,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on September 29 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on September 30 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -199,6 +208,8 @@ without performing the unavailable human review.
   182 incoming files byte-identical.
   The September 29 pre-change probe found all 249 incoming files
   byte-identical after Ipseity Daily Pulse returned to the public catalog.
+  The September 30 pre-change probe found all 257 incoming files byte-identical
+  after later Predict the Self publication work.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -225,16 +236,17 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 41 routine tests pass across 39 HTML pages, 29 named
-data tables, 800 interactive or keyboard-focusable elements, and seven
-first-party stylesheets on September 29. The verifier's success detail now
+All seven groups and all 42 routine tests pass across 39 HTML pages, 31 named
+data tables, 196 exposed headings, 809 interactive or keyboard-focusable
+elements, and seven first-party stylesheets on September 30. The verifier's success detail now
 reports exposed and safely hidden control counts directly, rather than leaving
 that coverage implicit.
 The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
-alternatives, repeated navigation names, resolved landmark-label references,
+alternatives, nonempty unskipped heading ranks, repeated navigation names,
+resolved landmark-label references,
 accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names and
 ARIA relationships, and the
 manual-review worksheet's sample and closure boundary. One focused table-name
@@ -242,7 +254,8 @@ test covers captions and valid explicit labels while rejecting absent, broken,
 or empty names. One focused negative
 test guards the first-anchor/target conjunction, five tests cover the build-time
 Quarto normalizer, one covers the generic navigation-name rule, one covers the
-generic table-header rule, three cover interactive names and ARIA relationships
+generic table-header rule, one covers heading text and rank, three cover
+interactive names and ARIA relationships
 across links, buttons, forms, disclosures, roles, media, and custom focus
 targets, and three cover the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
@@ -304,7 +317,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-September 29 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 63 GiB
+September 30 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 63 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -329,8 +342,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean September 29 incoming report set
-  superseded by the current four-Project synchronization.
+  v1 release ledger, including the clean September 29 report set superseded by
+  the current heading-contract revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

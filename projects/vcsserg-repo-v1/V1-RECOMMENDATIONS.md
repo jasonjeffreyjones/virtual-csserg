@@ -79,6 +79,15 @@ Quarto source-line anchors are safely hidden, and the manual sample expanded
 automatically from 11 pages and 44 results to 13 pages and 52 results. That
 growth validates the metadata-derived coverage mechanism without substituting
 for the still-open rendered review.
+On September 30, the deterministic precursor to screen-reader heading
+navigation was strengthened. All 196 exposed headings on 39 pages contain
+text and avoid forward rank skips, and a focused fixture now rejects an empty
+heading and jumps such as `h2` to `h4`. The check deliberately permits
+multiple first-level headings and returns to higher ranks in Quarto books. The
+current expanded site also contains 31 named tables and 809 interactive or
+keyboard-focusable elements: all 783 exposed interactive elements are named,
+with 26 source-line anchors safely hidden. Rendered heading order and announced
+names remain part of the manual review.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

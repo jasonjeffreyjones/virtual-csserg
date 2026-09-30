@@ -58,7 +58,8 @@ it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
 non-passing result. The whole-site check also requires every data table to have
 an accessible name, every table header cell to declare a valid row or column
-scope, and every exposed interactive or
+scope, every exposed heading to contain text without skipping forward over a
+rank, and every exposed interactive or
 keyboard-focusable element to have an accessible name. Coverage includes links,
 buttons, native form and disclosure controls, interactive ARIA roles, media
 controls, and custom nonnegative-`tabindex` targets. Label and control

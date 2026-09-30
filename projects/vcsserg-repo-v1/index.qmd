@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on September 29, 2026. The validated
+All seven automated promise groups pass on September 30, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -33,10 +33,10 @@ That step also names repeated navigation landmarks and adds explicit column
 scope to generated table headers. Every public data table now has a concise
 source-owned caption, and the whole-site parser rejects an unnamed table. It also requires
 accessible names and valid ARIA targets and expanded states on exposed
-interactive and keyboard-focusable elements. After Ipseity Daily Pulse returned
-to Published status, the same contracts pass across 39 HTML pages, 29 named
-data tables, and 800 interactive or keyboard-focusable elements: all 774
-exposed elements are named and 26 Quarto source-line anchors are safely hidden.
+interactive and keyboard-focusable elements. The same contracts now pass
+across 39 HTML pages, 31 named data tables, 196 exposed headings, and 809
+interactive or keyboard-focusable elements: all 783 exposed interactive
+elements are named and 26 Quarto source-line anchors are safely hidden.
 The manual review sample expanded automatically from 11 pages and 44 results to
 13 pages and 52 results. A claim-to-evidence review found the
 infrastructure report substantively adequate for its stated purpose; rendered
@@ -104,7 +104,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, named repeated navigation and data tables, scoped table headers, explicit image alternatives, named interactive elements with valid ARIA relationships, branding, complete footer links, Bootstrap, and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have basic semantics, first-anchor bypass links, nonempty headings without forward rank skips, named repeated navigation and data tables, scoped table headers, explicit image alternatives, named interactive elements with valid ARIA relationships, branding, complete footer links, Bootstrap, and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -143,7 +143,13 @@ scoped. Their sources now provide concise captions, and a focused fixture
 rejects absent, broken, or empty table names. On September 29, the restored
 Ipseity Daily Pulse publication brought the current totals to 29 named tables
 and 800 interactive or keyboard-focusable elements, with all 774 exposed
-elements named. It also became narrower where old rules
+elements named. Later Predict the Self work increased those totals. On
+September 30, a whole-site audit found 196 exposed headings, all nonempty and
+free of forward rank skips, alongside 31 named tables and 809 interactive or
+keyboard-focusable elements; all 783 exposed interactive elements are named.
+A focused fixture rejects an empty heading and a jump such as `h2` to `h4`.
+The rule permits multiple `h1` elements and movement back to a higher rank in
+the Quarto book structure. It also became narrower where old rules
 created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
@@ -235,7 +241,8 @@ Quarto can add automated accessibility checks to rendered HTML, but its own
 documentation cautions that conformance tooling cannot detect every issue and
 still requires manual inspection (Quarto, n.d.-b). Version 1 now rejects
 missing or late bypass links and image `alt` attributes across all public HTML.
-It also rejects unnamed repeated navigation, unnamed data tables, and missing
+It also rejects empty headings and forward rank skips, unnamed repeated
+navigation, unnamed data tables, and missing
 or invalid table-header scope. It now rejects unnamed exposed interactive and keyboard-focusable
 elements, broken label/control references, invalid expanded states, and focusable controls hidden from
 assistive technology. The build-time normalizer removes a runtime dependency from the five
@@ -290,7 +297,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-A September 29 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+A September 30 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -302,8 +309,9 @@ still need network access for their intended presentation.
 The expected-file parity probe uses ordinary public HTTP requests and no
 deployment configuration. It found all 109 files byte-identical before the
 September 15 release, all 110 byte-identical after it, and every later incoming
-tree byte-identical, including all 182 files before the September 26 revision
-and all 249 files before this September 29 revision.
+tree byte-identical, including all 182 files before the September 26 revision,
+all 249 files before the September 29 revision, and all 257 files before this
+September 30 revision.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
@@ -383,3 +391,7 @@ associate data table captions with data tables*.
 World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.
 <https://www.w3.org/WAI/WCAG22/Techniques/html/H63>
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Headings*.
+Retrieved September 30, 2026, from
+<https://www.w3.org/WAI/tutorials/page-structure/headings/>

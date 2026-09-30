@@ -73,6 +73,7 @@ INTERACTIVE_ROLES = {
     "treeitem",
 }
 FORM_CONTROL_ELEMENTS = {"input", "select", "textarea"}
+HEADING_ELEMENTS = {f"h{level}" for level in range(1, 7)}
 VOID_ELEMENTS = {
     "area",
     "base",
@@ -110,8 +111,9 @@ class PageParser(HTMLParser):
         self.footer_group_tag = None
         self.footer_references = []
         self.figure_count = 0
-        self.h1_count = 0
         self.hidden_depth = 0
+        self.heading_records = []
+        self.heading_stack = []
         self.html_lang = ""
         self.id_text_parts = {}
         self.id_text_stack = []
@@ -239,8 +241,6 @@ class PageParser(HTMLParser):
             self.main_count += 1
             if element_id:
                 self.main_ids.append(element_id)
-        elif tag == "h1":
-            self.h1_count += 1
         elif tag == "figure":
             self.figure_count += 1
         elif tag == "img":
@@ -250,6 +250,8 @@ class PageParser(HTMLParser):
                 if alternative:
                     for control in self.interactive_stack:
                         control["text_parts"].append(alternative)
+                    for heading in self.heading_stack:
+                        heading["text_parts"].append(alternative)
                     for labelled_id in self.id_text_stack:
                         self.id_text_parts[labelled_id].append(alternative)
         elif tag == "th":
@@ -270,6 +272,14 @@ class PageParser(HTMLParser):
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
             self.description = attributes.get("content", "").strip()
+        if tag in HEADING_ELEMENTS:
+            heading = {
+                "level": int(tag[1]),
+                "text_parts": [],
+                "hidden": self.hidden_depth > 0,
+            }
+            self.heading_records.append(heading)
+            self.heading_stack.append(heading)
         if tag == "nav" or attributes.get("role", "").lower() == "navigation":
             self.navigation_landmarks.append(
                 (
@@ -309,6 +319,11 @@ class PageParser(HTMLParser):
                     break
         if tag == "label" and self.label_stack:
             self.label_stack.pop()
+        if tag in HEADING_ELEMENTS:
+            for index in range(len(self.heading_stack) - 1, -1, -1):
+                if self.heading_stack[index]["level"] == int(tag[1]):
+                    self.heading_stack.pop(index)
+                    break
         for index in range(len(self.open_elements) - 1, -1, -1):
             if self.open_elements[index][0] == tag:
                 closed = self.open_elements[index:]
@@ -337,6 +352,8 @@ class PageParser(HTMLParser):
                 self.caption_table["caption_parts"].append(data)
             for control in self.interactive_stack:
                 control["text_parts"].append(data)
+            for heading in self.heading_stack:
+                heading["text_parts"].append(data)
             for labelled_id in self.id_text_stack:
                 self.id_text_parts[labelled_id].append(data)
             for label in self.label_stack:
@@ -382,6 +399,23 @@ def page_accessibility_problems(parsed, relative):
         or parsed.first_anchor_reference not in valid_skip_references
     ):
         problems.append(f"{relative}: bypass link is not the first link")
+    exposed_headings = [
+        heading for heading in parsed.heading_records if not heading["hidden"]
+    ]
+    for number, heading in enumerate(exposed_headings, start=1):
+        text = " ".join(" ".join(heading["text_parts"]).split())
+        if not text:
+            problems.append(
+                f"{relative}: heading {number} (h{heading['level']}) has no text"
+            )
+    for number, (previous, current) in enumerate(
+        zip(exposed_headings, exposed_headings[1:]), start=2
+    ):
+        if current["level"] > previous["level"] + 1:
+            problems.append(
+                f"{relative}: heading {number} skips forward from "
+                f"h{previous['level']} to h{current['level']}"
+            )
     for number, image in enumerate(parsed.images, start=1):
         if "alt" not in image:
             source = image.get("src", f"image {number}")
@@ -1031,6 +1065,11 @@ def check_html_and_css():
         not element["hidden"] for element in interactive_elements
     )
     hidden_interactive = len(interactive_elements) - exposed_interactive
+    exposed_headings = sum(
+        not heading["hidden"]
+        for parsed in parsed_pages.values()
+        for heading in parsed.heading_records
+    )
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1064,7 +1103,10 @@ def check_html_and_css():
             titles.setdefault(parsed.title, []).append(relative)
         if parsed.main_count != 1:
             problems.append(f"{relative}: expected one main element")
-        if parsed.h1_count < 1:
+        if not any(
+            heading["level"] == 1 and not heading["hidden"]
+            for heading in parsed.heading_records
+        ):
             problems.append(f"{relative}: expected at least one h1")
         problems.extend(page_accessibility_problems(parsed, relative))
         duplicate_ids = sorted({item for item in parsed.ids if parsed.ids.count(item) > 1})
@@ -1149,7 +1191,8 @@ def check_html_and_css():
         not problems,
         f"{len(html_pages)} HTML page(s), "
         f"{sum(len(parsed.table_records) for parsed in parsed_pages.values())} "
-        f"named data table(s), {exposed_interactive} exposed interactive or "
+        f"named data table(s), {exposed_headings} exposed heading(s), "
+        f"{exposed_interactive} exposed interactive or "
         f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
         f"control(s), and {len(first_party_css)} first-party "
         "stylesheet(s) passed structural and local-link checks"

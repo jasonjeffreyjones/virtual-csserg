@@ -118,6 +118,30 @@ class StaticAccessibilityTests(unittest.TestCase):
             VERIFY.page_accessibility_problems(named, "navigation.html"), []
         )
 
+    def test_headings_need_text_and_must_not_skip_forward(self):
+        invalid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<h1>Report</h1><h3>Skipped subsection</h3><h2></h2>'
+            '<h4>Another skipped subsection</h4></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(invalid, "headings.html"),
+            [
+                "headings.html: heading 3 (h2) has no text",
+                "headings.html: heading 2 skips forward from h1 to h3",
+                "headings.html: heading 4 skips forward from h2 to h4",
+            ],
+        )
+
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<h1>Report</h1><h2>Finding</h2><h3>Evidence</h3>'
+            '<h2>Limitations</h2></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "headings.html"), []
+        )
+
     def test_table_headers_need_valid_scope(self):
         unscoped = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'
@@ -152,6 +176,7 @@ class StaticAccessibilityTests(unittest.TestCase):
         self.assertEqual(
             VERIFY.page_accessibility_problems(unnamed, "tables.html"),
             [
+                "tables.html: heading 1 (h2) has no text",
                 "tables.html: table 1 has no accessible name",
                 "tables.html: table 2 references labels without text",
                 "tables.html: table 2 has no accessible name",

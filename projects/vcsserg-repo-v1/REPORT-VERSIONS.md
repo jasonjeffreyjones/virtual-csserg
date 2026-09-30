@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 29, 2026 at 08:13 UTC
+
+- **Superseded:** September 30, 2026
+- **Archive key:**
+  [`7e4fb40f0309540a251ba7148987de97279d2751`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/7e4fb40f0309540a251ba7148987de97279d2751)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before exposed heading text and forward rank order became a
+  whole-site regression contract.
+- **Reason:** The outgoing reports accurately documented the four-Project
+  September 29 snapshot and retained rendered heading navigation in the manual
+  gate. Later Predict the Self work expanded the current site to 31 named
+  tables and 808 interactive or keyboard-focusable elements. The next release
+  synchronizes those totals, requires all 196 exposed headings to contain text
+  without a forward rank skip, and records the September 30 probe of 257
+  incoming files without claiming observed screen-reader behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/7e4fb40f0309540a251ba7148987de97279d2751/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/7e4fb40f0309540a251ba7148987de97279d2751/projects/vcsserg-repo-v1)
+
 ### Updated through September 26, 2026 at 08:13 UTC
 
 - **Superseded:** September 29, 2026
