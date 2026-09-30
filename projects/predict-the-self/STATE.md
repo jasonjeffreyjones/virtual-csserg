@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-29T09:14:56Z
+updated: 2026-09-30T09:44:28Z
 ---
 
 # Predict the Self — Current State
@@ -46,6 +46,10 @@ point, distributional, and primary word-count contrasts as one fixed family.
 Six directions retain simultaneous intervals, centering the robust pattern on
 Add volume and later response length; the Delete-count point gain and the
 small demographics-over-text increment become inconclusive.
+A locked training-only full-text synthesis now tests whether those quantity
+and continuity signals compose into a useful forecast. It improves word-count
+and source-change calibration but fails its prespecified edit-similarity and
+novel-content gates, so no development comparison is permitted.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -193,6 +197,19 @@ point-error reduction (`+0.047580` to `+6.232420`), word-count CRPS reduction
 scores from overlapping folds, not retroactive preregistration, formal
 population familywise control, or fresh confirmation.
 
+The locked calibrated-synthesis analysis combines stable source-unit ranking,
+a count-only word target, a text-and-demographic Add target, and common fold
+follow-up units in 150 leave-one-out predictions. Relative to repeat-2024, it
+lowers word-count MAE to `51.986667` from `55.580000` (error reduction
+`+3.593333`, interval `+1.440000` to `+5.726667`) and raises ROUGE-L F1 to
+`0.220153` from `0.200017` (`+0.020136`, `+0.002677` to `+0.037571`). But
+normalized edit similarity falls to `0.268883` from `0.272662` (difference
+`-0.003779`, interval `-0.013404` to `+0.004287`), line-count MAE rises to
+`27.053333` from `6.160000`, and novel-type F1 is `0.075887` versus `0.134680`
+for an equal-volume marginal ranking (difference `-0.058793`, `-0.076168` to
+`-0.041473`). The three-part advancement gate fails; development labels remain
+unread by this method.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -270,6 +287,13 @@ population familywise control, or fresh confirmation.
   tests, a complete JSON result, and a 16-row contrast audit. The calculation
   reads only four existing training-case audits, verifies their hashes and
   inherited means, and never reads benchmark, development, or test rows.
+- Locked `ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md` before reading benchmark rows
+  in the iteration, implementation, or scoring (SHA-256
+  `ae0594e0f95f4131416be0bab4c3bfa913010dc6380d65c39966849c3a9f7253`).
+  Added a hash-guarded full-text leave-one-out generator and evaluation, six
+  focused tests, all 150 fold predictions, a complete case audit, and a JSON
+  result with a prespecified no-development gate. No development or private-
+  test row or artifact was read or changed.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -286,9 +310,9 @@ population familywise control, or fresh confirmation.
   two-column PDF. Validation permits any nonempty length through the actual
   ten-page ceiling.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
-  question/status, exactly one dense quantitative figure, eight linked findings,
+  question/status, exactly one dense quantitative figure, nine linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes fifty research
+- The three forms link reciprocally. The Full Report publishes fifty-five research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -359,6 +383,12 @@ population familywise control, or fresh confirmation.
   folds, undo sequential research choices, or support population inference.
   Its 16-row audit is a derived benchmark-data adaptation under CC BY-NC-SA
   4.0.
+- The calibrated-synthesis design was chosen after all preceding quantity and
+  content results were known. Common exact units favor generic template
+  statements and their appended-line format produces severe line-count error.
+  Its gate is pointwise rather than multiplicity-adjusted. Fold predictions and
+  the audit are derived benchmark-data adaptations under CC BY-NC-SA 4.0; the
+  failed gate forbids development evaluation of this fixed method.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -391,6 +421,8 @@ population familywise control, or fresh confirmation.
   source-response comparison.
 - `ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md`: fixed 16-contrast family and
   simultaneous-interval sensitivity procedure.
+- `ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md`: fixed full-text synthesis rule,
+  content control, and three-part advancement gate.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -419,6 +451,9 @@ population familywise control, or fresh confirmation.
 - `analysis/analyze_multiplicity_stress_test.py`: locked cross-analysis
   robustness audit; its complete JSON result and flat contrast audit are under
   `results/`.
+- `analysis/analyze_calibrated_synthesis.py`: locked training-only full-text
+  synthesis and gate evaluation; its JSON, case audit, and all fold predictions
+  are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -446,13 +481,13 @@ population familywise control, or fresh confirmation.
    development data to limit repeated tuning; preferably reserve new evidence
    or use training-only nested evaluation because development labels are now
    heavily reused.
-3. Avoid further fixed lexical re-rankers or post hoc decompositions on the
-   same 150 cases without a substantively new representation or new evidence.
-   Before reusing development labels, require a synthesizing or semantic
-   person-conditioned approach to preserve the response-form calibration
-   signal, demonstrate value beyond simple source counts, treat the now-
-   inconclusive conditional demographic increment cautiously, and beat leave-one-out
-   marginal additions in training; then lock any development comparison and
-   avoid private test feedback.
+3. Do not evaluate the failed common-unit synthesis on development data. Avoid
+   further fixed lexical re-rankers or post hoc decompositions on the same 150
+   cases without a substantively new representation or new evidence. Before
+   reusing development labels, require a semantic person-conditioned approach
+   to preserve response-form calibration, introduce source-relevant rather than
+   generic content, demonstrate value beyond simple source counts, and beat
+   leave-one-out marginal additions in training; then lock any development
+   comparison and avoid private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

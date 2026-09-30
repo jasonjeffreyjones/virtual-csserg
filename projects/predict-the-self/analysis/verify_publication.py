@@ -92,6 +92,7 @@ def main() -> int:
     assert short_path.resolve() in local_targets(landing_path, landing)
 
     expected_artifacts = {
+        PUBLIC / "report/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
         PUBLIC / "report/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
         PUBLIC / "report/ANALYSIS_PLAN_CHANGE_VOLUME.md",
         PUBLIC / "report/ANALYSIS_PLAN_FEATURE_ABLATION.md",
@@ -103,6 +104,7 @@ def main() -> int:
         PUBLIC / "report/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
         PUBLIC / "report/BENCHMARK_PROVENANCE.md",
         PUBLIC / "report/analysis/analyze_change_distributions.py",
+        PUBLIC / "report/analysis/analyze_calibrated_synthesis.py",
         PUBLIC / "report/analysis/analyze_change_volume.py",
         PUBLIC / "report/analysis/analyze_feature_ablation.py",
         PUBLIC / "report/analysis/analyze_multiplicity_stress_test.py",
@@ -117,6 +119,9 @@ def main() -> int:
         PUBLIC / "report/analysis/trajectory_retrieval.py",
         PUBLIC / "report/results/change_distributions_train_analysis.json",
         PUBLIC / "report/results/change_distributions_train_audit.csv",
+        PUBLIC / "report/results/calibrated_synthesis_train_analysis.json",
+        PUBLIC / "report/results/calibrated_synthesis_train_audit.csv",
+        PUBLIC / "report/results/calibrated_synthesis_train_predictions.csv",
         PUBLIC / "report/results/change_volume_train_analysis.json",
         PUBLIC / "report/results/change_volume_train_audit.csv",
         PUBLIC / "report/results/feature_ablation_train_analysis.json",
@@ -146,6 +151,7 @@ def main() -> int:
     evidence_targets = local_targets(evidence_path, evidence)
     assert expected_artifacts <= evidence_targets, "Full Report omits public artifacts"
     for source, legacy in (
+        ("ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md", "artifacts/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md"),
         ("ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md", "artifacts/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md"),
         ("ANALYSIS_PLAN_CHANGE_VOLUME.md", "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md"),
         ("ANALYSIS_PLAN_FEATURE_ABLATION.md", "artifacts/ANALYSIS_PLAN_FEATURE_ABLATION.md"),
@@ -157,6 +163,7 @@ def main() -> int:
         ("ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md", "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md"),
         ("BENCHMARK_PROVENANCE.md", "artifacts/BENCHMARK_PROVENANCE.md"),
         ("analysis/analyze_change_distributions.py", "artifacts/analyze_change_distributions.py"),
+        ("analysis/analyze_calibrated_synthesis.py", "artifacts/analyze_calibrated_synthesis.py"),
         ("analysis/analyze_change_volume.py", "artifacts/analyze_change_volume.py"),
         ("analysis/analyze_feature_ablation.py", "artifacts/analyze_feature_ablation.py"),
         ("analysis/analyze_multiplicity_stress_test.py", "artifacts/analyze_multiplicity_stress_test.py"),
@@ -171,6 +178,9 @@ def main() -> int:
         ("analysis/trajectory_retrieval.py", "artifacts/trajectory_retrieval.py"),
         ("results/change_distributions_train_analysis.json", "artifacts/change_distributions_train_analysis.json"),
         ("results/change_distributions_train_audit.csv", "artifacts/change_distributions_train_audit.csv"),
+        ("results/calibrated_synthesis_train_analysis.json", "artifacts/calibrated_synthesis_train_analysis.json"),
+        ("results/calibrated_synthesis_train_audit.csv", "artifacts/calibrated_synthesis_train_audit.csv"),
+        ("results/calibrated_synthesis_train_predictions.csv", "artifacts/calibrated_synthesis_train_predictions.csv"),
         ("results/change_volume_train_analysis.json", "artifacts/change_volume_train_analysis.json"),
         ("results/change_volume_train_audit.csv", "artifacts/change_volume_train_audit.csv"),
         ("results/feature_ablation_train_analysis.json", "artifacts/feature_ablation_train_analysis.json"),

@@ -12,6 +12,7 @@ ROOT = PROJECT.parents[1]
 SOURCE = PROJECT / "_book"
 PUBLIC = ROOT / "website/projects/predict-the-self/report"
 COMPATIBILITY_ARTIFACTS = {
+    "ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md": "artifacts/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
     "ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md": "artifacts/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
     "ANALYSIS_PLAN_CHANGE_VOLUME.md": "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md",
     "ANALYSIS_PLAN_FEATURE_ABLATION.md": "artifacts/ANALYSIS_PLAN_FEATURE_ABLATION.md",
@@ -23,6 +24,7 @@ COMPATIBILITY_ARTIFACTS = {
     "ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md": "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
     "BENCHMARK_PROVENANCE.md": "artifacts/BENCHMARK_PROVENANCE.md",
     "analysis/analyze_change_distributions.py": "artifacts/analyze_change_distributions.py",
+    "analysis/analyze_calibrated_synthesis.py": "artifacts/analyze_calibrated_synthesis.py",
     "analysis/analyze_change_volume.py": "artifacts/analyze_change_volume.py",
     "analysis/analyze_feature_ablation.py": "artifacts/analyze_feature_ablation.py",
     "analysis/analyze_multiplicity_stress_test.py": "artifacts/analyze_multiplicity_stress_test.py",
@@ -37,6 +39,9 @@ COMPATIBILITY_ARTIFACTS = {
     "analysis/trajectory_retrieval.py": "artifacts/trajectory_retrieval.py",
     "results/change_distributions_train_analysis.json": "artifacts/change_distributions_train_analysis.json",
     "results/change_distributions_train_audit.csv": "artifacts/change_distributions_train_audit.csv",
+    "results/calibrated_synthesis_train_analysis.json": "artifacts/calibrated_synthesis_train_analysis.json",
+    "results/calibrated_synthesis_train_audit.csv": "artifacts/calibrated_synthesis_train_audit.csv",
+    "results/calibrated_synthesis_train_predictions.csv": "artifacts/calibrated_synthesis_train_predictions.csv",
     "results/change_volume_train_analysis.json": "artifacts/change_volume_train_analysis.json",
     "results/change_volume_train_audit.csv": "artifacts/change_volume_train_audit.csv",
     "results/feature_ablation_train_analysis.json": "artifacts/feature_ablation_train_analysis.json",

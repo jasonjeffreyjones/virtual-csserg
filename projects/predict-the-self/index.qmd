@@ -91,6 +91,17 @@ gain and the `+0.217704` demographics-over-text increment become
 inconclusive. This post hoc stress test narrows the current claim; it is not
 retroactive preregistration or population evidence.
 
+An eighth lock asks whether those separate signals can be assembled into a
+coherent full-text forecast. In leave-one-out training prediction, calibrated
+synthesis lowers word-count error relative to repeat-2024 (`51.986667` versus
+`55.580000`) and improves ROUGE-L F1 (`0.220153` versus `0.200017`). But its
+normalized edit similarity is lower (`0.268883` versus `0.272662`), its
+line-count error is much larger (`27.053333` versus `6.160000`), and its novel-
+type F1 is only `0.075887` versus `0.134680` for an equal-volume marginal-
+addition ranking. It fails the prespecified three-part advancement gate, so
+the plan forbids a development comparison. Common whole response units do not
+turn volume calibration into person-specific content prediction.
+
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
@@ -104,7 +115,8 @@ presenting reused training cases or oracle budgets as fresh confirmation, then
 tests no-oracle change-volume forecasts, their predictive distributions, the
 locked source-feature ablation, and the count-only source-form comparison
 separately. It then reports the bounded 16-contrast multiplicity stress test
-without recasting earlier dependent analyses as confirmation.
+without recasting earlier dependent analyses as confirmation, followed by the
+locked calibrated-synthesis failure and its no-development decision.
 
 The report distinguishes three claims that should not be collapsed:
 

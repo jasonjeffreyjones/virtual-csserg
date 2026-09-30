@@ -151,7 +151,19 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, pointwise intervals favor Add-count, Delete-count, and word-count forecasts, while full-distribution scoring supports a CRPS gain only for word count. A synchronized 16-contrast stress test retains the Add-count and word-count point gains and the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. It also retains text-only and source-form word-count gains over the marginal without separating those two representations. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <div class="scorecard-wrap" role="region" aria-label="Calibrated full-text synthesis advancement gate" tabindex="0">
+        <table class="scorecard-table">
+          <caption class="visually-hidden">Calibrated full-text synthesis advancement gate</caption>
+          <thead><tr><th scope="col">Training leave-one-out gate</th><th scope="col">Calibrated synthesis</th><th scope="col">Comparator</th><th scope="col">Paired effect</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Edit similarity</th><td>0.268883</td><td>Repeat: 0.272662</td><td>−0.003779<br><small>95% interval −0.013404 to +0.004287</small></td></tr>
+            <tr><th scope="row">Word-count MAE</th><td class="metric-better">51.986667</td><td>Repeat: 55.580000</td><td class="metric-better">+3.593333<br><small>95% interval +1.440000 to +5.726667</small></td></tr>
+            <tr><th scope="row">Novel-type F1</th><td>0.075887</td><td class="metric-better">Marginal: 0.134680</td><td>−0.058793<br><small>95% interval −0.076168 to −0.041473</small></td></tr>
+            <tr><th scope="row">Decision</th><td colspan="3">Gate failed; no development prediction permitted</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, pointwise intervals favor Add-count, Delete-count, and word-count forecasts, while full-distribution scoring supports a CRPS gain only for word count. A synchronized 16-contrast stress test retains the Add-count and word-count point gains and the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. A subsequent full-text synthesis improves word-count error but fails both its edit-similarity and marginal-content gates, so it is not advanced to development. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -177,6 +189,9 @@
         </article>
         <article class="finding">
           <p><strong>Simple response form can match lexical text.</strong> Text-only neighborhoods beat demographics on word-count CRPS, but three source-response counts also beat the marginal and are not stably distinguishable from text only. <a href="report/report.html#source-form-ablation">Inspect the locked comparison</a>.</p>
+        </article>
+        <article class="finding">
+          <p><strong>Common-unit synthesis fails its advancement gate.</strong> It improves word-count error and ROUGE-L but sharply worsens line-count error and reaches only 0.075887 novel-type F1 versus 0.134680 for an equal-volume marginal ranking. <a href="report/report.html#calibrated-synthesis">Inspect the locked failure</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Most future vocabulary is unavailable to extraction.</strong> An average 73.2% of distinct follow-up token types are absent from the earlier response; projection-to-source similarity is still 0.903898. <a href="report/report.html#extractive-limits">See the extractive limits</a>.</p>

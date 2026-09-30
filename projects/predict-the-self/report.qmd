@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-09-29"
+date: "2026-09-30"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -62,6 +62,13 @@ simultaneous 95% intervals: Add-count and word-count point-error reductions,
 the word-count CRPS reduction, text-only and source-form word-count gains over
 the marginal, and combined matching over demographics alone. The Delete-count
 point gain and demographics' small increment over text become inconclusive.
+A final locked training-only analysis integrates stable source units, a count-
+only word-length target, a combined-neighborhood Add-count target, and common
+fold follow-up units into one full-text synthesis. It lowers word-count error
+and improves ROUGE-L relative to repeat-2024, but edit similarity does not
+improve, line-count error rises sharply, and novel-type F1 is `0.075887` versus
+`0.134680` for an equal-volume marginal-addition ranking. The prespecified
+advancement gate fails, so no development prediction is permitted.
 A separately locked leave-one-out cross-validation of the frozen stable
 projection repeats its central mixed
 pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
@@ -119,6 +126,10 @@ rises. The other non-exact agreement intervals span zero.
   directions. It preserves the Add-count and word-count point gains and the
   principal word-count distribution results, but not the Delete-count point
   gain or the small demographics-over-text increment.
+- A locked full-text synthesis test improves response-length and source-change
+  calibration but loses badly to an equal-volume marginal ranking on novel-
+  type F1 and multiplies line-count error. It fails its advancement gate and
+  is not evaluated on development data.
 
 # Introduction {#introduction}
 
@@ -428,6 +439,35 @@ is the common critical value for two-sided simultaneous intervals. This is a
 post hoc sensitivity audit, not retroactive preregistration or formal
 population familywise control: stored leave-one-out scores are resampled
 without refitting their heavily overlapping folds.
+
+## Locked calibrated full-text synthesis
+
+An eighth training-only plan was locked before reading benchmark rows in this
+iteration, implementation, or scoring at SHA-256
+`ae0594e0f95f4131416be0bab4c3bfa913010dc6380d65c39966849c3a9f7253`.
+It asks whether the Project's separately observed signals can be composed into
+one prospective text forecast. Each outer fold ranks held-out source units with
+the frozen stable-token rule, forecasts follow-up word count with the fixed
+three-count source-form neighborhood, forecasts distinct Add count with the
+fixed text-and-demographic neighborhood, and ranks complete follow-up units
+that are exact-unit additions in at least two fold cases.
+
+The generator searches every nonempty prefix of ranked stable source units and
+every prefix of ranked common additions. It minimizes the sum of normalized
+absolute error from the predicted word and Add counts, then applies fixed
+source-retention and parsimony tie rules. All fitting and candidate text come
+from the other 149 cases. A volume-matched marginal token ranking receives
+exactly as many novel-token guesses as the synthesized response, so its content
+comparison uses no held-out future budget.
+
+Twenty thousand paired case-bootstrap resamples use seed `20260930`, restarted
+for every contrast. Development prediction is allowed only if three pointwise
+95% intervals all exclude zero in the favorable direction: normalized edit
+similarity versus repeat-2024, word-count error versus repeat-2024, and novel-
+type F1 versus the volume-matched marginal ranking. This conservative gate is
+not a multiplicity correction. The design is dependent on earlier results and
+the same training cohort, so even a passing result would not be untouched
+confirmation.
 
 # Results {#results}
 
@@ -846,6 +886,51 @@ support every contrast; fitted folds overlap; and resampling stored case scores
 does not refit the models. It is a conservative internal coherence check, not
 population inference or a remedy for sequential analysis.
 
+## Calibrated synthesis does not clear the content gate {#calibrated-synthesis}
+
+The full-text synthesis changes the kind of error without producing a general
+agreement gain. It is much closer to the observed amount of source change and
+has lower word-count error than repeat-2024, but the common appended units
+substantially inflate the number of lines and dilute token agreement.
+
+| Training leave-one-out metric | Calibrated synthesis | Stable projection | Repeat 2024 | Synthesis utility effect versus repeat (95% interval) |
+| --- | ---: | ---: | ---: | ---: |
+| Exact match | 0.000000 | 0.000000 | 0.000000 | 0.000000 (0.000000 to 0.000000) |
+| Normalized edit similarity | 0.268883 | 0.276809 | 0.272662 | −0.003779 (−0.013404 to +0.004287) |
+| Token Jaccard | 0.098165 | 0.133873 | 0.134297 | −0.036132 (−0.048502 to −0.024014) |
+| Token-overlap F1 | 0.267251 | 0.276737 | 0.280231 | −0.012980 (−0.035902 to +0.010370) |
+| ROUGE-L F1 | 0.220153 | 0.200304 | 0.200017 | +0.020136 (+0.002677 to +0.037571) |
+| Character n-gram F1 | 0.238779 | 0.266194 | 0.267813 | −0.029034 (−0.040378 to −0.017567) |
+| Word-count MAE | 51.986667 | 46.986667 | 55.580000 | +3.593333 (+1.440000 to +5.726667) |
+| Line-count MAE | 27.053333 | 9.066667 | 6.160000 | −20.893333 (−23.820000 to −17.966667) |
+| Source-similarity MAE | 0.143463 | 0.729214 | 0.799983 | +0.656521 (+0.627361 to +0.684716) |
+
+: Complete official scored metrics for calibrated training synthesis
+
+Positive effects favor synthesis for every row. The ROUGE-L and source-
+similarity results show that the generator approximates the degree and sequence
+of change better than continuity baselines; they do not show correct new
+identity content. Relative to the stable projection, synthesis also improves
+ROUGE-L by `+0.019849` and source-similarity error by `+0.585751`, but worsens
+token Jaccard, character n-gram F1, and line-count error with intervals
+excluding zero. Its word-count error is five words higher on average than the
+stable projection, with an interval spanning zero.
+
+The equal-volume content comparison is unambiguously unfavorable:
+
+| Distinct novel-type measure | Calibrated synthesis | Volume-matched marginal | Paired difference (95% interval) |
+| --- | ---: | ---: | ---: |
+| Precision | 0.097449 | 0.208189 | −0.110740 (−0.139732 to −0.082632) |
+| Recall | 0.074294 | 0.116041 | −0.041748 (−0.058335 to −0.025062) |
+| F1 | 0.075887 | 0.134680 | −0.058793 (−0.076168 to −0.041473) |
+
+: Common-unit synthesis versus equal-volume marginal additions
+
+Synthesis wins 33 cases, ties 21, and loses 96 on novel-type F1. Only the word-
+count gate passes; the edit-similarity interval spans zero and the content gate
+excludes zero in the wrong direction. The prespecified advancement rule
+therefore fails, and no development prediction was generated.
+
 ## Frozen test submission {#submission}
 
 The method generated one nonblank prediction for every test ID in the required
@@ -914,6 +999,16 @@ narrower than the original pointwise pattern. A synthesizing model should
 preserve that calibration signal while demonstrating content value beyond
 marginal prevalence.
 
+The calibrated-synthesis test directly attempts that composition and shows why
+the two requirements must be evaluated together. Common complete response
+units make predicted text look appropriately different from its source and
+improve sequence overlap, but they recover fewer correct novel types than a
+token-frequency prior and create a gross line-count mismatch. Forecasting the
+amount of novelty is not a license to fill that budget with generic statements.
+The failed advancement gate prevents another look at development labels and
+raises the next-method bar from “synthesize something” to “add source-relevant
+semantic content that beats both continuity and marginal prevalence.”
+
 The probabilistic extension further qualifies the claim: the clearest
 distributional gain is for follow-up word count. The ablation locates most of
 that signal in the earlier self-description rather than demographics, and the
@@ -929,6 +1024,8 @@ surface predictors establishes such a mechanism.
 
 The complete open materials are:
 
+- [`ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md`](ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md)
+  — pre-analysis lock and advancement gate for full-text synthesis;
 - [`ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md`](ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md)
   — pre-analysis lock for probabilistic revision-volume forecasts;
 - [`ANALYSIS_PLAN_FEATURE_ABLATION.md`](ANALYSIS_PLAN_FEATURE_ABLATION.md)
@@ -951,6 +1048,8 @@ The complete open materials are:
   — hash-guarded paired bootstrap and extractive-limit analysis;
 - [`analysis/analyze_change_distributions.py`](analysis/analyze_change_distributions.py)
   — hash-guarded leave-one-out predictive-distribution evaluation;
+- [`analysis/analyze_calibrated_synthesis.py`](analysis/analyze_calibrated_synthesis.py)
+  — hash-guarded leave-one-out full-text synthesis and gate evaluation;
 - [`analysis/analyze_change_volume.py`](analysis/analyze_change_volume.py)
   — hash-guarded leave-one-out response-form and revision-volume forecasts;
 - [`analysis/analyze_feature_ablation.py`](analysis/analyze_feature_ablation.py)
@@ -979,6 +1078,12 @@ The complete open materials are:
   — complete machine-readable probabilistic-forecast result;
 - [`results/change_distributions_train_audit.csv`](results/change_distributions_train_audit.csv)
   — all 150 cases' CRPS and central-interval diagnostics;
+- [`results/calibrated_synthesis_train_analysis.json`](results/calibrated_synthesis_train_analysis.json)
+  — complete official-metric, content, and advancement-gate result;
+- [`results/calibrated_synthesis_train_audit.csv`](results/calibrated_synthesis_train_audit.csv)
+  — all 150 cases' targets, structure, metrics, and content scores;
+- [`results/calibrated_synthesis_train_predictions.csv`](results/calibrated_synthesis_train_predictions.csv)
+  — all 150 leave-one-out full-text synthesis predictions;
 - [`results/change_volume_train_analysis.json`](results/change_volume_train_analysis.json)
   — complete machine-readable change-volume result;
 - [`results/change_volume_train_audit.csv`](results/change_volume_train_audit.csv)
@@ -1028,7 +1133,7 @@ The complete open materials are:
 - [`submissions/aleph_initial_alpha_method.md`](submissions/aleph_initial_alpha_method.md)
   — submission-ready method card.
 
-Both generators use only the Python standard library. The challenge's 17
+All Project research scripts use only the Python standard library. The challenge's 17
 public tests passed before the stable artifact was generated. Regenerating the
 stable development and test artifacts reproduced their hashes exactly; the
 retrieval pipeline separately hash-guards its inputs and fixed analysis plan.
@@ -1137,6 +1242,15 @@ check rather than formal prospective familywise error control or population
 inference. The flat audit is derived from benchmark-data adaptations and
 remains governed by CC BY-NC-SA 4.0.
 
+The calibrated-synthesis analysis is also dependent: every component and its
+three-part gate were chosen after the earlier training results were known.
+Exact repeated response units favor generic template language, and appending
+one statement per unit explains the severe line-count error. Its fold
+predictions transfer public training text and remain benchmark-data adaptations
+under CC BY-NC-SA 4.0. The pointwise gate is deliberately conservative but is
+not multiplicity-adjusted; failing it is a method decision, not a universal
+claim that semantic synthesis is impossible.
+
 The paired bootstrap treats development cases as the resampling unit, but the
 benchmark is a selected longitudinal cohort rather than a probability sample.
 Its intervals describe sensitivity to the composition of these 50 cases, not
@@ -1147,7 +1261,9 @@ or achievable prospective scores.
 The immediate next step is to submit the two prepared artifacts to the
 challenge organizer and add the complete private test scorecard, unchanged, to
 this report. Further fixed lexical re-rankers on the same 150 cases are unlikely
-to be informative without a substantively new representation. A later method
-should synthesize rather than copy novel content, show an incremental advantage
-over leave-one-out marginal additions before any additional development
-comparison, lock that comparison, and avoid private test feedback for tuning.
+to be informative without a substantively new representation. The fixed common-
+unit synthesis has now failed its training gate, so it must not be evaluated on
+development data. A later method should introduce source-relevant semantic
+content rather than copy common statements, preserve response-form calibration,
+beat leave-one-out marginal additions in training, lock any later development
+comparison, and avoid private test feedback for tuning.

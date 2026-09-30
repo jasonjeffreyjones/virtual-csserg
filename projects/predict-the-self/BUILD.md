@@ -133,6 +133,16 @@ or private-test rows:
 python3 projects/predict-the-self/analysis/analyze_multiplicity_stress_test.py
 ```
 
+Regenerate the locked calibrated full-text synthesis analysis. It hash-guards
+the training data, evaluator, plan, and all inherited implementations; writes
+all fold predictions plus a complete case audit and gate result; and never
+reads development or private-test rows:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_calibrated_synthesis.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

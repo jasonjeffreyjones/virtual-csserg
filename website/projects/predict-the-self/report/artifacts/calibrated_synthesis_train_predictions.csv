@@ -1,0 +1,5245 @@
+id,predicted_tst_2025
+train_0001,"I am a female
+Love being a mother
+I have a cat
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0002,"I am a wife.
+I am a sister.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0003,"I'm a very caresmadtic
+God fearing
+funny
+I am creative.
+creative
+Curious
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0004,"I have pets, love all animals, and have a good job.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0005,"smart
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0006,"I am unique.
+I am witty.
+I am a survivor.
+I am a dog lover.
+I am a wildlife lover.
+I am a heart attack survivor.
+I am not my mothers keeper.
+I am a puzzle lover.
+I am happy when alone.
+I am hungry for new knowledge.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter."
+train_0007,"I am a Christian.
+I love God.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife"
+train_0008,"I am a man, husband, brother, son.
+I am creative.
+creative
+Curious
+funny
+I am kind.
+daughter
+helpful
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+friend
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother."
+train_0009,"Who am I?
+1. A woman
+2. A middle aged woman
+3. A Jewish woman, albeit a secular Jewish woman
+4. A Southerner and a Native New Yorker, both are very much a part of me, I have spent 90 percent of my life in the South
+5. I am bipolar.
+6. I am a survivor of rape and molestation. The first time happened when I was 4, the last time was in my 30s.  A cousin, a friend of my family, boys from my  high school, a guy in my dorm  a guy I met at a bar and  roofied me, a guy I met at a party, a physical therapist. my friend's dad... I am certain I have forgotten some
+8. I am a writer.
+11. I was told I was ""gifted""  Perhaps.  My IQ was very high
+13 At 40 I got help, finally. It took 7 hospital visits to get there. It may not sound like I am doing well, but I am, actually. I am making progress and I love my therapist and doctor. it just took me a long time
+16 I lam a damn good cook
+19.  I am the partner of a musician. he is also bipolar and funny and smart. we are the parents of cats
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife"
+train_0010,"I am a friend
+I am creative.
+Curious
+I am kind.
+creative
+funny
+Helpful
+I am a man.
+I am a son.
+I am a woman
+loyal
+smart
+Brother
+daughter
+Friend
+I am a Christian.
+I am a college graduate
+I am a mother
+I am a mother.
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+sister
+thoughtful
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0011,"Male
+I am creative.
+creative
+Curious
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother"
+train_0012,"I love animals and I have an 18 y/o shihtzu who I consider my four-legged son.
+I enjoy nature and people watching.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0013,"I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0014,"I am a father.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven"
+train_0015,"I am smart.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook"
+train_0016,"I am an average person with a myriad of experiences behind him who's trying to do his best
+I am creative.
+Curious
+funny
+Helpful
+I am kind.
+creative
+daughter
+Friend"
+train_0017,"I believe there is a lot there for me.
+I am creative.
+creative
+Curious
+funny
+I am kind.
+daughter
+Friend
+Helpful
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father"
+train_0018,"I am a single adult female living in the USA.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter."
+train_0019,"I am a husband, a father, and the son of my parent.
+I am creative.
+creative
+funny
+Helpful
+I am kind.
+curious
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert"
+train_0020,"Passionate lover.
+I believe in true love.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter."
+train_0021,"I'm a friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0022,"I am a son.
+I am a child of my mother.
+I am a friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom"
+train_0023,"1.  i'm an author, a writer
+2.  i'm a philosopher, i have a formal philosophy, with an ethics
+3.  i'm a poet
+4.  i'm the son of my mother
+5.  i'm the sone of my father
+7.  i have five dogs, and i love them dearly
+10.  i'm old and i'm tired of the shit
+11.  but i understand the shit, including what i used to put out, what was an expression of me
+13.  i am an atheist and not an anti-theist; and this means that i believe responsibility devolves on the people in this world, and that justice only comes among us, the people
+14.  i am one of the people
+16.  i am to some degree a mathematician, and a logician; the two areas are not exactly the same
+17.  i am remote from most people, and i am comfortable with that now
+18.  i try to have some forgiveness in me for the slights and arrows i have suffered, but i know that that only goes so far - i am not the most forgiving person, and i'm fine with that
+20.  i am a musician
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0024,"I am a son
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+artist
+brave
+Brother
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0025,"I’m a young woman.
+A white woman.
+I’m funny.
+I’m smart.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0026,"Smart
+outgoing
+I am creative.
+creative
+Curious
+funny
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+thoughtful
+Brother
+I am a Christian."
+train_0027,"I am a good listener.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0028,"lover
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister"
+train_0029,"Male
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian."
+train_0030,"A wife
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate"
+train_0031,"I am very creative and resourceful
+I love to read thriller and sci-f books
+I have always been very short and when I was young it bothered me but not any more.
+I have skin that gets very dark in the summer.
+I love to be outdoors gardening.
+I love to play softball and volleyball.
+I am very religious I totally believe in Jesus and God
+I love my family above all else.
+I love working on computers that is what I do for a living
+I love playing with my dog she knows many different tricks
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0032,"I'm not the kind of person who is vengeful even when a wrong is directed toward me.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0033,"Father
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0034,"I love summertime.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father"
+train_0035,"These activities prepared me for my life in this country.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a man.
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a wife"
+train_0036,"I descri e myself as being a mother, wife, teacher, and friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0037,"I am a friend
+I am creative.
+Curious
+Helpful
+I am kind.
+creative
+daughter
+Friend
+funny
+I am a man.
+I am a son.
+I am a woman
+sister
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+loyal
+smart
+worker
+artist
+caring
+Christian
+cook
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0038,"disabled
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father"
+train_0039,"I am a father
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a man.
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker.
+I am a husband.
+I am a mom"
+train_0040,"I am a son.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a man.
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father"
+train_0041,"I am a daughter, an older sister, and a dog mom.
+I am a good friend and a good listener.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a mother
+I am a mother.
+I am a woman
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0042,"I have lived a wonderful life.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0043,"I'm a female.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend."
+train_0044,"I am a father.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a college graduate
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother"
+train_0045,"I’m a good friend
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0046,"Creative
+I am creative.
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0047,"I am a son.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend."
+train_0048,"I am a human.
+I am someone unique.
+I am someone that is very anxious but cares
+I am someone who wants the best for people
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a Friend
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader"
+train_0049,"I am a creative, spontaneous person.
+I'm wholesome.
+I'm an advocate for women's rights.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+I am kind.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0050,"2. I am creative
+8. I am a cat lover
+20. I am not very good at describing who I am
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother"
+train_0051,"wife
+sister
+creative
+I am creative.
+Curious
+funny
+Helpful
+I am kind.
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+thoughtful
+Brother
+I am a Christian."
+train_0052,"I am an elderly woman who lives alone in Arizona.
+I raised three children in a suburban environment.
+I worked as a Hospice Nurse for fifteen years which was very challenging but also rewarding.
+I was diagnosed with lung disease when I was 55 years old and found that I had a genetic mutation for Cystic Fibrosis.
+This explained and life long problem with a chronic cough and eventually difficulty breathing.
+I am retired now and have a Doodle puppy that keeps me company.
+I like to do craft projects and enjoy gardening.
+I like to read all kinds of books and always have since I was a child.
+I have a sister and a brother who live in Florida who I don't see very much.
+My sister and I stay in contact through emails and phone calls.
+I have 2 nieces and 1 nephew who live on the East Coast and don't see very much anymore.
+My father was in the Navy during WWII but didn't see active service before the War ended.
+My mother died when I was 23 years old and my father died when I was 30 years old.
+I have a lot of cousins living in New England but haven't seen them since I was a teenager.
+I like to walk with my dog and enjoy nature.
+I love animals and have had many different pets in my life.
+I would love to have a little farm with lots of animals but I'm afraid it would be too much work for me now.
+I am creative.
+creative
+funny
+I am kind.
+Curious
+daughter
+Friend
+Helpful
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Loving
+thoughtful
+worker
+artist
+brave
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife
+I am a wife.
+I am an animal lover.
+I am an artist
+I am beautiful.
+I am creative
+I am empathetic"
+train_0053,"I am a caregiver, a man with purpose to take care of my family.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother"
+train_0054,"2. I am a mom
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0055,"smart
+loving
+kind
+I am creative.
+creative
+Curious
+Helpful
+I am kind.
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+thoughtful
+Brother
+daughter
+Friend
+I am a Christian."
+train_0056,"creative
+I am creative.
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+Brother
+I am a Christian."
+train_0057,"I am a woman who had a birthday yesterday.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+loyal
+smart
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0058,"I am an animal lover and have 3 dogs.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0059,"A creative person
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0060,"I have always loved animals and am always trying to help them in some way.
+I like creative tasks.
+I am organized.
+I love music and have a good ear and frequently get compliments on my taste in music.
+I am artistic and have a good eye for color and form.
+I am very protective of others but not maternal.
+I am creative.
+creative
+funny
+I am kind.
+Curious
+daughter
+Friend
+Helpful
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife
+I am a wife.
+I am an animal lover.
+I am an artist"
+train_0061,"I am a 71 year old grandmother.
+I always had boring office jobs, which I said, supported my life, but was not my life.
+I’m a Reiki master.
+I am very astute and psychic.
+I love my little dog and I grieve over the loss of another dog I had, I like to learn things I like to have fun.
+I have a good sense of humor and am well liked.
+I don’t like to travel I like being at home.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0062,"I hope to live a life that is filled with genuine love and care for those around me.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+I am a Friend
+I am a man.
+I am a son.
+loyal
+sister
+smart
+thoughtful
+Brother
+daughter
+Friend
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am a woman
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend."
+train_0063,"i am a son
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a woman
+I am kind.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am a son.
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0064,"I am creative 19.
+I am creative.
+creative
+funny
+Helpful
+I am kind.
+Curious
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Loving
+loyal
+smart
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter."
+train_0065,"I'm a wife, a mother and a grandmother.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0066,"I am a spritual being.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0067,"I love art, online content, time with my pets, and my girlfriend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0068,"I am a friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+I am kind.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0069,"I am a Christian
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0070,"I am a loyal friend.
+I love dogs.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0071,"i am hispanic.
+i am not tall but not short.
+i enjoy math and history.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker."
+train_0072,"I'm overweight.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0073,"I am not overweight.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven"
+train_0074,"1. I am a man.
+4. I have no children.
+7. I am a disappointment to my mother.
+9. I am a veteran.
+11. I do not keep a job for very long i.e. 1-2 yrs.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0075,"I lived in Florida for 24 years
+I am a big Boston sports fan
+I love to camp and be around a campfire
+I was in sales for seven years
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0076,"Good Person
+father
+brother
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+smart
+thoughtful
+I am a Christian.
+I am a college graduate"
+train_0077,"I am an artist and designer.
+I am a daughter, and I am a sister.
+I am funny, I love to make people laugh.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife
+I am a wife."
+train_0078,"I love dark chocolate.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom"
+train_0079,"My bedtime friend lives in London
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian."
+train_0080,"Friend
+I am creative.
+Curious
+funny
+Helpful
+I am kind.
+daughter
+I am a Friend
+I am a man.
+I am a woman
+loyal
+sister
+smart
+I am a Christian.
+I am a college graduate"
+train_0081,"a husband
+a son
+a father
+a dog lover
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0082,"Smart
+I am creative.
+creative
+I am kind.
+daughter
+Friend
+Helpful
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+Brother
+I am a Christian.
+I am a college graduate"
+train_0083,"I am a father
+I am a survivor
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother"
+train_0084,"I am a woman
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man."
+train_0085,"I am a strong woman.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+I am kind.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0086,"I am a black male.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0087,"I am an ambitious young woman who is apart of the gen z generation.
+I am someone who aims for constant positivity despite the world being such an unfair place.
+I am a short and small statured person who has a big personality and big goals.
+I am a hungry person literally and figuratively.
+I am a very creative soul who is always open to offering solutions to plethoras of issues.
+I am a person who is very mindful of my surrounds and the feelings of those who surround me.
+I am a person so who can be very cautious but when the surroundings have been confirmed to be safe I am the life of the party.
+I am someone who values their family very much.
+However, despite me valuing family very much I am I not one to let someone step on be simply because we are family.
+I am someone who I personally feel have a very good grasp on emotional and logical affairs.
+However, I have a good balance with these things because I am not always dressed to impress, I am comfortable enough in my own skin to go out in a casual outfit without my hair or makeup down.
+Whenever I do dress up however, I always end up looking like a different person in a good way and I will dress my best in that situation however that doesn’t occur often enough.
+I enjoy the natural beauty in life of wearing sunscreen with a  natural blush and bronzer.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife"
+train_0088,"I am a wife.
+I am a mother.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0089,"1. I am a woman.
+2. I am a Christian
+6. I am a grandmother.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a Christian.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0090,"I was brought up to believe in a strong sense of family and to take pride in a strong work ethic.
+Although I have a very good life, a college degree has always been one of the things I wish I had done.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife"
+train_0091,"I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0092,"Like music.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0093,"trustworthy
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+smart
+thoughtful
+Brother
+I am a Christian."
+train_0094,"4. I am a mother.
+8. I love animals.
+I am creative.
+creative
+Curious
+Helpful
+I am kind.
+Friend
+funny
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+smart
+thoughtful
+Brother
+daughter
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+sister
+brave
+Christian
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0095,"I live in the mountain west with my wife and three dogs.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a Christian.
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom"
+train_0096,"I'm a woman.
+I'm an animal lover.
+I love plants.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0097,"I am a mother.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am a woman
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0098,"I am a person who loves to build and maintain connections with others.
+I am a person who chooses to challenge others when appropriate to break their cycle of pain and suffering.
+I am a person who loves to laugh and enjoy good company.
+I am a person who loves animals, especially dogs.
+I am a person who loves to create art in different facets.
+I am person who loves to travel and explore domestic and international destinations.
+I am a person who loves to watch true- and fiction crime shows and movies.
+I am person who has learned how to set boundaries with family members.
+I am a person who lives to help and support others with their struggles.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher."
+train_0099,"I am a lover of science fiction
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker"
+train_0100,"A great friend, a good listener and communicate well.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother"
+train_0101,"I am someone who wants to live a relaxed, but fulfilling life.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter"
+train_0102,"I am a man.
+I like to read and write.
+I enjoy engaging in constructive discussion on important matters.
+I like to build things.
+I have worked for 40+ years.
+I am a Christian.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter."
+train_0103,"I am a chef. I am a caretaker. I am a daughter. I am a sister. I am a friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0104,"Creative
+I am creative.
+Curious
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+thoughtful
+Brother"
+train_0105,"1) I am a woman with a passion and thirst for knowledge.
+4) I believe in humanity
+6) I enjoy science and the drive for innovation
+7) I am a woman who strives for excellence in her daily life
+8) I like the quote ""work hard, play hard"" I value hard work but also a life of balance
+9) I enjoy reading mysteries and thrillers with plot twists
+11) I am not a human; I am only a brain in a fleshy meat suit
+13) I am a woman who gives second chances
+18) Who is anyone really? I am just a woman typing on a computer
+19) I believe nature is healing. Touching the trees, the water, the soil is important for the human pyche.
+20) I am just a woman who practices science, tries her best to be a good person and live her best life.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0106,"I am an American who works hard to live a great life and enjoy the privilege that our government gives us.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend"
+train_0107,"Live with my Husband of 44 years.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian."
+train_0108,"A wife.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+I am kind.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0109,"I am kind.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father"
+train_0110,"I am a nice person, a thoughtful person, creative, caring, smart, funny, friendly.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a Friend
+I am a mother
+I am a mother.
+I am an introvert
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter
+I am a daughter.
+I am a good friend"
+train_0111,"I am a father.
+I am creative.
+creative
+Curious
+funny
+Helpful
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a woman
+I am kind.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am a son.
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a mom"
+train_0112,"I am a Christian.
+I am a cancer survivor.
+I love music.
+I believe a minimalistic life is best for me.
+I like helping and being supportive to others needs.
+I have a wonderful husband.
+I have found life fulfilling without children-but love children.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0113,"I am not empathetic.
+I do not like opera.
+I am overweight.
+I like to analyze history.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven"
+train_0114,"I am a wife.
+I am a mother.
+I am a daughter, and I am a friend.
+I love to travel and go to quirky spots.
+I like to hear the birds tweet but not roosters crow at 5:00 AM.
+I like to try new food dishes, but I do not like to cook them myself.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife
+I am an animal lover."
+train_0115,"I’m a husband, live in the Pacific Northwest with my partner and 4 year old dog.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven"
+train_0116,"I like computers.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend"
+train_0117,"friend
+I am creative.
+creative
+Curious
+funny
+I am kind.
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+smart
+thoughtful
+Brother
+daughter
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Loving
+sister
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0118,"7. Someone who wishes for companionship
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother"
+train_0119,"I'm a male.
+I'm white.
+I'm in my 20s.
+I love technology.
+I love watching animation and documentaries.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook"
+train_0120,"I am a good friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a college graduate"
+train_0121,"I am a good friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a grandmother
+I am a hard worker
+I am a husband.
+I am a mom
+I am a reader"
+train_0122,"I am a reader and an animal lover.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0123,"This is but a very short list of who I am: (1) I am (2) I am you (3) I am street (4) I am evil (5) I am good (6) I am a soul (7) I am darkness (8) I am light (9) I am the boundless universes. (10) I am dark matter (11) I am an animal (12) I am a child (13) I am a servant (14) I am alone (15) I am everything (16) I am fear (17) I am love (18) I am the cosmos (19) I am female (20) I am male.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0124,"A College Student
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son."
+train_0125,"Mother
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother"
+train_0126,"I am a woman
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+loyal
+sister
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am smart.
+Kind
+Loving
+smart
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father"
+train_0127,"Woman, wife, mother, sister, daughter, aunt, grandmother, friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother"
+train_0128,"-I was a very active young woman.
+-I am a survivor
+-I love people
+-I believe in love
+-I am kind
+I am creative.
+Helpful
+I am kind.
+creative
+Curious
+daughter
+Friend
+funny
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+thoughtful
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend"
+train_0129,"I am creative.
+Curious
+Helpful
+creative
+daughter
+Friend
+funny
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+smart
+Brother
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+loyal
+thoughtful
+worker
+artist
+brave
+Christian
+cook
+Driven
+Father"
+train_0130,"a son
+a friend
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a man.
+I am a mother"
+train_0131,"I am a woman.
+I have lived in the same relative area most of my life.
+I like to dance but I am not very good at it.
+I like to cook.
+But, I like that mostly because I love to eat.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister."
+train_0132,"I am a son
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0133,"I am smart, funny, resourceful, loved as well as a son, brother and friend.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0134,"I love animals.
+I am an alcoholic.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a Friend
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom"
+train_0135,"Love to cook
+Organized
+Love gardening
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate"
+train_0136,"the head and not the tail
+I am creative.
+Curious
+Helpful
+I am kind.
+creative
+daughter
+Friend
+funny
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+thoughtful
+worker
+artist
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0137,"4. I am a creative.
+16. I am a writer.
+20. I am love and hate.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a man.
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0138,"christian
+I am creative.
+creative
+Curious
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+sister
+thoughtful
+Brother
+I am a Christian."
+train_0139,"I love animals.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0140,"son
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother"
+train_0141,"I am a woman.
+I am creative.
+creative
+funny
+Helpful
+I am kind.
+Curious
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+smart
+worker
+artist
+brave
+caring
+Christian
+cook
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother"
+train_0142,"Christian.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother"
+train_0143,"I am a woman and I am young.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am a woman
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a college graduate
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
+train_0144,"I am a daughter, friend and sibling.
+I am a worker and citizen
+I am an old woman, creaky and full of woes
+I am a lover of dragons , mythos, small cats and dumb puns.
+I am the shameless bottomless pit of wating that yearns for the last piece of pizza and the last drop of hope when all things look bleak
+I am a sentamentalist, a drama-queen and a crier
+I am a worrywart, a brooder and a hoverer,
+I am a thing as simple as dirt and as complicated as DNA.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife"
+train_0145,"I am a loyal friend
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a man.
+I am a son.
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a daughter
+I am a Friend
+I am a mother.
+I am a Sister
+I am a woman
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a college graduate
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a hard worker
+I am a hard worker."
+train_0146,"I love people.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+artist
+brave
+Brother
+caring
+cook
+Driven
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a husband.
+I am a mom"
+train_0147,"i am a woman, a mother, a wife, a grandmother, a teacher, a scholar,a high priestess, a friend to most, and an enemy to few.
+i have 2 perfect ladies that I birthed and my eldest has given me a beautiful little red headed granddaughter.  My youngest daughter is about to finish college a year early and has outright owned her own home for a year now.  I am proud.
+All and all I am a happy, blessed woman.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a daughter.
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband.
+I am a mom
+I am a reader
+I am a sister.
+I am a teacher.
+I am a wife
+I am a wife.
+I am an animal lover.
+I am an artist
+I am beautiful.
+I am creative
+I am empathetic
+I am loyal.
+I am ME."
+train_0148,"I am a father
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a mother.
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun"
+train_0149,"I'm a 63 year old divorced woman who is currently living with my daughter and two grandchildren.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+smart
+thoughtful
+Brother
+Friend
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother"
+train_0150,"I am a mother.
+I am a sister.
+I am a daughter.
+I am a friend.
+I have a cat.
+Sometimes, I'm not that funny, yet I still try to bring a smile to others.
+I love dark chocolate and nuts.
+I love to learn.
+I am creative.
+creative
+Curious
+funny
+Helpful
+I am kind.
+daughter
+Friend
+I am a Friend
+I am a man.
+I am a son.
+I am a woman
+loyal
+sister
+smart
+thoughtful
+Brother
+I am a Christian.
+I am a college graduate
+I am a daughter
+I am a mother
+I am a Sister
+I am an introvert
+I am kind
+I am smart.
+Kind
+Loving
+worker
+artist
+brave
+caring
+Christian
+cook
+Driven
+Father
+Fun
+I am a good friend
+I am a good friend.
+I am a grandmother
+I am a hard worker
+I am a hard worker.
+I am a husband."
