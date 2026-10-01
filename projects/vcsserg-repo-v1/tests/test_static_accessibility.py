@@ -32,6 +32,43 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_page_frame_has_one_top_level_banner_main_and_contentinfo(self):
+        valid = parse(
+            "<html><body><header>Site identity</header><main>"
+            "<article><header>Article title</header><footer>Article notes</footer>"
+            "</article></main><footer>Site information</footer></body></html>"
+        )
+        self.assertEqual(valid.banner_count, 1)
+        self.assertEqual(valid.contentinfo_count, 1)
+        self.assertEqual(VERIFY.page_landmark_problems(valid, "frame.html"), [])
+
+        missing = parse(
+            "<html><body><main><header>Section title</header>"
+            "<footer>Section notes</footer></main></body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_landmark_problems(missing, "frame.html"),
+            [
+                "frame.html: expected one banner landmark, found 0",
+                "frame.html: expected one contentinfo landmark, found 0",
+            ],
+        )
+
+        invalid = parse(
+            '<html><body><header>First</header><div role="banner">Second</div>'
+            '<main><footer>Nested notes</footer></main><div role="main"></div>'
+            '<footer>First</footer><div role="contentinfo">Second</div>'
+            "</body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_landmark_problems(invalid, "frame.html"),
+            [
+                "frame.html: expected one banner landmark, found 2",
+                "frame.html: expected one main landmark, found 2",
+                "frame.html: expected one contentinfo landmark, found 2",
+            ],
+        )
+
     def test_accepts_first_bypass_link_and_explicit_image_alternatives(self):
         page = parse(
             '<a class="skip-link" href="#main">Skip to content</a>'

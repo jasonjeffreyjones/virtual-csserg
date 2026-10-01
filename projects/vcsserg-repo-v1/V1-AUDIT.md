@@ -16,19 +16,19 @@ does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on September 30, 2026 |
+| Documented promise | Evidence or test | Status on October 1, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | First-party HTML/CSS semantics, first-anchor bypass links, nonempty unskipped heading ranks, named repeated navigation landmarks, named data tables with scoped headers, explicit image alternatives, named exposed interactive and keyboard-focusable elements with valid ARIA relationships and safely hidden source-line anchors, local paths/fragments, Bootstrap CDN, logo, grouped required footer | Automated pass across 39 HTML pages, 31 named data tables, 196 exposed headings, 809 interactive or keyboard-focusable elements, and 7 first-party stylesheets; all 783 exposed interactive elements are named and 26 source-line anchors are safely hidden; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one page-level banner, main, and content-information landmark; first-anchor bypass links; nonempty unskipped heading ranks; named repeated navigation landmarks; named data tables with scoped headers; explicit image alternatives; named exposed interactive and keyboard-focusable elements with valid ARIA relationships and safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 34 named data tables, 198 exposed headings, 819 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has the complete three-landmark frame, all 793 exposed interactive elements are named, and 26 source-line anchors are safely hidden; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, and 257 before the September 30 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, and 267 before the October 1 revision |
 
 ## Current automated result
 
-On September 30, 2026, **all seven groups pass**. The final report-format gap
+On October 1, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -150,6 +150,20 @@ publication structure:
   safely hidden. These source facts reduce risk but do not establish rendered
   screen-reader heading navigation. A fresh `w3m` pass returned zero for all
   26 current 40- and 120-column views and placed “Skip to content” first.
+- On October 1, a top-level landmark audit found exactly one banner, main
+  region, and content-information landmark on every one of the 39 current
+  pages. The context-aware parser follows native HTML landmark rules, so
+  headers and footers nested in a main, article, aside, navigation, or section
+  region are not misclassified as page landmarks. One focused fixture accepts
+  valid nested structure and rejects both missing and duplicate landmarks,
+  including explicit ARIA roles. Later Predict the Self work brought the
+  current inventory to 34 named tables, 198 exposed headings, and 819
+  interactive or keyboard-focusable elements: all 793 exposed interactive
+  elements are named, and 26 source-line anchors remain safely hidden. This
+  source contract does not establish the landmarks exposed by a browser and
+  screen-reader pairing. A supplemental `w3m` pass returned zero for all 26
+  current 40- and 120-column views and placed “Skip to content” first; this
+  remains linearized text-order evidence only.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -166,7 +180,8 @@ one H1 on a multi-level Quarto book page.
 The current verifier:
 
 - adds a dedicated three-format report group;
-- requires every page's first anchor itself to target `main` as a bypass and
+- requires exactly one page-level banner, main, and content-information
+  landmark, and requires every page's first anchor itself to target `main` as a bypass and
   every image to carry an explicit `alt` attribute, and requires accessible
   heading text without forward rank skips, names on repeated navigation
   landmarks and exposed interactive or
@@ -175,7 +190,8 @@ The current verifier:
   scope on table header cells,
   with negative fixtures for missing,
   late, wrong-target, misleading-first, and runtime-relocated bypasses, a
-  missing image alternative, an empty or forward-skipped heading, unnamed
+  missing or duplicate page landmarks, a missing image alternative, an empty
+  or forward-skipped heading, unnamed
   navigation or control, missing or empty
   label targets, missing controlled targets, invalid expanded state, unsafe
   hidden controls, an unnamed data table, broken or empty table labels, and
@@ -236,7 +252,8 @@ revision, all 166 incoming files were byte-identical. Before the September 25
 revision, all 174 incoming files were byte-identical. Before the September 26
 revision, all 182 incoming files were byte-identical. Before the September 29
 revision, all 249 incoming files were byte-identical. Before the September 30
-revision, all 257 incoming files were byte-identical; normal automation must
+revision, all 257 incoming files were byte-identical. Before the October 1
+revision, all 267 incoming files were byte-identical; normal automation must
 still deploy and inventory this revised release.
 
 ## Other current requirements

@@ -56,8 +56,11 @@ annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
 The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
-non-passing result. The whole-site check also requires every data table to have
-an accessible name, every table header cell to declare a valid row or column
+non-passing result. The whole-site check also requires exactly one page-level
+banner, main, and content-information landmark. It recognizes native
+header/footer context so nested section and article structures are not
+misclassified as page landmarks. It requires every data table to have an
+accessible name, every table header cell to declare a valid row or column
 scope, every exposed heading to contain text without skipping forward over a
 rank, and every exposed interactive or
 keyboard-focusable element to have an accessible name. Coverage includes links,

@@ -88,6 +88,17 @@ current expanded site also contains 31 named tables and 809 interactive or
 keyboard-focusable elements: all 783 exposed interactive elements are named,
 with 26 source-line anchors safely hidden. Rendered heading order and announced
 names remain part of the manual review.
+On October 1, the deterministic precursor to screen-reader landmark navigation
+was strengthened. All 39 public pages expose exactly one top-level banner, one
+main region, and one content-information landmark. A context-aware fixture
+accepts nested section and article headers and footers while rejecting missing
+or duplicate page landmarks and explicit-role duplicates. The current site
+contains 34 named tables, 198 exposed headings, and 819 interactive or
+keyboard-focusable elements: all 793 exposed interactive elements are named,
+with 26 source-line anchors safely hidden. The contract follows W3C's native
+HTML landmark mapping but does not inspect a rendered accessibility tree or
+replace screen-reader review (World Wide Web Consortium Web Accessibility
+Initiative, n.d.).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -311,3 +322,7 @@ https://quarto.org/docs/output-formats/html-accessibility.html
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
 https://www.w3.org/WAI/WCAG22/Techniques/html/H39
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Landmark
+regions*. Retrieved October 1, 2026, from
+https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

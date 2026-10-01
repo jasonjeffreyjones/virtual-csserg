@@ -74,6 +74,20 @@ INTERACTIVE_ROLES = {
 }
 FORM_CONTROL_ELEMENTS = {"input", "select", "textarea"}
 HEADING_ELEMENTS = {f"h{level}" for level in range(1, 7)}
+IMPLICIT_LANDMARK_CONTEXT_ELEMENTS = {
+    "article",
+    "aside",
+    "main",
+    "nav",
+    "section",
+}
+IMPLICIT_LANDMARK_CONTEXT_ROLES = {
+    "article",
+    "complementary",
+    "main",
+    "navigation",
+    "region",
+}
 VOID_ELEMENTS = {
     "area",
     "base",
@@ -105,6 +119,8 @@ class PageParser(HTMLParser):
         self.description = ""
         self.assignment = None
         self.assignments = []
+        self.banner_count = 0
+        self.contentinfo_count = 0
         self.footer_depth = 0
         self.footer_group = None
         self.footer_group_references = {}
@@ -150,10 +166,28 @@ class PageParser(HTMLParser):
         attributes = dict(attrs)
         element_id = attributes.get("id")
         aria_hidden = attributes.get("aria-hidden", "").strip().lower() == "true"
+        role = attributes.get("role", "").strip().lower()
+        implicit_landmark_context = any(
+            ancestor_tag in IMPLICIT_LANDMARK_CONTEXT_ELEMENTS
+            or ancestor_role in IMPLICIT_LANDMARK_CONTEXT_ROLES
+            for ancestor_tag, _, _, ancestor_role in self.open_elements
+        )
         if tag not in VOID_ELEMENTS:
-            self.open_elements.append((tag, aria_hidden, element_id))
+            self.open_elements.append((tag, aria_hidden, element_id, role))
             if aria_hidden:
                 self.hidden_depth += 1
+        if role == "banner" or (
+            tag == "header" and not role and not implicit_landmark_context
+        ):
+            self.banner_count += 1
+        if role == "contentinfo" or (
+            tag == "footer" and not role and not implicit_landmark_context
+        ):
+            self.contentinfo_count += 1
+        if role == "main" or (tag == "main" and not role):
+            self.main_count += 1
+            if element_id:
+                self.main_ids.append(element_id)
         if tag == "footer":
             self.footer_depth += 1
         footer_group = attributes.get("data-footer-group")
@@ -196,7 +230,6 @@ class PageParser(HTMLParser):
             keyboard_focusable = tabindex is not None and int(tabindex) >= 0
         except (TypeError, ValueError):
             keyboard_focusable = False
-        role = attributes.get("role", "").strip().lower()
         interactive = (
             (
                 tag in NATIVE_INTERACTIVE_ELEMENTS
@@ -237,10 +270,6 @@ class PageParser(HTMLParser):
                 self.interactive_stack.append(control)
         if tag == "html":
             self.html_lang = attributes.get("lang", "")
-        elif tag == "main":
-            self.main_count += 1
-            if element_id:
-                self.main_ids.append(element_id)
         elif tag == "figure":
             self.figure_count += 1
         elif tag == "img":
@@ -328,8 +357,8 @@ class PageParser(HTMLParser):
             if self.open_elements[index][0] == tag:
                 closed = self.open_elements[index:]
                 del self.open_elements[index:]
-                self.hidden_depth -= sum(hidden for _, hidden, _ in closed)
-                for _, _, closed_id in reversed(closed):
+                self.hidden_depth -= sum(hidden for _, hidden, _, _ in closed)
+                for _, _, closed_id, _ in reversed(closed):
                     if not closed_id:
                         continue
                     for id_index in range(len(self.id_text_stack) - 1, -1, -1):
@@ -542,6 +571,25 @@ def page_accessibility_problems(parsed, relative):
             problems.append(
                 f"{relative}: {description} has invalid aria-expanded"
             )
+    return problems
+
+
+def page_landmark_problems(parsed, relative):
+    """Return source-level checks for the page's top-level landmark frame."""
+    problems = []
+    if parsed.banner_count != 1:
+        problems.append(
+            f"{relative}: expected one banner landmark, found {parsed.banner_count}"
+        )
+    if parsed.main_count != 1:
+        problems.append(
+            f"{relative}: expected one main landmark, found {parsed.main_count}"
+        )
+    if parsed.contentinfo_count != 1:
+        problems.append(
+            f"{relative}: expected one contentinfo landmark, "
+            f"found {parsed.contentinfo_count}"
+        )
     return problems
 
 
@@ -1101,8 +1149,7 @@ def check_html_and_css():
             problems.append(f"{relative}: missing title")
         else:
             titles.setdefault(parsed.title, []).append(relative)
-        if parsed.main_count != 1:
-            problems.append(f"{relative}: expected one main element")
+        problems.extend(page_landmark_problems(parsed, relative))
         if not any(
             heading["level"] == 1 and not heading["hidden"]
             for heading in parsed.heading_records
@@ -1189,7 +1236,8 @@ def check_html_and_css():
     return Result(
         "Static HTML/CSS site",
         not problems,
-        f"{len(html_pages)} HTML page(s), "
+        f"{len(html_pages)} HTML page(s) with one banner, main, and "
+        "contentinfo landmark each, "
         f"{sum(len(parsed.table_records) for parsed in parsed_pages.values())} "
         f"named data table(s), {exposed_headings} exposed heading(s), "
         f"{exposed_interactive} exposed interactive or "

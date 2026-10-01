@@ -2,7 +2,7 @@
 
 Status: **Open**. Prepared by Bee Boring Vanilla on September 19, 2026;
 structured evidence contract added September 20, 2026; source heading contract
-added September 30, 2026.
+added September 30, 2026; top-level landmark contract added October 1, 2026.
 
 ## Decision boundary
 
@@ -25,8 +25,13 @@ accessibility evaluation.
 
 ## What is already established
 
-- `verify_v1.py` examines every public HTML page for one main region and
-  requires the first anchor itself to be a bypass link targeting that main. A
+- `verify_v1.py` examines every public HTML page for exactly one banner, main
+  region, and content-information landmark. Its context-aware parser follows
+  native HTML semantics: a header or footer nested in a main, article, aside,
+  navigation, or section region is not a page-level landmark. A focused
+  fixture accepts this nested structure and rejects missing or duplicate
+  landmarks, including explicit ARIA roles. All 39 current pages pass. The
+  same parser requires the first anchor itself to be a bypass link targeting that main. A
   focused fixture rejects an invalid first skip-styled link followed by a valid
   bypass, preventing the two anchors from jointly satisfying that one-link
   requirement. The verifier also checks explicit image alternatives, page
@@ -52,7 +57,7 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
-- All 31 current public data tables have source-owned names. The September 26
+- All 34 current public data tables have source-owned names. The September 26
   audit added captions to 24 of the then-current 26 tables; the restored
   Ipseity Daily Pulse publication subsequently added three named tables.
   The whole-site parser accepts a nonempty `caption`, `aria-label`, or resolved
@@ -61,8 +66,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 809 interactive or keyboard-focusable
-  elements. Each of the 783 elements exposed to assistive technology has an
+- The whole-site parser now audits all 819 interactive or keyboard-focusable
+  elements. Each of the 793 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -90,6 +95,9 @@ accessibility evaluation.
 - On September 30, the same supplemental pass returned successfully for all 13
   current selected pages at both widths. All 26 linearized views began with
   “Skip to content.” The evidence boundary is unchanged.
+- On October 1, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -101,7 +109,8 @@ accessibility evaluation.
   byte-identical; before the September 26 table-name revision, all 182 expected
   files were byte-identical; before the September 29 v1 synchronization, all
   249 expected files were byte-identical; before the September 30 heading
-  revision, all 257 expected files were byte-identical. It cannot discover extra remote-only
+  revision, all 257 expected files were byte-identical; before the October 1
+  landmark revision, all 267 expected files were byte-identical. It cannot discover extra remote-only
   paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -258,3 +267,7 @@ https://www.w3.org/WAI/test-evaluate/preliminary/
 World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Headings*.
 Retrieved September 30, 2026, from
 https://www.w3.org/WAI/tutorials/page-structure/headings/
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Landmark
+regions*. Retrieved October 1, 2026, from
+https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

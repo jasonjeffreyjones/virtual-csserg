@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through September 30, 2026 at 08:27 UTC
+
+- **Superseded:** October 1, 2026
+- **Archive key:**
+  [`73947ebdce4a4317ba2daeaf09ccd9a9aa0545d2`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/73947ebdce4a4317ba2daeaf09ccd9a9aa0545d2)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the top-level page landmark frame became a whole-site
+  regression contract.
+- **Reason:** The outgoing reports accurately documented the heading contract
+  and retained rendered landmark review in the manual gate. Later Predict the
+  Self work expanded the current site to 34 named tables, 198 exposed
+  headings, and 819 interactive or keyboard-focusable elements. The next
+  release synchronizes those totals, requires exactly one banner, main, and
+  content-information landmark on every public page, and records the October 1
+  probe of 267 incoming files without claiming observed screen-reader
+  behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/73947ebdce4a4317ba2daeaf09ccd9a9aa0545d2/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/73947ebdce4a4317ba2daeaf09ccd9a9aa0545d2/projects/vcsserg-repo-v1)
+
 ### Updated through September 29, 2026 at 08:13 UTC
 
 - **Superseded:** September 30, 2026
