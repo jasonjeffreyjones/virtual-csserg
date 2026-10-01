@@ -143,6 +143,23 @@ python3 projects/predict-the-self/analysis/analyze_calibrated_synthesis.py \
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked semantic-neighborhood Add-ranking analysis. Download the
+public-domain 25-dimensional GloVe Twitter conversion outside the repository,
+verify the pinned SHA-256, and pass it explicitly. The analysis streams only
+vectors used by source text, reproduces every inherited marginal and surface-
+neighborhood hit count, and never reads development or private-test rows:
+
+```bash
+curl -L --fail --output /tmp/glove-twitter-25.gz \
+  https://github.com/RaRe-Technologies/gensim-data/releases/download/glove-twitter-25/glove-twitter-25.gz
+printf '%s  %s\n' \
+  63877d71151688baf6f31d5437374f637f737a5e100e12150a5bd61a9f273c3f \
+  /tmp/glove-twitter-25.gz | sha256sum --check
+python3 projects/predict-the-self/analysis/analyze_semantic_neighborhood_additions.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766 \
+  --embeddings /tmp/glove-twitter-25.gz
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

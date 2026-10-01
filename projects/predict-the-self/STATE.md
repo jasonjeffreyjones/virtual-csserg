@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-09-30T09:44:28Z
+updated: 2026-10-01T09:17:16Z
 ---
 
 # Predict the Self — Current State
@@ -50,6 +50,11 @@ A locked training-only full-text synthesis now tests whether those quantity
 and continuity signals compose into a useful forecast. It improves word-count
 and source-change calibration but fails its prespecified edit-similarity and
 novel-content gates, so no development comparison is permitted.
+A locked external-semantic test now also shows that replacing surface TF-IDF
+with pretrained GloVe source centroids does not improve novel-token ranking:
+the semantic neighborhood is effectively tied with the surface neighborhood
+and remains worse than marginal Add frequency. Its content hurdle fails, so it
+also cannot advance to development.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -210,6 +215,18 @@ for an equal-volume marginal ranking (difference `-0.058793`, `-0.076168` to
 `-0.041473`). The three-part advancement gate fails; development labels remain
 unread by this method.
 
+The locked semantic-neighborhood analysis represents each training source as a
+fold-IDF-weighted centroid of distinct public-domain 25-dimensional GloVe
+Twitter token vectors. The vectors cover `2409` of `2537` source token types
+(`94.9547%`), with no zero-coverage case. At the same oracle held-out Add budget,
+the semantic ranking recovers a mean `0.148760` of additions versus `0.160992`
+for marginal frequency. The semantic-minus-marginal difference is `-0.012232`
+with a case-bootstrap interval of `-0.018361` to `-0.006322`; semantic wins 22
+cases, ties 65, and loses 63. Its difference from the inherited surface
+neighborhood is `-0.000247` (`-0.006521` to `+0.005834`). Distributional
+source similarity therefore does not demonstrate person-conditioned lexical
+advantage under this fixed centroid and ranking rule.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -294,6 +311,14 @@ unread by this method.
   focused tests, all 150 fold predictions, a complete case audit, and a JSON
   result with a prespecified no-development gate. No development or private-
   test row or artifact was read or changed.
+- Locked `ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md` before reading
+  benchmark rows (SHA-256
+  `6a6a536a11c552b0e75f40ce6d79100902727958fa908cb57a662ac85df5fdcf`).
+  Added a standard-library streaming GloVe parser, hash-guarded leave-one-out
+  semantic-neighborhood comparison, seven focused tests, complete JSON result,
+  and 150-row case audit. The script reproduces every inherited marginal and
+  surface-neighborhood hit count before accepting results. Development and test
+  rows and artifacts were not read or changed.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -312,7 +337,7 @@ unread by this method.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, nine linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes fifty-five research
+- The three forms link reciprocally. The Full Report publishes fifty-nine research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -389,6 +414,14 @@ unread by this method.
   Its gate is pointwise rather than multiplicity-adjusted. Fold predictions and
   the audit are derived benchmark-data adaptations under CC BY-NC-SA 4.0; the
   failed gate forbids development evaluation of this fixed method.
+- The semantic-neighborhood design was chosen after the earlier content
+  failures were known. Its external Twitter-trained vectors are distributional
+  rather than validated identity measures and can encode bias or domain
+  mismatch; its centroid discards order, polysemy, negation, and response
+  structure. It retains the oracle budget, candidate vocabulary, and fixed
+  neighborhood shrinkage. The GloVe artifact is PDDL-licensed, hash-pinned, and
+  not committed. Its case audit is a derived benchmark-data adaptation under
+  CC BY-NC-SA 4.0; the failed hurdle forbids development evaluation.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -423,6 +456,8 @@ unread by this method.
   simultaneous-interval sensitivity procedure.
 - `ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md`: fixed full-text synthesis rule,
   content control, and three-part advancement gate.
+- `ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md`: fixed external-semantic
+  Add-ranking representation, controls, and content hurdle.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -454,6 +489,9 @@ unread by this method.
 - `analysis/analyze_calibrated_synthesis.py`: locked training-only full-text
   synthesis and gate evaluation; its JSON, case audit, and all fold predictions
   are under `results/`.
+- `analysis/analyze_semantic_neighborhood_additions.py`: locked streaming GloVe
+  semantic-neighborhood comparison; its JSON and 150-case audit are under
+  `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -481,13 +519,13 @@ unread by this method.
    development data to limit repeated tuning; preferably reserve new evidence
    or use training-only nested evaluation because development labels are now
    heavily reused.
-3. Do not evaluate the failed common-unit synthesis on development data. Avoid
-   further fixed lexical re-rankers or post hoc decompositions on the same 150
-   cases without a substantively new representation or new evidence. Before
-   reusing development labels, require a semantic person-conditioned approach
-   to preserve response-form calibration, introduce source-relevant rather than
-   generic content, demonstrate value beyond simple source counts, and beat
-   leave-one-out marginal additions in training; then lock any development
-   comparison and avoid private test feedback.
+3. Do not evaluate either the failed common-unit synthesis or the failed GloVe-
+   centroid ranking on development data. Avoid more fixed Add re-rankers or
+   post hoc decompositions on the same 150 cases without richer compositional
+   context or new longitudinal evidence. Before reusing development labels,
+   require a person-conditioned method to preserve response-form calibration,
+   demonstrate value beyond simple source counts, and beat leave-one-out
+   marginal additions in training; then lock any development comparison and
+   avoid private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

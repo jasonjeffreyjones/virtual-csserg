@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_semantic_neighborhood_additions",
+  "cases": 150,
+  "scored_cases_with_positive_budget": 150,
+  "zero_budget_cases": 0,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "6a6a536a11c552b0e75f40ce6d79100902727958fa908cb57a662ac85df5fdcf",
+    "inherited_neighborhood_implementation_sha256": "bdcfbf9bc2c72fc9e4e45e7fa8bb317d5ecf88efb8959d77222816c5154c8b4a",
+    "inherited_neighborhood_audit_sha256": "dbd03631a34829311715885caf49455c71e06bf4fd22ee3484a0e8afd184f0bc"
+  },
+  "external_representation": {
+    "name": "GloVe Twitter 25-dimensional vectors",
+    "artifact_sha256": "63877d71151688baf6f31d5437374f637f737a5e100e12150a5bd61a9f273c3f",
+    "vectors": 1193514,
+    "dimensions": 25,
+    "source": "Twitter: 2 billion tweets and 27 billion tokens; Gensim-data word2vec-format conversion",
+    "license": "Open Data Commons PDDL 1.0",
+    "project_source_vocabulary_types": 2537,
+    "in_vocabulary_source_types": 2409,
+    "source_type_coverage_fraction": 0.949547
+  },
+  "design": {
+    "training_cases_per_fold": 149,
+    "neighbor_count": 30,
+    "neighbor_effective_weight": 30.0,
+    "marginal_prior_weight": 30.0,
+    "source_representation": "fold-IDF-weighted centroid of distinct source-token GloVe Twitter vectors",
+    "comparators": [
+      "fold marginal Add frequency",
+      "inherited text-and-demographic surface-TF-IDF neighborhood"
+    ],
+    "budget": "observed held-out novel-token-type count",
+    "warning": "The oracle budget uses each held-out follow-up and isolates ranking quality; no method is a standalone forecast.",
+    "score_identity": "Predicted and observed sets have equal size, so case-level novel-type precision, recall, and F1 are identical."
+  },
+  "source_vector_case_coverage_fraction": {
+    "mean": 0.95938,
+    "median": 0.978609,
+    "minimum": 0.608696,
+    "maximum": 1.0
+  },
+  "cases_with_zero_source_vector_coverage": 0,
+  "observed_addition_budget": {
+    "mean": 39.433333,
+    "median": 31.0,
+    "minimum": 1.0,
+    "maximum": 146.0
+  },
+  "candidate_vocabulary_reachable_fraction": {
+    "mean": 0.773139,
+    "median": 0.781534,
+    "minimum": 0.0,
+    "maximum": 1.0
+  },
+  "mean_selected_semantic_neighbor_cosine_similarity": {
+    "mean": 0.975307,
+    "median": 0.982059,
+    "minimum": 0.865274,
+    "maximum": 0.991437
+  },
+  "top_set_overlap_fraction": {
+    "semantic_with_marginal": {
+      "mean": 0.74653,
+      "median": 0.764706,
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "semantic_with_surface_neighborhood": {
+      "mean": 0.715137,
+      "median": 0.727273,
+      "minimum": 0.0,
+      "maximum": 0.892857
+    }
+  },
+  "novel_type_recovered_fraction": {
+    "marginal_addition": {
+      "mean": 0.160992,
+      "median": 0.15625,
+      "minimum": 0.0,
+      "maximum": 0.4
+    },
+    "surface_neighborhood": {
+      "mean": 0.149007,
+      "median": 0.148542,
+      "minimum": 0.0,
+      "maximum": 0.407407
+    },
+    "semantic_neighborhood": {
+      "mean": 0.14876,
+      "median": 0.153846,
+      "minimum": 0.0,
+      "maximum": 0.410714
+    }
+  },
+  "paired_comparisons": {
+    "primary_semantic_vs_marginal": {
+      "effect_definition": "semantic_neighborhood_minus_marginal_addition",
+      "mean_effect_positive_favors_semantic_neighborhood": -0.012232,
+      "paired_case_bootstrap_95_ci_low": -0.018361,
+      "paired_case_bootstrap_95_ci_high": -0.006322,
+      "semantic_neighborhood_case_wins": 22,
+      "case_ties": 65,
+      "semantic_neighborhood_case_losses": 63
+    },
+    "secondary_semantic_vs_surface_neighborhood": {
+      "effect_definition": "semantic_neighborhood_minus_surface_neighborhood",
+      "mean_effect_positive_favors_semantic_neighborhood": -0.000247,
+      "paired_case_bootstrap_95_ci_low": -0.006521,
+      "paired_case_bootstrap_95_ci_high": 0.005834,
+      "semantic_neighborhood_case_wins": 40,
+      "case_ties": 71,
+      "semantic_neighborhood_case_losses": 39
+    }
+  },
+  "primary_gate": {
+    "rule": "semantic-minus-marginal mean must be positive and its pointwise 95% interval must exclude zero positively",
+    "passed": false,
+    "development_evaluation_permitted_this_iteration": false,
+    "next_step_if_passed": "A later locked prospective method must still forecast volume, preserve response form, beat simple source counts, and pass a full-text training gate."
+  },
+  "bootstrap": {
+    "unit": "paired scored training case",
+    "resamples": 20000,
+    "seed": 20261001,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "interpretation": "Describes sensitivity to training-case composition; it is not a population-generalization interval."
+  },
+  "interpretation_limits": "GloVe proximity is distributional rather than an ipseological identity measure. The centroid discards order and polysemy, Twitter vectors can encode bias and domain mismatch, and the oracle budget prevents a prospective forecasting claim. This is not development or private-test performance."
+}

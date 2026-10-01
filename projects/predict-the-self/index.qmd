@@ -102,6 +102,17 @@ addition ranking. It fails the prespecified three-part advancement gate, so
 the plan forbids a development comparison. Common whole response units do not
 turn volume calibration into person-specific content prediction.
 
+A ninth lock tests a substantively new source representation before any return
+to development data. Public-domain 25-dimensional GloVe vectors trained on
+Twitter cover 94.95% of the training sources' distinct token types. Yet the
+fixed semantic neighborhood recovers only `0.148760` of held-out additions,
+versus `0.160992` for marginal frequency. Its `−0.012232` paired difference has
+a case-bootstrap interval of `−0.018361` to `−0.006322`. It is also
+indistinguishable from the prior surface neighborhood (`−0.000247`, interval
+`−0.006521` to `+0.005834`). Distributional source similarity changes about a
+quarter of the guesses without improving which new words the same person later
+uses. The semantic hurdle fails, so no development prediction is permitted.
+
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
@@ -116,7 +127,9 @@ tests no-oracle change-volume forecasts, their predictive distributions, the
 locked source-feature ablation, and the count-only source-form comparison
 separately. It then reports the bounded 16-contrast multiplicity stress test
 without recasting earlier dependent analyses as confirmation, followed by the
-locked calibrated-synthesis failure and its no-development decision.
+locked calibrated-synthesis failure and its no-development decision, then the
+external-semantic neighborhood test and its independently failed content
+hurdle.
 
 The report distinguishes three claims that should not be collapsed:
 

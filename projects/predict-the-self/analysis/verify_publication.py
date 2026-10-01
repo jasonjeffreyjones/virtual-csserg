@@ -93,6 +93,7 @@ def main() -> int:
 
     expected_artifacts = {
         PUBLIC / "report/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
+        PUBLIC / "report/ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md",
         PUBLIC / "report/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
         PUBLIC / "report/ANALYSIS_PLAN_CHANGE_VOLUME.md",
         PUBLIC / "report/ANALYSIS_PLAN_FEATURE_ABLATION.md",
@@ -105,6 +106,7 @@ def main() -> int:
         PUBLIC / "report/BENCHMARK_PROVENANCE.md",
         PUBLIC / "report/analysis/analyze_change_distributions.py",
         PUBLIC / "report/analysis/analyze_calibrated_synthesis.py",
+        PUBLIC / "report/analysis/analyze_semantic_neighborhood_additions.py",
         PUBLIC / "report/analysis/analyze_change_volume.py",
         PUBLIC / "report/analysis/analyze_feature_ablation.py",
         PUBLIC / "report/analysis/analyze_multiplicity_stress_test.py",
@@ -130,6 +132,8 @@ def main() -> int:
         PUBLIC / "report/results/multiplicity_stress_test_train_audit.csv",
         PUBLIC / "report/results/source_form_ablation_train_analysis.json",
         PUBLIC / "report/results/source_form_ablation_train_audit.csv",
+        PUBLIC / "report/results/semantic_neighborhood_additions_train_analysis.json",
+        PUBLIC / "report/results/semantic_neighborhood_additions_train_audit.csv",
         PUBLIC / "report/results/neighborhood_additions_train_analysis.json",
         PUBLIC / "report/results/neighborhood_additions_train_audit.csv",
         PUBLIC / "report/results/novelty_prior_dev_analysis.json",
@@ -152,6 +156,7 @@ def main() -> int:
     assert expected_artifacts <= evidence_targets, "Full Report omits public artifacts"
     for source, legacy in (
         ("ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md", "artifacts/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md"),
+        ("ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md", "artifacts/ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md"),
         ("ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md", "artifacts/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md"),
         ("ANALYSIS_PLAN_CHANGE_VOLUME.md", "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md"),
         ("ANALYSIS_PLAN_FEATURE_ABLATION.md", "artifacts/ANALYSIS_PLAN_FEATURE_ABLATION.md"),
@@ -164,6 +169,7 @@ def main() -> int:
         ("BENCHMARK_PROVENANCE.md", "artifacts/BENCHMARK_PROVENANCE.md"),
         ("analysis/analyze_change_distributions.py", "artifacts/analyze_change_distributions.py"),
         ("analysis/analyze_calibrated_synthesis.py", "artifacts/analyze_calibrated_synthesis.py"),
+        ("analysis/analyze_semantic_neighborhood_additions.py", "artifacts/analyze_semantic_neighborhood_additions.py"),
         ("analysis/analyze_change_volume.py", "artifacts/analyze_change_volume.py"),
         ("analysis/analyze_feature_ablation.py", "artifacts/analyze_feature_ablation.py"),
         ("analysis/analyze_multiplicity_stress_test.py", "artifacts/analyze_multiplicity_stress_test.py"),
@@ -189,6 +195,8 @@ def main() -> int:
         ("results/multiplicity_stress_test_train_audit.csv", "artifacts/multiplicity_stress_test_train_audit.csv"),
         ("results/source_form_ablation_train_analysis.json", "artifacts/source_form_ablation_train_analysis.json"),
         ("results/source_form_ablation_train_audit.csv", "artifacts/source_form_ablation_train_audit.csv"),
+        ("results/semantic_neighborhood_additions_train_analysis.json", "artifacts/semantic_neighborhood_additions_train_analysis.json"),
+        ("results/semantic_neighborhood_additions_train_audit.csv", "artifacts/semantic_neighborhood_additions_train_audit.csv"),
         ("results/neighborhood_additions_train_analysis.json", "artifacts/neighborhood_additions_train_analysis.json"),
         ("results/neighborhood_additions_train_audit.csv", "artifacts/neighborhood_additions_train_audit.csv"),
         ("results/novelty_prior_dev_analysis.json", "artifacts/novelty_prior_dev_analysis.json"),

@@ -13,6 +13,7 @@ SOURCE = PROJECT / "_book"
 PUBLIC = ROOT / "website/projects/predict-the-self/report"
 COMPATIBILITY_ARTIFACTS = {
     "ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md": "artifacts/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
+    "ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md": "artifacts/ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md",
     "ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md": "artifacts/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
     "ANALYSIS_PLAN_CHANGE_VOLUME.md": "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md",
     "ANALYSIS_PLAN_FEATURE_ABLATION.md": "artifacts/ANALYSIS_PLAN_FEATURE_ABLATION.md",
@@ -25,6 +26,7 @@ COMPATIBILITY_ARTIFACTS = {
     "BENCHMARK_PROVENANCE.md": "artifacts/BENCHMARK_PROVENANCE.md",
     "analysis/analyze_change_distributions.py": "artifacts/analyze_change_distributions.py",
     "analysis/analyze_calibrated_synthesis.py": "artifacts/analyze_calibrated_synthesis.py",
+    "analysis/analyze_semantic_neighborhood_additions.py": "artifacts/analyze_semantic_neighborhood_additions.py",
     "analysis/analyze_change_volume.py": "artifacts/analyze_change_volume.py",
     "analysis/analyze_feature_ablation.py": "artifacts/analyze_feature_ablation.py",
     "analysis/analyze_multiplicity_stress_test.py": "artifacts/analyze_multiplicity_stress_test.py",
@@ -50,6 +52,8 @@ COMPATIBILITY_ARTIFACTS = {
     "results/multiplicity_stress_test_train_audit.csv": "artifacts/multiplicity_stress_test_train_audit.csv",
     "results/source_form_ablation_train_analysis.json": "artifacts/source_form_ablation_train_analysis.json",
     "results/source_form_ablation_train_audit.csv": "artifacts/source_form_ablation_train_audit.csv",
+    "results/semantic_neighborhood_additions_train_analysis.json": "artifacts/semantic_neighborhood_additions_train_analysis.json",
+    "results/semantic_neighborhood_additions_train_audit.csv": "artifacts/semantic_neighborhood_additions_train_audit.csv",
     "results/neighborhood_additions_train_analysis.json": "artifacts/neighborhood_additions_train_analysis.json",
     "results/neighborhood_additions_train_audit.csv": "artifacts/neighborhood_additions_train_audit.csv",
     "results/novelty_prior_dev_analysis.json": "artifacts/novelty_prior_dev_analysis.json",

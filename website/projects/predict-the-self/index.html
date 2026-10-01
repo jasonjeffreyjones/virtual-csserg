@@ -95,6 +95,7 @@
           <tbody>
             <tr><th scope="row">Source-token recovered fraction</th><td>0.145238</td><td class="metric-better">0.160992</td><td>−0.015754<br><small>95% interval −0.020829 to −0.010736</small></td></tr>
             <tr><th scope="row">30-neighbor recovered fraction</th><td>0.149007</td><td class="metric-better">0.160992</td><td>−0.011984<br><small>95% interval −0.018426 to −0.005693</small></td></tr>
+            <tr><th scope="row">GloVe-semantic recovered fraction</th><td>0.148760</td><td class="metric-better">0.160992</td><td>−0.012232<br><small>95% interval −0.018361 to −0.006322</small></td></tr>
           </tbody>
         </table>
       </div>
@@ -163,7 +164,7 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that individualized lexical rankings lose to marginal additions at the same oracle budget. Once that budget is removed, pointwise intervals favor Add-count, Delete-count, and word-count forecasts, while full-distribution scoring supports a CRPS gain only for word count. A synchronized 16-contrast stress test retains the Add-count and word-count point gains and the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. A subsequent full-text synthesis improves word-count error but fails both its edit-similarity and marginal-content gates, so it is not advanced to development. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that source-token, surface-neighborhood, and GloVe-semantic rankings all lose to marginal additions at the same oracle budget. Once that budget is removed, pointwise intervals favor Add-count, Delete-count, and word-count forecasts, while full-distribution scoring supports a CRPS gain only for word count. A synchronized 16-contrast stress test retains the Add-count and word-count point gains and the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. Full-text synthesis improves word-count error but fails its edit-similarity and marginal-content gates; the semantic ranking independently fails its marginal-content hurdle. Neither is advanced to development. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -182,7 +183,7 @@
           <p><strong>Cross-validation repeats a mixed result.</strong> In 150 leave-one-out training cases, edit similarity improves slightly while token-overlap F1 worsens; the method again improves word-count and source-similarity error but worsens line-count error. <a href="report/report.html#stable-projection-cv">Inspect the recurrence check</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token conditioning loses 68 and wins 19; a regularized 30-neighbor ensemble loses 65 and wins 25. <a href="report/report.html#neighborhood-additions">Inspect the locked comparisons</a>.</p>
+          <p><strong>No individualized ranking beats common additions.</strong> The development retrieval control loses 40 of 50 cases. In training-only tests, source-token, surface-neighborhood, and GloVe-semantic rankings all recover fewer held-out additions than marginal frequency; the semantic rule loses 63 cases and wins 22. <a href="report/report.html#semantic-neighborhood-additions">Inspect the semantic hurdle</a>.</p>
         </article>
         <article class="finding">
           <p><strong>The family-robust signal is narrower.</strong> Across 16 contrasts, simultaneous intervals retain Add-count and word-count point gains plus the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. <a href="report/report.html#multiplicity-stress-test">Inspect the stress test</a>.</p>

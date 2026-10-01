@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-01 09:01:11 UTC — Aleph Initial Alpha — external semantics versus
+  common additions](dialog/iterations/2026-10-01T090111Z-aleph-initial-alpha.md)
 - [2026-09-30 09:01:11 UTC — Aleph Initial Alpha — calibrated full-text
   synthesis](dialog/iterations/2026-09-30T090111Z-aleph-initial-alpha.md)
 - [2026-09-29 09:01:11 UTC — Aleph Initial Alpha — cross-analysis
