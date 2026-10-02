@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-01T09:17:16Z
+updated: 2026-10-02T09:16:19Z
 ---
 
 # Predict the Self — Current State
@@ -55,6 +55,11 @@ with pretrained GloVe source centroids does not improve novel-token ranking:
 the semantic neighborhood is effectively tied with the surface neighborhood
 and remains worse than marginal Add frequency. Its content hurdle fails, so it
 also cannot advance to development.
+A corrected locked response-length decomposition now reveals that the inherited
+“source-calibrated marginal” is itself additive persistence. A genuinely raw
+fold distribution of follow-up word counts substantially outperforms that
+source-conditioned comparator, so earlier word-count gains do not establish
+value over ignoring the focal source.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -174,8 +179,9 @@ Demographics-only CRPS is `40.471984`; its `+0.200711` reduction has an
 interval spanning zero (`-0.479832` to `+0.861529`). Adding demographics to
 text supplies a smaller incremental reduction of `+0.217704` (`+0.024229` to
 `+0.420871`). Add-count, Delete-count, and line-count ablation contrasts all
-span zero. Earlier self-description carries most of the supported
-response-length signal relative to demographics; demographics alone do not.
+span zero. Earlier self-description carries most of the gain relative to
+demographics under this source-calibrated comparison; demographics alone do
+not.
 
 The locked source-form comparison also reproduces every inherited marginal
 and text-only case score. Count-only matching lowers word-count CRPS to
@@ -226,6 +232,20 @@ cases, ties 65, and loses 63. Its difference from the inherited surface
 neighborhood is `-0.000247` (`-0.006521` to `+0.005834`). Distributional
 source similarity therefore does not demonstrate person-conditioned lexical
 advantage under this fixed centroid and ranking rule.
+
+The corrected locked response-length analysis separates the raw fold
+distribution of follow-up counts from additive persistence, which adds fold
+word-count changes to the focal person's earlier count. Raw-marginal CRPS is
+`32.579884` versus `40.672695` for additive persistence. The raw-minus-
+additive effect is `-8.092811`, with a case-bootstrap interval of `-15.719421`
+to `-1.507037`; negative values favor raw. Raw median MAE is `46.073333`
+versus `56.080000`, and raw central-80% interval score is `196.800000` versus
+`264.626667`. Source and follow-up word counts correlate `0.304483`. The
+inherited source-form neighborhood still improves on additive persistence by
+`3.245309`, but its mean CRPS (`37.427386`) remains descriptively above raw.
+No direct paired raw-versus-source-form interval was prespecified. The earlier
+multiplicity result remains correct for its fixed family, but that family did
+not include the stronger no-source baseline.
 
 ## Completed research and artifacts
 
@@ -319,6 +339,15 @@ advantage under this fixed centroid and ranking rule.
   and 150-row case audit. The script reproduces every inherited marginal and
   surface-neighborhood hit count before accepting results. Development and test
   rows and artifacts were not read or changed.
+- Preserved the initial response-length lock unchanged after its first audit
+  check exposed that the inherited word-count “marginal” already meant
+  additive persistence. Locked the corrected
+  `ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md` before accepting,
+  summarizing, writing, or inspecting any aggregate result (SHA-256
+  `8071914fd204beefeabd294fac7e3f1b00dceeba50c0372ffbd5498b2d136861`).
+  Added a hash-guarded raw-versus-additive analysis, six focused tests, a
+  complete JSON result, and a 150-row audit. It reproduces the inherited
+  additive CRPS case by case and reads no development or test row.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
@@ -337,7 +366,7 @@ advantage under this fixed centroid and ranking rule.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, nine linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes fifty-nine research
+- The three forms link reciprocally. The Full Report publishes sixty-four research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -422,6 +451,13 @@ advantage under this fixed centroid and ranking rule.
   neighborhood shrinkage. The GloVe artifact is PDDL-licensed, hash-pinned, and
   not committed. Its case audit is a derived benchmark-data adaptation under
   CC BY-NC-SA 4.0; the failed hurdle forbids development evaluation.
+- The response-length decomposition was corrected after its first replication
+  check revealed the inherited comparator's meaning. The original lock remains
+  byte-preserved, and no aggregate was accepted, written, or inspected before
+  the correction, but the sequence is not preregistration. The primary paired
+  result covers raw versus additive only; raw versus source form is descriptive.
+  Its overlapping folds and bootstrap concern this selected cohort, and its
+  audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -458,6 +494,9 @@ advantage under this fixed centroid and ranking rule.
   content control, and three-part advancement gate.
 - `ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md`: fixed external-semantic
   Add-ranking representation, controls, and content hurdle.
+- `ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md` and
+  `ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md`: preserved initial lock and
+  corrected raw-versus-additive word-count plan.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -492,6 +531,9 @@ advantage under this fixed centroid and ranking rule.
 - `analysis/analyze_semantic_neighborhood_additions.py`: locked streaming GloVe
   semantic-neighborhood comparison; its JSON and 150-case audit are under
   `results/`.
+- `analysis/analyze_response_length_persistence.py`: corrected locked
+  response-length baseline decomposition; its JSON and 150-case audit are
+  under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -523,9 +565,9 @@ advantage under this fixed centroid and ranking rule.
    centroid ranking on development data. Avoid more fixed Add re-rankers or
    post hoc decompositions on the same 150 cases without richer compositional
    context or new longitudinal evidence. Before reusing development labels,
-   require a person-conditioned method to preserve response-form calibration,
-   demonstrate value beyond simple source counts, and beat leave-one-out
-   marginal additions in training; then lock any development comparison and
-   avoid private test feedback.
+   require a person-conditioned method to beat the raw fold follow-up
+   distribution for response length, preserve response-form calibration, and
+   beat leave-one-out marginal additions for content; then lock any development
+   comparison and avoid private test feedback.
 4. Perform the remaining rendered accessibility and responsive-layout checks
    when browser infrastructure is available.

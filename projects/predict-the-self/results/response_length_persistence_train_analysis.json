@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_response_length_persistence",
+  "cases": 150,
+  "benchmark": {
+    "commit": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "training_sha256": "720aea3c4a9f7ad96ff3960ad6faa36991e1771dc43793c9e16e33b583bd4a48",
+    "evaluator_sha256": "1236dbcca70129f6200c2703dd67649dbfa760a2a7f74402fa1d3d956b97b2ae",
+    "analysis_plan_sha256": "8071914fd204beefeabd294fac7e3f1b00dceeba50c0372ffbd5498b2d136861",
+    "superseded_initial_plan_sha256": "13e8737f02b1546d08e8d51998b115a5500ac5621910204c97f0f13258685ebb",
+    "source_form_implementation_sha256": "721815303644b0da611732496207609f26cd421ae28f9f00d1563d3fe473195f",
+    "source_form_audit_sha256": "b2de65f50f20584c866a113b84cf98b40aa4ed0e972e9db36494753dbcee0c0e"
+  },
+  "design": {
+    "training_cases_per_fold": 149,
+    "additive_distribution": "max(0, held-out source word count + each fold follow-up-minus-source word-count change), equally weighted",
+    "raw_marginal_distribution": "each fold follow-up word count, equally weighted",
+    "point_forecast": "left-continuous empirical median",
+    "probabilistic_score": "empirical CRPS",
+    "central_interval": {
+      "nominal_coverage": 0.8,
+      "quantiles": [
+        0.1,
+        0.9
+      ]
+    },
+    "primary_contrast": "raw follow-up marginal CRPS minus additive persistence CRPS",
+    "future_information_used_for_prediction": "none"
+  },
+  "inherited_source_form_audit_reproduced": true,
+  "descriptive": {
+    "source_word_count": {
+      "mean": 96.46,
+      "median": 85.0
+    },
+    "followup_word_count": {
+      "mean": 88.533333,
+      "median": 86.5
+    },
+    "followup_minus_source_word_count": {
+      "mean": -7.926667,
+      "median": -0.5
+    },
+    "source_followup_word_count_pearson_correlation": 0.304483
+  },
+  "mean_absolute_error": {
+    "raw_marginal_median": 46.073333,
+    "additive_persistence_median": 56.08,
+    "unchanged_source": 55.58
+  },
+  "predictive_distributions": {
+    "raw_marginal": {
+      "mean_crps": 32.579884,
+      "central_80_interval_coverage": 0.8,
+      "mean_central_80_interval_width": 141.8,
+      "mean_central_80_interval_score": 196.8
+    },
+    "additive_persistence": {
+      "mean_crps": 40.672695,
+      "central_80_interval_coverage": 0.806667,
+      "mean_central_80_interval_width": 149.96,
+      "mean_central_80_interval_score": 264.626667
+    },
+    "source_form_neighborhood": {
+      "mean_crps": 37.427386,
+      "provenance": "inherited locked source-form case audit"
+    }
+  },
+  "primary_comparison": {
+    "effect_definition": "raw_marginal_crps_minus_additive_persistence_crps",
+    "positive_favors": "additive_persistence",
+    "mean_effect": -8.092811,
+    "paired_case_bootstrap_95_ci_low": -15.719421,
+    "paired_case_bootstrap_95_ci_high": -1.507037,
+    "favored_method_case_wins": 71,
+    "case_ties": 0,
+    "favored_method_case_losses": 79
+  },
+  "primary_decision": "raw_marginal_outperforms_additive_persistence",
+  "secondary_comparisons": {
+    "additive_vs_source_form_crps_reproduction": {
+      "effect_definition": "additive_persistence_crps_minus_source_form_neighborhood_crps",
+      "positive_favors": "source_form_neighborhood",
+      "mean_effect": 3.245309,
+      "paired_case_bootstrap_95_ci_low": 1.831384,
+      "paired_case_bootstrap_95_ci_high": 4.82131,
+      "favored_method_case_wins": 96,
+      "case_ties": 0,
+      "favored_method_case_losses": 54
+    },
+    "raw_marginal_vs_additive_absolute_error": {
+      "effect_definition": "raw_marginal_absolute_error_minus_additive_persistence_absolute_error",
+      "positive_favors": "additive_persistence",
+      "mean_effect": -10.006667,
+      "paired_case_bootstrap_95_ci_low": -19.46,
+      "paired_case_bootstrap_95_ci_high": -1.1665,
+      "favored_method_case_wins": 70,
+      "case_ties": 6,
+      "favored_method_case_losses": 74
+    },
+    "unchanged_source_vs_additive_absolute_error": {
+      "effect_definition": "unchanged_source_absolute_error_minus_additive_persistence_absolute_error",
+      "positive_favors": "additive_persistence",
+      "mean_effect": -0.5,
+      "paired_case_bootstrap_95_ci_low": -0.58,
+      "paired_case_bootstrap_95_ci_high": -0.42,
+      "favored_method_case_wins": 0,
+      "case_ties": 75,
+      "favored_method_case_losses": 75
+    },
+    "raw_marginal_vs_additive_interval_score": {
+      "effect_definition": "raw_marginal_interval_score_minus_additive_persistence_interval_score",
+      "positive_favors": "additive_persistence",
+      "mean_effect": -67.826667,
+      "paired_case_bootstrap_95_ci_low": -133.660167,
+      "paired_case_bootstrap_95_ci_high": -14.959,
+      "favored_method_case_wins": 54,
+      "case_ties": 1,
+      "favored_method_case_losses": 95
+    }
+  },
+  "bootstrap": {
+    "unit": "paired training case",
+    "resamples": 20000,
+    "seed_restarted_for_each_comparison": 20261002,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "multiplicity_adjustment": "none; one primary contrast"
+  },
+  "claim_boundary": "This dependent, locked training-cohort diagnostic concerns response length, not correct future identity content. It is not untouched confirmation, population evidence, development performance, or private-test performance."
+}

@@ -160,6 +160,17 @@ python3 projects/predict-the-self/analysis/analyze_semantic_neighborhood_additio
   --embeddings /tmp/glove-twitter-25.gz
 ```
 
+Regenerate the corrected training-only response-length decomposition. It
+hash-guards both the preserved initial lock and the corrected lock, reproduces
+the inherited additive-persistence CRPS case by case, and compares that source-
+calibrated distribution with the raw fold distribution of follow-up word
+counts. It never reads or writes a development or private-test row:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_response_length_persistence.py \
+  --benchmark-dir /path/to/predict-future-selves-at-9b6a766
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt

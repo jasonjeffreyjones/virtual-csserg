@@ -138,6 +138,17 @@
           </tbody>
         </table>
       </div>
+      <div class="scorecard-wrap" role="region" aria-label="Training leave-one-out response-length baseline decomposition" tabindex="0">
+        <table class="scorecard-table">
+          <caption class="visually-hidden">Training leave-one-out response-length baseline decomposition</caption>
+          <thead><tr><th scope="col">Word-count distribution</th><th scope="col">Mean CRPS</th><th scope="col">Median MAE</th><th scope="col">Primary comparison</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Raw follow-up marginal</th><td class="metric-better">32.579884</td><td class="metric-better">46.073333</td><td class="metric-better">Raw minus additive: −8.092811<br><small>95% interval −15.719421 to −1.507037</small></td></tr>
+            <tr><th scope="row">Additive persistence</th><td>40.672695</td><td>56.080000</td><td>Uses focal source count</td></tr>
+            <tr><th scope="row">Source-form neighborhood</th><td>37.427386</td><td>—</td><td>Descriptive against raw</td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="scorecard-wrap" role="region" aria-label="Cross-analysis simultaneous interval stress test" tabindex="0">
         <table class="scorecard-table">
           <caption class="visually-hidden">Cross-analysis simultaneous interval stress test</caption>
@@ -164,7 +175,7 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses repeat the stable projection's mixed pattern and show that source-token, surface-neighborhood, and GloVe-semantic rankings all lose to marginal additions at the same oracle budget. Once that budget is removed, pointwise intervals favor Add-count, Delete-count, and word-count forecasts, while full-distribution scoring supports a CRPS gain only for word count. A synchronized 16-contrast stress test retains the Add-count and word-count point gains and the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. Full-text synthesis improves word-count error but fails its edit-similarity and marginal-content gates; the semantic ranking independently fails its marginal-content hurdle. Neither is advanced to development. Cross-validation is not fresh confirmation, the ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses show that source-token, surface-neighborhood, and GloVe-semantic rankings all lose to marginal additions at the same oracle budget. No-oracle neighborhoods improve some quantities relative to a source-calibrated change-offset comparator, but a corrected baseline decomposition finds that raw follow-up word counts outperform that additive-persistence comparator. The earlier stress test remains valid within its fixed family but does not establish response-length skill over the raw distribution. Full-text synthesis and semantic ranking fail their advancement hurdles; neither is advanced to development. Cross-validation is not fresh confirmation, ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -189,7 +200,7 @@
           <p><strong>The family-robust signal is narrower.</strong> Across 16 contrasts, simultaneous intervals retain Add-count and word-count point gains plus the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. <a href="report/report.html#multiplicity-stress-test">Inspect the stress test</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>Simple response form can match lexical text.</strong> Text-only neighborhoods beat demographics on word-count CRPS, but three source-response counts also beat the marginal and are not stably distinguishable from text only. <a href="report/report.html#source-form-ablation">Inspect the locked comparison</a>.</p>
+          <p><strong>The raw length baseline is stronger.</strong> Raw fold follow-up counts reach CRPS 32.579884 versus 40.672695 for additive persistence; the paired interval favors raw. Earlier source-form gains were against that weaker source-calibrated comparator, not against ignoring the focal source. <a href="report/report.html#response-length-decomposition">Inspect the decomposition</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Common-unit synthesis fails its advancement gate.</strong> It improves word-count error and ROUGE-L but sharply worsens line-count error and reaches only 0.075887 novel-type F1 versus 0.134680 for an equal-volume marginal ranking. <a href="report/report.html#calibrated-synthesis">Inspect the locked failure</a>.</p>
