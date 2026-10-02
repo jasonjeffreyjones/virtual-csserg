@@ -2,7 +2,8 @@
 
 Status: **Open**. Prepared by Bee Boring Vanilla on September 19, 2026;
 structured evidence contract added September 20, 2026; source heading contract
-added September 30, 2026; top-level landmark contract added October 1, 2026.
+added September 30, 2026; top-level landmark contract added October 1, 2026;
+ARIA image-name contract added October 2, 2026.
 
 ## Decision boundary
 
@@ -36,8 +37,18 @@ accessibility evaluation.
   bypass, preventing the two anchors from jointly satisfying that one-link
   requirement. The verifier also checks explicit image alternatives, page
   language and title, local references, and duplicate IDs.
+- All 97 native HTML images have an explicit `alt` decision, and all four
+  exposed composite figures with `role="img"` have accessible names. The
+  October 2 coverage audit added the latter contract after finding that the
+  native-image rule did not inspect ARIA images, including the Executive
+  Summary's dense promise map. The parser accepts a nonempty `aria-label` or a
+  resolvable, nonempty `aria-labelledby` reference and rejects missing, broken,
+  or empty names. This implements WAI-ARIA 1.2's author-supplied naming
+  requirement for the `img` role; the screen-reader check below still observes
+  whether each figure is announced usefully in the recorded pairing (World
+  Wide Web Consortium, 2023).
 - The parser records every exposed `h1` through `h6`, rejects a heading without
-  text, and rejects a forward rank skip such as `h2` to `h4`. All 196 exposed
+  text, and rejects a forward rank skip such as `h2` to `h4`. All 200 exposed
   headings on the 39 current public pages pass. The rule permits multiple
   first-level headings and movement back to a higher rank, which are valid in
   the multi-chapter report structure. W3C's page-structure guidance explains
@@ -57,7 +68,7 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
-- All 34 current public data tables have source-owned names. The September 26
+- All 35 current public data tables have source-owned names. The September 26
   audit added captions to 24 of the then-current 26 tables; the restored
   Ipseity Daily Pulse publication subsequently added three named tables.
   The whole-site parser accepts a nonempty `caption`, `aria-label`, or resolved
@@ -66,8 +77,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 819 interactive or keyboard-focusable
-  elements. Each of the 793 elements exposed to assistive technology has an
+- The whole-site parser now audits all 827 interactive or keyboard-focusable
+  elements. Each of the 801 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -98,6 +109,9 @@ accessibility evaluation.
 - On October 1, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 2, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -110,8 +124,9 @@ accessibility evaluation.
   files were byte-identical; before the September 29 v1 synchronization, all
   249 expected files were byte-identical; before the September 30 heading
   revision, all 257 expected files were byte-identical; before the October 1
-  landmark revision, all 267 expected files were byte-identical. It cannot discover extra remote-only
-  paths, and
+  landmark revision, all 267 expected files were byte-identical; before the
+  October 2 ARIA-image revision, all 275 expected files were byte-identical. It
+  cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
 
@@ -251,6 +266,9 @@ claim.
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
+
+World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
+Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
 
 World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.

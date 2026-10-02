@@ -62,7 +62,9 @@ header/footer context so nested section and article structures are not
 misclassified as page landmarks. It requires every data table to have an
 accessible name, every table header cell to declare a valid row or column
 scope, every exposed heading to contain text without skipping forward over a
-rank, and every exposed interactive or
+rank, every native image to carry an explicit `alt` decision, every exposed
+non-native element with `role="img"` to have a nonempty `aria-label` or a
+resolvable nonempty `aria-labelledby` reference, and every exposed interactive or
 keyboard-focusable element to have an accessible name. Coverage includes links,
 buttons, native form and disclosure controls, interactive ARIA roles, media
 controls, and custom nonnegative-`tabindex` targets. Label and control

@@ -131,6 +131,36 @@ class StaticAccessibilityTests(unittest.TestCase):
             ["misleading.html: bypass link is not the first link"],
         )
 
+    def test_aria_images_need_resolvable_accessible_names(self):
+        invalid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<div role="img"></div>'
+            '<div role="img" aria-labelledby="missing"></div>'
+            '<span id="empty"></span>'
+            '<div role="img" aria-labelledby="empty"></div>'
+            '<div role="img" aria-hidden="true"></div></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(invalid, "graphics.html"),
+            [
+                "graphics.html: ARIA image 1 has no accessible name",
+                "graphics.html: ARIA image 2 references missing label ids: missing",
+                "graphics.html: ARIA image 2 has no accessible name",
+                "graphics.html: ARIA image 3 references labels without text",
+                "graphics.html: ARIA image 3 has no accessible name",
+            ],
+        )
+
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<div role="img" aria-label="Seven promise groups pass"></div>'
+            '<p id="trend-name">Annual prevalence trend</p>'
+            '<div role="img" aria-labelledby="trend-name"></div></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "graphics.html"), []
+        )
+
     def test_repeated_navigation_landmarks_need_resolvable_names(self):
         unnamed = parse(
             '<a class="skip" href="#main">Skip</a>'

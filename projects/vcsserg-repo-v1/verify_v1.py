@@ -150,6 +150,7 @@ class PageParser(HTMLParser):
         self.project_statuses = []
         self.project_updates = []
         self.references = []
+        self.role_images = []
         self.skip_references = []
         self.table_header_scopes = []
         self.table_records = []
@@ -316,6 +317,15 @@ class PageParser(HTMLParser):
                     attributes.get("aria-labelledby", "").split(),
                 )
             )
+        if role == "img" and tag != "img":
+            self.role_images.append(
+                {
+                    "tag": tag,
+                    "aria_label": attributes.get("aria-label", ""),
+                    "labelled_by": attributes.get("aria-labelledby", "").split(),
+                    "hidden": aria_hidden or self.hidden_depth > 0,
+                }
+            )
 
         for attribute in ("href", "src"):
             reference = attributes.get(attribute)
@@ -449,6 +459,30 @@ def page_accessibility_problems(parsed, relative):
         if "alt" not in image:
             source = image.get("src", f"image {number}")
             problems.append(f"{relative}: image has no alt attribute: {source}")
+    exposed_role_images = [image for image in parsed.role_images if not image["hidden"]]
+    for number, role_image in enumerate(exposed_role_images, start=1):
+        labelled_by = role_image["labelled_by"]
+        missing_labels = sorted(set(labelled_by) - set(parsed.ids))
+        if missing_labels:
+            problems.append(
+                f"{relative}: ARIA image {number} references missing label ids: "
+                + ", ".join(missing_labels)
+            )
+        referenced_label = " ".join(
+            parsed.text_for_id(element_id)
+            for element_id in labelled_by
+            if element_id in parsed.ids
+        ).strip()
+        if labelled_by and not missing_labels and not referenced_label:
+            problems.append(
+                f"{relative}: ARIA image {number} references labels without text"
+            )
+        if labelled_by:
+            has_accessible_name = bool(referenced_label and not missing_labels)
+        else:
+            has_accessible_name = bool(role_image["aria_label"].strip())
+        if not has_accessible_name:
+            problems.append(f"{relative}: ARIA image {number} has no accessible name")
     for number, (accessible_name, labelled_by) in enumerate(
         parsed.navigation_landmarks, start=1
     ):
@@ -1118,6 +1152,11 @@ def check_html_and_css():
         for parsed in parsed_pages.values()
         for heading in parsed.heading_records
     )
+    exposed_role_images = sum(
+        not image["hidden"]
+        for parsed in parsed_pages.values()
+        for image in parsed.role_images
+    )
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1238,6 +1277,9 @@ def check_html_and_css():
         not problems,
         f"{len(html_pages)} HTML page(s) with one banner, main, and "
         "contentinfo landmark each, "
+        f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "
+        f"image(s) with explicit alternatives, {exposed_role_images} exposed "
+        "ARIA image(s) with accessible names, "
         f"{sum(len(parsed.table_records) for parsed in parsed_pages.values())} "
         f"named data table(s), {exposed_headings} exposed heading(s), "
         f"{exposed_interactive} exposed interactive or "

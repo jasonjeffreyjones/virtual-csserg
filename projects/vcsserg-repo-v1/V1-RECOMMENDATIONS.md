@@ -99,6 +99,18 @@ with 26 source-line anchors safely hidden. The contract follows W3C's native
 HTML landmark mapping but does not inspect a rendered accessibility tree or
 replace screen-reader review (World Wide Web Consortium Web Accessibility
 Initiative, n.d.).
+On October 2, the source audit expanded from native images to composite figures
+exposed with `role="img"`. The gap mattered because the required dense promise
+map in the Version 1 Executive Summary uses that semantic role rather than an
+HTML `img` element. All 97 native images have explicit alternatives and all
+four exposed ARIA images already have author-supplied names. A focused fixture
+now rejects a missing name, an unresolved `aria-labelledby` target, and a
+resolved target without text. The current site also contains 35 named tables,
+200 exposed headings, and 827 interactive or keyboard-focusable elements: all
+801 exposed interactive elements are named, with 26 source-line anchors safely
+hidden. WAI-ARIA 1.2 requires author-supplied labels for the `img` role; this
+source rule does not establish the actual screen-reader announcement (World
+Wide Web Consortium, 2023).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -322,6 +334,9 @@ https://quarto.org/docs/output-formats/html-accessibility.html
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
 https://www.w3.org/WAI/WCAG22/Techniques/html/H39
+
+World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
+Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Landmark
 regions*. Retrieved October 1, 2026, from

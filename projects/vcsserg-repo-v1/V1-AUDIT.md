@@ -16,19 +16,19 @@ does not establish rendered keyboard or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on October 1, 2026 |
+| Documented promise | Evidence or test | Status on October 2, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one page-level banner, main, and content-information landmark; first-anchor bypass links; nonempty unskipped heading ranks; named repeated navigation landmarks; named data tables with scoped headers; explicit image alternatives; named exposed interactive and keyboard-focusable elements with valid ARIA relationships and safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 34 named data tables, 198 exposed headings, 819 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has the complete three-landmark frame, all 793 exposed interactive elements are named, and 26 source-line anchors are safely hidden; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one page-level banner, main, and content-information landmark; first-anchor bypass links; nonempty unskipped heading ranks; named repeated navigation landmarks; named data tables with scoped headers; explicit native-image alternatives; accessible names for exposed ARIA images and interactive or keyboard-focusable elements; valid checked ARIA relationships; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 97 native images, 4 exposed ARIA images, 35 named data tables, 200 exposed headings, 827 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has the complete three-landmark frame, all 801 exposed interactive elements are named, and 26 source-line anchors are safely hidden; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, and 267 before the October 1 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, and 275 before the October 2 revision |
 
 ## Current automated result
 
-On October 1, 2026, **all seven groups pass**. The final report-format gap
+On October 2, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -164,6 +164,22 @@ publication structure:
   screen-reader pairing. A supplemental `w3m` pass returned zero for all 26
   current 40- and 120-column views and placed “Skip to content” first; this
   remains linearized text-order evidence only.
+- On October 2, an image-semantics coverage audit found that the native-image
+  rule did not inspect composite figures exposed with `role="img"`, including
+  the Version 1 Executive Summary's dense promise map. All four current ARIA
+  images already have explicit `aria-label` values. The parser now requires
+  every exposed non-native ARIA image to have a nonempty `aria-label` or a
+  resolvable, nonempty `aria-labelledby` reference; one focused fixture rejects
+  missing, broken, and empty names while permitting an assistive-technology-
+  hidden graphic. WAI-ARIA 1.2 requires author-supplied names for this role
+  (World Wide Web Consortium, 2023). The current site has 97 native images, 35
+  named tables, 200 exposed headings, and 827 interactive or keyboard-focusable
+  elements: all four exposed ARIA images and all 801 exposed interactive
+  elements are named, while 26 source-line anchors remain safely hidden. These
+  source facts do not establish how a browser and screen reader announce the
+  figures. A supplemental `w3m` pass returned zero for all 26 current 40- and
+  120-column views and placed “Skip to content” first; this remains linearized
+  text-order evidence only.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -182,7 +198,8 @@ The current verifier:
 - adds a dedicated three-format report group;
 - requires exactly one page-level banner, main, and content-information
   landmark, and requires every page's first anchor itself to target `main` as a bypass and
-  every image to carry an explicit `alt` attribute, and requires accessible
+  every native image to carry an explicit `alt` attribute, every exposed
+  non-native ARIA image to have an explicit resolvable name, and requires accessible
   heading text without forward rank skips, names on repeated navigation
   landmarks and exposed interactive or
   keyboard-focusable elements, valid ARIA
@@ -190,7 +207,8 @@ The current verifier:
   scope on table header cells,
   with negative fixtures for missing,
   late, wrong-target, misleading-first, and runtime-relocated bypasses, a
-  missing or duplicate page landmarks, a missing image alternative, an empty
+  missing or duplicate page landmarks, a missing image alternative, a missing,
+  broken, or empty ARIA image name, an empty
   or forward-skipped heading, unnamed
   navigation or control, missing or empty
   label targets, missing controlled targets, invalid expanded state, unsafe
@@ -253,7 +271,8 @@ revision, all 174 incoming files were byte-identical. Before the September 26
 revision, all 182 incoming files were byte-identical. Before the September 29
 revision, all 249 incoming files were byte-identical. Before the September 30
 revision, all 257 incoming files were byte-identical. Before the October 1
-revision, all 267 incoming files were byte-identical; normal automation must
+revision, all 267 incoming files were byte-identical. Before the October 2
+revision, all 275 incoming files were byte-identical; normal automation must
 still deploy and inventory this revised release.
 
 ## Other current requirements
@@ -280,3 +299,8 @@ still deploy and inventory this revised release.
   supersessions by full public commit key. `REPORT-VERSIONS.md` applies it to
   the outgoing September 15 v1 release, whose three report forms are verified
   to exist at the recorded commit.
+
+## References
+
+World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
+Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/

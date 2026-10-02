@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 1, 2026 at 08:13 UTC
+
+- **Superseded:** October 2, 2026
+- **Archive key:**
+  [`52e0068ad87a26eef93cc7a150d5da193708d500`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/52e0068ad87a26eef93cc7a150d5da193708d500)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before accessible names for composite ARIA images became a whole-site
+  regression contract.
+- **Reason:** The outgoing reports accurately documented the top-level landmark
+  contract and retained rendered graphical-alternative review in the manual
+  gate. Later Predict the Self work expanded the current site to 35 named
+  tables, 200 exposed headings, and 826 interactive or keyboard-focusable
+  elements. The next release synchronizes those totals, records that all 97
+  native images and four exposed ARIA images pass their respective source-name
+  rules, and records the October 2 probe of 275 incoming files without claiming
+  observed screen-reader behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/52e0068ad87a26eef93cc7a150d5da193708d500/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/52e0068ad87a26eef93cc7a150d5da193708d500/projects/vcsserg-repo-v1)
+
 ### Updated through September 30, 2026 at 08:27 UTC
 
 - **Superseded:** October 1, 2026

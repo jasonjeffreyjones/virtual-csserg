@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 1, 2026. The validated
+All seven automated promise groups pass on October 2, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -27,7 +27,8 @@ workflow path. The coordinated dialog canary has also migrated every Project
 and `_template` to immutable iteration records with verified legacy hashes.
 Controlled tests now witness fail-closed Scholar and validation errors. Static
 checks also require a first-anchor bypass link and an explicit `alt` decision
-for every image. Generated Quarto pages now place that bypass link first in the
+for every native image. They also require an author-supplied accessible name
+for every exposed composite figure with `role="img"`. Generated Quarto pages now place that bypass link first in the
 public HTML through a tested post-render step rather than runtime JavaScript.
 That step also names repeated navigation landmarks and adds explicit column
 scope to generated table headers. Every public data table now has a concise
@@ -37,9 +38,10 @@ interactive and keyboard-focusable elements. Every page now also must expose
 exactly one banner, one main region, and one content-information landmark;
 the context-aware parser does not misclassify headers or footers nested in a
 main, article, aside, navigation, or section region. The same contracts now
-pass across 39 HTML pages, 34 named data tables, 198 exposed headings, and 819
-interactive or keyboard-focusable elements: all 793 exposed interactive
-elements are named and 26 Quarto source-line anchors are safely hidden.
+pass across 39 HTML pages, 97 native images, 4 exposed ARIA images, 35 named
+data tables, 200 exposed headings, and 827 interactive or keyboard-focusable
+elements: all four exposed ARIA images and all 801 exposed interactive elements
+are named, while 26 Quarto source-line anchors are safely hidden.
 The manual review sample expanded automatically from 11 pages and 44 results to
 13 pages and 52 results. A claim-to-evidence review found the
 infrastructure report substantively adequate for its stated purpose; rendered
@@ -107,7 +109,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one banner, main, and content-information landmark; first-anchor bypass links; nonempty headings without forward rank skips; named repeated navigation and data tables; scoped table headers; explicit image alternatives; named interactive elements with valid ARIA relationships; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one banner, main, and content-information landmark; first-anchor bypass links; nonempty headings without forward rank skips; named repeated navigation, data tables, and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -159,7 +161,16 @@ confirming that nested section and article headers and footers are not page
 landmarks. This implements the native HTML landmark context documented by the
 W3C ARIA Authoring Practices Guide (World Wide Web Consortium Web
 Accessibility Initiative, n.d.-b), without claiming to observe a browser
-accessibility tree. The verifier also became narrower where old rules
+accessibility tree. On October 2, the audit closed a different source-coverage
+gap: its explicit-alternative rule inspected native `img` elements but not
+composite figures exposed with `role="img"`, including the Executive Summary's
+dense promise map. All four current ARIA images already have author-supplied
+names. The parser now requires every exposed non-native ARIA image to have a
+nonempty `aria-label` or a resolvable, nonempty `aria-labelledby` reference,
+and a focused fixture rejects missing, broken, and empty names. WAI-ARIA 1.2
+requires an author-supplied label for the `img` role (World Wide Web Consortium,
+2023). This source rule does not establish the rendered announcement, which
+remains in the screen-reader protocol. The verifier also became narrower where old rules
 created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
@@ -308,7 +319,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 1 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 2 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -322,7 +333,8 @@ deployment configuration. It found all 109 files byte-identical before the
 September 15 release, all 110 byte-identical after it, and every later incoming
 tree byte-identical, including all 182 files before the September 26 revision,
 all 249 files before the September 29 revision, all 257 files before the
-September 30 revision, and all 267 files before this October 1 revision.
+September 30 revision, and all 267 files before the October 1 revision.
+The October 2 pre-change probe found all 275 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
@@ -398,6 +410,9 @@ from <https://quarto.org/docs/output-formats/html-accessibility.html>
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
 <https://www.w3.org/WAI/WCAG22/Techniques/html/H39>
+
+World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
+Applications (WAI-ARIA) 1.2*. <https://www.w3.org/TR/wai-aria-1.2/>
 
 World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.
