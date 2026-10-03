@@ -69,8 +69,9 @@ keyboard-focusable element to have an accessible name. Coverage includes links,
 buttons, native form and disclosure controls, interactive ARIA roles, media
 controls, and custom nonnegative-`tabindex` targets. Label and control
 references must resolve, expanded states must be boolean, and controls hidden
-from assistive technology must be removed from the tab order. These source
-checks do not perform the rendered review.
+from assistive technology must be removed from the tab order. Positive
+`tabindex` values are prohibited so author-set priorities cannot override the
+DOM-order tab sequence. These source checks do not perform the rendered review.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:

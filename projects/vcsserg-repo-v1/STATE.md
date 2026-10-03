@@ -2,17 +2,17 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-02T08:19:33Z
+updated: 2026-10-03T08:17:04Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 2, 2026, all seven automated promise groups pass across
-39 HTML pages, 97 native images, four exposed ARIA images, 35 named data tables,
-200 exposed headings, 827 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 801
+Active. On October 3, 2026, all seven automated promise groups pass across
+39 HTML pages, 97 native images, four exposed ARIA images, 37 named data tables,
+202 exposed headings, 836 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 810
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires
@@ -29,6 +29,9 @@ references to resolve, expanded states to be boolean, and
 assistive-technology-hidden controls to be absent from the tab order. This
 includes links, buttons, native form and disclosure controls, interactive ARIA
 roles, media controls, and custom nonnegative-`tabindex` targets. A tested
+source-order rule also rejects positive `tabindex` values; the public tree uses
+ten zero-value scroll targets and 26 negative source anchors without any
+author-set positive tab priority. A tested
 post-render normalizer makes the
 bypass link first, names Quarto's repeated navigation regions, and adds column
 scope inside generated table heads on all five report pages without runtime
@@ -182,6 +185,16 @@ without performing the unavailable human review.
   assistive-technology-hidden graphic. WAI-ARIA 1.2 requires author-supplied
   names for this role. This source contract does not establish the rendered
   announcement in a browser and screen-reader pairing.
+- An October 3 focus-order coverage audit found that the parser inventoried
+  nonnegative `tabindex` targets but did not reject positive values, which
+  would move those elements ahead of the default DOM-order tab sequence. The
+  current public tree has ten `tabindex="0"` custom scroll regions, 26
+  `tabindex="-1"` source anchors, and no positive value. A focused fixture now
+  rejects positive values while accepting both current patterns. W3C strongly
+  advises against using positive values for tab priority. After the current
+  report rebuild, all 836 interactive or keyboard-focusable elements pass: 810
+  are exposed and named, and 26 are safely hidden. This source contract does
+  not establish rendered focus order, visibility, or operation.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -189,7 +202,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 2 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 3 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -236,7 +249,9 @@ without performing the unavailable human review.
   after later Predict the Self publication work. The October 1 pre-change
   probe found all 267 incoming files byte-identical after the next Predict the
   Self iteration. The October 2 pre-change probe found all 275 incoming files
-  byte-identical after the latest Predict the Self iteration.
+  byte-identical after the next Predict the Self iteration. The October 3
+  pre-change probe found all 285 incoming files byte-identical after the latest
+  Predict the Self iteration.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -263,10 +278,10 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 44 routine tests pass across 39 HTML pages, 97 native
-images, four exposed ARIA images, 35 named data tables, 200 exposed headings,
-827 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 2. Every page has
+All seven groups and all 45 routine tests pass across 39 HTML pages, 97 native
+images, four exposed ARIA images, 37 named data tables, 202 exposed headings,
+836 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 3. Every page has
 exactly one page-level banner, main, and content-information landmark. The verifier's success detail now
 reports exposed and safely hidden control counts directly, rather than leaving
 that coverage implicit.
@@ -277,8 +292,8 @@ indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
 alternatives, exposed ARIA image names, exact top-level landmark frames,
 nonempty unskipped heading ranks, repeated navigation names,
 resolved landmark-label references,
-accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names and
-ARIA relationships, and the
+accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names,
+ARIA relationships, no positive `tabindex` overrides, and the
 manual-review worksheet's sample and closure boundary. One focused table-name
 test covers captions and valid explicit labels while rejecting absent, broken,
 or empty names. One focused negative
@@ -289,7 +304,8 @@ generic table-header rule, one covers heading text and rank, one covers
 missing, broken, and empty ARIA image names, three cover
 interactive names and ARIA relationships
 across links, buttons, forms, disclosures, roles, media, and custom focus
-targets, and three cover the manual-review record.
+targets, one rejects positive `tabindex` values while accepting zero and
+negative patterns, and three cover the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -349,7 +365,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 2 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 63 GiB
+October 3 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 63 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -374,8 +390,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean September 29 report set superseded by
-  the current top-level-landmark revision.
+  v1 release ledger, including the clean October 2 report set superseded by
+  the current source-order focus revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

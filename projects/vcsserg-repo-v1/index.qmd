@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 2, 2026. The validated
+All seven automated promise groups pass on October 3, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -37,11 +37,14 @@ accessible names and valid ARIA targets and expanded states on exposed
 interactive and keyboard-focusable elements. Every page now also must expose
 exactly one banner, one main region, and one content-information landmark;
 the context-aware parser does not misclassify headers or footers nested in a
-main, article, aside, navigation, or section region. The same contracts now
-pass across 39 HTML pages, 97 native images, 4 exposed ARIA images, 35 named
-data tables, 200 exposed headings, and 827 interactive or keyboard-focusable
-elements: all four exposed ARIA images and all 801 exposed interactive elements
-are named, while 26 Quarto source-line anchors are safely hidden.
+main, article, aside, navigation, or section region. Positive `tabindex`
+values are now rejected so source order is not overridden by an author-set tab
+priority. The same contracts now pass across 39 HTML pages, 97 native images,
+4 exposed ARIA images, 37 named data tables, 202 exposed headings, and 836
+interactive or keyboard-focusable elements: all four exposed ARIA images and
+all 810 exposed interactive elements are named, while 26 Quarto source-line
+anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
+public element uses a positive value.
 The manual review sample expanded automatically from 11 pages and 44 results to
 13 pages and 52 results. A claim-to-evidence review found the
 infrastructure report substantively adequate for its stated purpose; rendered
@@ -109,7 +112,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one banner, main, and content-information landmark; first-anchor bypass links; nonempty headings without forward rank skips; named repeated navigation, data tables, and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one banner, main, and content-information landmark; first-anchor bypass links; nonempty headings without forward rank skips; named repeated navigation, data tables, and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -160,7 +163,7 @@ top-level banner, main region, and content-information landmark on each of the
 confirming that nested section and article headers and footers are not page
 landmarks. This implements the native HTML landmark context documented by the
 W3C ARIA Authoring Practices Guide (World Wide Web Consortium Web
-Accessibility Initiative, n.d.-b), without claiming to observe a browser
+Accessibility Initiative, n.d.-c), without claiming to observe a browser
 accessibility tree. On October 2, the audit closed a different source-coverage
 gap: its explicit-alternative rule inspected native `img` elements but not
 composite figures exposed with `role="img"`, including the Executive Summary's
@@ -170,7 +173,17 @@ nonempty `aria-label` or a resolvable, nonempty `aria-labelledby` reference,
 and a focused fixture rejects missing, broken, and empty names. WAI-ARIA 1.2
 requires an author-supplied label for the `img` role (World Wide Web Consortium,
 2023). This source rule does not establish the rendered announcement, which
-remains in the screen-reader protocol. The verifier also became narrower where old rules
+remains in the screen-reader protocol. On October 3, a focus-order coverage
+audit found that the parser recorded custom keyboard targets but did not reject
+positive `tabindex` values, which would move controls ahead of the normal DOM
+sequence. The current public tree uses ten `tabindex="0"` scroll regions and
+26 `tabindex="-1"` source anchors, with no positive value. A focused fixture
+now rejects positive values while accepting the current zero and negative
+patterns. W3C's keyboard-interface guidance strongly advises against positive
+values because they impose value-based tab priority ahead of controls in the
+default sequence (World Wide Web Consortium Web Accessibility Initiative,
+n.d.-a). This is a source-order safeguard, not an observation of rendered
+focus order. The verifier also became narrower where old rules
 created false
 failures: first-party design requirements no longer apply to vendored Quarto
 CSS, and a Quarto book may validly contain more than one first-level heading.
@@ -319,7 +332,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 2 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 3 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -334,7 +347,7 @@ September 15 release, all 110 byte-identical after it, and every later incoming
 tree byte-identical, including all 182 files before the September 26 revision,
 all 249 files before the September 29 revision, all 257 files before the
 September 30 revision, and all 267 files before the October 1 revision.
-The October 2 pre-change probe found all 275 incoming files byte-identical.
+The October 3 pre-change probe found all 285 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
@@ -418,10 +431,14 @@ World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.
 <https://www.w3.org/WAI/WCAG22/Techniques/html/H63>
 
-World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Headings*.
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
+a keyboard interface*. Retrieved October 3, 2026, from
+<https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/>
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Headings*.
 Retrieved September 30, 2026, from
 <https://www.w3.org/WAI/tutorials/page-structure/headings/>
 
-World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Landmark
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-c). *Landmark
 regions*. Retrieved October 1, 2026, from
 <https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/>

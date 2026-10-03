@@ -323,6 +323,30 @@ class StaticAccessibilityTests(unittest.TestCase):
             ],
         )
 
+    def test_positive_tabindex_is_rejected(self):
+        custom_order = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<button tabindex="2">Second</button>'
+            '<a href="first" tabindex="1">First</a></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(custom_order, "focus.html"),
+            [
+                "focus.html: interactive element 2 (button) uses positive tabindex 2",
+                "focus.html: interactive element 3 (a) uses positive tabindex 1",
+            ],
+        )
+
+        source_order = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<button>First</button>'
+            '<div tabindex="0" aria-label="Scrollable results"></div>'
+            '<div tabindex="-1"></div></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(source_order, "focus.html"), []
+        )
+
     def test_interactive_aria_targets_and_states_must_resolve(self):
         broken = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'

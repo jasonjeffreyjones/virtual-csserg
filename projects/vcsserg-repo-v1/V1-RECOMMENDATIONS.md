@@ -98,7 +98,7 @@ keyboard-focusable elements: all 793 exposed interactive elements are named,
 with 26 source-line anchors safely hidden. The contract follows W3C's native
 HTML landmark mapping but does not inspect a rendered accessibility tree or
 replace screen-reader review (World Wide Web Consortium Web Accessibility
-Initiative, n.d.).
+Initiative, n.d.-b).
 On October 2, the source audit expanded from native images to composite figures
 exposed with `role="img"`. The gap mattered because the required dense promise
 map in the Version 1 Executive Summary uses that semantic role rather than an
@@ -111,6 +111,18 @@ resolved target without text. The current site also contains 35 named tables,
 hidden. WAI-ARIA 1.2 requires author-supplied labels for the `img` role; this
 source rule does not establish the actual screen-reader announcement (World
 Wide Web Consortium, 2023).
+On October 3, a focus-order coverage audit found that the parser treated
+nonnegative `tabindex` values as keyboard-focusable but did not reject positive
+values that override DOM-order tabbing. The current public tree contains ten
+`tabindex="0"` custom scroll regions and 26 `tabindex="-1"` source anchors, with
+no positive value. A focused fixture now rejects positive values while
+accepting both current patterns. Later Predict the Self work brings the site
+to 37 named tables, 202 exposed headings, and 836 interactive or
+keyboard-focusable elements: all 810 exposed elements are named and 26 source
+anchors are safely hidden. W3C strongly advises against positive values for
+tab priority; this source contract reduces focus-order risk without replacing
+the open keyboard review (World Wide Web Consortium Web Accessibility
+Initiative, n.d.-a).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -338,6 +350,10 @@ https://www.w3.org/WAI/WCAG22/Techniques/html/H39
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
 
-World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Landmark
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
+a keyboard interface*. Retrieved October 3, 2026, from
+https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Landmark
 regions*. Retrieved October 1, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

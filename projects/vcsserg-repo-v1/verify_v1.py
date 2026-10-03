@@ -228,9 +228,10 @@ class PageParser(HTMLParser):
             self.label_stack.append(label_record)
         tabindex = attributes.get("tabindex")
         try:
-            keyboard_focusable = tabindex is not None and int(tabindex) >= 0
+            tabindex_value = int(tabindex) if tabindex is not None else None
         except (TypeError, ValueError):
-            keyboard_focusable = False
+            tabindex_value = None
+        keyboard_focusable = tabindex_value is not None and tabindex_value >= 0
         interactive = (
             (
                 tag in NATIVE_INTERACTIVE_ELEMENTS
@@ -254,6 +255,7 @@ class PageParser(HTMLParser):
                 "text_parts": [],
                 "hidden": aria_hidden or self.hidden_depth > 0,
                 "tabindex": tabindex or "",
+                "tabindex_value": tabindex_value,
                 "controls": attributes.get("aria-controls", "").split(),
                 "expanded": attributes.get("aria-expanded"),
                 "input_type": attributes.get("type", "").strip().lower(),
@@ -530,6 +532,14 @@ def page_accessibility_problems(parsed, relative):
             problems.append(f"{relative}: table {number} has no accessible name")
     for number, control in enumerate(parsed.interactive_elements, start=1):
         description = f"interactive element {number} ({control['tag']})"
+        if (
+            control["tabindex_value"] is not None
+            and control["tabindex_value"] > 0
+        ):
+            problems.append(
+                f"{relative}: {description} uses positive tabindex "
+                f"{control['tabindex_value']}"
+            )
         if control["hidden"]:
             if control["tabindex"] != "-1":
                 problems.append(
@@ -1284,7 +1294,8 @@ def check_html_and_css():
         f"named data table(s), {exposed_headings} exposed heading(s), "
         f"{exposed_interactive} exposed interactive or "
         f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
-        f"control(s), and {len(first_party_css)} first-party "
+        f"control(s), no positive tabindex overrides, and "
+        f"{len(first_party_css)} first-party "
         "stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),
     )

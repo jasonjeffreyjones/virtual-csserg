@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 2, 2026 at 08:19 UTC
+
+- **Superseded:** October 3, 2026
+- **Archive key:**
+  [`e7f9d521636732d168099e310d78f5a1913ae942`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/e7f9d521636732d168099e310d78f5a1913ae942)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before positive `tabindex` values became a whole-site regression
+  failure.
+- **Reason:** The outgoing reports accurately documented accessible names for
+  native and composite images while retaining observed focus order in the
+  manual gate. Later Predict the Self work expanded the current site to 37
+  named tables, 202 exposed headings, and 835 interactive or
+  keyboard-focusable elements. The next release synchronizes those totals,
+  records that the current tree uses ten zero and 26 negative `tabindex`
+  values with no positive value, and records the October 3 probe of 285
+  incoming files without claiming observed keyboard behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/e7f9d521636732d168099e310d78f5a1913ae942/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/e7f9d521636732d168099e310d78f5a1913ae942/projects/vcsserg-repo-v1)
+
 ### Updated through October 1, 2026 at 08:13 UTC
 
 - **Superseded:** October 2, 2026

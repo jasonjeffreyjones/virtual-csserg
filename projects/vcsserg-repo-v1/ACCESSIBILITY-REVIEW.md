@@ -3,7 +3,8 @@
 Status: **Open**. Prepared by Bee Boring Vanilla on September 19, 2026;
 structured evidence contract added September 20, 2026; source heading contract
 added September 30, 2026; top-level landmark contract added October 1, 2026;
-ARIA image-name contract added October 2, 2026.
+ARIA image-name contract added October 2, 2026; source-order tab contract added
+October 3, 2026.
 
 ## Decision boundary
 
@@ -68,7 +69,7 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
-- All 35 current public data tables have source-owned names. The September 26
+- All 37 current public data tables have source-owned names. The September 26
   audit added captions to 24 of the then-current 26 tables; the restored
   Ipseity Daily Pulse publication subsequently added three named tables.
   The whole-site parser accepts a nonempty `caption`, `aria-label`, or resolved
@@ -77,8 +78,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 827 interactive or keyboard-focusable
-  elements. Each of the 801 elements exposed to assistive technology has an
+- The whole-site parser now audits all 836 interactive or keyboard-focusable
+  elements. Each of the 810 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -99,6 +100,16 @@ accessibility evaluation.
   referenced labels, broken control references, invalid expanded state, and a
   focusable hidden link. These source properties do not establish the rendered
   name, role, state, order, or operation in a browser/screen reader.
+- A source-order audit found ten `tabindex="0"` custom scroll regions and 26
+  `tabindex="-1"` source anchors, with no positive value anywhere in the public
+  HTML. The parser already treated nonnegative values as keyboard-focusable,
+  but it did not reject positive values that would move controls ahead of the
+  default DOM-order sequence. A focused fixture now rejects positive
+  `tabindex` while accepting the current zero and negative patterns. W3C's
+  keyboard-interface guidance strongly advises against positive values for
+  tab ordering (World Wide Web Consortium Web Accessibility Initiative,
+  n.d.-a). This guards source priority; only the keyboard procedure below can
+  establish actual focus order and usability.
 - On September 19, `w3m` 0.5.3 returned successfully for the then-current 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
@@ -110,6 +121,9 @@ accessibility evaluation.
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
 - On October 2, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
+- On October 3, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
@@ -125,7 +139,8 @@ accessibility evaluation.
   249 expected files were byte-identical; before the September 30 heading
   revision, all 257 expected files were byte-identical; before the October 1
   landmark revision, all 267 expected files were byte-identical; before the
-  October 2 ARIA-image revision, all 275 expected files were byte-identical. It
+  October 2 ARIA-image revision, all 275 expected files were byte-identical;
+  before the October 3 source-order revision, all 285 were byte-identical. It
   cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -278,14 +293,18 @@ World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
 https://www.w3.org/WAI/WCAG22/Techniques/html/H39
 
-World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Easy checks:
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
+a keyboard interface*. Retrieved October 3, 2026, from
+https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Easy checks:
 A first review of web accessibility*. Retrieved September 19, 2026, from
 https://www.w3.org/WAI/test-evaluate/preliminary/
 
-World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Headings*.
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-c). *Headings*.
 Retrieved September 30, 2026, from
 https://www.w3.org/WAI/tutorials/page-structure/headings/
 
-World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Landmark
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-d). *Landmark
 regions*. Retrieved October 1, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/
