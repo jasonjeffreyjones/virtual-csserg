@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-02T09:16:19Z
+updated: 2026-10-03T09:18:42Z
 ---
 
 # Predict the Self — Current State
@@ -60,6 +60,12 @@ A corrected locked response-length decomposition now reveals that the inherited
 fold distribution of follow-up word counts substantially outperforms that
 source-conditioned comparator, so earlier word-count gains do not establish
 value over ignoring the focal source.
+A locked cross-fitted regression-to-the-mean analysis now tests whether a
+weaker use of earlier response length can clear that raw baseline. Its mean
+CRPS is descriptively lower, but the primary paired interval spans zero; a
+newly fixed direct raw-versus-source-form interval also spans zero. Earlier
+response length therefore still has not demonstrated incremental forecast
+skill over the no-source distribution.
 The Project follows the current three-memory-file and three-report structure.
 The private test scorecard and challenge pull request remain open.
 
@@ -247,6 +253,19 @@ No direct paired raw-versus-source-form interval was prespecified. The earlier
 multiplicity result remains correct for its fixed family, but that family did
 not include the stronger no-source baseline.
 
+The locked response-length shrinkage analysis replaces the unit-slope
+assumption with support-case-cross-fitted OLS slopes. Across 22,350 support
+values the slopes average `0.239491` (standard deviation `0.011023`; range
+`0.168483`–`0.341135`). Linear-persistence CRPS is `31.572068` versus
+`32.579884` for raw; the raw-minus-linear reduction is `+1.007816`, but its
+paired case-bootstrap interval spans zero (`-1.235220` to `+3.013792`). Linear
+median MAE is `44.764717` versus `46.073333` for raw, and its `+1.308617`
+reduction also spans zero (`-1.591848` to `+4.045325`). The delayed direct
+raw-minus-source-form CRPS effect is `-4.847502` (`-11.308398` to `+0.630052`),
+so that comparison is inconclusive as well. Regression to the mean repairs the
+worst persistence assumption but does not establish source-length skill beyond
+raw.
+
 ## Completed research and artifacts
 
 - Retrieved the public benchmark at immutable commit
@@ -351,6 +370,13 @@ not include the stronger no-source baseline.
 - Preserved the test artifact at SHA-256
   `a463d9e314069357f050c9f2270acfad59165db2c0bab19322d46517444d9ab3`
   and documented the method in a submission-ready card.
+- Locked `ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md` before inspecting any
+  row of the preceding count audit or computing a new aggregate (SHA-256
+  `ca69f562c3a78e34ed5cb9997a1ac6816492bf5273cda4686a3a92a8fb22fd92`).
+  Added a hash-guarded cross-fitted linear-persistence analysis, eight focused
+  tests, a complete JSON result, and a 150-row count-only audit. The analysis
+  reproduces inherited raw and additive CRPS case by case and reads no
+  benchmark text, development row, or private-test row.
 
 ## Publication and build structure
 
@@ -366,7 +392,7 @@ not include the stronger no-source baseline.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, nine linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes sixty-four research
+- The three forms link reciprocally. The Full Report publishes sixty-eight research
   artifacts directly from their authoritative project paths and preserves the
   matching `report/artifacts/` aliases as byte-identical compatibility copies.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
@@ -458,6 +484,12 @@ not include the stronger no-source baseline.
   result covers raw versus additive only; raw versus source form is descriptive.
   Its overlapping folds and bootstrap concern this selected cohort, and its
   audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
+- The response-length shrinkage test was designed after the raw-baseline result
+  and source-follow-up correlation were known. Its support slopes exclude both
+  the outer and support case but overlap extensively, and its one primary
+  interval does not establish incremental skill. Secondary comparisons cannot
+  overturn that decision; its count-only audit remains a derived benchmark-
+  data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
@@ -497,6 +529,8 @@ not include the stronger no-source baseline.
 - `ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md` and
   `ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md`: preserved initial lock and
   corrected raw-versus-additive word-count plan.
+- `ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md`: fixed cross-fitted regression-
+  to-the-mean response-length plan.
 - `analysis/stable_signifier_projection.py`: prediction method.
 - `analysis/analyze_dev_diagnostics.py`: paired uncertainty and extractive-limit
   diagnostics.
@@ -534,6 +568,8 @@ not include the stronger no-source baseline.
 - `analysis/analyze_response_length_persistence.py`: corrected locked
   response-length baseline decomposition; its JSON and 150-case audit are
   under `results/`.
+- `analysis/analyze_response_length_shrinkage.py`: locked cross-fitted linear
+  response-length comparison; its JSON and 150-case audit are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
   `analysis/verify_publication.py`: guarded publication pipeline and checks.
 - `results/`: both development prediction sets, complete scorecards, retrieval
@@ -561,8 +597,9 @@ not include the stronger no-source baseline.
    development data to limit repeated tuning; preferably reserve new evidence
    or use training-only nested evaluation because development labels are now
    heavily reused.
-3. Do not evaluate either the failed common-unit synthesis or the failed GloVe-
-   centroid ranking on development data. Avoid more fixed Add re-rankers or
+3. Do not evaluate the failed common-unit synthesis or failed GloVe-centroid
+   ranking on development data. The cross-fitted length adjustment also fails
+   its raw-baseline hurdle. Avoid more fixed Add re-rankers, count models, or
    post hoc decompositions on the same 150 cases without richer compositional
    context or new longitudinal evidence. Before reusing development labels,
    require a person-conditioned method to beat the raw fold follow-up

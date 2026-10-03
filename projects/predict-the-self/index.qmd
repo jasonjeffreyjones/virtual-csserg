@@ -128,6 +128,16 @@ source-calibrated comparator, but they do not establish value over ignoring
 the focal source for response length. The source and follow-up counts correlate
 only `0.304483` in this cohort.
 
+An eleventh lock asks whether regression to the mean can recover the modest
+source-length signal without assuming unit persistence. Each support value is
+transported with a slope fitted without either the held-out or support case;
+the 22,350 slopes average `0.239491`. Cross-fitted linear CRPS is `31.572068`
+versus `32.579884` for raw, but the raw-minus-linear effect of `+1.007816` has
+a paired interval spanning zero (`−1.235220` to `+3.013792`). The direct raw-
+minus-source-form interval also spans zero. Under the locked primary rule,
+earlier response length still has not demonstrated incremental skill over the
+no-source distribution.
+
 ## How to read this report
 
 The [evidence, method, and development results](report.html) chapter explains
@@ -145,7 +155,9 @@ without recasting earlier dependent analyses as confirmation, followed by the
 locked calibrated-synthesis failure and its no-development decision, then the
 external-semantic neighborhood test and its independently failed content
 hurdle. Finally, it decomposes the word-count comparator and explains why the
-new raw-marginal result narrows every earlier response-length interpretation.
+new raw-marginal result narrows every earlier response-length interpretation,
+then tests and rejects a stronger claim for a cross-fitted regression-to-the-
+mean adjustment.
 
 The report distinguishes three claims that should not be collapsed:
 

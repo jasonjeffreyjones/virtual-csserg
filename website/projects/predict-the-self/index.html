@@ -143,9 +143,10 @@
           <caption class="visually-hidden">Training leave-one-out response-length baseline decomposition</caption>
           <thead><tr><th scope="col">Word-count distribution</th><th scope="col">Mean CRPS</th><th scope="col">Median MAE</th><th scope="col">Primary comparison</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Raw follow-up marginal</th><td class="metric-better">32.579884</td><td class="metric-better">46.073333</td><td class="metric-better">Raw minus additive: −8.092811<br><small>95% interval −15.719421 to −1.507037</small></td></tr>
-            <tr><th scope="row">Additive persistence</th><td>40.672695</td><td>56.080000</td><td>Uses focal source count</td></tr>
-            <tr><th scope="row">Source-form neighborhood</th><td>37.427386</td><td>—</td><td>Descriptive against raw</td></tr>
+            <tr><th scope="row">Cross-fitted linear persistence</th><td>31.572068</td><td>44.764717</td><td>Raw minus linear: +1.007816<br><small>95% interval −1.235220 to +3.013792</small></td></tr>
+            <tr><th scope="row">Raw follow-up marginal</th><td>32.579884</td><td>46.073333</td><td class="metric-better">Raw minus additive: −8.092811<br><small>95% interval −15.719421 to −1.507037</small></td></tr>
+            <tr><th scope="row">Additive persistence</th><td>40.672695</td><td>56.080000</td><td>Unit source-count slope</td></tr>
+            <tr><th scope="row">Source-form neighborhood</th><td>37.427386</td><td>—</td><td>Raw minus source form: −4.847502<br><small>95% interval −11.308398 to +0.630052</small></td></tr>
           </tbody>
         </table>
       </div>
@@ -175,7 +176,7 @@
           </tbody>
         </table>
       </div>
-      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses show that source-token, surface-neighborhood, and GloVe-semantic rankings all lose to marginal additions at the same oracle budget. No-oracle neighborhoods improve some quantities relative to a source-calibrated change-offset comparator, but a corrected baseline decomposition finds that raw follow-up word counts outperform that additive-persistence comparator. The earlier stress test remains valid within its fixed family but does not establish response-length skill over the raw distribution. Full-text synthesis and semantic ranking fail their advancement hurdles; neither is advanced to development. Cross-validation is not fresh confirmation, ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
+      <figcaption id="forecast-caption">Figure 1. Development results show continuity, lexical novelty, text agreement, and volume-matched novel-token recovery. Locked 150-case leave-one-out analyses show that source-token, surface-neighborhood, and GloVe-semantic rankings all lose to marginal additions at the same oracle budget. No-oracle neighborhoods improve some quantities relative to a source-calibrated change-offset comparator, but a corrected baseline decomposition finds that raw follow-up word counts outperform additive persistence. A cross-fitted regression-to-the-mean adjustment has lower mean CRPS than raw, but its primary paired interval spans zero. The earlier stress test remains valid within its fixed family but does not establish response-length skill over the raw distribution. Full-text synthesis and semantic ranking fail their advancement hurdles; neither is advanced to development. Cross-validation is not fresh confirmation, ranking controls are not full-text forecasts, and the benchmark defines no composite score.</figcaption>
     </figure>
 
     <section class="summary-findings ruled-section" aria-labelledby="findings-title">
@@ -200,7 +201,7 @@
           <p><strong>The family-robust signal is narrower.</strong> Across 16 contrasts, simultaneous intervals retain Add-count and word-count point gains plus the word-count CRPS gain, but not the smaller Delete-count effect or demographics' increment over text. <a href="report/report.html#multiplicity-stress-test">Inspect the stress test</a>.</p>
         </article>
         <article class="finding">
-          <p><strong>The raw length baseline is stronger.</strong> Raw fold follow-up counts reach CRPS 32.579884 versus 40.672695 for additive persistence; the paired interval favors raw. Earlier source-form gains were against that weaker source-calibrated comparator, not against ignoring the focal source. <a href="report/report.html#response-length-decomposition">Inspect the decomposition</a>.</p>
+          <p><strong>Source-conditioned length skill remains inconclusive.</strong> Raw fold follow-up counts beat additive persistence. Cross-fitted regression to the mean lowers CRPS descriptively to 31.572068, but its paired interval versus raw spans zero; the direct raw-versus-source-form interval does too. <a href="report/report.html#response-length-shrinkage">Inspect the shrinkage test</a>.</p>
         </article>
         <article class="finding">
           <p><strong>Common-unit synthesis fails its advancement gate.</strong> It improves word-count error and ROUGE-L but sharply worsens line-count error and reaches only 0.075887 novel-type F1 versus 0.134680 for an equal-volume marginal ranking. <a href="report/report.html#calibrated-synthesis">Inspect the locked failure</a>.</p>

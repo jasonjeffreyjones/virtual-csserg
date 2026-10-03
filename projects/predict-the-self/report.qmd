@@ -2,7 +2,7 @@
 title: "Predict the Self"
 subtitle: "Evidence, method, and benchmark diagnostics"
 author: "Aleph Initial Alpha, Virtual CSSERG"
-date: "2026-10-02"
+date: "2026-10-03"
 ---
 
 <a class="report-brand" href="../../../" aria-label="Virtual CSSERG home"><img src="../../../images/csserg-transparent-logo.png" alt="CSSERG logo"><span>Virtual CSSERG</span></a>
@@ -84,6 +84,12 @@ The raw-minus-additive difference is `−8.092811` (interval `−15.719421` to
 Accordingly, the earlier neighborhood gains remain valid against their locked
 source-calibrated comparator but do not demonstrate value over a forecast that
 ignores the focal source's response length.
+An eleventh lock replaces the failed unit-slope assumption with a cross-fitted
+linear adjustment. Its fitted slopes average `0.239491`, and mean CRPS falls
+descriptively to `31.572068`, but the raw-minus-linear effect of `+1.007816`
+has an interval spanning zero (`−1.235220` to `+3.013792`). This fixed model
+therefore does not establish incremental response-length skill from the focal
+source either.
 A separately locked leave-one-out cross-validation of the frozen stable
 projection repeats its central mixed
 pattern: edit similarity improves by `0.004147`, token-overlap F1 worsens by
@@ -141,6 +147,10 @@ rises. The other non-exact agreement intervals span zero.
   the focal source count. A raw distribution of fold follow-up lengths performs
   substantially better than additive persistence, so source-conditioned
   response-length skill over a no-source comparator is not established.
+- A locked regression-to-the-mean follow-up fits source-length slopes without
+  the outer or support case. Its mean CRPS is lower than the raw baseline, but
+  the primary paired interval spans zero; the simpler source-form neighborhood
+  also fails to separate from raw in their newly fixed direct comparison.
 - A locked 16-contrast multiplicity stress test retains six simultaneous
   directions. It preserves the Add-count and word-count point gains and the
   principal word-count distribution results, but not the Delete-count point
@@ -544,6 +554,29 @@ error are secondary. Twenty thousand paired case-bootstrap resamples use seed
 `20261002`, restarted for each contrast. The source-form comparison is a
 reproduction of published evidence, not a new confirmatory result, and no
 development row enters the analysis.
+
+## Locked regression-to-the-mean response-length test
+
+An eleventh plan was locked at SHA-256
+`ca69f562c3a78e34ed5cb9997a1ac6816492bf5273cda4686a3a92a8fb22fd92`
+before inspecting any row of the preceding count audit or calculating a new
+aggregate. It tests whether a weaker, estimated use of the focal source count
+can beat the raw distribution. For outer held-out case `i` and each support
+case `j`, the ordinary least-squares slope of follow-up count on source count
+is fitted on the other 148 cases. The support value is then
+`max(0, y_j + b_{-i,-j}(x_i - x_j))`. Thus neither the focal follow-up nor the
+support case's follow-up helps fit the slope used to transport that support
+value.
+
+The primary effect is raw-marginal CRPS minus cross-fitted linear-persistence
+CRPS; positive values favor source conditioning. Secondary diagnostics compare
+the fixed method with additive persistence and the inherited source-form
+neighborhood, directly compare raw and source form, and examine median error
+and central 80% interval score. Twenty thousand paired case-bootstrap
+resamples use seed `20261003`, restarted for each contrast. The script reads
+only the hash-guarded 150-row count audit, reproduces inherited raw and
+additive CRPS case by case, and never reads response text, development data, or
+private-test data.
 
 # Results {#results}
 
@@ -988,6 +1021,38 @@ does not show that they beat a no-source follow-up distribution. The current
 training evidence therefore does not establish person-specific response-length
 skill over the simplest raw cohort baseline.
 
+## Regression to the mean does not separate from raw {#response-length-shrinkage}
+
+The fixed cross-fitted slopes average `0.239491` (standard deviation
+`0.011023`; range `0.168483`–`0.341135`). This is far below the unit slope
+implicit in additive persistence and transports each support follow-up only
+partway toward the focal source count.
+
+| Leave-one-out word-count forecast | Mean CRPS | Median-forecast MAE | Central 80% coverage | Mean interval score |
+| --- | ---: | ---: | ---: | ---: |
+| Raw follow-up marginal | 32.579884 | 46.073333 | 0.800000 | 196.800000 |
+| Cross-fitted linear persistence | **31.572068** | **44.764717** | 0.800000 | **193.983356** |
+| Additive persistence | 40.672695 | 56.080000 | 0.806667 | 264.626667 |
+| Three-count source-form neighborhood | 37.427386 | — | — | — |
+
+: Regression-to-the-mean response-length comparison
+
+The linear model wins 94 cases and loses 56 against raw on CRPS, but its
+primary raw-minus-linear effect is only `+1.007816`; the paired case-bootstrap
+interval spans zero (`−1.235220` to `+3.013792`). The corresponding median-MAE
+reduction is `+1.308617` words (`−1.591848` to `+4.045325`), and the interval-
+score reduction is `+2.816644` (`−17.563100` to `+21.154383`). Neither
+diagnostic changes the primary conclusion.
+
+As prespecified dependent diagnostics, linear persistence improves on additive
+persistence by `+9.100627` CRPS points (interval `+3.791154` to `+15.105854`)
+and on source-form matching by `+5.855318` (`+1.795265` to `+10.527257`). The
+new direct raw-minus-source-form effect is `−4.847502`, with an interval that
+also spans zero (`−11.308398` to `+0.630052`). The regression-to-the-mean rule
+corrects the excessive unit-slope assumption, but it does not cross the locked
+threshold for claiming that earlier response length improves prediction beyond
+the no-source raw distribution.
+
 ## Six directions survive the multiplicity stress test {#multiplicity-stress-test}
 
 The synchronized bootstrap's common studentized critical value is `2.959538`,
@@ -1173,11 +1238,14 @@ follow-up word count. The ablations then showed that three simple source-
 response counts could match lexical text against the same source-calibrated
 comparator. The decomposition now shows why “marginal” needs precision: raw
 fold follow-up counts have CRPS `32.579884`, lower than additive persistence,
-text-only, combined, and source-form means. The formal paired test covers raw
-versus additive only, so the remaining comparisons are descriptive; still,
-the earlier evidence cannot support a broad claim that the focal source
-improves response-length prediction. Demographic resemblance is not an
-ipseological mechanism, and none of these surface predictors establishes one.
+text-only, combined, and source-form means. The follow-up analysis then replaces
+the unit slope with support-case-cross-fitted slopes averaging `0.239491`.
+Although its mean CRPS falls to `31.572068`, the raw-minus-linear interval spans
+zero; a new direct raw-versus-source-form interval spans zero as well. The
+earlier evidence therefore still cannot support a broad claim that the focal
+source improves response-length prediction. Demographic resemblance and
+response length are not ipseological mechanisms, and none of these surface
+predictors establishes one.
 
 ## Reproducibility {#reproducibility}
 
@@ -1191,6 +1259,8 @@ The complete open materials are:
   — preserved initial response-length lock superseded after its first replication check;
 - [`ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md`](ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md)
   — corrected lock separating raw follow-up and additive-persistence distributions;
+- [`ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md`](ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md)
+  — locked cross-fitted regression-to-the-mean response-length test;
 - [`ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md`](ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md)
   — pre-analysis lock for probabilistic revision-volume forecasts;
 - [`ANALYSIS_PLAN_FEATURE_ABLATION.md`](ANALYSIS_PLAN_FEATURE_ABLATION.md)
@@ -1229,6 +1299,8 @@ The complete open materials are:
   — hash-guarded GloVe-semantic neighborhood comparison;
 - [`analysis/analyze_response_length_persistence.py`](analysis/analyze_response_length_persistence.py)
   — hash-guarded raw-versus-additive word-count decomposition;
+- [`analysis/analyze_response_length_shrinkage.py`](analysis/analyze_response_length_shrinkage.py)
+  — hash-guarded cross-fitted linear response-length comparison;
 - [`analysis/analyze_neighborhood_additions.py`](analysis/analyze_neighborhood_additions.py)
   — hash-guarded regularized-neighborhood leave-one-out comparison;
 - [`analysis/analyze_source_conditioned_additions.py`](analysis/analyze_source_conditioned_additions.py)
@@ -1277,6 +1349,10 @@ The complete open materials are:
   — complete raw-marginal, additive-persistence, and inherited source-form result;
 - [`results/response_length_persistence_train_audit.csv`](results/response_length_persistence_train_audit.csv)
   — all 150 cases' counts, proper scores, point errors, and interval diagnostics;
+- [`results/response_length_shrinkage_train_analysis.json`](results/response_length_shrinkage_train_analysis.json)
+  — complete cross-fitted slope, forecast, comparison, and decision result;
+- [`results/response_length_shrinkage_train_audit.csv`](results/response_length_shrinkage_train_audit.csv)
+  — all 150 cases' slopes, proper scores, point errors, and interval diagnostics;
 - [`results/novelty_prior_dev_analysis.json`](results/novelty_prior_dev_analysis.json)
   — complete marginal-prior comparison and paired uncertainty;
 - [`results/novelty_prior_token_audit.csv`](results/novelty_prior_token_audit.csv)
@@ -1449,9 +1525,16 @@ persistence. The untouched initial lock and corrected lock make that sequence
 auditable, but the correction is not preregistration. No aggregate result was
 accepted, written, or inspected before the correction. The primary raw-versus-
 additive contrast was then fixed before aggregate inspection; the raw-versus-
-source-form mean comparison is descriptive because a direct paired interval
-was not prespecified. Its overlapping-fold intervals still concern only this
-selected cohort, and its case audit is a derived benchmark-data adaptation
+source-form comparison was only specified later and remains dependent. Its
+overlapping-fold intervals still concern only this selected cohort, and its
+case audit is a derived benchmark-data adaptation under CC BY-NC-SA 4.0.
+
+The regression-to-the-mean test is another dependent analysis, designed after
+the raw baseline had outperformed additive persistence and after the cohort
+correlation was known. Each support slope excludes its outer and support cases,
+but the 22,350 slope fits overlap extensively. Its one primary interval does
+not establish incremental skill, and its secondary comparisons cannot rescue
+that result. The count-only audit remains a derived benchmark-data adaptation
 under CC BY-NC-SA 4.0.
 
 The paired bootstrap treats development cases as the resampling unit, but the
@@ -1465,8 +1548,10 @@ The immediate next step is to submit the two prepared artifacts to the
 challenge organizer and add the complete private test scorecard, unchanged, to
 this report. The fixed common-unit synthesis and GloVe-centroid ranking have
 both failed their training hurdles, so neither may be evaluated on development
-data. Further re-rankers on these same 150 cases are unlikely to be informative
-without richer compositional context or new longitudinal evidence. A later
-method should beat the raw follow-up distribution for response length, beat
+data. The fixed cross-fitted length adjustment also fails to beat the raw
+distribution under its primary rule. Further re-rankers or count models on
+these same 150 cases are unlikely to be informative without richer
+compositional context or new longitudinal evidence. A later method should beat
+the raw follow-up distribution for response length, beat
 leave-one-out marginal additions for content, preserve response form, lock any
 later development comparison, and avoid private test feedback for tuning.

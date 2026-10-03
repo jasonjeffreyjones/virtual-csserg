@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "analysis": "training_leave_one_out_response_length_shrinkage",
+  "cases": 150,
+  "provenance": {
+    "benchmark_commit_inherited": "9b6a766712583fec8d3182957260b1123fbfa146",
+    "analysis_plan_sha256": "ca69f562c3a78e34ed5cb9997a1ac6816492bf5273cda4686a3a92a8fb22fd92",
+    "preceding_plan_sha256": "8071914fd204beefeabd294fac7e3f1b00dceeba50c0372ffbd5498b2d136861",
+    "preceding_implementation_sha256": "e8a055f2f0ca0be65bc898caeadcef3f901c57b84fca6d323f6cbe50f44bc98d",
+    "preceding_audit_sha256": "b9dec6d552f116ecef9344b4ae8762dbbd1ac1b458bc2fb296aed5295ec0aa8d"
+  },
+  "design": {
+    "training_cases_per_outer_fold": 149,
+    "slope_fit_cases_per_support_value": 148,
+    "linear_distribution": "max(0, support follow-up + OLS slope fit without outer or support case * (held-out source - support source)), equally weighted",
+    "raw_marginal_distribution": "each outer-fold support follow-up count, equally weighted",
+    "additive_distribution": "max(0, support follow-up + held-out source - support source), equally weighted",
+    "point_forecast": "left-continuous empirical median",
+    "probabilistic_score": "empirical CRPS",
+    "primary_contrast": "raw follow-up marginal CRPS minus linear-persistence CRPS",
+    "future_information_used_for_focal_prediction": "none"
+  },
+  "preceding_raw_and_additive_scores_reproduced": true,
+  "support_specific_slope_distribution": {
+    "count": 22350,
+    "mean": 0.239491,
+    "standard_deviation": 0.011023,
+    "minimum": 0.168483,
+    "first_quartile": 0.236238,
+    "median": 0.238899,
+    "third_quartile": 0.241439,
+    "maximum": 0.341135
+  },
+  "mean_absolute_error": {
+    "raw_marginal": 46.073333,
+    "additive_persistence": 56.08,
+    "linear_persistence": 44.764717
+  },
+  "predictive_distributions": {
+    "raw_marginal": {
+      "mean_crps": 32.579884,
+      "central_80_interval_coverage": 0.8,
+      "mean_central_80_interval_width": 141.8,
+      "mean_central_80_interval_score": 196.8
+    },
+    "additive_persistence": {
+      "mean_crps": 40.672695
+    },
+    "source_form_neighborhood": {
+      "mean_crps": 37.427386,
+      "provenance": "inherited preceding case audit"
+    },
+    "linear_persistence": {
+      "mean_crps": 31.572068,
+      "central_80_interval_coverage": 0.8,
+      "mean_central_80_interval_width": 135.446964,
+      "mean_central_80_interval_score": 193.983356
+    }
+  },
+  "primary_comparison": {
+    "effect_definition": "raw_marginal_crps_minus_linear_persistence_crps",
+    "positive_favors": "linear_persistence",
+    "mean_effect": 1.007816,
+    "paired_case_bootstrap_95_ci_low": -1.23522,
+    "paired_case_bootstrap_95_ci_high": 3.013792,
+    "favored_method_case_wins": 94,
+    "case_ties": 0,
+    "favored_method_case_losses": 56
+  },
+  "primary_decision": "primary_comparison_does_not_separate_methods",
+  "secondary_comparisons": {
+    "additive_vs_linear_crps": {
+      "effect_definition": "additive_persistence_crps_minus_linear_persistence_crps",
+      "positive_favors": "linear_persistence",
+      "mean_effect": 9.100627,
+      "paired_case_bootstrap_95_ci_low": 3.791154,
+      "paired_case_bootstrap_95_ci_high": 15.105854,
+      "favored_method_case_wins": 93,
+      "case_ties": 0,
+      "favored_method_case_losses": 57
+    },
+    "source_form_vs_linear_crps": {
+      "effect_definition": "source_form_neighborhood_crps_minus_linear_persistence_crps",
+      "positive_favors": "linear_persistence",
+      "mean_effect": 5.855318,
+      "paired_case_bootstrap_95_ci_low": 1.795265,
+      "paired_case_bootstrap_95_ci_high": 10.527257,
+      "favored_method_case_wins": 85,
+      "case_ties": 0,
+      "favored_method_case_losses": 65
+    },
+    "raw_marginal_vs_source_form_crps": {
+      "effect_definition": "raw_marginal_crps_minus_source_form_neighborhood_crps",
+      "positive_favors": "source_form_neighborhood",
+      "mean_effect": -4.847502,
+      "paired_case_bootstrap_95_ci_low": -11.308398,
+      "paired_case_bootstrap_95_ci_high": 0.630052,
+      "favored_method_case_wins": 71,
+      "case_ties": 0,
+      "favored_method_case_losses": 79
+    },
+    "raw_marginal_vs_linear_absolute_error": {
+      "effect_definition": "raw_marginal_absolute_error_minus_linear_persistence_absolute_error",
+      "positive_favors": "linear_persistence",
+      "mean_effect": 1.308617,
+      "paired_case_bootstrap_95_ci_low": -1.591848,
+      "paired_case_bootstrap_95_ci_high": 4.045325,
+      "favored_method_case_wins": 82,
+      "case_ties": 0,
+      "favored_method_case_losses": 68
+    },
+    "raw_marginal_vs_linear_interval_score": {
+      "effect_definition": "raw_marginal_interval_score_minus_linear_persistence_interval_score",
+      "positive_favors": "linear_persistence",
+      "mean_effect": 2.816644,
+      "paired_case_bootstrap_95_ci_low": -17.5631,
+      "paired_case_bootstrap_95_ci_high": 21.154383,
+      "favored_method_case_wins": 128,
+      "case_ties": 0,
+      "favored_method_case_losses": 22
+    }
+  },
+  "bootstrap": {
+    "unit": "paired outer training case",
+    "resamples": 20000,
+    "seed_restarted_for_each_comparison": 20261003,
+    "interval": "percentile",
+    "confidence_level": 0.95,
+    "multiplicity_adjustment": "none; one primary contrast"
+  },
+  "claim_boundary": "This dependent training-cohort diagnostic concerns response length, not correct future identity content. It is not untouched confirmation, population evidence, development performance, or private-test performance."
+}

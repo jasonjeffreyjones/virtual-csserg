@@ -171,6 +171,16 @@ python3 projects/predict-the-self/analysis/analyze_response_length_persistence.p
   --benchmark-dir /path/to/predict-future-selves-at-9b6a766
 ```
 
+Regenerate the locked regression-to-the-mean response-length test. It reads
+only the preceding hash-guarded 150-case count audit, cross-fits each support
+slope without the outer or support case, and writes a complete JSON result and
+150-row audit. It never reads benchmark text, development rows, or private-test
+rows:
+
+```bash
+python3 projects/predict-the-self/analysis/analyze_response_length_shrinkage.py
+```
+
 ```bash
 python3 -m pip install --target /tmp/predict-self-publishing-deps \
   -r projects/predict-the-self/requirements-publication.txt
