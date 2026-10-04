@@ -5,9 +5,6 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
-from pypdf import PdfReader
-
-
 PROJECT = Path(__file__).resolve().parents[1]
 ROOT = PROJECT.parents[1]
 PUBLIC = ROOT / "website/projects/predict-the-self"
@@ -62,7 +59,20 @@ def local_targets(path: Path, page: Page) -> set[Path]:
     }
 
 
+def validate_artifact_copy(source: Path, canonical: Path, alias: Path) -> None:
+    """Require both public copies to equal the authoritative Project source."""
+    expected = source.read_bytes()
+    assert canonical.read_bytes() == expected, (
+        f"published artifact differs from Project source: {canonical}"
+    )
+    assert alias.read_bytes() == expected, (
+        f"published artifact alias differs from Project source: {alias}"
+    )
+
+
 def main() -> int:
+    from pypdf import PdfReader
+
     summary_path = PUBLIC / "index.html"
     landing_path = PUBLIC / "report/index.html"
     evidence_path = PUBLIC / "report/report.html"
@@ -233,9 +243,11 @@ def main() -> int:
         ("submissions/aleph_initial_alpha_submission.csv", "artifacts/aleph_initial_alpha_submission.csv"),
         ("submissions/aleph_initial_alpha_method.md", "artifacts/aleph_initial_alpha_method.md"),
     ):
-        assert (PUBLIC / "report" / source).read_bytes() == (
-            PUBLIC / "report" / legacy
-        ).read_bytes(), f"legacy artifact alias differs: {legacy}"
+        validate_artifact_copy(
+            PROJECT / source,
+            PUBLIC / "report" / source,
+            PUBLIC / "report" / legacy,
+        )
 
     pdf = PdfReader(short_path)
     assert 1 <= len(pdf.pages) <= 10, f"PDF pages: {len(pdf.pages)}"

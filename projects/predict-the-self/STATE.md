@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-03T09:18:42Z
+updated: 2026-10-04T09:05:24Z
 ---
 
 # Predict the Self — Current State
@@ -67,6 +67,10 @@ newly fixed direct raw-versus-source-form interval also spans zero. Earlier
 response length therefore still has not demonstrated incremental forecast
 skill over the no-source distribution.
 The Project follows the current three-memory-file and three-report structure.
+The publication verifier now compares all 68 canonical public research
+artifacts and their compatibility aliases byte for byte with the authoritative
+Project sources, so two mutually consistent but stale public copies can no
+longer pass validation.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -377,6 +381,10 @@ raw.
   tests, a complete JSON result, and a 150-row count-only audit. The analysis
   reproduces inherited raw and additive CRPS case by case and reads no
   benchmark text, development row, or private-test row.
+- Strengthened the publication verifier to require every canonical research
+  artifact and compatibility alias to equal its authoritative Project source.
+  Three focused regression tests cover matching copies, mutually consistent
+  stale public copies, and a stale alias without adding a runtime dependency.
 
 ## Publication and build structure
 
@@ -394,7 +402,9 @@ raw.
   and both report choices.
 - The three forms link reciprocally. The Full Report publishes sixty-eight research
   artifacts directly from their authoritative project paths and preserves the
-  matching `report/artifacts/` aliases as byte-identical compatibility copies.
+  matching `report/artifacts/` aliases as byte-identical compatibility copies;
+  validation now checks both public copies directly against each Project
+  source.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -571,7 +581,8 @@ raw.
 - `analysis/analyze_response_length_shrinkage.py`: locked cross-fitted linear
   response-length comparison; its JSON and 150-case audit are under `results/`.
 - `analysis/publish_full_report.py`, `analysis/render_short_report.py`, and
-  `analysis/verify_publication.py`: guarded publication pipeline and checks.
+  `analysis/verify_publication.py`: guarded publication pipeline and checks,
+  including authoritative source-to-public artifact identity.
 - `results/`: both development prediction sets, complete scorecards, retrieval
   audit, and complete diagnostic results.
 - `submissions/`: frozen test artifact and method card.

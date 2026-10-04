@@ -191,8 +191,9 @@ PYTHONPATH=/tmp/predict-self-publishing-deps \
   python3 projects/predict-the-self/analysis/render_short_report.py
 ```
 
-Validate the research code, guarded publisher, three-form publication, v1
-promise groups, and whitespace:
+Validate the research code, guarded publisher, three-form publication,
+source-to-public byte identity for every research artifact and compatibility
+alias, v1 promise groups, and whitespace:
 
 ```bash
 python3 -m unittest discover -s projects/predict-the-self/tests -v
