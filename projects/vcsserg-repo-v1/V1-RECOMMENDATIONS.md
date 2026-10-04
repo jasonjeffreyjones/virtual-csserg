@@ -31,7 +31,7 @@ status-inspection refusal, prohibited runner edits, plus Scholar and validation
 failures without commit, push, or deployment. They run as a separate
 integration suite rather than recursively inside a live runner. A September 18
 claim-to-evidence review closes the substantive report gate and documents its
-internal-review boundary; rendered keyboard and assistive-technology usability
+internal-review boundary; rendered keyboard, reflow, and assistive-technology usability
 remains the sole manual gate. On September 19, the generated-report build made
 every bypass link first in static HTML without runtime relocation, and
 `ACCESSIBILITY-REVIEW.md` made the remaining manual gate reproducible. Its
@@ -123,6 +123,19 @@ anchors are safely hidden. W3C strongly advises against positive values for
 tab priority; this source contract reduces focus-order risk without replacing
 the open keyboard review (World Wide Web Consortium Web Accessibility
 Initiative, n.d.-a).
+On October 4, a viewport audit found one `width=device-width` declaration on
+each of the 39 public pages, with no declaration that disables user scaling or
+sets a nonnegative maximum scale below 2. A focused fixture now rejects a
+missing or duplicate declaration, a fixed layout width, `user-scalable=no`, an
+insufficient maximum scale, and an ambiguous maximum-scale value. Later Predict
+the Self work and the current report citation bring the site to 38 named tables,
+204 exposed headings, and 843 interactive or keyboard-focusable elements: all
+817 exposed elements are named
+and 26 source anchors are safely hidden. W3C's ACT rule maps the zoom
+restrictions to Resize Text and says a pass still needs further testing; the
+source contract therefore preserves a prerequisite without replacing the open
+320-pixel and 200%-text review (World Wide Web Consortium Web Accessibility
+Initiative, 2022).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -349,6 +362,10 @@ https://www.w3.org/WAI/WCAG22/Techniques/html/H39
 
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
+
+World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
+*Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
+https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
 a keyboard interface*. Retrieved October 3, 2026, from

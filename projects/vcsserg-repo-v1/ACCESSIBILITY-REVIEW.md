@@ -4,7 +4,8 @@ Status: **Open**. Prepared by Bee Boring Vanilla on September 19, 2026;
 structured evidence contract added September 20, 2026; source heading contract
 added September 30, 2026; top-level landmark contract added October 1, 2026;
 ARIA image-name contract added October 2, 2026; source-order tab contract added
-October 3, 2026.
+October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
+2026.
 
 ## Decision boundary
 
@@ -49,7 +50,7 @@ accessibility evaluation.
   whether each figure is announced usefully in the recorded pairing (World
   Wide Web Consortium, 2023).
 - The parser records every exposed `h1` through `h6`, rejects a heading without
-  text, and rejects a forward rank skip such as `h2` to `h4`. All 200 exposed
+  text, and rejects a forward rank skip such as `h2` to `h4`. All 204 exposed
   headings on the 39 current public pages pass. The rule permits multiple
   first-level headings and movement back to a higher rank, which are valid in
   the multi-chapter report structure. W3C's page-structure guidance explains
@@ -78,8 +79,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 836 interactive or keyboard-focusable
-  elements. Each of the 810 elements exposed to assistive technology has an
+- The whole-site parser now audits all 843 interactive or keyboard-focusable
+  elements. Each of the 817 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -110,6 +111,15 @@ accessibility evaluation.
   tab ordering (World Wide Web Consortium Web Accessibility Initiative,
   n.d.-a). This guards source priority; only the keyboard procedure below can
   establish actual focus order and usability.
+- All 39 pages have exactly one viewport declaration using
+  `width=device-width`. None disables user scaling or sets a nonnegative
+  `maximum-scale` below 2. A focused fixture rejects a missing declaration, a
+  fixed layout width, `user-scalable=no`, an insufficient maximum scale, and
+  an ambiguous maximum-scale value. This implements a project-level responsive
+  prerequisite and the W3C ACT rule's zoom restrictions. A passing source
+  declaration still needs further testing; only the narrow-width and 200%-text
+  procedure below establishes rendered reflow for this release (World Wide Web
+  Consortium Web Accessibility Initiative, 2022).
 - On September 19, `w3m` 0.5.3 returned successfully for the then-current 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
@@ -126,6 +136,9 @@ accessibility evaluation.
 - On October 3, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 4, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -140,7 +153,8 @@ accessibility evaluation.
   revision, all 257 expected files were byte-identical; before the October 1
   landmark revision, all 267 expected files were byte-identical; before the
   October 2 ARIA-image revision, all 275 expected files were byte-identical;
-  before the October 3 source-order revision, all 285 were byte-identical. It
+  before the October 3 source-order revision, all 285 were byte-identical;
+  before the October 4 viewport revision, all 293 were byte-identical. It
   cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -292,6 +306,10 @@ https://www.w3.org/WAI/WCAG22/Techniques/html/H63
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
 https://www.w3.org/WAI/WCAG22/Techniques/html/H39
+
+World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
+*Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
+https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
 a keyboard interface*. Retrieved October 3, 2026, from

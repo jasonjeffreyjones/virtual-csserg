@@ -32,6 +32,60 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_viewport_is_responsive_and_does_not_restrict_zoom(self):
+        valid = parse(
+            '<meta name="viewport" '
+            'content="width=device-width, initial-scale=1, user-scalable=yes">'
+        )
+        self.assertEqual(VERIFY.page_viewport_problems(valid, "page.html"), [])
+
+        valid_at_two_hundred_percent = parse(
+            '<meta name="viewport" '
+            'content="width=device-width, maximum-scale=2">'
+        )
+        self.assertEqual(
+            VERIFY.page_viewport_problems(
+                valid_at_two_hundred_percent, "page.html"
+            ),
+            [],
+        )
+
+        missing = parse("<html><body></body></html>")
+        self.assertEqual(
+            VERIFY.page_viewport_problems(missing, "missing.html"),
+            ["missing.html: expected one viewport meta declaration, found 0"],
+        )
+
+        duplicate = parse(
+            '<meta name="viewport" content="width=device-width">'
+            '<meta name="viewport" content="width=device-width">'
+        )
+        self.assertEqual(
+            VERIFY.page_viewport_problems(duplicate, "duplicate.html"),
+            ["duplicate.html: expected one viewport meta declaration, found 2"],
+        )
+
+        restrictive = parse(
+            '<meta name="viewport" content="width=980, user-scalable=no, '
+            'maximum-scale=1.5">'
+        )
+        self.assertEqual(
+            VERIFY.page_viewport_problems(restrictive, "restricted.html"),
+            [
+                "restricted.html: viewport does not use width=device-width",
+                "restricted.html: viewport disables user scaling",
+                "restricted.html: viewport maximum-scale is below 2",
+            ],
+        )
+
+        ambiguous = parse(
+            '<meta name="viewport" content="width=device-width, maximum-scale=yes">'
+        )
+        self.assertEqual(
+            VERIFY.page_viewport_problems(ambiguous, "ambiguous.html"),
+            ["ambiguous.html: viewport has invalid maximum-scale 'yes'"],
+        )
+
     def test_page_frame_has_one_top_level_banner_main_and_contentinfo(self):
         valid = parse(
             "<html><body><header>Site identity</header><main>"

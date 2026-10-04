@@ -9,6 +9,7 @@ from html.parser import HTMLParser
 import importlib.util
 import io
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -158,6 +159,7 @@ class PageParser(HTMLParser):
         self.caption_table = None
         self.text_parts = []
         self.title_parts = []
+        self.viewport_contents = []
 
     @property
     def title(self):
@@ -304,6 +306,12 @@ class PageParser(HTMLParser):
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
             self.description = attributes.get("content", "").strip()
+        is_viewport = (
+            tag == "meta"
+            and attributes.get("name", "").strip().lower() == "viewport"
+        )
+        if is_viewport:
+            self.viewport_contents.append(attributes.get("content", ""))
         if tag in HEADING_ELEMENTS:
             heading = {
                 "level": int(tag[1]),
@@ -634,6 +642,48 @@ def page_landmark_problems(parsed, relative):
             f"{relative}: expected one contentinfo landmark, "
             f"found {parsed.contentinfo_count}"
         )
+    return problems
+
+
+def page_viewport_problems(parsed, relative):
+    """Return project-level responsive viewport and user-zoom checks."""
+    if len(parsed.viewport_contents) != 1:
+        return [
+            f"{relative}: expected one viewport meta declaration, "
+            f"found {len(parsed.viewport_contents)}"
+        ]
+
+    content = parsed.viewport_contents[0]
+    properties = {}
+    for directive in content.split(","):
+        name, separator, value = directive.partition("=")
+        if separator:
+            properties[name.strip().lower()] = value.strip().lower()
+
+    problems = []
+    if properties.get("width") != "device-width":
+        problems.append(f"{relative}: viewport does not use width=device-width")
+
+    if properties.get("user-scalable") in {"no", "0"}:
+        problems.append(f"{relative}: viewport disables user scaling")
+
+    maximum_scale = properties.get("maximum-scale")
+    if maximum_scale is not None:
+        try:
+            maximum_scale_value = float(maximum_scale)
+        except ValueError:
+            problems.append(
+                f"{relative}: viewport has invalid maximum-scale {maximum_scale!r}"
+            )
+        else:
+            if not math.isfinite(maximum_scale_value):
+                problems.append(
+                    f"{relative}: viewport has invalid maximum-scale "
+                    f"{maximum_scale!r}"
+                )
+            elif 0 <= maximum_scale_value < 2:
+                problems.append(f"{relative}: viewport maximum-scale is below 2")
+
     return problems
 
 
@@ -1199,6 +1249,7 @@ def check_html_and_css():
         else:
             titles.setdefault(parsed.title, []).append(relative)
         problems.extend(page_landmark_problems(parsed, relative))
+        problems.extend(page_viewport_problems(parsed, relative))
         if not any(
             heading["level"] == 1 and not heading["hidden"]
             for heading in parsed.heading_records
@@ -1286,7 +1337,7 @@ def check_html_and_css():
         "Static HTML/CSS site",
         not problems,
         f"{len(html_pages)} HTML page(s) with one banner, main, and "
-        "contentinfo landmark each, "
+        "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "
         f"image(s) with explicit alternatives, {exposed_role_images} exposed "
         "ARIA image(s) with accessible names, "

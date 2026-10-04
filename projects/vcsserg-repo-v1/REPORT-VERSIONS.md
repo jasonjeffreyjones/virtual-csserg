@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 3, 2026 at 08:17 UTC
+
+- **Superseded:** October 4, 2026
+- **Archive key:**
+  [`53b6ec54aab1e1c84e223a337c857a0043de4383`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/53b6ec54aab1e1c84e223a337c857a0043de4383)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before responsive, zoom-permitting viewport metadata became a
+  whole-site regression contract.
+- **Reason:** The outgoing reports accurately documented natural source-order
+  focus while retaining observed reflow and text resizing in the manual gate.
+  Later Predict the Self work expanded the current site to 38 named tables,
+  204 exposed headings, and 842 interactive or keyboard-focusable elements.
+  The next release synchronizes those totals, requires one responsive viewport
+  declaration on every page without a sub-200% zoom ceiling, and records the
+  October 4 probe of 293 incoming files without claiming rendered reflow or
+  zoom behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/53b6ec54aab1e1c84e223a337c857a0043de4383/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/53b6ec54aab1e1c84e223a337c857a0043de4383/projects/vcsserg-repo-v1)
+
 ### Updated through October 2, 2026 at 08:19 UTC
 
 - **Superseded:** October 3, 2026

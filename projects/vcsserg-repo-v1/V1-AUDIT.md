@@ -12,23 +12,23 @@ python3 projects/vcsserg-repo-v1/verify_v1.py
 
 The verifier does not read `.env`, contact remote systems, create commits, or
 deploy. It returns nonzero while an automated group fails. A passing run still
-does not establish rendered keyboard or assistive-technology usability.
+does not establish rendered reflow, keyboard, or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on October 3, 2026 |
+| Documented promise | Evidence or test | Status on October 4, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one page-level banner, main, and content-information landmark; first-anchor bypass links; nonempty unskipped heading ranks; named repeated navigation landmarks; named data tables with scoped headers; explicit native-image alternatives; accessible names for exposed ARIA images and interactive or keyboard-focusable elements; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 97 native images, 4 exposed ARIA images, 37 named data tables, 202 exposed headings, 836 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has the complete three-landmark frame, all 810 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered keyboard/assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; first-anchor bypass links; nonempty unskipped heading ranks; named repeated navigation landmarks; named data tables with scoped headers; explicit native-image alternatives; accessible names for exposed ARIA images and interactive or keyboard-focusable elements; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 97 native images, 4 exposed ARIA images, 38 named data tables, 204 exposed headings, 843 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has the complete three-landmark frame and a responsive viewport without a sub-200% zoom ceiling, all 817 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, and 285 before the October 3 revision |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, and 293 before the October 4 revision |
 
 ## Current automated result
 
-On October 3, 2026, **all seven groups pass**. The final report-format gap
+On October 4, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -193,6 +193,19 @@ publication structure:
   does not establish observed focus order. A supplemental `w3m` pass returned
   zero for all 26 current 40- and 120-column views and placed “Skip to content”
   first; this remains linearized text-order evidence only.
+- On October 4, a viewport audit found exactly one `width=device-width`
+  declaration on every public page, with no declaration that disables user
+  scaling or sets a nonnegative maximum scale below 2. A focused fixture now
+  rejects missing, duplicate, fixed-width, scaling-disabled, insufficient, and
+  ambiguous viewport declarations. After later Predict the Self work, the site
+  contains 38 named tables, 204 exposed headings, and 843 interactive or
+  keyboard-focusable elements: all 817 exposed elements are named and 26
+  source anchors remain safely hidden. W3C's ACT rule maps its zoom checks to
+  Resize Text and explicitly says a pass still needs further testing. This
+  source contract therefore does not establish rendered reflow or 200% text
+  resizing. A supplemental `w3m` pass returned zero for all 26 current 40- and
+  120-column views and placed “Skip to content” first; it remains linearized
+  text-order evidence only.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -216,7 +229,8 @@ The current verifier:
   heading text without forward rank skips, names on repeated navigation
   landmarks and exposed interactive or
   keyboard-focusable elements, valid ARIA
-  label/control/state relationships, no positive `tabindex` overrides,
+  label/control/state relationships, no positive `tabindex` overrides, one
+  responsive viewport that does not restrict zoom below 200%,
   accessible data-table names, and valid
   scope on table header cells,
   with negative fixtures for missing,
@@ -226,7 +240,8 @@ The current verifier:
   or forward-skipped heading, unnamed
   navigation or control, missing or empty
   label targets, missing controlled targets, invalid expanded state, unsafe
-  hidden controls, positive `tabindex`, an unnamed data table, broken or empty
+  hidden controls, positive `tabindex`, a missing, duplicate, fixed-width, or
+  zoom-restricting viewport, an unnamed data table, broken or empty
   table labels, and
   missing table-header scope;
 - checks the Executive Summary figure count, report cross-links, Quarto source,
@@ -288,7 +303,8 @@ revision, all 249 incoming files were byte-identical. Before the September 30
 revision, all 257 incoming files were byte-identical. Before the October 1
 revision, all 267 incoming files were byte-identical. Before the October 2
 revision, all 275 incoming files were byte-identical. Before the October 3
-revision, all 285 incoming files were byte-identical; normal automation must
+revision, all 285 incoming files were byte-identical. Before the October 4
+revision, all 293 incoming files were byte-identical; normal automation must
 still deploy and inventory this revised release.
 
 ## Other current requirements
@@ -320,6 +336,10 @@ still deploy and inventory this revised release.
 
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
+
+World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
+*Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
+https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.). *Developing a
 keyboard interface*. Retrieved October 3, 2026, from

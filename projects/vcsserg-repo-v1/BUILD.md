@@ -71,7 +71,11 @@ controls, and custom nonnegative-`tabindex` targets. Label and control
 references must resolve, expanded states must be boolean, and controls hidden
 from assistive technology must be removed from the tab order. Positive
 `tabindex` values are prohibited so author-set priorities cannot override the
-DOM-order tab sequence. These source checks do not perform the rendered review.
+DOM-order tab sequence. Every page must also contain exactly one viewport
+declaration using `width=device-width`; `user-scalable=no`, its zero-value
+equivalent, and nonnegative `maximum-scale` values below 2 are rejected. These
+source checks preserve a prerequisite for narrow reflow and 200% text resizing
+but do not perform the rendered review.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:
