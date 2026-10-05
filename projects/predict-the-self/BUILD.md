@@ -31,7 +31,9 @@ python3 projects/predict-the-self/analysis/analyze_dev_diagnostics.py \
 Regenerate the locked matched-trajectory development baseline and its complete
 comparison. These commands hash-guard the training data, development data,
 evaluator, stable predictions, and pre-prediction analysis plan. They never
-generate a private-test artifact:
+generate a private-test artifact. The generated public scorecard records
+logical repository and pinned-benchmark labels rather than the host-specific
+absolute paths used during a run:
 
 ```bash
 python3 projects/predict-the-self/analysis/trajectory_retrieval.py \

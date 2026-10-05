@@ -2,7 +2,8 @@
 """Validate Predict the Self's three-form publication and PDF layout."""
 
 from html.parser import HTMLParser
-from pathlib import Path
+import json
+from pathlib import Path, PureWindowsPath
 from urllib.parse import unquote, urlsplit
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -68,6 +69,21 @@ def validate_artifact_copy(source: Path, canonical: Path, alias: Path) -> None:
     assert alias.read_bytes() == expected, (
         f"published artifact alias differs from Project source: {alias}"
     )
+
+
+def validate_scorecard_provenance(scorecard: dict[str, object]) -> None:
+    """Reject machine-specific paths from public scorecard provenance."""
+    for field in ("predictions", "references"):
+        value = scorecard.get(field)
+        assert isinstance(value, str) and value, f"scorecard {field} is missing"
+        parsed = urlsplit(value)
+        assert parsed.scheme != "file", f"scorecard {field} uses a file URI: {value}"
+        assert not Path(value).is_absolute(), (
+            f"scorecard {field} exposes an absolute host path: {value}"
+        )
+        assert not PureWindowsPath(value).is_absolute(), (
+            f"scorecard {field} exposes an absolute host path: {value}"
+        )
 
 
 def main() -> int:
@@ -171,6 +187,12 @@ def main() -> int:
         PUBLIC / "report/submissions/aleph_initial_alpha_submission.csv",
         PUBLIC / "report/submissions/aleph_initial_alpha_method.md",
     }
+    for scorecard_name in (
+        "stable_signifier_dev_scorecard.json",
+        "trajectory_retrieval_dev_scorecard.json",
+    ):
+        with (PROJECT / "results" / scorecard_name).open(encoding="utf-8") as handle:
+            validate_scorecard_provenance(json.load(handle))
     evidence_targets = local_targets(evidence_path, evidence)
     assert expected_artifacts <= evidence_targets, "Full Report omits public artifacts"
     for source, legacy in (

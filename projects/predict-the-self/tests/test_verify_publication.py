@@ -59,5 +59,41 @@ class ArtifactCopyTests(unittest.TestCase):
                 verify_publication.validate_artifact_copy(source, canonical, alias)
 
 
+class ScorecardProvenanceTests(unittest.TestCase):
+    def test_logical_relative_paths_pass(self) -> None:
+        verify_publication.validate_scorecard_provenance(
+            {
+                "predictions": "projects/predict-the-self/results/predictions.csv",
+                "references": "benchmark@commit/data/dev.csv",
+            }
+        )
+
+    def test_posix_absolute_path_fails(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "absolute host path"):
+            verify_publication.validate_scorecard_provenance(
+                {
+                    "predictions": "/home/researcher/predictions.csv",
+                    "references": "benchmark@commit/data/dev.csv",
+                }
+            )
+
+    def test_windows_absolute_path_fails(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "absolute host path"):
+            verify_publication.validate_scorecard_provenance(
+                {
+                    "predictions": "projects/predictions.csv",
+                    "references": "C:\\Users\\researcher\\dev.csv",
+                }
+            )
+
+    def test_file_uri_fails(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "file URI"):
+            verify_publication.validate_scorecard_provenance(
+                {
+                    "predictions": "projects/predictions.csv",
+                    "references": "file:///tmp/dev.csv",
+                }
+            )
+
 if __name__ == "__main__":
     unittest.main()

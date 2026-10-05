@@ -1,7 +1,7 @@
 {
   "cases": 50,
   "predictions": "projects/predict-the-self/results/stable_signifier_dev_predictions.csv",
-  "references": "/tmp/predict-future-selves.ug5C4F/repo/data/dev.csv",
+  "references": "predict-future-selves@9b6a766712583fec8d3182957260b1123fbfa146/data/dev.csv",
   "metrics": {
     "normalized_exact_match_rate": {
       "value": 0.0,

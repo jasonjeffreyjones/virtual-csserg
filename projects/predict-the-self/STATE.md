@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-04T09:05:24Z
+updated: 2026-10-05T09:13:30Z
 ---
 
 # Predict the Self — Current State
@@ -70,7 +70,10 @@ The Project follows the current three-memory-file and three-report structure.
 The publication verifier now compares all 68 canonical public research
 artifacts and their compatibility aliases byte for byte with the authoritative
 Project sources, so two mutually consistent but stale public copies can no
-longer pass validation.
+longer pass validation. It now also rejects absolute host paths in public
+scorecard provenance. Both development scorecards and every published copy use
+stable logical repository and pinned-benchmark labels rather than ephemeral
+workspace paths.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -385,6 +388,10 @@ raw.
   artifact and compatibility alias to equal its authoritative Project source.
   Three focused regression tests cover matching copies, mutually consistent
   stale public copies, and a stale alias without adding a runtime dependency.
+- Removed machine-specific absolute paths from both authoritative development
+  scorecards and all four public copies. Retrieval scorecard regeneration now
+  emits stable logical provenance labels, and four verifier regressions reject
+  POSIX paths, Windows paths, and `file:` URIs while accepting logical labels.
 
 ## Publication and build structure
 
@@ -501,6 +508,9 @@ raw.
   overturn that decision; its count-only audit remains a derived benchmark-
   data adaptation under CC BY-NC-SA 4.0.
 - Do not alter the frozen test artifact in response to private score feedback.
+- Public scorecard provenance must use stable logical labels rather than
+  machine-specific absolute paths. Benchmark hashes and the pinned commit
+  remain the authority for the referenced inputs.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is

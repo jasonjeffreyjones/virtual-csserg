@@ -19,6 +19,10 @@ def row(case_id: str, text: str, target: str = "") -> dict[str, str]:
 
 
 class FakeEvaluator:
+    METRIC_INFO = {
+        "word_count_mae": ("Form", "lower", "Word-count error."),
+    }
+
     @staticmethod
     def tokenize(text: str) -> list[str]:
         return text.casefold().split()
@@ -62,6 +66,26 @@ class TrajectoryRetrievalTests(unittest.TestCase):
         self.assertEqual(precision, 0.5)
         self.assertEqual(recall, 0.5)
         self.assertEqual(f1, 0.5)
+
+    def test_scorecard_uses_stable_logical_provenance_paths(self) -> None:
+        bundle = {
+            "vectors": {"word_count_mae": [2.0, 4.0]},
+            "descriptive": {},
+        }
+        scorecard = analysis.make_scorecard(
+            Path("/host-specific/predictions.csv"),
+            Path("/tmp/run-specific/data/dev.csv"),
+            bundle,
+            FakeEvaluator,
+        )
+        self.assertEqual(
+            scorecard["predictions"],
+            "projects/predict-the-self/results/trajectory_retrieval_dev_predictions.csv",
+        )
+        self.assertEqual(
+            scorecard["references"],
+            "predict-future-selves@9b6a766712583fec8d3182957260b1123fbfa146/data/dev.csv",
+        )
 
 
 if __name__ == "__main__":

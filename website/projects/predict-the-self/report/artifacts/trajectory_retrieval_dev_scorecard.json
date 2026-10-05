@@ -1,7 +1,7 @@
 {
   "cases": 50,
-  "predictions": "/home/ubuntu/virtual-csserg/projects/predict-the-self/results/trajectory_retrieval_dev_predictions.csv",
-  "references": "/tmp/predict-future-selves-20260918/data/dev.csv",
+  "predictions": "projects/predict-the-self/results/trajectory_retrieval_dev_predictions.csv",
+  "references": "predict-future-selves@9b6a766712583fec8d3182957260b1123fbfa146/data/dev.csv",
   "metrics": {
     "normalized_exact_match_rate": {
       "value": 0.0,

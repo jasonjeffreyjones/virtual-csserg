@@ -26,6 +26,12 @@ EXPECTED_PLAN_SHA256 = (
 )
 BOOTSTRAP_SEED = 20260918
 BOOTSTRAP_RESAMPLES = 20_000
+PUBLISHED_RETRIEVAL_PREDICTIONS = (
+    "projects/predict-the-self/results/trajectory_retrieval_dev_predictions.csv"
+)
+PINNED_DEVELOPMENT_REFERENCES = (
+    "predict-future-selves@9b6a766712583fec8d3182957260b1123fbfa146/data/dev.csv"
+)
 
 
 def read_development(path: Path) -> list[dict[str, str]]:
@@ -183,8 +189,10 @@ def make_scorecard(
     }
     return {
         "cases": len(next(iter(vectors.values()))),
-        "predictions": str(retrieval_path),
-        "references": str(development_path),
+        # The scorecard is a public research artifact. Record stable logical
+        # provenance rather than the host-specific paths used for this run.
+        "predictions": PUBLISHED_RETRIEVAL_PREDICTIONS,
+        "references": PINNED_DEVELOPMENT_REFERENCES,
         "metrics": {
             name: {
                 "value": round(values[name], 6),
