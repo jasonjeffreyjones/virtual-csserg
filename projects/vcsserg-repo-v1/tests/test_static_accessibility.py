@@ -32,6 +32,28 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_automatic_meta_refresh_or_redirect_is_rejected(self):
+        valid = parse(
+            '<meta http-equiv="content-type" content="text/html; charset=utf-8">'
+            '<a class="skip" href="#main">Skip</a><main id="main"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "stable.html"), []
+        )
+
+        automatic = parse(
+            '<meta http-equiv="refresh" content="30">'
+            '<meta HTTP-EQUIV="Refresh" content="0; url=elsewhere.html">'
+            '<a class="skip" href="#main">Skip</a><main id="main"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(automatic, "timed.html"),
+            [
+                "timed.html: contains 2 automatic meta refresh or redirect "
+                "declaration(s)"
+            ],
+        )
+
     def test_viewport_is_responsive_and_does_not_restrict_zoom(self):
         valid = parse(
             '<meta name="viewport" '

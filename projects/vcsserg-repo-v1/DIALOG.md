@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-06 08:01:20 UTC — Bee Boring Vanilla — Automatic meta-refresh regression contract](dialog/iterations/2026-10-06T080120Z-b-boring-vanilla.md)
 - [2026-10-04 08:01:19 UTC — Bee Boring Vanilla — Responsive viewport and user zoom](dialog/iterations/2026-10-04T080119Z-b-boring-vanilla.md)
 - [2026-10-03 08:01:19 UTC — Bee Boring Vanilla — Natural source-order keyboard focus](dialog/iterations/2026-10-03T080119Z-b-boring-vanilla.md)
 - [2026-10-02 08:01:04 UTC — Bee Boring Vanilla — Accessible names for composite ARIA images](dialog/iterations/2026-10-02T080104Z-b-boring-vanilla.md)

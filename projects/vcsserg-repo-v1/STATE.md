@@ -2,23 +2,24 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-04T08:18:22Z
+updated: 2026-10-06T08:13:36Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 4, 2026, all seven automated promise groups pass across
+Active. On October 6, 2026, all seven automated promise groups pass across
 39 HTML pages, 97 native images, four exposed ARIA images, 38 named data tables,
-204 exposed headings, 843 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 817
+204 exposed headings, 844 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 818
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires
 exactly one page-level banner, main, and content-information landmark; the
 page to declare one `width=device-width` viewport without disabling scaling or
-setting a nonnegative maximum scale below 2; the
+setting a nonnegative maximum scale below 2; no page to reload or redirect
+automatically through `meta http-equiv="refresh"`; the
 first anchor itself to be a bypass link targeting `main`; an explicit `alt`
 decision for every native image; an accessible name for every exposed
 non-native ARIA image; and an accessible name for every navigation landmark
@@ -208,6 +209,13 @@ without performing the unavailable human review.
   elements: all 817 exposed elements are named and 26 source anchors remain
   safely hidden. This source contract preserves a narrow-layout and 200%-text
   prerequisite; it does not establish rendered reflow or text resizing.
+- An October 6 timing audit found no `meta http-equiv="refresh"` declaration
+  on any of the 39 public pages. The parser now records those declarations and
+  a focused fixture rejects both a delayed reload and a zero-delay redirect.
+  W3C identifies timed meta redirects and page reloads as failures of Timing
+  Adjustable; this Project applies the stricter rule that its static pages need
+  no meta refresh at all. The source check does not inspect script- or
+  server-driven updates or establish the absence of rendered interruptions.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -215,7 +223,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 4 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 6 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -267,6 +275,8 @@ without performing the unavailable human review.
   Predict the Self iteration.
   The October 4 pre-change probe found all 293 incoming files byte-identical
   after the next Predict the Self iteration.
+  The October 6 pre-change probe again found all 293 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -293,10 +303,10 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 46 routine tests pass across 39 HTML pages, 97 native
+All seven groups and all 47 routine tests pass across 39 HTML pages, 97 native
 images, four exposed ARIA images, 38 named data tables, 204 exposed headings,
-843 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 4. Every page has
+844 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 6. Every page has
 exactly one page-level banner, main, and content-information landmark. The verifier's success detail now
 reports the responsive zoom-permitting viewport contract plus exposed and
 safely hidden control counts directly, rather than leaving that coverage
@@ -310,7 +320,7 @@ nonempty unskipped heading ranks, repeated navigation names,
 resolved landmark-label references,
 accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names,
 ARIA relationships, no positive `tabindex` overrides, one responsive viewport
-without a sub-200% zoom ceiling, and the
+without a sub-200% zoom ceiling, no automatic meta refresh or redirect, and the
 manual-review worksheet's sample and closure boundary. One focused table-name
 test covers captions and valid explicit labels while rejecting absent, broken,
 or empty names. One focused negative
@@ -323,7 +333,8 @@ interactive names and ARIA relationships
 across links, buttons, forms, disclosures, roles, media, and custom focus
 targets, one rejects positive `tabindex` values while accepting zero and
 negative patterns, one covers responsive and zoom-permitting viewport
-metadata, and three cover the manual-review record.
+metadata, one rejects automatic meta refreshes and redirects, and three cover
+the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -383,7 +394,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 4 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 63 GiB
+October 6 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 62 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -408,8 +419,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 3 report set superseded by
-  the current viewport revision.
+  v1 release ledger, including the clean October 4 report set superseded by
+  the current no-meta-refresh revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

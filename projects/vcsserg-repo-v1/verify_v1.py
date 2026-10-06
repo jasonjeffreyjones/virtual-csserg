@@ -147,6 +147,7 @@ class PageParser(HTMLParser):
         self.anchor_count = 0
         self.main_count = 0
         self.main_ids = []
+        self.meta_refresh_contents = []
         self.navigation_landmarks = []
         self.project_statuses = []
         self.project_updates = []
@@ -306,6 +307,11 @@ class PageParser(HTMLParser):
             self.in_title = True
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
             self.description = attributes.get("content", "").strip()
+        if (
+            tag == "meta"
+            and attributes.get("http-equiv", "").strip().lower() == "refresh"
+        ):
+            self.meta_refresh_contents.append(attributes.get("content", ""))
         is_viewport = (
             tag == "meta"
             and attributes.get("name", "").strip().lower() == "viewport"
@@ -436,6 +442,11 @@ def parse_page(path):
 def page_accessibility_problems(parsed, relative):
     """Return deterministic checks that complement rendered assistive-tech QA."""
     problems = []
+    if parsed.meta_refresh_contents:
+        problems.append(
+            f"{relative}: contains {len(parsed.meta_refresh_contents)} "
+            "automatic meta refresh or redirect declaration(s)"
+        )
     valid_skip_references = [
         reference
         for reference in parsed.skip_references
@@ -1345,7 +1356,8 @@ def check_html_and_css():
         f"named data table(s), {exposed_headings} exposed heading(s), "
         f"{exposed_interactive} exposed interactive or "
         f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
-        f"control(s), no positive tabindex overrides, and "
+        f"control(s), no positive tabindex overrides or automatic meta "
+        "refreshes, and "
         f"{len(first_party_css)} first-party "
         "stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),

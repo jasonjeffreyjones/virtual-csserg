@@ -136,6 +136,17 @@ restrictions to Resize Text and says a pass still needs further testing; the
 source contract therefore preserves a prerequisite without replacing the open
 320-pixel and 200%-text review (World Wide Web Consortium Web Accessibility
 Initiative, 2022).
+On October 6, a timing audit found no `meta http-equiv="refresh"` declarations
+on any of the 39 public pages. The parser now records those declarations and a
+focused fixture rejects both a timed reload and an instant redirect. This is a
+deliberately strict project-level rule: W3C identifies timed meta redirects and
+page reloads as failures of Timing Adjustable, while this static site has no
+need for even an instant client-side redirect. The rule prevents one class of
+automatic reading interruption without observing script-driven updates or
+replacing the open rendered review (World Wide Web Consortium Web Accessibility
+Initiative, 2026). The added report citation brings the current inventory to
+844 interactive or keyboard-focusable elements: all 818 exposed elements are
+named and 26 source anchors remain safely hidden.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -366,6 +377,10 @@ Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
 World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
 https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
+
+World Wide Web Consortium Web Accessibility Initiative. (2026, August 10).
+*Understanding Success Criterion 2.2.1: Timing Adjustable*.
+https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
 a keyboard interface*. Retrieved October 3, 2026, from

@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 4, 2026 at 08:18 UTC
+
+- **Superseded:** October 6, 2026
+- **Archive key:**
+  [`ab3dd1a02ee023e1c78ae95cc14b3bf0efd07b28`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/ab3dd1a02ee023e1c78ae95cc14b3bf0efd07b28)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before automatic meta refresh or redirect became a whole-site
+  regression failure.
+- **Reason:** The outgoing reports accurately documented responsive,
+  zoom-permitting viewport metadata while retaining rendered reflow in the
+  manual gate. The next release records that no current page uses meta refresh,
+  adds a focused fixture rejecting delayed reloads and instant redirects, and
+  records the October 6 probe of 293 incoming files without claiming that
+  source inspection detects script- or server-driven updates.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/ab3dd1a02ee023e1c78ae95cc14b3bf0efd07b28/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/ab3dd1a02ee023e1c78ae95cc14b3bf0efd07b28/projects/vcsserg-repo-v1)
+
 ### Updated through October 3, 2026 at 08:17 UTC
 
 - **Superseded:** October 4, 2026

@@ -5,7 +5,7 @@ structured evidence contract added September 20, 2026; source heading contract
 added September 30, 2026; top-level landmark contract added October 1, 2026;
 ARIA image-name contract added October 2, 2026; source-order tab contract added
 October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
-2026.
+2026; automatic meta-refresh prohibition added October 6, 2026.
 
 ## Decision boundary
 
@@ -79,8 +79,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 843 interactive or keyboard-focusable
-  elements. Each of the 817 elements exposed to assistive technology has an
+- The whole-site parser now audits all 844 interactive or keyboard-focusable
+  elements. Each of the 818 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -120,6 +120,14 @@ accessibility evaluation.
   declaration still needs further testing; only the narrow-width and 200%-text
   procedure below establishes rendered reflow for this release (World Wide Web
   Consortium Web Accessibility Initiative, 2022).
+- None of the 39 public pages uses `meta http-equiv="refresh"` to reload or
+  redirect automatically. A focused fixture rejects both a delayed reload and
+  a zero-delay redirect. W3C identifies timed meta redirects and reloads as
+  failures of Timing Adjustable; this Project applies the stricter static-site
+  rule that no meta refresh is needed. This excludes one markup-based time
+  limit but does not detect script- or server-driven updates or establish the
+  absence of interruptions in a browser (World Wide Web Consortium Web
+  Accessibility Initiative, 2026).
 - On September 19, `w3m` 0.5.3 returned successfully for the then-current 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
@@ -139,6 +147,9 @@ accessibility evaluation.
 - On October 4, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 6, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -155,7 +166,8 @@ accessibility evaluation.
   October 2 ARIA-image revision, all 275 expected files were byte-identical;
   before the October 3 source-order revision, all 285 were byte-identical;
   before the October 4 viewport revision, all 293 were byte-identical. It
-  cannot discover extra remote-only paths, and
+  again found all 293 incoming files byte-identical before the October 6
+  meta-refresh revision. It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
 
@@ -310,6 +322,10 @@ https://www.w3.org/WAI/WCAG22/Techniques/html/H39
 World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
 https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
+
+World Wide Web Consortium Web Accessibility Initiative. (2026, August 10).
+*Understanding Success Criterion 2.2.1: Timing Adjustable*.
+https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
 a keyboard interface*. Retrieved October 3, 2026, from

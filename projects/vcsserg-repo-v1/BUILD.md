@@ -75,7 +75,10 @@ DOM-order tab sequence. Every page must also contain exactly one viewport
 declaration using `width=device-width`; `user-scalable=no`, its zero-value
 equivalent, and nonnegative `maximum-scale` values below 2 are rejected. These
 source checks preserve a prerequisite for narrow reflow and 200% text resizing
-but do not perform the rendered review.
+but do not perform the rendered review. Automatic page refreshes and redirects
+implemented with `meta http-equiv="refresh"` are also prohibited; this
+project-level rule avoids introducing a content-owned reading time limit or
+context change into the static publication tree.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:

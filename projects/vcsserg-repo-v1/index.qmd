@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 4, 2026. The validated
+All seven automated promise groups pass on October 6, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -41,10 +41,12 @@ main, article, aside, navigation, or section region. Positive `tabindex`
 values are now rejected so source order is not overridden by an author-set tab
 priority. Every page must also declare one `width=device-width` viewport without
 disabling scaling or setting a nonnegative maximum scale below 2. The same
+parser now rejects every automatic page reload or redirect declared through
+`meta http-equiv="refresh"`; none occurs in the public tree. The source
 contracts now pass across 39 HTML pages, 97 native images,
-4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 843
+4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 844
 interactive or keyboard-focusable elements: all four exposed ARIA images and
-all 817 exposed interactive elements are named, while 26 Quarto source-line
+all 818 exposed interactive elements are named, while 26 Quarto source-line
 anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
 public element uses a positive value.
 The manual review sample expanded automatically from 11 pages and 44 results to
@@ -115,7 +117,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one banner, main, content-information landmark, and responsive zoom-permitting viewport; first-anchor bypass links; nonempty headings without forward rank skips; named repeated navigation, data tables, and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic meta refresh or redirect; first-anchor bypass links; nonempty headings without forward rank skips; named repeated navigation, data tables, and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -194,7 +196,15 @@ rejects a missing or duplicate declaration, a fixed layout width,
 W3C's ACT rule maps the zoom restrictions to Resize Text and says a pass still
 needs further testing (World Wide Web Consortium Web Accessibility Initiative,
 2022). The contract is therefore a source prerequisite, not evidence of
-rendered 320-pixel reflow or 200% text resizing. The verifier also became
+rendered 320-pixel reflow or 200% text resizing. On October 6, a timing audit
+found no `meta http-equiv="refresh"` declarations on any public page. A focused
+fixture now rejects both a delayed reload and a zero-delay redirect. W3C
+identifies timed meta redirects and page reloads as failures of Timing
+Adjustable; the Project applies a stricter no-meta-refresh rule because its
+static pages need no automatic context change (World Wide Web Consortium Web
+Accessibility Initiative, 2026). This source contract does not inspect
+script- or server-driven updates or establish the absence of rendered
+interruptions. The verifier also became
 narrower where old rules
 created false
 failures: first-party design requirements no longer apply to vendored Quarto
@@ -344,7 +354,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 4 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 6 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -359,7 +369,7 @@ September 15 release, all 110 byte-identical after it, and every later incoming
 tree byte-identical, including all 182 files before the September 26 revision,
 all 249 files before the September 29 revision, all 257 files before the
 September 30 revision, and all 267 files before the October 1 revision.
-The October 4 pre-change probe found all 293 incoming files byte-identical.
+The October 6 pre-change probe found all 293 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
@@ -446,6 +456,10 @@ to associate header cells with data cells in data tables*.
 World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
 <https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/>
+
+World Wide Web Consortium Web Accessibility Initiative. (2026, August 10).
+*Understanding Success Criterion 2.2.1: Timing Adjustable*.
+<https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable>
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-a). *Developing
 a keyboard interface*. Retrieved October 3, 2026, from
