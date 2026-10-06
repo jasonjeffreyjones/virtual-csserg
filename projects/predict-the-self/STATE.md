@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-05T09:13:30Z
+updated: 2026-10-06T09:06:01Z
 ---
 
 # Predict the Self — Current State
@@ -73,7 +73,10 @@ Project sources, so two mutually consistent but stale public copies can no
 longer pass validation. It now also rejects absolute host paths in public
 scorecard provenance. Both development scorecards and every published copy use
 stable logical repository and pinned-benchmark labels rather than ephemeral
-workspace paths.
+workspace paths. The verifier now additionally requires reciprocal navigation
+from the Executive Summary and both Full Report HTML surfaces to the other
+report forms, and requires the short PDF to contain the exact public Executive
+Summary and Full Report URLs rather than merely counting link annotations.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -392,6 +395,11 @@ raw.
   scorecards and all four public copies. Retrieval scorecard regeneration now
   emits stable logical provenance labels, and four verifier regressions reject
   POSIX paths, Windows paths, and `file:` URIs while accepting logical labels.
+- Strengthened three-form publication validation so the Executive Summary,
+  Full Report landing page, and Full Report evidence chapter must each link to
+  the other report forms, while the short PDF must contain the exact production
+  Executive Summary and Full Report URLs. Four focused regressions cover both
+  valid reciprocity and the former false-positive cases.
 
 ## Publication and build structure
 
@@ -407,11 +415,13 @@ raw.
 - The five-minute Executive Summary uses the selected evidence-brief structure:
   question/status, exactly one dense quantitative figure, nine linked findings,
   and both report choices.
-- The three forms link reciprocally. The Full Report publishes sixty-eight research
-  artifacts directly from their authoritative project paths and preserves the
-  matching `report/artifacts/` aliases as byte-identical compatibility copies;
-  validation now checks both public copies directly against each Project
-  source.
+- The three forms link reciprocally. Validation checks the Executive Summary,
+  both Full Report HTML surfaces, and exact PDF URI actions rather than using a
+  PDF annotation count as a proxy. The Full Report publishes sixty-eight
+  research artifacts directly from their authoritative project paths and
+  preserves the matching `report/artifacts/` aliases as byte-identical
+  compatibility copies; validation checks both public copies directly against
+  each Project source.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -511,6 +521,9 @@ raw.
 - Public scorecard provenance must use stable logical labels rather than
   machine-specific absolute paths. Benchmark hashes and the pinned commit
   remain the authority for the referenced inputs.
+- Three-form reciprocity requires links from the Executive Summary and both
+  Full Report HTML surfaces, plus exact production Executive Summary and Full
+  Report URI actions in the short PDF. Annotation count alone is insufficient.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is

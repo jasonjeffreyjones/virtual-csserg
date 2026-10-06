@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+from types import SimpleNamespace
 import tempfile
 import unittest
 
@@ -13,6 +14,20 @@ SPEC = importlib.util.spec_from_file_location("predict_verify_publication", MODU
 assert SPEC and SPEC.loader
 verify_publication = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(verify_publication)
+
+
+class FakeAnnotation:
+    def __init__(self, uri: str):
+        self.uri = uri
+
+    def get_object(self):
+        return {"/A": {"/URI": self.uri}}
+
+
+def fake_pdf(*uris: str):
+    return SimpleNamespace(
+        pages=[{"/Annots": [FakeAnnotation(uri) for uri in uris]}]
+    )
 
 
 class ArtifactCopyTests(unittest.TestCase):
@@ -93,6 +108,86 @@ class ScorecardProvenanceTests(unittest.TestCase):
                     "predictions": "projects/predictions.csv",
                     "references": "file:///tmp/dev.csv",
                 }
+            )
+
+
+class ReciprocalReportLinkTests(unittest.TestCase):
+    def test_all_html_report_surfaces_link_to_other_forms(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            summary_path = root / "index.html"
+            landing_path = root / "report/index.html"
+            evidence_path = root / "report/report.html"
+            short_path = root / "short-report.pdf"
+
+            summary = verify_publication.Page(
+                '<a href="report/index.html">Full</a>'
+                '<a href="short-report.pdf">Short</a>'
+            )
+            report_links = (
+                '<a href="../index.html">Summary</a>'
+                '<a href="../short-report.pdf">Short</a>'
+            )
+            landing = verify_publication.Page(report_links)
+            evidence = verify_publication.Page(report_links)
+
+            verify_publication.validate_reciprocal_html_links(
+                summary_path,
+                summary,
+                landing_path,
+                landing,
+                evidence_path,
+                evidence,
+                short_path,
+            )
+
+    def test_evidence_chapter_without_short_report_link_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            summary_path = root / "index.html"
+            landing_path = root / "report/index.html"
+            evidence_path = root / "report/report.html"
+            short_path = root / "short-report.pdf"
+
+            with self.assertRaisesRegex(
+                AssertionError, "Full Report evidence chapter omits short report"
+            ):
+                verify_publication.validate_reciprocal_html_links(
+                    summary_path,
+                    verify_publication.Page(
+                        '<a href="report/index.html">Full</a>'
+                        '<a href="short-report.pdf">Short</a>'
+                    ),
+                    landing_path,
+                    verify_publication.Page(
+                        '<a href="../index.html">Summary</a>'
+                        '<a href="../short-report.pdf">Short</a>'
+                    ),
+                    evidence_path,
+                    verify_publication.Page(
+                        '<a href="../index.html">Summary</a>'
+                    ),
+                    short_path,
+                )
+
+    def test_pdf_links_to_both_html_report_forms(self) -> None:
+        verify_publication.validate_pdf_report_links(
+            fake_pdf(
+                verify_publication.PUBLIC_PROJECT_URL,
+                verify_publication.PUBLIC_REPORT_URL,
+            )
+        )
+
+    def test_unrelated_pdf_annotations_do_not_satisfy_reciprocity(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "short report omits reciprocal"):
+            verify_publication.validate_pdf_report_links(
+                fake_pdf(
+                    "https://example.com/one",
+                    "https://example.com/two",
+                    "https://example.com/three",
+                    "https://example.com/four",
+                    "https://example.com/five",
+                )
             )
 
 if __name__ == "__main__":

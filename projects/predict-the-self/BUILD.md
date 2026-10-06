@@ -195,7 +195,8 @@ PYTHONPATH=/tmp/predict-self-publishing-deps \
 
 Validate the research code, guarded publisher, three-form publication,
 source-to-public byte identity for every research artifact and compatibility
-alias, v1 promise groups, and whitespace:
+alias, reciprocal links among the Executive Summary, both Full Report HTML
+surfaces, and the short PDF, v1 promise groups, and whitespace:
 
 ```bash
 python3 -m unittest discover -s projects/predict-the-self/tests -v

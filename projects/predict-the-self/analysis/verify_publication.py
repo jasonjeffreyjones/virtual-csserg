@@ -9,6 +9,10 @@ from urllib.parse import unquote, urlsplit
 PROJECT = Path(__file__).resolve().parents[1]
 ROOT = PROJECT.parents[1]
 PUBLIC = ROOT / "website/projects/predict-the-self"
+PUBLIC_PROJECT_URL = (
+    "https://jasonjones.ninja/virtual-csserg/projects/predict-the-self/"
+)
+PUBLIC_REPORT_URL = PUBLIC_PROJECT_URL + "report/"
 
 
 class Page(HTMLParser):
@@ -58,6 +62,56 @@ def local_targets(path: Path, page: Page) -> set[Path]:
         for target, _ in [resolve_local(path, link)]
         if target is not None
     }
+
+
+def validate_reciprocal_html_links(
+    summary_path: Path,
+    summary: Page,
+    landing_path: Path,
+    landing: Page,
+    evidence_path: Path,
+    evidence: Page,
+    short_path: Path,
+) -> None:
+    """Require every HTML report surface to link to the other report forms."""
+    summary_targets = local_targets(summary_path, summary)
+    landing_targets = local_targets(landing_path, landing)
+    evidence_targets = local_targets(evidence_path, evidence)
+    assert landing_path.resolve() in summary_targets, (
+        "Executive Summary omits Full Report landing page"
+    )
+    assert short_path.resolve() in summary_targets, (
+        "Executive Summary omits short report"
+    )
+    for label, targets in (
+        ("Full Report landing page", landing_targets),
+        ("Full Report evidence chapter", evidence_targets),
+    ):
+        assert summary_path.resolve() in targets, f"{label} omits Executive Summary"
+        assert short_path.resolve() in targets, f"{label} omits short report"
+
+
+def pdf_external_uris(pdf) -> set[str]:
+    """Collect external URI actions from every annotation in a PDF reader."""
+    uris = set()
+    for page in pdf.pages:
+        for reference in page.get("/Annots", []):
+            annotation = reference.get_object()
+            action = annotation.get("/A")
+            if hasattr(action, "get_object"):
+                action = action.get_object()
+            uri = action.get("/URI") if action else None
+            if uri:
+                uris.add(str(uri))
+    return uris
+
+
+def validate_pdf_report_links(pdf) -> None:
+    """Require the short PDF to link back to both public HTML report forms."""
+    uris = pdf_external_uris(pdf)
+    expected = {PUBLIC_PROJECT_URL, PUBLIC_REPORT_URL}
+    missing = sorted(expected - uris)
+    assert not missing, f"short report omits reciprocal links: {', '.join(missing)}"
 
 
 def validate_artifact_copy(source: Path, canonical: Path, alias: Path) -> None:
@@ -112,10 +166,15 @@ def main() -> int:
     ):
         validate_local_links(path, page)
 
-    assert landing_path.resolve() in local_targets(summary_path, summary)
-    assert short_path.resolve() in local_targets(summary_path, summary)
-    assert summary_path.resolve() in local_targets(landing_path, landing)
-    assert short_path.resolve() in local_targets(landing_path, landing)
+    validate_reciprocal_html_links(
+        summary_path,
+        summary,
+        landing_path,
+        landing,
+        evidence_path,
+        evidence,
+        short_path,
+    )
 
     expected_artifacts = {
         PUBLIC / "report/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
@@ -291,6 +350,7 @@ def main() -> int:
         page.extract_text(visitor_text=visit)
     assert columns == {"left", "right"}, f"PDF body columns found: {columns}"
     assert annotations >= 5, f"PDF link annotations found: {annotations}"
+    validate_pdf_report_links(pdf)
 
     print(
         "Predict the Self publication: one summary figure, two-chapter linked "

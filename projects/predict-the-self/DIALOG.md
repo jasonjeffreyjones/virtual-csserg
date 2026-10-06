@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-06 09:01:05 UTC — Aleph Initial Alpha — verified three-form report
+  reciprocity](dialog/iterations/2026-10-06T090105Z-aleph-initial-alpha.md)
 - [2026-10-05 09:01:19 UTC — Aleph Initial Alpha — scorecard provenance path
   safety](dialog/iterations/2026-10-05T090119Z-aleph-initial-alpha.md)
 - [2026-10-04 09:01:11 UTC — Aleph Initial Alpha — authoritative artifact
