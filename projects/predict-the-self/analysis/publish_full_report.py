@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Replace the public Full Report with the complete local Quarto build."""
 
-from pathlib import Path
+import json
+from pathlib import Path, PurePosixPath
 import shutil
 import tempfile
 import uuid
@@ -11,80 +12,52 @@ PROJECT = Path(__file__).resolve().parents[1]
 ROOT = PROJECT.parents[1]
 SOURCE = PROJECT / "_book"
 PUBLIC = ROOT / "website/projects/predict-the-self/report"
-COMPATIBILITY_ARTIFACTS = {
-    "ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md": "artifacts/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
-    "ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md": "artifacts/ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md",
-    "ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md": "artifacts/ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md",
-    "ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md": "artifacts/ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md",
-    "ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md": "artifacts/ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md",
-    "ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md": "artifacts/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
-    "ANALYSIS_PLAN_CHANGE_VOLUME.md": "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md",
-    "ANALYSIS_PLAN_FEATURE_ABLATION.md": "artifacts/ANALYSIS_PLAN_FEATURE_ABLATION.md",
-    "ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md": "artifacts/ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md",
-    "ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md": "artifacts/ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md",
-    "ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md": "artifacts/ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md",
-    "ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md": "artifacts/ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md",
-    "ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md": "artifacts/ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md",
-    "ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md": "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
-    "BENCHMARK_PROVENANCE.md": "artifacts/BENCHMARK_PROVENANCE.md",
-    "analysis/analyze_change_distributions.py": "artifacts/analyze_change_distributions.py",
-    "analysis/analyze_calibrated_synthesis.py": "artifacts/analyze_calibrated_synthesis.py",
-    "analysis/analyze_semantic_neighborhood_additions.py": "artifacts/analyze_semantic_neighborhood_additions.py",
-    "analysis/analyze_response_length_persistence.py": "artifacts/analyze_response_length_persistence.py",
-    "analysis/analyze_response_length_shrinkage.py": "artifacts/analyze_response_length_shrinkage.py",
-    "analysis/analyze_change_volume.py": "artifacts/analyze_change_volume.py",
-    "analysis/analyze_feature_ablation.py": "artifacts/analyze_feature_ablation.py",
-    "analysis/analyze_multiplicity_stress_test.py": "artifacts/analyze_multiplicity_stress_test.py",
-    "analysis/analyze_source_form_ablation.py": "artifacts/analyze_source_form_ablation.py",
-    "analysis/analyze_dev_diagnostics.py": "artifacts/analyze_dev_diagnostics.py",
-    "analysis/analyze_neighborhood_additions.py": "artifacts/analyze_neighborhood_additions.py",
-    "analysis/analyze_novelty_prior.py": "artifacts/analyze_novelty_prior.py",
-    "analysis/analyze_source_conditioned_additions.py": "artifacts/analyze_source_conditioned_additions.py",
-    "analysis/analyze_stable_projection_cross_validation.py": "artifacts/analyze_stable_projection_cross_validation.py",
-    "analysis/analyze_trajectory_retrieval.py": "artifacts/analyze_trajectory_retrieval.py",
-    "analysis/stable_signifier_projection.py": "artifacts/stable_signifier_projection.py",
-    "analysis/trajectory_retrieval.py": "artifacts/trajectory_retrieval.py",
-    "results/change_distributions_train_analysis.json": "artifacts/change_distributions_train_analysis.json",
-    "results/change_distributions_train_audit.csv": "artifacts/change_distributions_train_audit.csv",
-    "results/calibrated_synthesis_train_analysis.json": "artifacts/calibrated_synthesis_train_analysis.json",
-    "results/calibrated_synthesis_train_audit.csv": "artifacts/calibrated_synthesis_train_audit.csv",
-    "results/calibrated_synthesis_train_predictions.csv": "artifacts/calibrated_synthesis_train_predictions.csv",
-    "results/change_volume_train_analysis.json": "artifacts/change_volume_train_analysis.json",
-    "results/change_volume_train_audit.csv": "artifacts/change_volume_train_audit.csv",
-    "results/feature_ablation_train_analysis.json": "artifacts/feature_ablation_train_analysis.json",
-    "results/feature_ablation_train_audit.csv": "artifacts/feature_ablation_train_audit.csv",
-    "results/multiplicity_stress_test_train_analysis.json": "artifacts/multiplicity_stress_test_train_analysis.json",
-    "results/multiplicity_stress_test_train_audit.csv": "artifacts/multiplicity_stress_test_train_audit.csv",
-    "results/source_form_ablation_train_analysis.json": "artifacts/source_form_ablation_train_analysis.json",
-    "results/source_form_ablation_train_audit.csv": "artifacts/source_form_ablation_train_audit.csv",
-    "results/semantic_neighborhood_additions_train_analysis.json": "artifacts/semantic_neighborhood_additions_train_analysis.json",
-    "results/semantic_neighborhood_additions_train_audit.csv": "artifacts/semantic_neighborhood_additions_train_audit.csv",
-    "results/response_length_persistence_train_analysis.json": "artifacts/response_length_persistence_train_analysis.json",
-    "results/response_length_persistence_train_audit.csv": "artifacts/response_length_persistence_train_audit.csv",
-    "results/response_length_shrinkage_train_analysis.json": "artifacts/response_length_shrinkage_train_analysis.json",
-    "results/response_length_shrinkage_train_audit.csv": "artifacts/response_length_shrinkage_train_audit.csv",
-    "results/neighborhood_additions_train_analysis.json": "artifacts/neighborhood_additions_train_analysis.json",
-    "results/neighborhood_additions_train_audit.csv": "artifacts/neighborhood_additions_train_audit.csv",
-    "results/novelty_prior_dev_analysis.json": "artifacts/novelty_prior_dev_analysis.json",
-    "results/novelty_prior_token_audit.csv": "artifacts/novelty_prior_token_audit.csv",
-    "results/source_conditioned_additions_train_analysis.json": "artifacts/source_conditioned_additions_train_analysis.json",
-    "results/source_conditioned_additions_train_audit.csv": "artifacts/source_conditioned_additions_train_audit.csv",
-    "results/stable_signifier_dev_diagnostics.json": "artifacts/stable_signifier_dev_diagnostics.json",
-    "results/stable_signifier_dev_predictions.csv": "artifacts/stable_signifier_dev_predictions.csv",
-    "results/stable_signifier_dev_scorecard.json": "artifacts/stable_signifier_dev_scorecard.json",
-    "results/stable_projection_train_cv_analysis.json": "artifacts/stable_projection_train_cv_analysis.json",
-    "results/stable_projection_train_cv_predictions.csv": "artifacts/stable_projection_train_cv_predictions.csv",
-    "results/trajectory_retrieval_dev_analysis.json": "artifacts/trajectory_retrieval_dev_analysis.json",
-    "results/trajectory_retrieval_dev_audit.csv": "artifacts/trajectory_retrieval_dev_audit.csv",
-    "results/trajectory_retrieval_dev_predictions.csv": "artifacts/trajectory_retrieval_dev_predictions.csv",
-    "results/trajectory_retrieval_dev_scorecard.json": "artifacts/trajectory_retrieval_dev_scorecard.json",
-    "submissions/aleph_initial_alpha_submission.csv": "artifacts/aleph_initial_alpha_submission.csv",
-    "submissions/aleph_initial_alpha_method.md": "artifacts/aleph_initial_alpha_method.md",
-}
+MANIFEST = PROJECT / "PUBLICATION_ARTIFACTS.json"
 
 
 class PublicationError(ValueError):
     """Raised when the completed local report cannot be safely published."""
+
+
+def load_artifact_manifest(path: Path = MANIFEST) -> dict[str, str]:
+    """Load one safe, duplicate-free source-to-alias artifact inventory."""
+    try:
+        pairs = json.loads(
+            path.read_text(encoding="utf-8"), object_pairs_hook=lambda items: items
+        )
+    except (OSError, json.JSONDecodeError) as error:
+        raise PublicationError(f"cannot read artifact manifest {path}: {error}") from error
+    if not isinstance(pairs, list) or not pairs:
+        raise PublicationError("artifact manifest must be a nonempty JSON object")
+
+    artifacts = {}
+    aliases = set()
+    for entry in pairs:
+        if not isinstance(entry, tuple) or len(entry) != 2:
+            raise PublicationError("artifact manifest must be a JSON object")
+        source, alias = entry
+        if not isinstance(source, str) or not isinstance(alias, str):
+            raise PublicationError("artifact manifest paths must be strings")
+        if source in artifacts:
+            raise PublicationError(f"duplicate artifact source {source}")
+        if alias in aliases:
+            raise PublicationError(f"duplicate artifact alias {alias}")
+        for label, value in (("source", source), ("alias", alias)):
+            relative = PurePosixPath(value)
+            if (
+                not relative.parts
+                or relative.is_absolute()
+                or ".." in relative.parts
+                or "\\" in value
+            ):
+                raise PublicationError(f"unsafe artifact {label} path {value}")
+        if PurePosixPath(alias).parts[0] != "artifacts":
+            raise PublicationError(f"artifact alias is outside artifacts/: {alias}")
+        if source == alias:
+            raise PublicationError(f"artifact source and alias are identical: {source}")
+        artifacts[source] = alias
+        aliases.add(alias)
+    return artifacts
 
 
 def normalize_generated_html(tree: Path) -> None:
@@ -100,8 +73,9 @@ def normalize_generated_html(tree: Path) -> None:
 def publish(source: Path = SOURCE, public: Path = PUBLIC) -> None:
     source = Path(source).resolve()
     public = Path(public).resolve()
+    artifacts = load_artifact_manifest()
     required = (source / "index.html", source / "report.html", source / "report.css")
-    required += tuple(source / path for path in COMPATIBILITY_ARTIFACTS)
+    required += tuple(source / path for path in artifacts)
     for artifact in required:
         if not artifact.is_file():
             raise PublicationError(f"missing build artifact {artifact}")
@@ -112,7 +86,7 @@ def publish(source: Path = SOURCE, public: Path = PUBLIC) -> None:
     moved_existing = False
     try:
         shutil.copytree(source, staging, dirs_exist_ok=True)
-        for current, legacy in COMPATIBILITY_ARTIFACTS.items():
+        for current, legacy in artifacts.items():
             alias = staging / legacy
             alias.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(staging / current, alias)

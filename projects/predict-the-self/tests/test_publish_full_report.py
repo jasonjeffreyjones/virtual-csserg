@@ -16,79 +16,40 @@ def make_complete_build(source: Path) -> None:
         "index.html",
         "report.html",
         "report.css",
-        "ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
-        "ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md",
-        "ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md",
-        "ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md",
-        "ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md",
-        "ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
-        "ANALYSIS_PLAN_CHANGE_VOLUME.md",
-        "ANALYSIS_PLAN_FEATURE_ABLATION.md",
-        "ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md",
-        "ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md",
-        "ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md",
-        "ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md",
-        "ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md",
-        "ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
-        "BENCHMARK_PROVENANCE.md",
-        "analysis/analyze_change_distributions.py",
-        "analysis/analyze_calibrated_synthesis.py",
-        "analysis/analyze_semantic_neighborhood_additions.py",
-        "analysis/analyze_response_length_persistence.py",
-        "analysis/analyze_response_length_shrinkage.py",
-        "analysis/analyze_change_volume.py",
-        "analysis/analyze_feature_ablation.py",
-        "analysis/analyze_multiplicity_stress_test.py",
-        "analysis/analyze_source_form_ablation.py",
-        "analysis/analyze_dev_diagnostics.py",
-        "analysis/analyze_neighborhood_additions.py",
-        "analysis/analyze_novelty_prior.py",
-        "analysis/analyze_source_conditioned_additions.py",
-        "analysis/analyze_stable_projection_cross_validation.py",
-        "analysis/analyze_trajectory_retrieval.py",
-        "analysis/stable_signifier_projection.py",
-        "analysis/trajectory_retrieval.py",
-        "results/change_distributions_train_analysis.json",
-        "results/change_distributions_train_audit.csv",
-        "results/calibrated_synthesis_train_analysis.json",
-        "results/calibrated_synthesis_train_audit.csv",
-        "results/calibrated_synthesis_train_predictions.csv",
-        "results/change_volume_train_analysis.json",
-        "results/change_volume_train_audit.csv",
-        "results/feature_ablation_train_analysis.json",
-        "results/feature_ablation_train_audit.csv",
-        "results/multiplicity_stress_test_train_analysis.json",
-        "results/multiplicity_stress_test_train_audit.csv",
-        "results/source_form_ablation_train_analysis.json",
-        "results/source_form_ablation_train_audit.csv",
-        "results/semantic_neighborhood_additions_train_analysis.json",
-        "results/semantic_neighborhood_additions_train_audit.csv",
-        "results/response_length_persistence_train_analysis.json",
-        "results/response_length_persistence_train_audit.csv",
-        "results/response_length_shrinkage_train_analysis.json",
-        "results/response_length_shrinkage_train_audit.csv",
-        "results/neighborhood_additions_train_analysis.json",
-        "results/neighborhood_additions_train_audit.csv",
-        "results/novelty_prior_dev_analysis.json",
-        "results/novelty_prior_token_audit.csv",
-        "results/source_conditioned_additions_train_analysis.json",
-        "results/source_conditioned_additions_train_audit.csv",
-        "results/stable_signifier_dev_diagnostics.json",
-        "results/stable_signifier_dev_predictions.csv",
-        "results/stable_signifier_dev_scorecard.json",
-        "results/stable_projection_train_cv_analysis.json",
-        "results/stable_projection_train_cv_predictions.csv",
-        "results/trajectory_retrieval_dev_analysis.json",
-        "results/trajectory_retrieval_dev_audit.csv",
-        "results/trajectory_retrieval_dev_predictions.csv",
-        "results/trajectory_retrieval_dev_scorecard.json",
-        "submissions/aleph_initial_alpha_submission.csv",
-        "submissions/aleph_initial_alpha_method.md",
+        *publish_full_report.load_artifact_manifest(),
     )
     for relative in files:
         path = source / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(f"new {relative}", encoding="utf-8")
+
+
+class ArtifactManifestTests(unittest.TestCase):
+    def test_duplicate_source_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest = Path(temporary) / "manifest.json"
+            manifest.write_text(
+                '{"results/a.csv":"artifacts/a.csv",'
+                '"results/a.csv":"artifacts/b.csv"}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                publish_full_report.PublicationError, "duplicate artifact source"
+            ):
+                publish_full_report.load_artifact_manifest(manifest)
+
+    def test_alias_outside_artifacts_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest = Path(temporary) / "manifest.json"
+            manifest.write_text(
+                '{"results/a.csv":"../outside.csv"}', encoding="utf-8"
+            )
+
+            with self.assertRaisesRegex(
+                publish_full_report.PublicationError, "unsafe artifact alias path"
+            ):
+                publish_full_report.load_artifact_manifest(manifest)
 
 
 class PublishFullReportTests(unittest.TestCase):

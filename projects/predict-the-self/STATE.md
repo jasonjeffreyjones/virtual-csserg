@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-06T09:06:01Z
+updated: 2026-10-07T09:10:36Z
 ---
 
 # Predict the Self — Current State
@@ -67,7 +67,7 @@ newly fixed direct raw-versus-source-form interval also spans zero. Earlier
 response length therefore still has not demonstrated incremental forecast
 skill over the no-source distribution.
 The Project follows the current three-memory-file and three-report structure.
-The publication verifier now compares all 68 canonical public research
+The publication verifier now compares all 69 canonical public research
 artifacts and their compatibility aliases byte for byte with the authoritative
 Project sources, so two mutually consistent but stale public copies can no
 longer pass validation. It now also rejects absolute host paths in public
@@ -77,6 +77,10 @@ workspace paths. The verifier now additionally requires reciprocal navigation
 from the Executive Summary and both Full Report HTML surfaces to the other
 report forms, and requires the short PDF to contain the exact public Executive
 Summary and Full Report URLs rather than merely counting link annotations.
+The guarded publisher and verifier now consume the same public artifact
+inventory rather than maintaining independent lists. Validation requires the
+Full Report's canonical research-artifact links to equal that inventory, and
+the publisher rejects duplicate, escaping, or non-`artifacts/` alias paths.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -400,6 +404,10 @@ raw.
   the other report forms, while the short PDF must contain the exact production
   Executive Summary and Full Report URLs. Four focused regressions cover both
   valid reciprocity and the former false-positive cases.
+- Replaced the publisher and verifier's independent 68-entry artifact lists
+  with one public 69-entry `PUBLICATION_ARTIFACTS.json` inventory, including
+  the inventory itself. Six focused regressions cover malformed mappings,
+  exact report-link agreement, omissions, and unlisted research artifacts.
 
 ## Publication and build structure
 
@@ -417,11 +425,12 @@ raw.
   and both report choices.
 - The three forms link reciprocally. Validation checks the Executive Summary,
   both Full Report HTML surfaces, and exact PDF URI actions rather than using a
-  PDF annotation count as a proxy. The Full Report publishes sixty-eight
-  research artifacts directly from their authoritative project paths and
-  preserves the matching `report/artifacts/` aliases as byte-identical
-  compatibility copies; validation checks both public copies directly against
-  each Project source.
+  PDF annotation count as a proxy. The Full Report publishes sixty-nine
+  research artifacts directly from their authoritative project paths,
+  including the source-to-alias inventory, and preserves the matching
+  `report/artifacts/` aliases as byte-identical compatibility copies.
+  Validation checks both public copies directly against each Project source
+  and requires the report's canonical artifact links to match the inventory.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -524,6 +533,9 @@ raw.
 - Three-form reciprocity requires links from the Executive Summary and both
   Full Report HTML surfaces, plus exact production Executive Summary and Full
   Report URI actions in the short PDF. Annotation count alone is insufficient.
+- `PUBLICATION_ARTIFACTS.json` is the sole source-to-compatibility-alias
+  inventory. Every inventoried canonical artifact must be linked from the Full
+  Report, and every linked research artifact must be inventoried.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is
@@ -537,6 +549,8 @@ raw.
   immutable iteration records, yearly indexes, and the preserved legacy dialog.
 - `BUILD.md`, `_quarto.yml`, `index.qmd`, `report.qmd`, `short-report.md`:
   publication sources and reproduction instructions.
+- `PUBLICATION_ARTIFACTS.json`: authoritative public artifact and
+  compatibility-alias inventory shared by the publisher and verifier.
 - `BENCHMARK_PROVENANCE.md`: pinned commit, licensing, and governing hashes.
 - `ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md`: fixed exploratory comparison plan.
 - `ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md`: fixed training-only

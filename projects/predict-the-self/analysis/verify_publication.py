@@ -3,12 +3,13 @@
 
 from html.parser import HTMLParser
 import json
-from pathlib import Path, PureWindowsPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from urllib.parse import unquote, urlsplit
 
 PROJECT = Path(__file__).resolve().parents[1]
 ROOT = PROJECT.parents[1]
 PUBLIC = ROOT / "website/projects/predict-the-self"
+MANIFEST = PROJECT / "PUBLICATION_ARTIFACTS.json"
 PUBLIC_PROJECT_URL = (
     "https://jasonjones.ninja/virtual-csserg/projects/predict-the-self/"
 )
@@ -125,6 +126,72 @@ def validate_artifact_copy(source: Path, canonical: Path, alias: Path) -> None:
     )
 
 
+def load_artifact_manifest(path: Path = MANIFEST) -> dict[str, str]:
+    """Load the publisher's sole source-to-alias artifact inventory."""
+    pairs = json.loads(
+        path.read_text(encoding="utf-8"), object_pairs_hook=lambda items: items
+    )
+    assert isinstance(pairs, list) and pairs, (
+        "artifact manifest must be a nonempty JSON object"
+    )
+    artifacts = {}
+    aliases = set()
+    for entry in pairs:
+        assert isinstance(entry, tuple) and len(entry) == 2, (
+            "artifact manifest must be a JSON object"
+        )
+        source, alias = entry
+        assert isinstance(source, str) and isinstance(alias, str), (
+            "artifact manifest paths must be strings"
+        )
+        assert source not in artifacts, f"duplicate artifact source {source}"
+        assert alias not in aliases, f"duplicate artifact alias {alias}"
+        for label, value in (("source", source), ("alias", alias)):
+            relative = PurePosixPath(value)
+            assert (
+                relative.parts
+                and not relative.is_absolute()
+                and ".." not in relative.parts
+                and "\\" not in value
+            ), f"unsafe artifact {label} path {value}"
+        assert PurePosixPath(alias).parts[0] == "artifacts", (
+            f"artifact alias is outside artifacts/: {alias}"
+        )
+        assert source != alias, f"artifact source and alias are identical: {source}"
+        artifacts[source] = alias
+        aliases.add(alias)
+    return artifacts
+
+
+def validate_artifact_links(
+    report_root: Path,
+    evidence_targets: set[Path],
+    artifacts: dict[str, str],
+) -> None:
+    """Require the report's canonical artifact links to equal the inventory."""
+    report_root = report_root.resolve()
+    expected = {(report_root / source).resolve() for source in artifacts}
+    linked = set()
+    for target in evidence_targets:
+        try:
+            relative = target.resolve().relative_to(report_root)
+        except ValueError:
+            continue
+        if relative.parts and (
+            relative.parts[0] in {"analysis", "results", "submissions"}
+            or relative.name == "BENCHMARK_PROVENANCE.md"
+            or relative.name == "PUBLICATION_ARTIFACTS.json"
+            or relative.name.startswith("ANALYSIS_PLAN_")
+        ):
+            linked.add(target.resolve())
+    missing = sorted(str(path.relative_to(report_root)) for path in expected - linked)
+    unlisted = sorted(str(path.relative_to(report_root)) for path in linked - expected)
+    assert not missing, f"Full Report omits inventoried artifacts: {', '.join(missing)}"
+    assert not unlisted, (
+        f"Full Report links unlisted research artifacts: {', '.join(unlisted)}"
+    )
+
+
 def validate_scorecard_provenance(scorecard: dict[str, object]) -> None:
     """Reject machine-specific paths from public scorecard provenance."""
     for field in ("predictions", "references"):
@@ -176,76 +243,7 @@ def main() -> int:
         short_path,
     )
 
-    expected_artifacts = {
-        PUBLIC / "report/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md",
-        PUBLIC / "report/ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md",
-        PUBLIC / "report/ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md",
-        PUBLIC / "report/ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md",
-        PUBLIC / "report/ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md",
-        PUBLIC / "report/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md",
-        PUBLIC / "report/ANALYSIS_PLAN_CHANGE_VOLUME.md",
-        PUBLIC / "report/ANALYSIS_PLAN_FEATURE_ABLATION.md",
-        PUBLIC / "report/ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md",
-        PUBLIC / "report/ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md",
-        PUBLIC / "report/ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md",
-        PUBLIC / "report/ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md",
-        PUBLIC / "report/ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md",
-        PUBLIC / "report/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md",
-        PUBLIC / "report/BENCHMARK_PROVENANCE.md",
-        PUBLIC / "report/analysis/analyze_change_distributions.py",
-        PUBLIC / "report/analysis/analyze_calibrated_synthesis.py",
-        PUBLIC / "report/analysis/analyze_semantic_neighborhood_additions.py",
-        PUBLIC / "report/analysis/analyze_response_length_persistence.py",
-        PUBLIC / "report/analysis/analyze_response_length_shrinkage.py",
-        PUBLIC / "report/analysis/analyze_change_volume.py",
-        PUBLIC / "report/analysis/analyze_feature_ablation.py",
-        PUBLIC / "report/analysis/analyze_multiplicity_stress_test.py",
-        PUBLIC / "report/analysis/analyze_source_form_ablation.py",
-        PUBLIC / "report/analysis/analyze_dev_diagnostics.py",
-        PUBLIC / "report/analysis/analyze_neighborhood_additions.py",
-        PUBLIC / "report/analysis/analyze_novelty_prior.py",
-        PUBLIC / "report/analysis/analyze_source_conditioned_additions.py",
-        PUBLIC / "report/analysis/analyze_stable_projection_cross_validation.py",
-        PUBLIC / "report/analysis/analyze_trajectory_retrieval.py",
-        PUBLIC / "report/analysis/stable_signifier_projection.py",
-        PUBLIC / "report/analysis/trajectory_retrieval.py",
-        PUBLIC / "report/results/change_distributions_train_analysis.json",
-        PUBLIC / "report/results/change_distributions_train_audit.csv",
-        PUBLIC / "report/results/calibrated_synthesis_train_analysis.json",
-        PUBLIC / "report/results/calibrated_synthesis_train_audit.csv",
-        PUBLIC / "report/results/calibrated_synthesis_train_predictions.csv",
-        PUBLIC / "report/results/change_volume_train_analysis.json",
-        PUBLIC / "report/results/change_volume_train_audit.csv",
-        PUBLIC / "report/results/feature_ablation_train_analysis.json",
-        PUBLIC / "report/results/feature_ablation_train_audit.csv",
-        PUBLIC / "report/results/multiplicity_stress_test_train_analysis.json",
-        PUBLIC / "report/results/multiplicity_stress_test_train_audit.csv",
-        PUBLIC / "report/results/source_form_ablation_train_analysis.json",
-        PUBLIC / "report/results/source_form_ablation_train_audit.csv",
-        PUBLIC / "report/results/semantic_neighborhood_additions_train_analysis.json",
-        PUBLIC / "report/results/semantic_neighborhood_additions_train_audit.csv",
-        PUBLIC / "report/results/response_length_persistence_train_analysis.json",
-        PUBLIC / "report/results/response_length_persistence_train_audit.csv",
-        PUBLIC / "report/results/response_length_shrinkage_train_analysis.json",
-        PUBLIC / "report/results/response_length_shrinkage_train_audit.csv",
-        PUBLIC / "report/results/neighborhood_additions_train_analysis.json",
-        PUBLIC / "report/results/neighborhood_additions_train_audit.csv",
-        PUBLIC / "report/results/novelty_prior_dev_analysis.json",
-        PUBLIC / "report/results/novelty_prior_token_audit.csv",
-        PUBLIC / "report/results/source_conditioned_additions_train_analysis.json",
-        PUBLIC / "report/results/source_conditioned_additions_train_audit.csv",
-        PUBLIC / "report/results/stable_signifier_dev_diagnostics.json",
-        PUBLIC / "report/results/stable_signifier_dev_predictions.csv",
-        PUBLIC / "report/results/stable_signifier_dev_scorecard.json",
-        PUBLIC / "report/results/stable_projection_train_cv_analysis.json",
-        PUBLIC / "report/results/stable_projection_train_cv_predictions.csv",
-        PUBLIC / "report/results/trajectory_retrieval_dev_analysis.json",
-        PUBLIC / "report/results/trajectory_retrieval_dev_audit.csv",
-        PUBLIC / "report/results/trajectory_retrieval_dev_predictions.csv",
-        PUBLIC / "report/results/trajectory_retrieval_dev_scorecard.json",
-        PUBLIC / "report/submissions/aleph_initial_alpha_submission.csv",
-        PUBLIC / "report/submissions/aleph_initial_alpha_method.md",
-    }
+    artifacts = load_artifact_manifest()
     for scorecard_name in (
         "stable_signifier_dev_scorecard.json",
         "trajectory_retrieval_dev_scorecard.json",
@@ -253,81 +251,12 @@ def main() -> int:
         with (PROJECT / "results" / scorecard_name).open(encoding="utf-8") as handle:
             validate_scorecard_provenance(json.load(handle))
     evidence_targets = local_targets(evidence_path, evidence)
-    assert expected_artifacts <= evidence_targets, "Full Report omits public artifacts"
-    for source, legacy in (
-        ("ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md", "artifacts/ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md"),
-        ("ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md", "artifacts/ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md"),
-        ("ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md", "artifacts/ANALYSIS_PLAN_RESPONSE_LENGTH_PERSISTENCE.md"),
-        ("ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md", "artifacts/ANALYSIS_PLAN_RESPONSE_LENGTH_DECOMPOSITION.md"),
-        ("ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md", "artifacts/ANALYSIS_PLAN_RESPONSE_LENGTH_SHRINKAGE.md"),
-        ("ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md", "artifacts/ANALYSIS_PLAN_CHANGE_DISTRIBUTIONS.md"),
-        ("ANALYSIS_PLAN_CHANGE_VOLUME.md", "artifacts/ANALYSIS_PLAN_CHANGE_VOLUME.md"),
-        ("ANALYSIS_PLAN_FEATURE_ABLATION.md", "artifacts/ANALYSIS_PLAN_FEATURE_ABLATION.md"),
-        ("ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md", "artifacts/ANALYSIS_PLAN_MULTIPLICITY_STRESS_TEST.md"),
-        ("ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md", "artifacts/ANALYSIS_PLAN_SOURCE_FORM_ABLATION.md"),
-        ("ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md", "artifacts/ANALYSIS_PLAN_NEIGHBORHOOD_ADDITIONS.md"),
-        ("ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md", "artifacts/ANALYSIS_PLAN_SOURCE_CONDITIONED_ADDITIONS.md"),
-        ("ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md", "artifacts/ANALYSIS_PLAN_STABLE_PROJECTION_CROSS_VALIDATION.md"),
-        ("ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md", "artifacts/ANALYSIS_PLAN_TRAJECTORY_RETRIEVAL.md"),
-        ("BENCHMARK_PROVENANCE.md", "artifacts/BENCHMARK_PROVENANCE.md"),
-        ("analysis/analyze_change_distributions.py", "artifacts/analyze_change_distributions.py"),
-        ("analysis/analyze_calibrated_synthesis.py", "artifacts/analyze_calibrated_synthesis.py"),
-        ("analysis/analyze_semantic_neighborhood_additions.py", "artifacts/analyze_semantic_neighborhood_additions.py"),
-        ("analysis/analyze_response_length_persistence.py", "artifacts/analyze_response_length_persistence.py"),
-        ("analysis/analyze_response_length_shrinkage.py", "artifacts/analyze_response_length_shrinkage.py"),
-        ("analysis/analyze_change_volume.py", "artifacts/analyze_change_volume.py"),
-        ("analysis/analyze_feature_ablation.py", "artifacts/analyze_feature_ablation.py"),
-        ("analysis/analyze_multiplicity_stress_test.py", "artifacts/analyze_multiplicity_stress_test.py"),
-        ("analysis/analyze_source_form_ablation.py", "artifacts/analyze_source_form_ablation.py"),
-        ("analysis/analyze_dev_diagnostics.py", "artifacts/analyze_dev_diagnostics.py"),
-        ("analysis/analyze_neighborhood_additions.py", "artifacts/analyze_neighborhood_additions.py"),
-        ("analysis/analyze_novelty_prior.py", "artifacts/analyze_novelty_prior.py"),
-        ("analysis/analyze_source_conditioned_additions.py", "artifacts/analyze_source_conditioned_additions.py"),
-        ("analysis/analyze_stable_projection_cross_validation.py", "artifacts/analyze_stable_projection_cross_validation.py"),
-        ("analysis/analyze_trajectory_retrieval.py", "artifacts/analyze_trajectory_retrieval.py"),
-        ("analysis/stable_signifier_projection.py", "artifacts/stable_signifier_projection.py"),
-        ("analysis/trajectory_retrieval.py", "artifacts/trajectory_retrieval.py"),
-        ("results/change_distributions_train_analysis.json", "artifacts/change_distributions_train_analysis.json"),
-        ("results/change_distributions_train_audit.csv", "artifacts/change_distributions_train_audit.csv"),
-        ("results/calibrated_synthesis_train_analysis.json", "artifacts/calibrated_synthesis_train_analysis.json"),
-        ("results/calibrated_synthesis_train_audit.csv", "artifacts/calibrated_synthesis_train_audit.csv"),
-        ("results/calibrated_synthesis_train_predictions.csv", "artifacts/calibrated_synthesis_train_predictions.csv"),
-        ("results/change_volume_train_analysis.json", "artifacts/change_volume_train_analysis.json"),
-        ("results/change_volume_train_audit.csv", "artifacts/change_volume_train_audit.csv"),
-        ("results/feature_ablation_train_analysis.json", "artifacts/feature_ablation_train_analysis.json"),
-        ("results/feature_ablation_train_audit.csv", "artifacts/feature_ablation_train_audit.csv"),
-        ("results/multiplicity_stress_test_train_analysis.json", "artifacts/multiplicity_stress_test_train_analysis.json"),
-        ("results/multiplicity_stress_test_train_audit.csv", "artifacts/multiplicity_stress_test_train_audit.csv"),
-        ("results/source_form_ablation_train_analysis.json", "artifacts/source_form_ablation_train_analysis.json"),
-        ("results/source_form_ablation_train_audit.csv", "artifacts/source_form_ablation_train_audit.csv"),
-        ("results/semantic_neighborhood_additions_train_analysis.json", "artifacts/semantic_neighborhood_additions_train_analysis.json"),
-        ("results/semantic_neighborhood_additions_train_audit.csv", "artifacts/semantic_neighborhood_additions_train_audit.csv"),
-        ("results/response_length_persistence_train_analysis.json", "artifacts/response_length_persistence_train_analysis.json"),
-        ("results/response_length_persistence_train_audit.csv", "artifacts/response_length_persistence_train_audit.csv"),
-        ("results/response_length_shrinkage_train_analysis.json", "artifacts/response_length_shrinkage_train_analysis.json"),
-        ("results/response_length_shrinkage_train_audit.csv", "artifacts/response_length_shrinkage_train_audit.csv"),
-        ("results/neighborhood_additions_train_analysis.json", "artifacts/neighborhood_additions_train_analysis.json"),
-        ("results/neighborhood_additions_train_audit.csv", "artifacts/neighborhood_additions_train_audit.csv"),
-        ("results/novelty_prior_dev_analysis.json", "artifacts/novelty_prior_dev_analysis.json"),
-        ("results/novelty_prior_token_audit.csv", "artifacts/novelty_prior_token_audit.csv"),
-        ("results/source_conditioned_additions_train_analysis.json", "artifacts/source_conditioned_additions_train_analysis.json"),
-        ("results/source_conditioned_additions_train_audit.csv", "artifacts/source_conditioned_additions_train_audit.csv"),
-        ("results/stable_signifier_dev_diagnostics.json", "artifacts/stable_signifier_dev_diagnostics.json"),
-        ("results/stable_signifier_dev_predictions.csv", "artifacts/stable_signifier_dev_predictions.csv"),
-        ("results/stable_signifier_dev_scorecard.json", "artifacts/stable_signifier_dev_scorecard.json"),
-        ("results/stable_projection_train_cv_analysis.json", "artifacts/stable_projection_train_cv_analysis.json"),
-        ("results/stable_projection_train_cv_predictions.csv", "artifacts/stable_projection_train_cv_predictions.csv"),
-        ("results/trajectory_retrieval_dev_analysis.json", "artifacts/trajectory_retrieval_dev_analysis.json"),
-        ("results/trajectory_retrieval_dev_audit.csv", "artifacts/trajectory_retrieval_dev_audit.csv"),
-        ("results/trajectory_retrieval_dev_predictions.csv", "artifacts/trajectory_retrieval_dev_predictions.csv"),
-        ("results/trajectory_retrieval_dev_scorecard.json", "artifacts/trajectory_retrieval_dev_scorecard.json"),
-        ("submissions/aleph_initial_alpha_submission.csv", "artifacts/aleph_initial_alpha_submission.csv"),
-        ("submissions/aleph_initial_alpha_method.md", "artifacts/aleph_initial_alpha_method.md"),
-    ):
+    validate_artifact_links(PUBLIC / "report", evidence_targets, artifacts)
+    for source, alias in artifacts.items():
         validate_artifact_copy(
             PROJECT / source,
             PUBLIC / "report" / source,
-            PUBLIC / "report" / legacy,
+            PUBLIC / "report" / alias,
         )
 
     pdf = PdfReader(short_path)
@@ -354,7 +283,7 @@ def main() -> int:
 
     print(
         "Predict the Self publication: one summary figure, two-chapter linked "
-        f"Full Report, {len(expected_artifacts)} artifacts, required phrase, and {len(pdf.pages)}-page "
+        f"Full Report, {len(artifacts)} artifacts, required phrase, and {len(pdf.pages)}-page "
         "two-column PDF passed."
     )
     return 0

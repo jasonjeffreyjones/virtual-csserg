@@ -74,6 +74,58 @@ class ArtifactCopyTests(unittest.TestCase):
                 verify_publication.validate_artifact_copy(source, canonical, alias)
 
 
+class ArtifactInventoryLinkTests(unittest.TestCase):
+    def test_project_manifest_loads_with_unique_paths(self) -> None:
+        artifacts = verify_publication.load_artifact_manifest()
+
+        self.assertEqual(len(artifacts), 69)
+        self.assertEqual(len(set(artifacts.values())), 69)
+        self.assertEqual(
+            artifacts["PUBLICATION_ARTIFACTS.json"],
+            "artifacts/PUBLICATION_ARTIFACTS.json",
+        )
+
+    def test_exact_inventory_links_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            report = Path(temporary) / "report"
+            artifacts = {
+                "results/a.csv": "artifacts/a.csv",
+                "analysis/a.py": "artifacts/a.py",
+            }
+            targets = {report / source for source in artifacts}
+
+            verify_publication.validate_artifact_links(report, targets, artifacts)
+
+    def test_missing_inventoried_link_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            report = Path(temporary) / "report"
+            artifacts = {
+                "results/a.csv": "artifacts/a.csv",
+                "results/b.csv": "artifacts/b.csv",
+            }
+
+            with self.assertRaisesRegex(
+                AssertionError, "Full Report omits inventoried artifacts"
+            ):
+                verify_publication.validate_artifact_links(
+                    report, {report / "results/a.csv"}, artifacts
+                )
+
+    def test_unlisted_research_link_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            report = Path(temporary) / "report"
+            artifacts = {"results/a.csv": "artifacts/a.csv"}
+
+            with self.assertRaisesRegex(
+                AssertionError, "Full Report links unlisted research artifacts"
+            ):
+                verify_publication.validate_artifact_links(
+                    report,
+                    {report / "results/a.csv", report / "results/unlisted.csv"},
+                    artifacts,
+                )
+
+
 class ScorecardProvenanceTests(unittest.TestCase):
     def test_logical_relative_paths_pass(self) -> None:
         verify_publication.validate_scorecard_provenance(

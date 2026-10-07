@@ -15,6 +15,10 @@ generated libraries cannot survive. It also preserves the matching
 `report/artifacts/` URLs as byte-identical compatibility copies and removes
 Quarto-introduced line-end whitespace from generated HTML. The Executive Summary
 is maintained as static HTML. `short-report.md` is the derivative PDF source.
+`PUBLICATION_ARTIFACTS.json` is the single source-to-alias inventory used by
+both the guarded publisher and verifier. The verifier additionally requires
+the Full Report's canonical research-artifact links to equal that inventory,
+so a linked, copied, or checked artifact cannot drift into a separate list.
 
 The host has no TeX PDF engine, so the short-report renderer uses optional
 build-only packages. They do not become website or production dependencies.
@@ -193,10 +197,11 @@ PYTHONPATH=/tmp/predict-self-publishing-deps \
   python3 projects/predict-the-self/analysis/render_short_report.py
 ```
 
-Validate the research code, guarded publisher, three-form publication,
-source-to-public byte identity for every research artifact and compatibility
-alias, reciprocal links among the Executive Summary, both Full Report HTML
-surfaces, and the short PDF, v1 promise groups, and whitespace:
+Validate the research code, guarded publisher, three-form publication, exact
+artifact link-to-inventory agreement, source-to-public byte identity for every
+research artifact and compatibility alias, reciprocal links among the
+Executive Summary, both Full Report HTML surfaces, and the short PDF, v1
+promise groups, and whitespace:
 
 ```bash
 python3 -m unittest discover -s projects/predict-the-self/tests -v

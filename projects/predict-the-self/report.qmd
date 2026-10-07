@@ -1251,6 +1251,8 @@ predictors establishes one.
 
 The complete open materials are:
 
+- [`PUBLICATION_ARTIFACTS.json`](PUBLICATION_ARTIFACTS.json)
+  — authoritative source-to-public compatibility inventory for every artifact below;
 - [`ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md`](ANALYSIS_PLAN_CALIBRATED_SYNTHESIS.md)
   — pre-analysis lock and advancement gate for full-text synthesis;
 - [`ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md`](ANALYSIS_PLAN_SEMANTIC_NEIGHBORHOOD_ADDITIONS.md)
