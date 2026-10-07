@@ -19,7 +19,7 @@ derivative PDF source.
 Quarto uses a writable temporary cache. The host has no TeX PDF engine, so the
 short-report renderer uses the optional build-only packages in
 `requirements-publication.txt`. These packages do not become website or
-production dependencies. The current short report occupies two pages; the
+production dependencies. The current short report occupies three pages; the
 requirement is two columns and no more than ten pages, not an exact page count.
 
 ```bash
@@ -64,8 +64,10 @@ accessible name, every table header cell to declare a valid row or column
 scope, every exposed heading to contain text without skipping forward over a
 rank, every native image to carry an explicit `alt` decision, every exposed
 non-native element with `role="img"` to have a nonempty `aria-label` or a
-resolvable nonempty `aria-labelledby` reference, and every exposed interactive or
-keyboard-focusable element to have an accessible name. Coverage includes links,
+resolvable nonempty `aria-labelledby` reference, every repeated navigation
+landmark to have a nonempty accessible name (including text in every resolved
+`aria-labelledby` target), and every exposed interactive or keyboard-focusable
+element to have an accessible name. Coverage includes links,
 buttons, native form and disclosure controls, interactive ARIA roles, media
 controls, and custom nonnegative-`tabindex` targets. Label and control
 references must resolve, expanded states must be boolean, and controls hidden

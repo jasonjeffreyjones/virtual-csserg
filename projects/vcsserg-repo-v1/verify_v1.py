@@ -507,20 +507,29 @@ def page_accessibility_problems(parsed, relative):
     for number, (accessible_name, labelled_by) in enumerate(
         parsed.navigation_landmarks, start=1
     ):
-        if (
-            len(parsed.navigation_landmarks) > 1
-            and not accessible_name
-            and not labelled_by
-        ):
-            problems.append(
-                f"{relative}: navigation landmark {number} has no accessible name"
-            )
-            continue
         missing_ids = sorted(set(labelled_by) - set(parsed.ids))
         if missing_ids:
             problems.append(
                 f"{relative}: navigation landmark {number} references missing "
                 f"label ids: {', '.join(missing_ids)}"
+            )
+        referenced_label = " ".join(
+            parsed.text_for_id(element_id)
+            for element_id in labelled_by
+            if element_id in parsed.ids
+        ).strip()
+        if labelled_by and not missing_ids and not referenced_label:
+            problems.append(
+                f"{relative}: navigation landmark {number} references labels "
+                "without text"
+            )
+        if labelled_by:
+            has_accessible_name = bool(referenced_label and not missing_ids)
+        else:
+            has_accessible_name = bool(accessible_name)
+        if len(parsed.navigation_landmarks) > 1 and not has_accessible_name:
+            problems.append(
+                f"{relative}: navigation landmark {number} has no accessible name"
             )
     for number, scope in enumerate(parsed.table_header_scopes, start=1):
         if scope not in VALID_TABLE_HEADER_SCOPES:
@@ -1228,6 +1237,9 @@ def check_html_and_css():
         for parsed in parsed_pages.values()
         for image in parsed.role_images
     )
+    navigation_landmarks = sum(
+        len(parsed.navigation_landmarks) for parsed in parsed_pages.values()
+    )
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1349,6 +1361,7 @@ def check_html_and_css():
         not problems,
         f"{len(html_pages)} HTML page(s) with one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
+        f"{navigation_landmarks} named navigation landmark(s), "
         f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "
         f"image(s) with explicit alternatives, {exposed_role_images} exposed "
         "ARIA image(s) with accessible names, "

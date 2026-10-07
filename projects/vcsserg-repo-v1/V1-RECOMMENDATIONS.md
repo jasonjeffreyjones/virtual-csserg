@@ -147,6 +147,15 @@ replacing the open rendered review (World Wide Web Consortium Web Accessibility
 Initiative, 2026). The added report citation brings the current inventory to
 844 interactive or keyboard-focusable elements: all 818 exposed elements are
 named and 26 source anchors remain safely hidden.
+On October 7, a coverage audit found a false pass inside the existing repeated-
+navigation rule: an `aria-labelledby` target could exist but contain no text.
+The parser now treats the referenced text—not mere ID existence—as the name,
+reports both empty and missing label failures, and a focused fixture preserves
+the distinction. All 160 current navigation landmarks have nonempty source
+names. W3C's landmark guidance recommends labels that distinguish repeated
+navigation regions; this deterministic check does not establish the browser
+accessibility tree or announced names (World Wide Web Consortium Web
+Accessibility Initiative, n.d.-b).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -387,5 +396,5 @@ a keyboard interface*. Retrieved October 3, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Landmark
-regions*. Retrieved October 1, 2026, from
+regions*. Retrieved October 7, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

@@ -248,6 +248,7 @@ class StaticAccessibilityTests(unittest.TestCase):
             [
                 "navigation.html: navigation landmark 1 has no accessible name",
                 "navigation.html: navigation landmark 2 references missing label ids: missing",
+                "navigation.html: navigation landmark 2 has no accessible name",
             ],
         )
 
@@ -259,6 +260,21 @@ class StaticAccessibilityTests(unittest.TestCase):
         )
         self.assertEqual(
             VERIFY.page_accessibility_problems(named, "navigation.html"), []
+        )
+
+    def test_navigation_landmark_label_references_need_text(self):
+        empty_label = parse(
+            '<a class="skip" href="#main">Skip</a>'
+            '<nav aria-label="Primary"><a href="/">Home</a></nav>'
+            '<main id="main"><span id="empty"></span>'
+            '<nav aria-labelledby="empty"></nav></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(empty_label, "navigation.html"),
+            [
+                "navigation.html: navigation landmark 2 references labels without text",
+                "navigation.html: navigation landmark 2 has no accessible name",
+            ],
         )
 
     def test_headings_need_text_and_must_not_skip_forward(self):

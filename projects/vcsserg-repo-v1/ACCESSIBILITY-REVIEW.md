@@ -5,7 +5,8 @@ structured evidence contract added September 20, 2026; source heading contract
 added September 30, 2026; top-level landmark contract added October 1, 2026;
 ARIA image-name contract added October 2, 2026; source-order tab contract added
 October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
-2026; automatic meta-refresh prohibition added October 6, 2026.
+2026; automatic meta-refresh prohibition added October 6, 2026; nonempty
+navigation-label reference contract added October 7, 2026.
 
 ## Decision boundary
 
@@ -63,8 +64,12 @@ accessibility evaluation.
   ahead of repeated navigation. The same normalizer now gives stable accessible
   names to Quarto's report, chapter, on-page, and previous/next navigation
   landmarks. The whole-site verifier rejects unnamed navigation landmarks when
-  a page exposes more than one, and it rejects unresolved `aria-labelledby`
-  references.
+  a page exposes more than one, rejects unresolved `aria-labelledby`
+  references, and now rejects resolved label targets without text. The October
+  7 coverage audit found that the prior missing-target fixture did not exercise
+  that empty-target false pass. A focused fixture now closes it; all 160
+  navigation landmarks across the 39 current pages have nonempty source names.
+  This does not establish their rendered announcement.
 - The shared normalizer now adds `scope="col"` to generated table-head cells.
   The whole-site verifier requires every table header cell to declare one of
   the four valid row or column scopes. This makes the intended relationships
@@ -150,6 +155,9 @@ accessibility evaluation.
 - On October 6, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 7, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -167,7 +175,10 @@ accessibility evaluation.
   before the October 3 source-order revision, all 285 were byte-identical;
   before the October 4 viewport revision, all 293 were byte-identical. It
   again found all 293 incoming files byte-identical before the October 6
-  meta-refresh revision. It cannot discover extra remote-only paths, and
+  meta-refresh revision. On October 7, 291 unchanged worktree files matched
+  production directly and the two already-edited pages' production digests
+  matched their clean incoming `HEAD` versions, establishing all 293 incoming
+  files as byte-identical before the navigation-label revision. It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
 
@@ -340,5 +351,5 @@ Retrieved September 30, 2026, from
 https://www.w3.org/WAI/tutorials/page-structure/headings/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-d). *Landmark
-regions*. Retrieved October 1, 2026, from
+regions*. Retrieved October 7, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

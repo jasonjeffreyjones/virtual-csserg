@@ -2,15 +2,15 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-06T08:13:36Z
+updated: 2026-10-07T08:15:32Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 6, 2026, all seven automated promise groups pass across
-39 HTML pages, 97 native images, four exposed ARIA images, 38 named data tables,
+Active. On October 7, 2026, all seven automated promise groups pass across
+39 HTML pages, 160 named navigation landmarks, 97 native images, four exposed ARIA images, 38 named data tables,
 204 exposed headings, 844 interactive or keyboard-focusable elements, and
 seven first-party stylesheets. All four exposed ARIA images and all 818
 exposed interactive elements are named and the other 26 are safely hidden
@@ -23,7 +23,8 @@ automatically through `meta http-equiv="refresh"`; the
 first anchor itself to be a bypass link targeting `main`; an explicit `alt`
 decision for every native image; an accessible name for every exposed
 non-native ARIA image; and an accessible name for every navigation landmark
-on pages containing more than one. It requires every exposed heading to
+on pages containing more than one. A referenced navigation name must resolve
+to nonempty text rather than merely an existing ID. It requires every exposed heading to
 contain text without skipping forward over a rank. It also requires every data table to have a
 nonempty caption or valid explicit ARIA name, every table header cell to
 declare a valid row or column scope, and every exposed interactive or
@@ -79,7 +80,7 @@ without performing the unavailable human review.
   The alternatives are labeled as dated decision archives.
 - VCSSERG v1 now has all three linked report forms: `index.qmd` currently
   renders a one-chapter Quarto HTML book; `short-report.md` currently renders a
-  two-page, two-column PDF; and the production Executive Summary contains
+  three-page, two-column PDF; and the production Executive Summary contains
   exactly one dense promise-map figure and five Full Report-linked findings.
   Neither one chapter nor one page is a requirement; Full Report structure is
   content-driven and the short PDF has a ten-page ceiling.
@@ -124,7 +125,8 @@ without performing the unavailable human review.
   own target and requires that
   target to identify `main`; it no longer lets an invalid first skip-styled link
   borrow validity from a later bypass. It also requires accessible names on
-  repeated navigation landmarks and resolves `aria-labelledby` targets. This
+  repeated navigation landmarks and resolves `aria-labelledby` targets to
+  nonempty text. This
   exposed 14 unnamed Quarto navigation regions across the four generated report
   pages. The September 23 rule then exposed 60 unscoped headers in the three
   table-bearing generated report pages. Their shared standard-library
@@ -216,6 +218,15 @@ without performing the unavailable human review.
   Adjustable; this Project applies the stricter rule that its static pages need
   no meta refresh at all. The source check does not inspect script- or
   server-driven updates or establish the absence of rendered interruptions.
+- An October 7 navigation-name coverage audit found that an existing but empty
+  `aria-labelledby` target could pass the September 22 repeated-landmark rule.
+  The parser now derives the referenced text, rejects missing and textless
+  targets, and reports the affected repeated landmark as unnamed. A separate
+  focused fixture preserves the empty-target failure. All 160 navigation
+  landmarks in the current 39-page tree pass the corrected source rule. W3C
+  recommends labels that distinguish repeated navigation regions; only the
+  open screen-reader protocol can establish the browser-exposed and announced
+  names.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -223,7 +234,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 6 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 7 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -276,7 +287,10 @@ without performing the unavailable human review.
   The October 4 pre-change probe found all 293 incoming files byte-identical
   after the next Predict the Self iteration.
   The October 6 pre-change probe again found all 293 incoming files
-  byte-identical.
+  byte-identical. The October 7 worktree probe found 291 files byte-identical
+  and the two already-edited public pages different; their production digests
+  exactly matched the clean incoming `HEAD` versions, establishing all 293
+  incoming files as byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -303,12 +317,13 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 47 routine tests pass across 39 HTML pages, 97 native
+All seven groups and all 48 routine tests pass across 39 HTML pages, 160 named
+navigation landmarks, 97 native
 images, four exposed ARIA images, 38 named data tables, 204 exposed headings,
 844 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 6. Every page has
+stylesheets on October 7. Every page has
 exactly one page-level banner, main, and content-information landmark. The verifier's success detail now
-reports the responsive zoom-permitting viewport contract plus exposed and
+reports the navigation-landmark count, responsive zoom-permitting viewport contract, plus exposed and
 safely hidden control counts directly, rather than leaving that coverage
 implicit.
 The checks now include validated identity/biography data, independent Project
@@ -317,7 +332,7 @@ iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, first-anchor bypass mechanisms, explicit image
 alternatives, exposed ARIA image names, exact top-level landmark frames,
 nonempty unskipped heading ranks, repeated navigation names,
-resolved landmark-label references,
+resolved nonempty landmark-label references,
 accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names,
 ARIA relationships, no positive `tabindex` overrides, one responsive viewport
 without a sub-200% zoom ceiling, no automatic meta refresh or redirect, and the
@@ -326,7 +341,8 @@ test covers captions and valid explicit labels while rejecting absent, broken,
 or empty names. One focused negative
 test guards the first-anchor/target conjunction, one covers missing and
 duplicate top-level landmarks with native context, five tests cover the build-time
-Quarto normalizer, one covers the generic navigation-name rule, one covers the
+Quarto normalizer, two cover the generic navigation-name rule (including
+textless referenced labels), one covers the
 generic table-header rule, one covers heading text and rank, one covers
 missing, broken, and empty ARIA image names, three cover
 interactive names and ARIA relationships
@@ -394,7 +410,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 6 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 62 GiB
+October 7 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 62 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -419,8 +435,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 4 report set superseded by
-  the current no-meta-refresh revision.
+  v1 release ledger, including the clean October 6 report set superseded by
+  the current nonempty navigation-label revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

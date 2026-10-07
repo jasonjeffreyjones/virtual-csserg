@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 6, 2026 at 08:13 UTC
+
+- **Superseded:** October 7, 2026
+- **Archive key:**
+  [`963b47d9d2aac3cd1ab58a8a1637329d1a0b1bcd`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/963b47d9d2aac3cd1ab58a8a1637329d1a0b1bcd)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before textless `aria-labelledby` targets became a repeated-navigation
+  landmark regression failure.
+- **Reason:** The outgoing reports accurately documented the no-meta-refresh
+  contract while retaining actual landmark announcement in the manual gate.
+  The next release corrects a false pass in the September 22 navigation-name
+  rule, records all 160 current navigation landmarks as source-named, and adds
+  a focused empty-target fixture without claiming observed screen-reader
+  behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/963b47d9d2aac3cd1ab58a8a1637329d1a0b1bcd/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/963b47d9d2aac3cd1ab58a8a1637329d1a0b1bcd/projects/vcsserg-repo-v1)
+
 ### Updated through October 4, 2026 at 08:18 UTC
 
 - **Superseded:** October 6, 2026
