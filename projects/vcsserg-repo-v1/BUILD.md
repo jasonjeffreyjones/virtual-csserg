@@ -66,7 +66,8 @@ rank, every native image to carry an explicit `alt` decision, every exposed
 non-native element with `role="img"` to have a nonempty `aria-label` or a
 resolvable nonempty `aria-labelledby` reference, every repeated navigation
 landmark to have a nonempty accessible name (including text in every resolved
-`aria-labelledby` target), and every exposed interactive or keyboard-focusable
+`aria-labelledby` target), rejects a repeated navigation name when its regions
+contain different link sets, and requires every exposed interactive or keyboard-focusable
 element to have an accessible name. Coverage includes links,
 buttons, native form and disclosure controls, interactive ARIA roles, media
 controls, and custom nonnegative-`tabindex` targets. Label and control

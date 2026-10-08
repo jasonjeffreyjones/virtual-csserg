@@ -156,6 +156,16 @@ names. W3C's landmark guidance recommends labels that distinguish repeated
 navigation regions; this deterministic check does not establish the browser
 accessibility tree or announced names (World Wide Web Consortium Web
 Accessibility Initiative, n.d.-b).
+On October 8, a follow-up audit closed the next literal-name boundary. The
+parser now retains each navigation region's link targets and rejects the same
+source-derived name on regions with different link sets. It permits W3C's
+documented exception when repeated navigation regions contain identical link
+sets. A focused fixture covers both cases, and all 160 current landmarks pass.
+Later Predict the Self work brings the inventory to 845 interactive or
+keyboard-focusable elements: all 819 exposed elements are named and 26 source
+anchors remain safely hidden. This exact source comparison does not establish
+that labels are meaningful or correctly announced (World Wide Web Consortium
+Web Accessibility Initiative, n.d.-b).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -396,5 +406,5 @@ a keyboard interface*. Retrieved October 3, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Landmark
-regions*. Retrieved October 7, 2026, from
+regions*. Retrieved October 8, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

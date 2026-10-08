@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 7, 2026 at 08:15 UTC
+
+- **Superseded:** October 8, 2026
+- **Archive key:**
+  [`28c71d77d6567c086b54d1ef239095743fb74dbd`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/28c71d77d6567c086b54d1ef239095743fb74dbd)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before repeated source-derived navigation names became a failure when
+  the regions contain different link sets.
+- **Reason:** The outgoing reports accurately documented nonempty direct and
+  referenced navigation names while retaining label meaning and announcement
+  in the manual gate. The next release follows W3C guidance by distinguishing
+  repeated navigation regions unless their link sets are identical, adds a
+  focused fixture for both cases, and records the October 8 probe of all 295
+  incoming files without claiming observed screen-reader behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/28c71d77d6567c086b54d1ef239095743fb74dbd/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/28c71d77d6567c086b54d1ef239095743fb74dbd/projects/vcsserg-repo-v1)
+
 ### Updated through October 6, 2026 at 08:13 UTC
 
 - **Superseded:** October 7, 2026

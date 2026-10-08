@@ -6,7 +6,8 @@ added September 30, 2026; top-level landmark contract added October 1, 2026;
 ARIA image-name contract added October 2, 2026; source-order tab contract added
 October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
 2026; automatic meta-refresh prohibition added October 6, 2026; nonempty
-navigation-label reference contract added October 7, 2026.
+navigation-label reference contract added October 7, 2026; distinct
+navigation-name contract added October 8, 2026.
 
 ## Decision boundary
 
@@ -69,7 +70,12 @@ accessibility evaluation.
   7 coverage audit found that the prior missing-target fixture did not exercise
   that empty-target false pass. A focused fixture now closes it; all 160
   navigation landmarks across the 39 current pages have nonempty source names.
-  This does not establish their rendered announcement.
+  An October 8 audit then closed the remaining literal-duplication false pass:
+  the parser now rejects the same source-derived name on navigation regions
+  with different link sets and permits W3C's exception for identical link
+  sets. A focused fixture covers both cases, and all 160 landmarks pass. Exact
+  source-name and link-set comparisons do not establish whether labels are
+  meaningful or correctly announced.
 - The shared normalizer now adds `scope="col"` to generated table-head cells.
   The whole-site verifier requires every table header cell to declare one of
   the four valid row or column scopes. This makes the intended relationships
@@ -84,8 +90,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 844 interactive or keyboard-focusable
-  elements. Each of the 818 elements exposed to assistive technology has an
+- The whole-site parser now audits all 845 interactive or keyboard-focusable
+  elements. Each of the 819 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -158,6 +164,9 @@ accessibility evaluation.
 - On October 7, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 8, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -178,7 +187,9 @@ accessibility evaluation.
   meta-refresh revision. On October 7, 291 unchanged worktree files matched
   production directly and the two already-edited pages' production digests
   matched their clean incoming `HEAD` versions, establishing all 293 incoming
-  files as byte-identical before the navigation-label revision. It cannot discover extra remote-only paths, and
+  files as byte-identical before the navigation-label revision. The October 8
+  pre-change probe found all 295 incoming files byte-identical before the
+  navigation-distinction revision. It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
 
@@ -351,5 +362,5 @@ Retrieved September 30, 2026, from
 https://www.w3.org/WAI/tutorials/page-structure/headings/
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-d). *Landmark
-regions*. Retrieved October 7, 2026, from
+regions*. Retrieved October 8, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/

@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 7, 2026. The validated
+All seven automated promise groups pass on October 8, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -33,7 +33,9 @@ public HTML through a tested post-render step rather than runtime JavaScript.
 That step also names repeated navigation landmarks and adds explicit column
 scope to generated table headers. The verifier requires every repeated
 navigation name supplied by `aria-labelledby` to resolve to nonempty text,
-rather than accepting ID existence alone. Every public data table now has a concise
+rather than accepting ID existence alone, and rejects the same source-derived
+name on navigation regions containing different link sets. It permits the
+documented exception for identical link sets. Every public data table now has a concise
 source-owned caption, and the whole-site parser rejects an unnamed table. It also requires
 accessible names and valid ARIA targets and expanded states on exposed
 interactive and keyboard-focusable elements. Every page now also must expose
@@ -46,9 +48,9 @@ disabling scaling or setting a nonnegative maximum scale below 2. The same
 parser now rejects every automatic page reload or redirect declared through
 `meta http-equiv="refresh"`; none occurs in the public tree. The source
 contracts now pass across 39 HTML pages, 160 named navigation landmarks, 97 native images,
-4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 844
+4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 845
 interactive or keyboard-focusable elements: all four exposed ARIA images and
-all 818 exposed interactive elements are named, while 26 Quarto source-line
+all 819 exposed interactive elements are named, while 26 Quarto source-line
 anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
 public element uses a positive value.
 The manual review sample expanded automatically from 11 pages and 44 results to
@@ -119,7 +121,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic meta refresh or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names; named data tables and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic meta refresh or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named data tables and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -223,6 +225,15 @@ the source result still does not establish the names exposed or announced by a
 browser and screen reader (World Wide Web Consortium Web Accessibility
 Initiative, n.d.-c).
 
+On October 8, a follow-up audit found that the corrected navigation-name rule
+still accepted the same source-derived name on regions containing different
+links. The parser now retains each region's link targets and rejects a repeated
+name when those link sets differ. It permits W3C's documented exception for
+identical link sets. One focused fixture covers both the failure and exception;
+all 160 current navigation landmarks pass. This exact source comparison does
+not establish that labels are meaningful or correctly announced (World Wide
+Web Consortium Web Accessibility Initiative, n.d.-c).
+
 The result should be read as a regression report. Treating seven passing groups
 as proof that Version 1 is complete, or as a measure of research quality, would
 go far beyond the evidence.
@@ -278,7 +289,7 @@ evidence, while the exact commit retains all three prior forms, dependencies,
 sources, and contemporaneous Project memory. The policy distinguishes material
 supersession from cosmetic maintenance and specifies correction and retraction
 notices. The ledger preserves the September 15 release and each later material
-outgoing report set through September 26;
+outgoing report set through October 7;
 see the [archive policy](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-ARCHIVING.md)
 and [version ledger](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/REPORT-VERSIONS.md).
 
@@ -367,7 +378,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 7 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 8 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -385,7 +396,8 @@ September 30 revision, and all 267 files before the October 1 revision.
 The October 7 comparison established all 293 incoming files as byte-identical:
 291 unchanged worktree files matched directly, while the production digests for
 the two already-edited public pages matched their clean incoming `HEAD`
-versions.
+versions. The October 8 pre-change probe found all 295 incoming files
+byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
 recursive checksum dry run with deletion reporting: the runner writes its
@@ -486,5 +498,5 @@ Retrieved September 30, 2026, from
 <https://www.w3.org/WAI/tutorials/page-structure/headings/>
 
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-c). *Landmark
-regions*. Retrieved October 7, 2026, from
+regions*. Retrieved October 8, 2026, from
 <https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/>

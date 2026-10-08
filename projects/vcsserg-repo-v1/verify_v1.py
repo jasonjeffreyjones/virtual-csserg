@@ -149,6 +149,7 @@ class PageParser(HTMLParser):
         self.main_ids = []
         self.meta_refresh_contents = []
         self.navigation_landmarks = []
+        self.navigation_stack = []
         self.project_statuses = []
         self.project_updates = []
         self.references = []
@@ -204,9 +205,13 @@ class PageParser(HTMLParser):
         if tag == "a":
             classes = attributes.get("class", "").split()
             is_skip = any("skip" in class_name for class_name in classes)
+            reference = attributes.get("href")
+            if reference:
+                for navigation in self.navigation_stack:
+                    navigation["links"].append(reference)
             if self.anchor_count == 0:
                 self.first_anchor_is_skip = is_skip
-                self.first_anchor_reference = attributes.get("href", "")
+                self.first_anchor_reference = reference or ""
             self.anchor_count += 1
             if is_skip:
                 self.skip_references.append(attributes.get("href", ""))
@@ -327,12 +332,16 @@ class PageParser(HTMLParser):
             self.heading_records.append(heading)
             self.heading_stack.append(heading)
         if tag == "nav" or attributes.get("role", "").lower() == "navigation":
-            self.navigation_landmarks.append(
-                (
-                    attributes.get("aria-label", "").strip(),
-                    attributes.get("aria-labelledby", "").split(),
-                )
-            )
+            navigation = {
+                "aria_label": attributes.get("aria-label", "").strip(),
+                "labelled_by": attributes.get("aria-labelledby", "").split(),
+                "links": [],
+                "tag": tag,
+                "depth": len(self.open_elements),
+            }
+            self.navigation_landmarks.append(navigation)
+            if tag not in VOID_ELEMENTS:
+                self.navigation_stack.append(navigation)
         if role == "img" and tag != "img":
             self.role_images.append(
                 {
@@ -379,6 +388,13 @@ class PageParser(HTMLParser):
                 if self.heading_stack[index]["level"] == int(tag[1]):
                     self.heading_stack.pop(index)
                     break
+        for index in range(len(self.navigation_stack) - 1, -1, -1):
+            navigation = self.navigation_stack[index]
+            if navigation["tag"] == tag and navigation["depth"] == len(
+                self.open_elements
+            ):
+                self.navigation_stack.pop(index)
+                break
         for index in range(len(self.open_elements) - 1, -1, -1):
             if self.open_elements[index][0] == tag:
                 closed = self.open_elements[index:]
@@ -504,9 +520,10 @@ def page_accessibility_problems(parsed, relative):
             has_accessible_name = bool(role_image["aria_label"].strip())
         if not has_accessible_name:
             problems.append(f"{relative}: ARIA image {number} has no accessible name")
-    for number, (accessible_name, labelled_by) in enumerate(
-        parsed.navigation_landmarks, start=1
-    ):
+    navigation_name_groups = {}
+    for number, navigation in enumerate(parsed.navigation_landmarks, start=1):
+        accessible_name = navigation["aria_label"]
+        labelled_by = navigation["labelled_by"]
         missing_ids = sorted(set(labelled_by) - set(parsed.ids))
         if missing_ids:
             problems.append(
@@ -531,6 +548,23 @@ def page_accessibility_problems(parsed, relative):
             problems.append(
                 f"{relative}: navigation landmark {number} has no accessible name"
             )
+        if has_accessible_name:
+            source_name = referenced_label if labelled_by else accessible_name
+            source_name = " ".join(source_name.split())
+            navigation_name_groups.setdefault(source_name.casefold(), []).append(
+                (number, source_name, Counter(navigation["links"]))
+            )
+    for repeated in navigation_name_groups.values():
+        if len(repeated) < 2:
+            continue
+        first_links = repeated[0][2]
+        if all(links == first_links for _, _, links in repeated[1:]):
+            continue
+        numbers = ", ".join(str(number) for number, _, _ in repeated)
+        problems.append(
+            f"{relative}: navigation landmarks {numbers} share accessible name "
+            f"{repeated[0][1]!r} but contain different links"
+        )
     for number, scope in enumerate(parsed.table_header_scopes, start=1):
         if scope not in VALID_TABLE_HEADER_SCOPES:
             problems.append(
@@ -1361,7 +1395,8 @@ def check_html_and_css():
         not problems,
         f"{len(html_pages)} HTML page(s) with one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
-        f"{navigation_landmarks} named navigation landmark(s), "
+        f"{navigation_landmarks} named navigation landmark(s) with distinct "
+        "labels for different link sets, "
         f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "
         f"image(s) with explicit alternatives, {exposed_role_images} exposed "
         "ARIA image(s) with accessible names, "

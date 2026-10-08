@@ -277,6 +277,37 @@ class StaticAccessibilityTests(unittest.TestCase):
             ],
         )
 
+    def test_duplicate_navigation_names_require_identical_link_sets(self):
+        different_links = parse(
+            '<a class="skip" href="#main">Skip</a>'
+            '<nav aria-label="Sections"><a href="#one">One</a></nav>'
+            '<main id="main"><nav aria-label="Sections">'
+            '<a href="#two">Two</a></nav></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(
+                different_links, "navigation.html"
+            ),
+            [
+                "navigation.html: navigation landmarks 1, 2 share accessible "
+                "name 'Sections' but contain different links"
+            ],
+        )
+
+        identical_links = parse(
+            '<a class="skip" href="#main">Skip</a>'
+            '<nav aria-label="Results"><a href="#previous">Previous</a>'
+            '<a href="#next">Next</a></nav><main id="main">'
+            '<nav aria-label="Results"><a href="#next">Next</a>'
+            '<a href="#previous">Previous</a></nav></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(
+                identical_links, "navigation.html"
+            ),
+            [],
+        )
+
     def test_headings_need_text_and_must_not_skip_forward(self):
         invalid = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'
