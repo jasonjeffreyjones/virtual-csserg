@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-07T09:10:36Z
+updated: 2026-10-08T09:06:40Z
 ---
 
 # Predict the Self — Current State
@@ -81,6 +81,10 @@ The guarded publisher and verifier now consume the same public artifact
 inventory rather than maintaining independent lists. Validation requires the
 Full Report's canonical research-artifact links to equal that inventory, and
 the publisher rejects duplicate, escaping, or non-`artifacts/` alias paths.
+The publisher now also requires every built canonical artifact to equal its
+authoritative Project source before it mutates the public report tree; a stale
+Quarto resource or missing Project source leaves the existing publication
+untouched.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -408,6 +412,11 @@ raw.
   with one public 69-entry `PUBLICATION_ARTIFACTS.json` inventory, including
   the inventory itself. Six focused regressions cover malformed mappings,
   exact report-link agreement, omissions, and unlisted research artifacts.
+- Strengthened the guarded publisher to compare every built canonical artifact
+  byte for byte with its authoritative Project source before staging or
+  replacing the public report. Two focused regressions show that stale build
+  resources and missing Project sources both fail without changing the
+  existing public tree.
 
 ## Publication and build structure
 
@@ -431,6 +440,9 @@ raw.
   `report/artifacts/` aliases as byte-identical compatibility copies.
   Validation checks both public copies directly against each Project source
   and requires the report's canonical artifact links to match the inventory.
+- The guarded publisher checks built canonical artifacts against Project
+  sources before any public-tree mutation; the verifier independently repeats
+  the source-to-canonical and source-to-alias checks afterward.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -536,6 +548,9 @@ raw.
 - `PUBLICATION_ARTIFACTS.json` is the sole source-to-compatibility-alias
   inventory. Every inventoried canonical artifact must be linked from the Full
   Report, and every linked research artifact must be inventoried.
+- The guarded publisher must leave the current public report untouched unless
+  every inventoried Quarto resource exists and is byte-identical to its
+  authoritative Project source.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is

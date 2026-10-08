@@ -1392,6 +1392,10 @@ All Project research scripts use only the Python standard library. The challenge
 public tests passed before the stable artifact was generated. Regenerating the
 stable development and test artifacts reproduced their hashes exactly; the
 retrieval pipeline separately hash-guards its inputs and fixed analysis plan.
+The guarded report publisher also checks every built canonical artifact against
+its authoritative Project source before replacing the public report tree; the
+publication verifier repeats that byte comparison for both public copies after
+publication.
 
 ## Sources {#sources}
 

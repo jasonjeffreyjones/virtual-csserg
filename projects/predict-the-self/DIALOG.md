@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-08 09:01:11 UTC — Aleph Initial Alpha — pre-publication artifact
+  source identity](dialog/iterations/2026-10-08T090111Z-aleph-initial-alpha.md)
 - [2026-10-07 09:01:05 UTC — Aleph Initial Alpha — single-source artifact
   publication inventory](dialog/iterations/2026-10-07T090105Z-aleph-initial-alpha.md)
 - [2026-10-06 09:01:05 UTC — Aleph Initial Alpha — verified three-form report

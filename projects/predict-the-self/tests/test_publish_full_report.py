@@ -11,7 +11,7 @@ publish_full_report = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(publish_full_report)
 
 
-def make_complete_build(source: Path) -> None:
+def make_complete_build(source: Path, project: Path) -> None:
     files = (
         "index.html",
         "report.html",
@@ -22,6 +22,10 @@ def make_complete_build(source: Path) -> None:
         path = source / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(f"new {relative}", encoding="utf-8")
+        if relative not in {"index.html", "report.html", "report.css"}:
+            authoritative = project / relative
+            authoritative.parent.mkdir(parents=True, exist_ok=True)
+            authoritative.write_text(f"new {relative}", encoding="utf-8")
 
 
 class ArtifactManifestTests(unittest.TestCase):
@@ -57,15 +61,17 @@ class PublishFullReportTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / "book"
+            project = root / "project"
             public = root / "public/report"
             source.mkdir()
+            project.mkdir()
             public.mkdir(parents=True)
-            make_complete_build(source)
+            make_complete_build(source, project)
             (source / "index.html").write_text("new index.html  \n", encoding="utf-8")
             (public / "index.html").write_text("old report", encoding="utf-8")
             (public / "stale.js").write_text("stale", encoding="utf-8")
 
-            publish_full_report.publish(source, public)
+            publish_full_report.publish(source, public, project)
 
             self.assertEqual((public / "index.html").read_text(), "new index.html\n")
             self.assertTrue((public / "report.html").is_file())
@@ -79,14 +85,60 @@ class PublishFullReportTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / "book"
+            project = root / "project"
             public = root / "public/report"
             source.mkdir()
+            project.mkdir()
             public.mkdir(parents=True)
             (source / "index.html").write_text("incomplete", encoding="utf-8")
             (public / "index.html").write_text("published", encoding="utf-8")
 
             with self.assertRaises(publish_full_report.PublicationError):
-                publish_full_report.publish(source, public)
+                publish_full_report.publish(source, public, project)
+
+            self.assertEqual((public / "index.html").read_text(), "published")
+
+    def test_stale_build_artifact_leaves_existing_public_tree_unchanged(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "book"
+            project = root / "project"
+            public = root / "public/report"
+            source.mkdir()
+            project.mkdir()
+            public.mkdir(parents=True)
+            make_complete_build(source, project)
+            (source / "results/stable_signifier_dev_scorecard.json").write_text(
+                "stale build", encoding="utf-8"
+            )
+            (public / "index.html").write_text("published", encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                publish_full_report.PublicationError,
+                "built artifact differs from authoritative Project source",
+            ):
+                publish_full_report.publish(source, public, project)
+
+            self.assertEqual((public / "index.html").read_text(), "published")
+
+    def test_missing_project_artifact_leaves_existing_public_tree_unchanged(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "book"
+            project = root / "project"
+            public = root / "public/report"
+            source.mkdir()
+            project.mkdir()
+            public.mkdir(parents=True)
+            make_complete_build(source, project)
+            (project / "results/stable_signifier_dev_scorecard.json").unlink()
+            (public / "index.html").write_text("published", encoding="utf-8")
+
+            with self.assertRaisesRegex(
+                publish_full_report.PublicationError,
+                "missing authoritative Project artifact",
+            ):
+                publish_full_report.publish(source, public, project)
 
             self.assertEqual((public / "index.html").read_text(), "published")
 

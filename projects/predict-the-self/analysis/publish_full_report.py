@@ -70,15 +70,41 @@ def normalize_generated_html(tree: Path) -> None:
         path.write_text(normalized, encoding="utf-8")
 
 
-def publish(source: Path = SOURCE, public: Path = PUBLIC) -> None:
+def validate_authoritative_artifacts(
+    source: Path, project: Path, artifacts: dict[str, str]
+) -> None:
+    """Require every built canonical artifact to equal its Project source."""
+    for relative in artifacts:
+        built = (source / relative).resolve()
+        authoritative = (project / relative).resolve()
+        if not built.is_relative_to(source):
+            raise PublicationError(f"build artifact escapes report tree: {relative}")
+        if not authoritative.is_relative_to(project):
+            raise PublicationError(f"Project artifact escapes Project tree: {relative}")
+        if not authoritative.is_file():
+            raise PublicationError(f"missing authoritative Project artifact {relative}")
+        if built.read_bytes() != authoritative.read_bytes():
+            raise PublicationError(
+                f"built artifact differs from authoritative Project source: {relative}"
+            )
+
+
+def publish(
+    source: Path = SOURCE,
+    public: Path = PUBLIC,
+    project: Path = PROJECT,
+    manifest: Path = MANIFEST,
+) -> None:
     source = Path(source).resolve()
     public = Path(public).resolve()
-    artifacts = load_artifact_manifest()
+    project = Path(project).resolve()
+    artifacts = load_artifact_manifest(manifest)
     required = (source / "index.html", source / "report.html", source / "report.css")
     required += tuple(source / path for path in artifacts)
     for artifact in required:
         if not artifact.is_file():
             raise PublicationError(f"missing build artifact {artifact}")
+    validate_authoritative_artifacts(source, project, artifacts)
 
     public.parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix=".predict-report-stage-", dir=public.parent))

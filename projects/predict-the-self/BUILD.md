@@ -19,6 +19,11 @@ is maintained as static HTML. `short-report.md` is the derivative PDF source.
 both the guarded publisher and verifier. The verifier additionally requires
 the Full Report's canonical research-artifact links to equal that inventory,
 so a linked, copied, or checked artifact cannot drift into a separate list.
+Before replacing the public report tree, the publisher requires every built
+canonical artifact to be byte-identical to its authoritative Project source.
+It leaves the existing public tree untouched when a source is missing, a
+Quarto resource is stale, or a resource path escapes either tree. The verifier
+repeats the source-to-public identity check after publication.
 
 The host has no TeX PDF engine, so the short-report renderer uses optional
 build-only packages. They do not become website or production dependencies.
@@ -199,9 +204,9 @@ PYTHONPATH=/tmp/predict-self-publishing-deps \
 
 Validate the research code, guarded publisher, three-form publication, exact
 artifact link-to-inventory agreement, source-to-public byte identity for every
-research artifact and compatibility alias, reciprocal links among the
-Executive Summary, both Full Report HTML surfaces, and the short PDF, v1
-promise groups, and whitespace:
+research artifact and compatibility alias, pre-publication build-to-source
+identity, reciprocal links among the Executive Summary, both Full Report HTML
+surfaces, and the short PDF, v1 promise groups, and whitespace:
 
 ```bash
 python3 -m unittest discover -s projects/predict-the-self/tests -v
