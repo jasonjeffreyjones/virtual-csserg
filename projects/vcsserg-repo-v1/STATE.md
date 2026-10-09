@@ -2,17 +2,17 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-08T08:12:38Z
+updated: 2026-10-09T08:12:39Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 8, 2026, all seven automated promise groups pass across
+Active. On October 9, 2026, all seven automated promise groups pass across
 39 HTML pages, 160 named navigation landmarks, 97 native images, four exposed ARIA images, 38 named data tables,
-204 exposed headings, 845 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 819
+204 exposed headings, 846 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 820
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires
@@ -36,7 +36,9 @@ includes links, buttons, native form and disclosure controls, interactive ARIA
 roles, media controls, and custom nonnegative-`tabindex` targets. A tested
 source-order rule also rejects positive `tabindex` values; the public tree uses
 ten zero-value scroll targets and 26 negative source anchors without any
-author-set positive tab priority. A tested
+author-set positive tab priority. A tested focus-entry rule also rejects every
+`autofocus` attribute so page load cannot request focus away from the document
+entry and first-link bypass path. A tested
 post-render normalizer makes the
 bypass link first, names Quarto's repeated navigation regions, and adds column
 scope inside generated table heads on all five report pages without runtime
@@ -237,6 +239,13 @@ without performing the unavailable human review.
   This exact-link comparison does not establish that labels are semantically
   useful or that a browser and screen reader expose and announce them as
   intended.
+- An October 9 focus-entry audit found no `autofocus` attribute on any current
+  public page, but the verifier did not preserve that source condition. The
+  HTML Standard defines the attribute as a request to focus an element on page
+  load and runs focusing steps for an eligible candidate. The parser now
+  rejects every occurrence, including the boolean form `autofocus="false"`;
+  one focused fixture covers the failure. This strict static-site rule does
+  not establish the initial focus observed in a browser.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -244,7 +253,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 8 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 9 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -302,6 +311,8 @@ without performing the unavailable human review.
   exactly matched the clean incoming `HEAD` versions, establishing all 293
   incoming files as byte-identical.
   The October 8 pre-change probe found all 295 incoming files byte-identical.
+  The October 9 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -328,11 +339,11 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 49 routine tests pass across 39 HTML pages, 160 named
+All seven groups and all 50 routine tests pass across 39 HTML pages, 160 named
 navigation landmarks, 97 native
 images, four exposed ARIA images, 38 named data tables, 204 exposed headings,
-845 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 8. Every page has
+846 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 9. Every page has
 exactly one page-level banner, main, and content-information landmark. The verifier's success detail now
 reports the navigation-landmark count, responsive zoom-permitting viewport contract, plus exposed and
 safely hidden control counts directly, rather than leaving that coverage
@@ -347,7 +358,8 @@ resolved nonempty landmark-label references, distinct navigation names for
 different link sets,
 accessible data-table names, valid table-header scopes, interactive and keyboard-focusable element names,
 ARIA relationships, no positive `tabindex` overrides, one responsive viewport
-without a sub-200% zoom ceiling, no automatic meta refresh or redirect, and the
+without a sub-200% zoom ceiling, no autofocus, no automatic meta refresh or
+redirect, and the
 manual-review worksheet's sample and closure boundary. One focused table-name
 test covers captions and valid explicit labels while rejecting absent, broken,
 or empty names. One focused negative
@@ -360,7 +372,7 @@ missing, broken, and empty ARIA image names, three cover
 interactive names and ARIA relationships
 across links, buttons, forms, disclosures, roles, media, and custom focus
 targets, one rejects positive `tabindex` values while accepting zero and
-negative patterns, one covers responsive and zoom-permitting viewport
+negative patterns, one rejects autofocus, one covers responsive and zoom-permitting viewport
 metadata, one rejects automatic meta refreshes and redirects, and three cover
 the manual-review record.
 The generic check does not validate PDF page layout, research quality, public
@@ -422,7 +434,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 8 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 62 GiB
+October 9 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.

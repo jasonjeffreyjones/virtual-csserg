@@ -7,7 +7,8 @@ ARIA image-name contract added October 2, 2026; source-order tab contract added
 October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
 2026; automatic meta-refresh prohibition added October 6, 2026; nonempty
 navigation-label reference contract added October 7, 2026; distinct
-navigation-name contract added October 8, 2026.
+navigation-name contract added October 8, 2026; automatic-focus prohibition
+added October 9, 2026.
 
 ## Decision boundary
 
@@ -90,8 +91,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 845 interactive or keyboard-focusable
-  elements. Each of the 819 elements exposed to assistive technology has an
+- The whole-site parser now audits all 846 interactive or keyboard-focusable
+  elements. Each of the 820 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -122,6 +123,14 @@ accessibility evaluation.
   tab ordering (World Wide Web Consortium Web Accessibility Initiative,
   n.d.-a). This guards source priority; only the keyboard procedure below can
   establish actual focus order and usability.
+- None of the 39 public pages declares `autofocus`. The October 9 focus-entry
+  audit added a strict project-level prohibition because the HTML Standard
+  defines the attribute as a request to focus an element when the page loads
+  and its processing model runs the focusing steps for an eligible candidate.
+  A focused fixture rejects both `autofocus` and the still-present boolean form
+  `autofocus="false"`. This preserves the source-owned document entry and
+  first-link bypass path; only the keyboard procedure below can establish the
+  browser's actual initial focus (WHATWG, 2026).
 - All 39 pages have exactly one viewport declaration using
   `width=device-width`. None disables user scaling or sets a nonnegative
   `maximum-scale` below 2. A focused fixture rejects a missing declaration, a
@@ -167,6 +176,9 @@ accessibility evaluation.
 - On October 8, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 9, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -189,7 +201,9 @@ accessibility evaluation.
   matched their clean incoming `HEAD` versions, establishing all 293 incoming
   files as byte-identical before the navigation-label revision. The October 8
   pre-change probe found all 295 incoming files byte-identical before the
-  navigation-distinction revision. It cannot discover extra remote-only paths, and
+  navigation-distinction revision. The October 9 pre-change probe again found
+  all 295 incoming files byte-identical before the automatic-focus revision.
+  It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
 
@@ -326,6 +340,9 @@ does not validate other Projects' empirical claims or create a WCAG conformance
 claim.
 
 ## References
+
+WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
+https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

@@ -161,11 +161,19 @@ parser now retains each navigation region's link targets and rejects the same
 source-derived name on regions with different link sets. It permits W3C's
 documented exception when repeated navigation regions contain identical link
 sets. A focused fixture covers both cases, and all 160 current landmarks pass.
-Later Predict the Self work brings the inventory to 845 interactive or
-keyboard-focusable elements: all 819 exposed elements are named and 26 source
+Later report work brings the inventory to 846 interactive or
+keyboard-focusable elements: all 820 exposed elements are named and 26 source
 anchors remain safely hidden. This exact source comparison does not establish
 that labels are meaningful or correctly announced (World Wide Web Consortium
 Web Accessibility Initiative, n.d.-b).
+On October 9, a focus-entry audit found no `autofocus` attribute on any of the
+39 public pages, but the whole-site verifier did not preserve that source
+condition. The HTML Standard defines `autofocus` as a request to focus an
+element on page load and specifies focusing steps for an eligible candidate.
+The parser now rejects any occurrence, and a focused fixture also rejects the
+misleading boolean form `autofocus="false"`. This intentionally strict rule
+protects the static site's document-entry and first-link bypass path without
+claiming where a browser actually places focus (WHATWG, 2026).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -385,6 +393,9 @@ https://quarto.org/docs/books/
 
 Quarto. (n.d.). *HTML accessibility checks*. Retrieved September 11, 2026, from
 https://quarto.org/docs/output-formats/html-accessibility.html
+
+WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
+https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

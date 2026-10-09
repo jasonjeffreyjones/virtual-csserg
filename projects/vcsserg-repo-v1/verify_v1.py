@@ -117,6 +117,7 @@ class Result:
 class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
+        self.autofocus_elements = []
         self.description = ""
         self.assignment = None
         self.assignments = []
@@ -169,6 +170,8 @@ class PageParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        if "autofocus" in attributes:
+            self.autofocus_elements.append(tag)
         element_id = attributes.get("id")
         aria_hidden = attributes.get("aria-hidden", "").strip().lower() == "true"
         role = attributes.get("role", "").strip().lower()
@@ -458,6 +461,11 @@ def parse_page(path):
 def page_accessibility_problems(parsed, relative):
     """Return deterministic checks that complement rendered assistive-tech QA."""
     problems = []
+    if parsed.autofocus_elements:
+        problems.append(
+            f"{relative}: contains {len(parsed.autofocus_elements)} "
+            "autofocus attribute(s)"
+        )
     if parsed.meta_refresh_contents:
         problems.append(
             f"{relative}: contains {len(parsed.meta_refresh_contents)} "
@@ -1404,8 +1412,8 @@ def check_html_and_css():
         f"named data table(s), {exposed_headings} exposed heading(s), "
         f"{exposed_interactive} exposed interactive or "
         f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
-        f"control(s), no positive tabindex overrides or automatic meta "
-        "refreshes, and "
+        f"control(s), no positive tabindex overrides, no autofocus attributes, "
+        "and no automatic meta refreshes, and "
         f"{len(first_party_css)} first-party "
         "stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),

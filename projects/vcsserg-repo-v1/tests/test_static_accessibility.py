@@ -32,6 +32,25 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_autofocus_is_rejected(self):
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<label for="query">Search</label><input id="query"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "stable.html"), []
+        )
+
+        automatic = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<input aria-label="Search" autofocus>'
+            '<button autofocus="false">Menu</button></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(automatic, "focus.html"),
+            ["focus.html: contains 2 autofocus attribute(s)"],
+        )
+
     def test_automatic_meta_refresh_or_redirect_is_rejected(self):
         valid = parse(
             '<meta http-equiv="content-type" content="text/html; charset=utf-8">'

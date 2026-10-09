@@ -6,6 +6,24 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 8, 2026 at 08:12 UTC
+
+- **Superseded:** October 9, 2026
+- **Archive key:**
+  [`af21d706c70648b2cef13b4dbbb36521c4a50d64`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/af21d706c70648b2cef13b4dbbb36521c4a50d64)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before HTML `autofocus` became a whole-site regression failure.
+- **Reason:** The outgoing reports accurately documented natural sequential
+  focus order while retaining observed keyboard behavior in the manual gate.
+  The next release records that no current page requests automatic focus,
+  adds a focused fixture rejecting the attribute, and records the October 9
+  probe of all 295 incoming files without claiming observed initial focus.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/af21d706c70648b2cef13b4dbbb36521c4a50d64/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/af21d706c70648b2cef13b4dbbb36521c4a50d64/projects/vcsserg-repo-v1)
+
 ### Updated through October 7, 2026 at 08:15 UTC
 
 - **Superseded:** October 8, 2026
