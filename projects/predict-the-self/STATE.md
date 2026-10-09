@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-08T09:06:40Z
+updated: 2026-10-09T09:08:17Z
 ---
 
 # Predict the Self — Current State
@@ -85,6 +85,10 @@ The publisher now also requires every built canonical artifact to equal its
 authoritative Project source before it mutates the public report tree; a stale
 Quarto resource or missing Project source leaves the existing publication
 untouched.
+The verifier now additionally resolves source, JSON Pointer, and format
+annotations on 20 headline Executive Summary values against the inventoried
+machine-readable results, so a missing annotation, unlisted source, or stale
+displayed number fails publication validation.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -417,6 +421,11 @@ raw.
   replacing the public report. Two focused regressions show that stale build
   resources and missing Project sources both fail without changing the
   existing public tree.
+- Bound the Executive Summary's five headline continuity/novelty values and
+  fifteen development-agreement values to inventoried JSON artifacts with RFC
+  6901 pointers and explicit display precision. Four focused regressions cover
+  matching values, stale display text, unlisted result sources, and missing
+  headline annotations.
 
 ## Publication and build structure
 
@@ -443,6 +452,10 @@ raw.
 - The guarded publisher checks built canonical artifacts against Project
   sources before any public-tree mutation; the verifier independently repeats
   the source-to-canonical and source-to-alias checks afterward.
+- The verifier resolves all 20 annotated headline values in the Executive
+  Summary against their authoritative inventoried JSON results at the declared
+  precision. This protects displayed numbers, not the manually specified CSS
+  bar widths or every quantitative statement in the three reports.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -551,6 +564,9 @@ raw.
 - The guarded publisher must leave the current public report untouched unless
   every inventoried Quarto resource exists and is byte-identical to its
   authoritative Project source.
+- Headline result annotations in the Executive Summary must retain an
+  inventoried JSON source, a resolvable JSON Pointer, and the declared numeric
+  format; the publication verifier requires exactly 20 such values.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is

@@ -4,6 +4,7 @@
 from html.parser import HTMLParser
 import json
 from pathlib import Path, PurePosixPath, PureWindowsPath
+import re
 from urllib.parse import unquote, urlsplit
 
 PROJECT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,8 @@ class Page(HTMLParser):
         self.figures = 0
         self.ids = set()
         self.links = []
+        self.result_claims = []
+        self._open_result_claims = []
         self.feed(text)
 
     def handle_starttag(self, tag, attrs):
@@ -33,6 +36,25 @@ class Page(HTMLParser):
         for name in ("href", "src"):
             if attributes.get(name):
                 self.links.append(attributes[name])
+        result_attributes = {
+            "source": attributes.get("data-result-source"),
+            "pointer": attributes.get("data-result-pointer"),
+            "format": attributes.get("data-result-format"),
+        }
+        if any(value is not None for value in result_attributes.values()):
+            result_attributes.update({"tag": tag, "text_parts": []})
+            self._open_result_claims.append(result_attributes)
+
+    def handle_data(self, data):
+        for claim in self._open_result_claims:
+            claim["text_parts"].append(data)
+
+    def handle_endtag(self, tag):
+        if self._open_result_claims and self._open_result_claims[-1]["tag"] == tag:
+            claim = self._open_result_claims.pop()
+            claim["text"] = " ".join("".join(claim.pop("text_parts")).split())
+            claim.pop("tag")
+            self.result_claims.append(claim)
 
 
 def resolve_local(path: Path, link: str) -> tuple[Path | None, str]:
@@ -192,6 +214,71 @@ def validate_artifact_links(
     )
 
 
+def resolve_json_pointer(document: object, pointer: str) -> object:
+    """Resolve an RFC 6901 JSON pointer with explicit structural checks."""
+    assert pointer == "" or pointer.startswith("/"), (
+        f"result claim uses an invalid JSON pointer: {pointer}"
+    )
+    current = document
+    if not pointer:
+        return current
+    for raw_token in pointer[1:].split("/"):
+        token = raw_token.replace("~1", "/").replace("~0", "~")
+        if isinstance(current, dict):
+            assert token in current, f"result claim JSON pointer is missing: {pointer}"
+            current = current[token]
+        elif isinstance(current, list):
+            assert token.isdigit() and int(token) < len(current), (
+                f"result claim JSON pointer is missing: {pointer}"
+            )
+            current = current[int(token)]
+        else:
+            raise AssertionError(f"result claim JSON pointer is missing: {pointer}")
+    return current
+
+
+def validate_result_claims(
+    page: Page,
+    project: Path,
+    artifacts: dict[str, str],
+    expected_count: int,
+) -> None:
+    """Require annotated displayed values to equal inventoried JSON results."""
+    assert len(page.result_claims) == expected_count, (
+        f"Executive Summary result claims: {len(page.result_claims)}"
+    )
+    documents = {}
+    for claim in page.result_claims:
+        source = claim.get("source")
+        pointer = claim.get("pointer")
+        format_spec = claim.get("format")
+        assert all(isinstance(value, str) and value for value in (
+            source,
+            pointer,
+            format_spec,
+        )), "result claim provenance is incomplete"
+        assert source in artifacts and source.endswith(".json"), (
+            f"result claim source is not an inventoried JSON artifact: {source}"
+        )
+        assert re.fullmatch(r"\.\d{1,2}f", format_spec), (
+            f"result claim format is invalid: {format_spec}"
+        )
+        if source not in documents:
+            documents[source] = json.loads(
+                (project / source).read_text(encoding="utf-8")
+            )
+        value = resolve_json_pointer(documents[source], pointer)
+        assert isinstance(value, (int, float)) and not isinstance(value, bool), (
+            f"result claim is not numeric: {source}#{pointer}"
+        )
+        expected = format(value, format_spec)
+        actual = claim["text"]
+        assert actual == expected, (
+            f"displayed result differs from {source}#{pointer}: "
+            f"expected {expected}, found {actual}"
+        )
+
+
 def validate_scorecard_provenance(scorecard: dict[str, object]) -> None:
     """Reject machine-specific paths from public scorecard provenance."""
     for field in ("predictions", "references"):
@@ -244,6 +331,7 @@ def main() -> int:
     )
 
     artifacts = load_artifact_manifest()
+    validate_result_claims(summary, PROJECT, artifacts, expected_count=20)
     for scorecard_name in (
         "stable_signifier_dev_scorecard.json",
         "trajectory_retrieval_dev_scorecard.json",
@@ -282,7 +370,8 @@ def main() -> int:
     validate_pdf_report_links(pdf)
 
     print(
-        "Predict the Self publication: one summary figure, two-chapter linked "
+        "Predict the Self publication: one summary figure with 20 source-verified "
+        "headline values, two-chapter linked "
         f"Full Report, {len(artifacts)} artifacts, required phrase, and {len(pdf.pages)}-page "
         "two-column PDF passed."
     )

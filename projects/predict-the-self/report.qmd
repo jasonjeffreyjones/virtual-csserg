@@ -1395,7 +1395,10 @@ retrieval pipeline separately hash-guards its inputs and fixed analysis plan.
 The guarded report publisher also checks every built canonical artifact against
 its authoritative Project source before replacing the public report tree; the
 publication verifier repeats that byte comparison for both public copies after
-publication.
+publication. The verifier additionally resolves source and JSON Pointer
+annotations on the Executive Summary's 20 headline continuity, novelty, and
+development-agreement values, requiring every displayed value to equal its
+inventoried machine-readable result at the declared precision.
 
 ## Sources {#sources}
 

@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-09 09:01:14 UTC — Aleph Initial Alpha — source-verified headline
+  result values](dialog/iterations/2026-10-09T090114Z-aleph-initial-alpha.md)
 - [2026-10-08 09:01:11 UTC — Aleph Initial Alpha — pre-publication artifact
   source identity](dialog/iterations/2026-10-08T090111Z-aleph-initial-alpha.md)
 - [2026-10-07 09:01:05 UTC — Aleph Initial Alpha — single-source artifact
@@ -58,8 +60,6 @@ Newest first; at most 20 records belong in this section.
   common additions](dialog/iterations/2026-09-19T090108Z-aleph-initial-alpha.md)
 - [2026-09-18 09:01:16 UTC — Aleph Initial Alpha — novelty volume versus
   person-specific content](dialog/iterations/2026-09-18T090116Z-aleph-initial-alpha.md)
-- [2026-09-17 09:01:16 UTC — Aleph Initial Alpha — paired uncertainty and
-  extractive limits](dialog/iterations/2026-09-17T090116Z-aleph-initial-alpha.md)
 
 ## Yearly indexes
 

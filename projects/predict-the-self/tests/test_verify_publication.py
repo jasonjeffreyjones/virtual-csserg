@@ -126,6 +126,73 @@ class ArtifactInventoryLinkTests(unittest.TestCase):
                 )
 
 
+class DisplayedResultClaimTests(unittest.TestCase):
+    def make_claim_page(self, displayed: str = "0.125000"):
+        return verify_publication.Page(
+            '<strong data-result-source="results/score.json" '
+            'data-result-pointer="/metrics/agreement/value" '
+            f'data-result-format=".6f">{displayed}</strong>'
+        )
+
+    def test_displayed_value_matches_inventoried_json_result(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/score.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"metrics":{"agreement":{"value":0.125}}}', encoding="utf-8"
+            )
+
+            verify_publication.validate_result_claims(
+                self.make_claim_page(),
+                project,
+                {"results/score.json": "artifacts/score.json"},
+                expected_count=1,
+            )
+
+    def test_stale_displayed_value_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/score.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"metrics":{"agreement":{"value":0.125}}}', encoding="utf-8"
+            )
+
+            with self.assertRaisesRegex(
+                AssertionError, "displayed result differs"
+            ):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page("0.250000"),
+                    project,
+                    {"results/score.json": "artifacts/score.json"},
+                    expected_count=1,
+                )
+
+    def test_uninventoried_result_source_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            with self.assertRaisesRegex(
+                AssertionError, "not an inventoried JSON artifact"
+            ):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(),
+                    Path(temporary),
+                    {},
+                    expected_count=1,
+                )
+
+    def test_missing_headline_claim_fails(self) -> None:
+        with self.assertRaisesRegex(
+            AssertionError, "Executive Summary result claims: 0"
+        ):
+            verify_publication.validate_result_claims(
+                verify_publication.Page("<strong>0.125000</strong>"),
+                Path("."),
+                {},
+                expected_count=1,
+            )
+
+
 class ScorecardProvenanceTests(unittest.TestCase):
     def test_logical_relative_paths_pass(self) -> None:
         verify_publication.validate_scorecard_provenance(

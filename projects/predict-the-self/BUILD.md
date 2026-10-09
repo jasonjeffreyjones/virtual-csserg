@@ -23,7 +23,11 @@ Before replacing the public report tree, the publisher requires every built
 canonical artifact to be byte-identical to its authoritative Project source.
 It leaves the existing public tree untouched when a source is missing, a
 Quarto resource is stale, or a resource path escapes either tree. The verifier
-repeats the source-to-public identity check after publication.
+repeats the source-to-public identity check after publication. The Executive
+Summary's five headline continuity/novelty values and fifteen development
+agreement values carry source, JSON Pointer, and display-format annotations;
+the verifier resolves all 20 against inventoried machine-readable results and
+rejects a missing annotation, an unlisted source, or a displayed-value mismatch.
 
 The host has no TeX PDF engine, so the short-report renderer uses optional
 build-only packages. They do not become website or production dependencies.
