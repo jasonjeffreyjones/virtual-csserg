@@ -193,6 +193,78 @@ class DisplayedResultClaimTests(unittest.TestCase):
             )
 
 
+class FigureResultEncodingTests(unittest.TestCase):
+    def make_figure_page(
+        self, *, aria_value: str = "0.125000", bar_class: str = "agreement-bar"
+    ):
+        return verify_publication.Page(
+            '<div aria-label="Mean agreement is '
+            f'{aria_value}." data-result-label-for="agreement-value">'
+            '<span class="'
+            f'{bar_class}" data-result-bar-for="agreement-value"></span>'
+            '<strong id="agreement-value" '
+            'data-result-source="results/score.json" '
+            'data-result-pointer="/metrics/agreement/value" '
+            'data-result-format=".6f">0.125000</strong></div>'
+        )
+
+    def resolve_claims(self, page, project: Path):
+        result = project / "results/score.json"
+        result.parent.mkdir()
+        result.write_text(
+            '{"metrics":{"agreement":{"value":0.125}}}', encoding="utf-8"
+        )
+        return verify_publication.validate_result_claims(
+            page,
+            project,
+            {"results/score.json": "artifacts/score.json"},
+            expected_count=1,
+        )
+
+    def test_bar_width_and_accessible_value_match_result(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            page = self.make_figure_page()
+            claims = self.resolve_claims(page, project)
+
+            verify_publication.validate_figure_result_encodings(
+                page,
+                claims,
+                ".agreement-bar { width: 12.5000%; background: green; }",
+                expected_bars=1,
+            )
+
+    def test_stale_bar_width_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            page = self.make_figure_page()
+            claims = self.resolve_claims(page, project)
+
+            with self.assertRaisesRegex(AssertionError, "result bar differs"):
+                verify_publication.validate_figure_result_encodings(
+                    page,
+                    claims,
+                    ".agreement-bar { width: 25.0000%; }",
+                    expected_bars=1,
+                )
+
+    def test_stale_accessible_value_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            page = self.make_figure_page(aria_value="0.250000")
+            claims = self.resolve_claims(page, project)
+
+            with self.assertRaisesRegex(
+                AssertionError, "accessible result values differ"
+            ):
+                verify_publication.validate_figure_result_encodings(
+                    page,
+                    claims,
+                    ".agreement-bar { width: 12.5000%; }",
+                    expected_bars=1,
+                )
+
+
 class ScorecardProvenanceTests(unittest.TestCase):
     def test_logical_relative_paths_pass(self) -> None:
         verify_publication.validate_scorecard_provenance(

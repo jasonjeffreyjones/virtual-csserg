@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-09T09:08:17Z
+updated: 2026-10-10T09:07:03Z
 ---
 
 # Predict the Self — Current State
@@ -88,7 +88,10 @@ untouched.
 The verifier now additionally resolves source, JSON Pointer, and format
 annotations on 20 headline Executive Summary values against the inventoried
 machine-readable results, so a missing annotation, unlisted source, or stale
-displayed number fails publication validation.
+displayed number fails publication validation. It now binds the same resolved
+claims to all five figure-bar widths and to the accessible label's ordered
+numeric values, so the figure's visual and nonvisual encodings cannot drift
+from its printed results.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -426,6 +429,10 @@ raw.
   6901 pointers and explicit display precision. Four focused regressions cover
   matching values, stale display text, unlisted result sources, and missing
   headline annotations.
+- Bound the dense Executive Summary figure's five CSS bar widths and ordered
+  accessible numeric label to the same resolved result claims. Three focused
+  regressions cover matching encodings, a stale visual width, and stale
+  screen-reader text.
 
 ## Publication and build structure
 
@@ -454,8 +461,10 @@ raw.
   the source-to-canonical and source-to-alias checks afterward.
 - The verifier resolves all 20 annotated headline values in the Executive
   Summary against their authoritative inventoried JSON results at the declared
-  precision. This protects displayed numbers, not the manually specified CSS
-  bar widths or every quantitative statement in the three reports.
+  precision. It additionally requires all five CSS bar widths to equal those
+  source values on the stated 0–1 scale and requires the accessible label to
+  contain the five displayed values in bar order. This does not bind every
+  quantitative statement in the three reports.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -566,7 +575,10 @@ raw.
   authoritative Project source.
 - Headline result annotations in the Executive Summary must retain an
   inventoried JSON source, a resolvable JSON Pointer, and the declared numeric
-  format; the publication verifier requires exactly 20 such values.
+  format; the publication verifier requires exactly 20 such values. Each of
+  the five dense-figure bars must reference one uniquely identified claim, and
+  the figure's accessible label must reference the five claims in display
+  order.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is

@@ -1398,7 +1398,10 @@ publication verifier repeats that byte comparison for both public copies after
 publication. The verifier additionally resolves source and JSON Pointer
 annotations on the Executive Summary's 20 headline continuity, novelty, and
 development-agreement values, requiring every displayed value to equal its
-inventoried machine-readable result at the declared precision.
+inventoried machine-readable result at the declared precision. The same
+resolved claims govern the dense figure's five CSS bar widths and the ordered
+numeric values in its accessible label, preventing either encoding from
+silently contradicting the printed values.
 
 ## Sources {#sources}
 

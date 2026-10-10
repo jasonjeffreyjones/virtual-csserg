@@ -24,6 +24,8 @@ class Page(HTMLParser):
         self.ids = set()
         self.links = []
         self.result_claims = []
+        self.result_bars = []
+        self.result_labels = []
         self._open_result_claims = []
         self.feed(text)
 
@@ -37,13 +39,31 @@ class Page(HTMLParser):
             if attributes.get(name):
                 self.links.append(attributes[name])
         result_attributes = {
+            "id": attributes.get("id"),
             "source": attributes.get("data-result-source"),
             "pointer": attributes.get("data-result-pointer"),
             "format": attributes.get("data-result-format"),
         }
-        if any(value is not None for value in result_attributes.values()):
+        if any(
+            result_attributes[name] is not None
+            for name in ("source", "pointer", "format")
+        ):
             result_attributes.update({"tag": tag, "text_parts": []})
             self._open_result_claims.append(result_attributes)
+        if attributes.get("data-result-bar-for") is not None:
+            self.result_bars.append(
+                {
+                    "result_id": attributes["data-result-bar-for"],
+                    "classes": attributes.get("class", "").split(),
+                }
+            )
+        if attributes.get("data-result-label-for") is not None:
+            self.result_labels.append(
+                {
+                    "result_ids": attributes["data-result-label-for"].split(),
+                    "aria_label": attributes.get("aria-label"),
+                }
+            )
 
     def handle_data(self, data):
         for claim in self._open_result_claims:
@@ -242,12 +262,13 @@ def validate_result_claims(
     project: Path,
     artifacts: dict[str, str],
     expected_count: int,
-) -> None:
+) -> dict[str, dict[str, object]]:
     """Require annotated displayed values to equal inventoried JSON results."""
     assert len(page.result_claims) == expected_count, (
         f"Executive Summary result claims: {len(page.result_claims)}"
     )
     documents = {}
+    resolved_claims = {}
     for claim in page.result_claims:
         source = claim.get("source")
         pointer = claim.get("pointer")
@@ -277,6 +298,81 @@ def validate_result_claims(
             f"displayed result differs from {source}#{pointer}: "
             f"expected {expected}, found {actual}"
         )
+        claim_id = claim.get("id")
+        if claim_id is not None:
+            assert isinstance(claim_id, str) and claim_id, "result claim id is empty"
+            assert claim_id not in resolved_claims, f"duplicate result claim id: {claim_id}"
+            resolved_claims[claim_id] = {"value": value, "display": actual}
+    return resolved_claims
+
+
+def css_width_for_class(stylesheet: str, css_class: str) -> str:
+    """Read one simple class rule's one explicit width declaration."""
+    rule_pattern = re.compile(
+        rf"(?<![-\w])\.{re.escape(css_class)}\s*\{{([^{{}}]*)\}}", re.DOTALL
+    )
+    rules = rule_pattern.findall(stylesheet)
+    assert len(rules) == 1, f"result bar CSS rule count for .{css_class}: {len(rules)}"
+    widths = re.findall(r"(?:^|;)\s*width\s*:\s*([^;]+)\s*;", rules[0])
+    assert len(widths) == 1, (
+        f"result bar width declaration count for .{css_class}: {len(widths)}"
+    )
+    return widths[0].strip()
+
+
+def validate_figure_result_encodings(
+    page: Page,
+    resolved_claims: dict[str, dict[str, object]],
+    stylesheet: str,
+    expected_bars: int,
+) -> None:
+    """Bind chart widths and accessible numeric text to resolved result claims."""
+    assert len(page.result_bars) == expected_bars, (
+        f"Executive Summary source-verified result bars: {len(page.result_bars)}"
+    )
+    result_ids = []
+    for bar in page.result_bars:
+        result_id = bar["result_id"]
+        classes = bar["classes"]
+        assert isinstance(result_id, str) and result_id in resolved_claims, (
+            f"result bar references an unknown claim: {result_id}"
+        )
+        assert isinstance(classes, list) and len(classes) == 1, (
+            f"result bar must have exactly one CSS class: {classes}"
+        )
+        value = resolved_claims[result_id]["value"]
+        assert isinstance(value, (int, float)) and 0 <= value <= 1, (
+            f"result bar value is outside the 0-1 scale: {result_id}"
+        )
+        expected_width = f"{value * 100:.4f}%"
+        actual_width = css_width_for_class(stylesheet, classes[0])
+        assert actual_width == expected_width, (
+            f"result bar differs from {result_id}: expected {expected_width}, "
+            f"found {actual_width}"
+        )
+        result_ids.append(result_id)
+    assert len(set(result_ids)) == expected_bars, "result bars repeat a claim"
+
+    assert len(page.result_labels) == 1, (
+        f"Executive Summary source-verified accessible result labels: "
+        f"{len(page.result_labels)}"
+    )
+    label = page.result_labels[0]
+    assert label["result_ids"] == result_ids, (
+        "accessible result label does not reference every bar in display order"
+    )
+    aria_label = label["aria_label"]
+    assert isinstance(aria_label, str) and aria_label, (
+        "source-verified result figure has no accessible label"
+    )
+    actual_values = re.findall(r"[-+]?(?:\d+\.\d+|\d+)", aria_label)
+    expected_values = [
+        str(resolved_claims[result_id]["display"]) for result_id in result_ids
+    ]
+    assert actual_values == expected_values, (
+        "accessible result values differ from source-verified figure values: "
+        f"expected {expected_values}, found {actual_values}"
+    )
 
 
 def validate_scorecard_provenance(scorecard: dict[str, object]) -> None:
@@ -331,7 +427,15 @@ def main() -> int:
     )
 
     artifacts = load_artifact_manifest()
-    validate_result_claims(summary, PROJECT, artifacts, expected_count=20)
+    resolved_claims = validate_result_claims(
+        summary, PROJECT, artifacts, expected_count=20
+    )
+    validate_figure_result_encodings(
+        summary,
+        resolved_claims,
+        (ROOT / "website/assets/styles.css").read_text(encoding="utf-8"),
+        expected_bars=5,
+    )
     for scorecard_name in (
         "stable_signifier_dev_scorecard.json",
         "trajectory_retrieval_dev_scorecard.json",
@@ -371,7 +475,8 @@ def main() -> int:
 
     print(
         "Predict the Self publication: one summary figure with 20 source-verified "
-        "headline values, two-chapter linked "
+        "headline values, five source-verified bars and accessible values, "
+        "two-chapter linked "
         f"Full Report, {len(artifacts)} artifacts, required phrase, and {len(pdf.pages)}-page "
         "two-column PDF passed."
     )

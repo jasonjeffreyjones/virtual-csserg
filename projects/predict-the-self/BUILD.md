@@ -28,6 +28,9 @@ Summary's five headline continuity/novelty values and fifteen development
 agreement values carry source, JSON Pointer, and display-format annotations;
 the verifier resolves all 20 against inventoried machine-readable results and
 rejects a missing annotation, an unlisted source, or a displayed-value mismatch.
+It also binds the dense figure's five CSS bar widths and ordered accessible
+numeric label to those same resolved claims, so its visual and nonvisual
+encodings cannot drift while the printed values remain current.
 
 The host has no TeX PDF engine, so the short-report renderer uses optional
 build-only packages. They do not become website or production dependencies.
@@ -210,7 +213,8 @@ Validate the research code, guarded publisher, three-form publication, exact
 artifact link-to-inventory agreement, source-to-public byte identity for every
 research artifact and compatibility alias, pre-publication build-to-source
 identity, reciprocal links among the Executive Summary, both Full Report HTML
-surfaces, and the short PDF, v1 promise groups, and whitespace:
+surfaces, and the short PDF, source-verified printed, visual, and accessible
+figure values, v1 promise groups, and whitespace:
 
 ```bash
 python3 -m unittest discover -s projects/predict-the-self/tests -v
