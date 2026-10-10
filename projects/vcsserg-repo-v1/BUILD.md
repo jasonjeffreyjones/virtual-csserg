@@ -84,7 +84,11 @@ source checks preserve a prerequisite for narrow reflow and 200% text resizing
 but do not perform the rendered review. Automatic page refreshes and redirects
 implemented with `meta http-equiv="refresh"` are also prohibited; this
 project-level rule avoids introducing a content-owned reading time limit or
-context change into the static publication tree.
+context change into the static publication tree. Audio and video elements may
+not declare the boolean `autoplay` attribute, including `autoplay="false"`;
+media playback must begin from an intentional user action. This source rule
+does not detect script-triggered playback or establish observed browser
+behavior.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:

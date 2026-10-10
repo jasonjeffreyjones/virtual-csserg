@@ -8,7 +8,8 @@ October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
 2026; automatic meta-refresh prohibition added October 6, 2026; nonempty
 navigation-label reference contract added October 7, 2026; distinct
 navigation-name contract added October 8, 2026; automatic-focus prohibition
-added October 9, 2026.
+added October 9, 2026; automatic-media-playback prohibition added October 10,
+2026.
 
 ## Decision boundary
 
@@ -91,8 +92,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 846 interactive or keyboard-focusable
-  elements. Each of the 820 elements exposed to assistive technology has an
+- The whole-site parser now audits all 848 interactive or keyboard-focusable
+  elements. Each of the 822 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -131,6 +132,16 @@ accessibility evaluation.
   `autofocus="false"`. This preserves the source-owned document entry and
   first-link bypass path; only the keyboard procedure below can establish the
   browser's actual initial focus (WHATWG, 2026).
+- None of the 39 public pages declares `autoplay` on an audio or video element.
+  The October 10 audit added a strict project-level prohibition, including the
+  still-present boolean form `autoplay="false"`. The HTML Standard defines the
+  attribute as a request for automatic media playback and encourages authors
+  to let users start playback explicitly. W3C likewise discourages automatic
+  audio because it can interfere with screen-reader output. A focused fixture
+  rejects both audible and muted examples. This source rule does not detect
+  script-triggered playback, CSS or image animation, media duration, or actual
+  browser playback (WHATWG, 2026; World Wide Web Consortium Web Accessibility
+  Initiative, n.d.-e).
 - All 39 pages have exactly one viewport declaration using
   `width=device-width`. None disables user scaling or sets a nonnegative
   `maximum-scale` below 2. A focused fixture rejects a missing declaration, a
@@ -179,6 +190,9 @@ accessibility evaluation.
 - On October 9, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 10, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -203,6 +217,8 @@ accessibility evaluation.
   pre-change probe found all 295 incoming files byte-identical before the
   navigation-distinction revision. The October 9 pre-change probe again found
   all 295 incoming files byte-identical before the automatic-focus revision.
+  The October 10 pre-change probe again found all 295 incoming files
+  byte-identical before the automatic-media-playback revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -341,6 +357,9 @@ claim.
 
 ## References
 
+WHATWG. (2026, October 9). *HTML Standard: Media elements*.
+https://html.spec.whatwg.org/multipage/media.html
+
 WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
 https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
 
@@ -381,3 +400,7 @@ https://www.w3.org/WAI/tutorials/page-structure/headings/
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-d). *Landmark
 regions*. Retrieved October 8, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-e).
+*Understanding Success Criterion 1.4.2: Audio Control*. Retrieved October 10,
+2026, from https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html

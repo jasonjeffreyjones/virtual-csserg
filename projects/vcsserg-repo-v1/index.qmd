@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 9, 2026. The validated
+All seven automated promise groups pass on October 10, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -47,13 +47,16 @@ priority. The parser also rejects `autofocus` so page load cannot request focus
 away from the document entry and first-link bypass path. Every page must also declare one `width=device-width` viewport without
 disabling scaling or setting a nonnegative maximum scale below 2. The same
 parser now rejects every automatic page reload or redirect declared through
-`meta http-equiv="refresh"`; none occurs in the public tree. The source
+`meta http-equiv="refresh"`; none occurs in the public tree. It also rejects
+`autoplay` on audio and video elements so media starts only after an
+intentional user action. The source
 contracts now pass across 39 HTML pages, 160 named navigation landmarks, 97 native images,
-4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 846
+4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 848
 interactive or keyboard-focusable elements: all four exposed ARIA images and
-all 820 exposed interactive elements are named, while 26 Quarto source-line
+all 822 exposed interactive elements are named, while 26 Quarto source-line
 anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
-public element uses a positive value or declares `autofocus`.
+public element uses a positive value or declares `autofocus` or media
+`autoplay`.
 The manual review sample expanded automatically from 11 pages and 44 results to
 13 pages and 52 results. A claim-to-evidence review found the
 infrastructure report substantively adequate for its stated purpose; rendered
@@ -122,7 +125,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic focus, meta refresh, or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named data tables and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named data tables and exposed ARIA images; scoped table headers; explicit native-image alternatives; named interactive elements with valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -243,6 +246,16 @@ parser now rejects every occurrence, and a focused fixture also rejects the
 misleading boolean form `autofocus="false"`. This strict static-site rule
 protects the source-owned document-entry and bypass path without establishing
 where a browser actually places initial focus (WHATWG, 2026).
+
+On October 10, an automatic-media audit found no `autoplay` attribute on any
+audio or video element in the 39 public pages. The parser now rejects every
+occurrence, including `autoplay="false"` and muted video. A focused fixture
+accepts controlled user-started media and rejects both automatic examples. The
+HTML Standard encourages explicit user-started playback, and W3C discourages
+automatic audio because it can interfere with screen-reader output. This
+strict project rule does not detect script-triggered playback, animation,
+media duration, or actual browser behavior (WHATWG, 2026; World Wide Web
+Consortium Web Accessibility Initiative, n.d.-d).
 
 The result should be read as a regression report. Treating seven passing groups
 as proof that Version 1 is complete, or as a measure of research quality, would
@@ -388,7 +401,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 9 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 10 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -406,7 +419,7 @@ September 30 revision, and all 267 files before the October 1 revision.
 The October 7 comparison established all 293 incoming files as byte-identical:
 291 unchanged worktree files matched directly, while the production digests for
 the two already-edited public pages matched their clean incoming `HEAD`
-versions. The October 8 and October 9 pre-change probes each found all 295
+versions. The October 8, October 9, and October 10 pre-change probes each found all 295
 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
@@ -480,6 +493,9 @@ Quarto. (n.d.-a). *Creating a book*. Retrieved September 11, 2026, from
 Quarto. (n.d.-b). *HTML accessibility checks*. Retrieved September 11, 2026,
 from <https://quarto.org/docs/output-formats/html-accessibility.html>
 
+WHATWG. (2026, October 9). *HTML Standard: Media elements*.
+<https://html.spec.whatwg.org/multipage/media.html>
+
 WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
 <https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute>
 
@@ -513,3 +529,7 @@ Retrieved September 30, 2026, from
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-c). *Landmark
 regions*. Retrieved October 8, 2026, from
 <https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/>
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-d).
+*Understanding Success Criterion 1.4.2: Audio Control*. Retrieved October 10,
+2026, from <https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html>

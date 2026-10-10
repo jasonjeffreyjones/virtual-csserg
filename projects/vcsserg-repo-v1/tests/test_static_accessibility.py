@@ -32,6 +32,27 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_media_autoplay_is_rejected(self):
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<audio controls aria-label="Interview recording"></audio>'
+            '<video controls aria-label="Presentation recording"></video></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "media.html"), []
+        )
+
+        automatic = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<audio autoplay aria-label="Background audio"></audio>'
+            '<video autoplay="false" muted aria-label="Decorative motion"></video>'
+            '</main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(automatic, "media.html"),
+            ["media.html: contains 2 autoplay media element(s)"],
+        )
+
     def test_autofocus_is_rejected(self):
         valid = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'

@@ -161,8 +161,8 @@ parser now retains each navigation region's link targets and rejects the same
 source-derived name on regions with different link sets. It permits W3C's
 documented exception when repeated navigation regions contain identical link
 sets. A focused fixture covers both cases, and all 160 current landmarks pass.
-Later report work brings the inventory to 846 interactive or
-keyboard-focusable elements: all 820 exposed elements are named and 26 source
+Later report work brings the inventory to 848 interactive or
+keyboard-focusable elements: all 822 exposed elements are named and 26 source
 anchors remain safely hidden. This exact source comparison does not establish
 that labels are meaningful or correctly announced (World Wide Web Consortium
 Web Accessibility Initiative, n.d.-b).
@@ -174,6 +174,18 @@ The parser now rejects any occurrence, and a focused fixture also rejects the
 misleading boolean form `autofocus="false"`. This intentionally strict rule
 protects the static site's document-entry and first-link bypass path without
 claiming where a browser actually places focus (WHATWG, 2026).
+On October 10, an automatic-media audit found no `autoplay` attribute on an
+audio or video element in the 39 public pages. The parser now rejects the
+boolean attribute even when written `autoplay="false"` or placed on muted
+video. A focused fixture accepts controlled user-started media and rejects both
+automatic examples. This is a strict static-site rule informed by W3C's warning
+that automatic audio can interfere with screen-reader output and the HTML
+Standard's encouragement to let users start playback. It does not detect
+script-triggered playback, animation, media duration, or actual browser
+behavior (WHATWG, 2026; World Wide Web Consortium Web Accessibility
+Initiative, n.d.-c). A supplemental `w3m` pass returned zero for all 26 current
+40- and 120-column views and placed “Skip to content” first; it remains
+linearized text-order evidence only.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -394,6 +406,9 @@ https://quarto.org/docs/books/
 Quarto. (n.d.). *HTML accessibility checks*. Retrieved September 11, 2026, from
 https://quarto.org/docs/output-formats/html-accessibility.html
 
+WHATWG. (2026, October 9). *HTML Standard: Media elements*.
+https://html.spec.whatwg.org/multipage/media.html
+
 WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
 https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
 
@@ -419,3 +434,7 @@ https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/
 World Wide Web Consortium Web Accessibility Initiative. (n.d.-b). *Landmark
 regions*. Retrieved October 8, 2026, from
 https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/
+
+World Wide Web Consortium Web Accessibility Initiative. (n.d.-c).
+*Understanding Success Criterion 1.4.2: Audio Control*. Retrieved October 10,
+2026, from https://www.w3.org/WAI/WCAG22/Understanding/audio-control.html

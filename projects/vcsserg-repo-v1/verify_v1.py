@@ -118,6 +118,7 @@ class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.autofocus_elements = []
+        self.autoplay_media = []
         self.description = ""
         self.assignment = None
         self.assignments = []
@@ -172,6 +173,8 @@ class PageParser(HTMLParser):
         attributes = dict(attrs)
         if "autofocus" in attributes:
             self.autofocus_elements.append(tag)
+        if tag in {"audio", "video"} and "autoplay" in attributes:
+            self.autoplay_media.append(tag)
         element_id = attributes.get("id")
         aria_hidden = attributes.get("aria-hidden", "").strip().lower() == "true"
         role = attributes.get("role", "").strip().lower()
@@ -465,6 +468,11 @@ def page_accessibility_problems(parsed, relative):
         problems.append(
             f"{relative}: contains {len(parsed.autofocus_elements)} "
             "autofocus attribute(s)"
+        )
+    if parsed.autoplay_media:
+        problems.append(
+            f"{relative}: contains {len(parsed.autoplay_media)} "
+            "autoplay media element(s)"
         )
     if parsed.meta_refresh_contents:
         problems.append(
@@ -1413,7 +1421,7 @@ def check_html_and_css():
         f"{exposed_interactive} exposed interactive or "
         f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
         f"control(s), no positive tabindex overrides, no autofocus attributes, "
-        "and no automatic meta refreshes, and "
+        "no autoplay media, and no automatic meta refreshes, and "
         f"{len(first_party_css)} first-party "
         "stylesheet(s) passed structural and local-link checks"
         if not problems else "; ".join(problems),

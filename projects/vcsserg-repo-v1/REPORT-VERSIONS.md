@@ -6,6 +6,25 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 9, 2026 at 08:12 UTC
+
+- **Superseded:** October 10, 2026
+- **Archive key:**
+  [`ac9297d89388b2e872017bbed7b71f155e4e2ec0`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/ac9297d89388b2e872017bbed7b71f155e4e2ec0)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before media `autoplay` became a whole-site regression failure.
+- **Reason:** The outgoing reports accurately documented the automatic-focus
+  prohibition while retaining observed media behavior in the manual gate. The
+  next release records that no current audio or video element requests
+  automatic playback, adds a focused fixture rejecting both ordinary and
+  muted autoplay, and records the October 10 probe of all 295 incoming files
+  without claiming observed browser behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/ac9297d89388b2e872017bbed7b71f155e4e2ec0/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/ac9297d89388b2e872017bbed7b71f155e4e2ec0/projects/vcsserg-repo-v1)
+
 ### Updated through October 8, 2026 at 08:12 UTC
 
 - **Superseded:** October 9, 2026
