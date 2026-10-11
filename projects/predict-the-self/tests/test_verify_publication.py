@@ -127,11 +127,18 @@ class ArtifactInventoryLinkTests(unittest.TestCase):
 
 
 class DisplayedResultClaimTests(unittest.TestCase):
-    def make_claim_page(self, displayed: str = "0.125000"):
+    def make_claim_page(
+        self,
+        displayed: str = "0.125000",
+        *,
+        source: str = "results/score.json",
+        pointer: str = "/metrics/agreement/value",
+        format_spec: str = ".6f",
+    ):
         return verify_publication.Page(
-            '<strong data-result-source="results/score.json" '
-            'data-result-pointer="/metrics/agreement/value" '
-            f'data-result-format=".6f">{displayed}</strong>'
+            f'<strong data-result-source="{source}" '
+            f'data-result-pointer="{pointer}" '
+            f'data-result-format="{format_spec}">{displayed}</strong>'
         )
 
     def test_displayed_value_matches_inventoried_json_result(self) -> None:
@@ -149,6 +156,82 @@ class DisplayedResultClaimTests(unittest.TestCase):
                 {"results/score.json": "artifacts/score.json"},
                 expected_count=1,
             )
+
+    def test_percentage_value_matches_inventoried_json_result(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/score.json"
+            result.parent.mkdir()
+            result.write_text('{"novelty":0.731727}', encoding="utf-8")
+
+            verify_publication.validate_result_claims(
+                self.make_claim_page(
+                    "73.2%", pointer="/novelty", format_spec=".1%"
+                ),
+                project,
+                {"results/score.json": "artifacts/score.json"},
+                expected_count=1,
+            )
+
+    def test_stale_percentage_value_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/score.json"
+            result.parent.mkdir()
+            result.write_text('{"novelty":0.731727}', encoding="utf-8")
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "70.0%", pointer="/novelty", format_spec=".1%"
+                    ),
+                    project,
+                    {"results/score.json": "artifacts/score.json"},
+                    expected_count=1,
+                )
+
+    def test_csv_row_count_matches_inventoried_submission(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            submission = project / "submissions/predictions.csv"
+            submission.parent.mkdir()
+            submission.write_text(
+                "id,prediction\ncase_1,first\ncase_2,second\n", encoding="utf-8"
+            )
+
+            verify_publication.validate_result_claims(
+                self.make_claim_page(
+                    "2",
+                    source="submissions/predictions.csv",
+                    pointer="/data_row_count",
+                    format_spec=".0f",
+                ),
+                project,
+                {"submissions/predictions.csv": "artifacts/predictions.csv"},
+                expected_count=1,
+            )
+
+    def test_stale_csv_row_count_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            submission = project / "submissions/predictions.csv"
+            submission.parent.mkdir()
+            submission.write_text(
+                "id,prediction\ncase_1,first\ncase_2,second\n", encoding="utf-8"
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "3",
+                        source="submissions/predictions.csv",
+                        pointer="/data_row_count",
+                        format_spec=".0f",
+                    ),
+                    project,
+                    {"submissions/predictions.csv": "artifacts/predictions.csv"},
+                    expected_count=1,
+                )
 
     def test_stale_displayed_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -172,7 +255,7 @@ class DisplayedResultClaimTests(unittest.TestCase):
     def test_uninventoried_result_source_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             with self.assertRaisesRegex(
-                AssertionError, "not an inventoried JSON artifact"
+                AssertionError, "not an inventoried machine-readable artifact"
             ):
                 verify_publication.validate_result_claims(
                     self.make_claim_page(),

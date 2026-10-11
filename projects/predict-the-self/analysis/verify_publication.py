@@ -2,6 +2,7 @@
 """Validate Predict the Self's three-form publication and PDF layout."""
 
 from html.parser import HTMLParser
+import csv
 import json
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import re
@@ -257,6 +258,16 @@ def resolve_json_pointer(document: object, pointer: str) -> object:
     return current
 
 
+def load_result_document(path: Path) -> object:
+    """Load one explicitly supported machine-readable claim source."""
+    if path.suffix == ".json":
+        return json.loads(path.read_text(encoding="utf-8"))
+    if path.suffix == ".csv":
+        with path.open(encoding="utf-8", newline="") as handle:
+            return {"data_row_count": sum(1 for _ in csv.DictReader(handle))}
+    raise AssertionError(f"unsupported result claim source format: {path.name}")
+
+
 def validate_result_claims(
     page: Page,
     project: Path,
@@ -278,16 +289,15 @@ def validate_result_claims(
             pointer,
             format_spec,
         )), "result claim provenance is incomplete"
-        assert source in artifacts and source.endswith(".json"), (
-            f"result claim source is not an inventoried JSON artifact: {source}"
+        assert source in artifacts and Path(source).suffix in {".json", ".csv"}, (
+            "result claim source is not an inventoried machine-readable "
+            f"artifact: {source}"
         )
-        assert re.fullmatch(r"\.\d{1,2}f", format_spec), (
+        assert re.fullmatch(r"\.\d{1,2}[f%]", format_spec), (
             f"result claim format is invalid: {format_spec}"
         )
         if source not in documents:
-            documents[source] = json.loads(
-                (project / source).read_text(encoding="utf-8")
-            )
+            documents[source] = load_result_document(project / source)
         value = resolve_json_pointer(documents[source], pointer)
         assert isinstance(value, (int, float)) and not isinstance(value, bool), (
             f"result claim is not numeric: {source}#{pointer}"
@@ -428,7 +438,7 @@ def main() -> int:
 
     artifacts = load_artifact_manifest()
     resolved_claims = validate_result_claims(
-        summary, PROJECT, artifacts, expected_count=20
+        summary, PROJECT, artifacts, expected_count=33
     )
     validate_figure_result_encodings(
         summary,
@@ -474,8 +484,8 @@ def main() -> int:
     validate_pdf_report_links(pdf)
 
     print(
-        "Predict the Self publication: one summary figure with 20 source-verified "
-        "headline values, five source-verified bars and accessible values, "
+        "Predict the Self publication: one summary figure with 33 source-verified "
+        "displayed values, five source-verified bars and accessible values, "
         "two-chapter linked "
         f"Full Report, {len(artifacts)} artifacts, required phrase, and {len(pdf.pages)}-page "
         "two-column PDF passed."
