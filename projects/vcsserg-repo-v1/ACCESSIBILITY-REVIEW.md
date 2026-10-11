@@ -9,7 +9,7 @@ October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
 navigation-label reference contract added October 7, 2026; distinct
 navigation-name contract added October 8, 2026; automatic-focus prohibition
 added October 9, 2026; automatic-media-playback prohibition added October 10,
-2026.
+2026; atomic page-language and document-title contract added October 11, 2026.
 
 ## Decision boundary
 
@@ -41,8 +41,19 @@ accessibility evaluation.
   same parser requires the first anchor itself to be a bypass link targeting that main. A
   focused fixture rejects an invalid first skip-styled link followed by a valid
   bypass, preventing the two anchors from jointly satisfying that one-link
-  requirement. The verifier also checks explicit image alternatives, page
-  language and title, local references, and duplicate IDs.
+  requirement. All 39 pages expose exactly one `html` element with `lang="en"`
+  and exactly one nonempty `title`. The October 11 focused fixture rejects a
+  missing language, a whitespace-only title, and duplicate roots or titles;
+  this closes a parser false pass in which a later element could overwrite or
+  merge the first element's state. It also confirms that an SVG `title` cannot
+  substitute for the HTML document title. W3C explains that a programmatic page
+  language supports correct presentation and pronunciation and that page
+  titles support identification and orientation. The exactly-one rule is a
+  stricter project-level source contract; it does not judge whether a title is
+  descriptive or establish the values announced by a browser and screen reader
+  (World Wide Web Consortium Web Accessibility Initiative, 2026a, 2026b). The
+  verifier also checks explicit image alternatives, local references, and
+  duplicate IDs.
 - All 97 native HTML images have an explicit `alt` decision, and all four
   exposed composite figures with `role="img"` have accessible names. The
   October 2 coverage audit added the latter contract after finding that the
@@ -83,7 +94,7 @@ accessibility evaluation.
   the four valid row or column scopes. This makes the intended relationships
   explicit in source; rendered screen-reader navigation remains part of the
   review below.
-- All 37 current public data tables have source-owned names. The September 26
+- All 38 current public data tables have source-owned names. The September 26
   audit added captions to 24 of the then-current 26 tables; the restored
   Ipseity Daily Pulse publication subsequently added three named tables.
   The whole-site parser accepts a nonempty `caption`, `aria-label`, or resolved
@@ -92,8 +103,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 848 interactive or keyboard-focusable
-  elements. Each of the 822 elements exposed to assistive technology has an
+- The whole-site parser now audits all 850 interactive or keyboard-focusable
+  elements. Each of the 824 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -158,7 +169,7 @@ accessibility evaluation.
   rule that no meta refresh is needed. This excludes one markup-based time
   limit but does not detect script- or server-driven updates or establish the
   absence of interruptions in a browser (World Wide Web Consortium Web
-  Accessibility Initiative, 2026).
+  Accessibility Initiative, 2026c).
 - On September 19, `w3m` 0.5.3 returned successfully for the then-current 11 selected
   production pages at 40 and 120 columns. Each linearized view began with
   “Skip to content.” This is useful no-style text-order evidence, not graphical
@@ -193,6 +204,9 @@ accessibility evaluation.
 - On October 10, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 11, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -219,6 +233,8 @@ accessibility evaluation.
   all 295 incoming files byte-identical before the automatic-focus revision.
   The October 10 pre-change probe again found all 295 incoming files
   byte-identical before the automatic-media-playback revision.
+  The October 11 pre-change probe again found all 295 incoming files
+  byte-identical before the document-identity revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -381,7 +397,15 @@ World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
 https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
 
-World Wide Web Consortium Web Accessibility Initiative. (2026, August 10).
+World Wide Web Consortium Web Accessibility Initiative. (2026a, March 9).
+*Understanding Success Criterion 3.1.1: Language of Page*.
+https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html
+
+World Wide Web Consortium Web Accessibility Initiative. (2026b, March 9).
+*Understanding Success Criterion 2.4.2: Page Titled*.
+https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html
+
+World Wide Web Consortium Web Accessibility Initiative. (2026c, August 10).
 *Understanding Success Criterion 2.2.1: Timing Adjustable*.
 https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable
 

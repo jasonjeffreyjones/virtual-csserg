@@ -16,19 +16,19 @@ does not establish rendered reflow, keyboard, or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on October 10, 2026 |
+| Documented promise | Evidence or test | Status on October 11, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty unskipped heading ranks; repeated navigation landmarks with nonempty direct or referenced names and distinct names for different link sets; named data tables with scoped headers; explicit native-image alternatives; accessible names for exposed ARIA images and interactive or keyboard-focusable elements; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 160 named navigation landmarks, 97 native images, 4 exposed ARIA images, 38 named data tables, 204 exposed headings, 848 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has the complete three-landmark frame and a responsive viewport without a sub-200% zoom ceiling, none uses `autofocus`, media `autoplay`, or meta refresh, all 822 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one English root declaration, nonempty title, page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty unskipped heading ranks; repeated navigation landmarks with nonempty direct or referenced names and distinct names for different link sets; named data tables with scoped headers; explicit native-image alternatives; accessible names for exposed ARIA images and interactive or keyboard-focusable elements; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages, 160 named navigation landmarks, 97 native images, 4 exposed ARIA images, 38 named data tables, 204 exposed headings, 850 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has one `html lang="en"`, one nonempty title, the complete three-landmark frame, and a responsive viewport without a sub-200% zoom ceiling, none uses `autofocus`, media `autoplay`, or meta refresh, all 824 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, 293 before the October 4, October 6, and October 7 revisions, and 295 before the October 8, October 9, and October 10 revisions |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, 293 before the October 4, October 6, and October 7 revisions, and 295 before the October 8, October 9, October 10, and October 11 revisions |
 
 ## Current automated result
 
-On October 10, 2026, **all seven groups pass**. The final report-format gap
+On October 11, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -214,7 +214,7 @@ publication structure:
   redirects because its static pages do not need automatic context changes.
   The source contract does not inspect script- or server-driven updates or
   establish the absence of rendered interruptions (World Wide Web Consortium
-  Web Accessibility Initiative, 2026). A supplemental `w3m` pass returned zero
+  Web Accessibility Initiative, 2026c). A supplemental `w3m` pass returned zero
   for all 26 current 40- and 120-column views and placed “Skip to content”
   first; it remains linearized text-order evidence only.
 - On October 7, a coverage audit found that the September 22 navigation rule
@@ -258,6 +258,20 @@ publication structure:
   `w3m` pass returned zero for all 26 current 40- and 120-column views and
   placed “Skip to content” first; it remains linearized text-order evidence
   only.
+- On October 11, a document-identity audit found one `html` element with
+  `lang="en"` and one nonempty, unique title on every public page. The previous
+  parser could let a second root overwrite the first language or merge multiple
+  titles into a false pass. It now preserves occurrences and rejects missing or
+  duplicate roots and titles, a non-English or missing root language, and a
+  whitespace-only title. One focused fixture covers those failures. W3C
+  distinguishes SVG and HTML titles, and the fixture confirms that an SVG
+  title cannot satisfy the document rule. W3C
+  identifies programmatic language and descriptive page titles as Level A
+  requirements; this exactly-one source contract does not assess title meaning
+  or observe browser and screen-reader announcement (World Wide Web Consortium
+  Web Accessibility Initiative, 2026a, 2026b). A supplemental `w3m` pass
+  returned zero for all 26 current 40- and 120-column views and placed “Skip
+  to content” first; it remains linearized text-order evidence only.
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -274,7 +288,8 @@ one H1 on a multi-level Quarto book page.
 The current verifier:
 
 - adds a dedicated three-format report group;
-- requires exactly one page-level banner, main, and content-information
+- requires exactly one `html` element with `lang="en"`, one nonempty title,
+  one page-level banner, main, and content-information
   landmark, and requires every page's first anchor itself to target `main` as a bypass and
   every native image to carry an explicit `alt` attribute, every exposed
   non-native ARIA image to have an explicit resolvable name, and requires accessible
@@ -287,7 +302,8 @@ The current verifier:
   no automatic meta refresh or redirect,
   accessible data-table names, and valid
   scope on table header cells,
-  with negative fixtures for missing,
+  with negative fixtures for missing or duplicate roots and titles, a missing
+  root language, an empty title, missing,
   late, wrong-target, misleading-first, and runtime-relocated bypasses, a
   missing or duplicate page landmarks, a missing image alternative, a missing,
   broken, or empty ARIA image name, an empty
@@ -363,7 +379,7 @@ October 6 revisions, all 293 incoming files were byte-identical. On October 7,
 291 unchanged worktree files matched production directly; the production
 digests for the two already-edited public pages matched their clean incoming
   `HEAD` versions, establishing all 293 incoming files as byte-identical. Before
-the October 8, October 9, and October 10 revisions, all 295 incoming files were
+the October 8, October 9, October 10, and October 11 revisions, all 295 incoming files were
 byte-identical. Normal
 automation must still deploy and inventory this revised release.
 
@@ -407,7 +423,15 @@ World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
 https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
 
-World Wide Web Consortium Web Accessibility Initiative. (2026, August 10).
+World Wide Web Consortium Web Accessibility Initiative. (2026a, March 9).
+*Understanding Success Criterion 3.1.1: Language of Page*.
+https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html
+
+World Wide Web Consortium Web Accessibility Initiative. (2026b, March 9).
+*Understanding Success Criterion 2.4.2: Page Titled*.
+https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html
+
+World Wide Web Consortium Web Accessibility Initiative. (2026c, August 10).
 *Understanding Success Criterion 2.2.1: Timing Adjustable*.
 https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable
 

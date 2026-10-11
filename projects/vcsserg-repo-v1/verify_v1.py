@@ -133,12 +133,12 @@ class PageParser(HTMLParser):
         self.hidden_depth = 0
         self.heading_records = []
         self.heading_stack = []
-        self.html_lang = ""
+        self.html_langs = []
         self.id_text_parts = {}
         self.id_text_stack = []
         self.images = []
         self.ids = []
-        self.in_title = False
+        self.title_stack = []
         self.interactive_elements = []
         self.interactive_stack = []
         self.label_records = []
@@ -162,12 +162,14 @@ class PageParser(HTMLParser):
         self.table_stack = []
         self.caption_table = None
         self.text_parts = []
-        self.title_parts = []
+        self.title_records = []
         self.viewport_contents = []
 
     @property
     def title(self):
-        return "".join(self.title_parts).strip()
+        if not self.title_records:
+            return ""
+        return "".join(self.title_records[0]).strip()
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -286,7 +288,7 @@ class PageParser(HTMLParser):
             else:
                 self.interactive_stack.append(control)
         if tag == "html":
-            self.html_lang = attributes.get("lang", "")
+            self.html_langs.append(attributes.get("lang", ""))
         elif tag == "figure":
             self.figure_count += 1
         elif tag == "img":
@@ -314,8 +316,13 @@ class PageParser(HTMLParser):
             self.table_stack.append(table_record)
         elif tag == "caption" and self.table_stack:
             self.caption_table = self.table_stack[-1]
-        elif tag == "title":
-            self.in_title = True
+        elif tag == "title" and not any(
+            ancestor_tag == "svg"
+            for ancestor_tag, _, _, _ in self.open_elements[:-1]
+        ):
+            title_record = []
+            self.title_records.append(title_record)
+            self.title_stack.append(title_record)
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
             self.description = attributes.get("content", "").strip()
         if (
@@ -368,8 +375,8 @@ class PageParser(HTMLParser):
                         self.footer_group_references[self.footer_group].append(reference)
 
     def handle_endtag(self, tag):
-        if tag == "title":
-            self.in_title = False
+        if tag == "title" and self.title_stack:
+            self.title_stack.pop()
         elif tag == "caption":
             self.caption_table = None
         elif tag == "a" and self.assignment is not None:
@@ -437,8 +444,8 @@ class PageParser(HTMLParser):
                 label["text_parts"].append(data)
         if self.assignment is not None:
             self.assignment["text"].append(data)
-        if self.in_title:
-            self.title_parts.append(data)
+        if self.title_stack:
+            self.title_stack[-1].append(data)
 
     @property
     def text(self):
@@ -712,6 +719,26 @@ def page_landmark_problems(parsed, relative):
             f"{relative}: expected one contentinfo landmark, "
             f"found {parsed.contentinfo_count}"
         )
+    return problems
+
+
+def page_identity_problems(parsed, relative):
+    """Return project-level language and document-title checks."""
+    problems = []
+    if len(parsed.html_langs) != 1:
+        problems.append(
+            f"{relative}: expected one html element, found {len(parsed.html_langs)}"
+        )
+    elif parsed.html_langs[0].strip().lower() != "en":
+        problems.append(f"{relative}: expected html lang=en")
+
+    if len(parsed.title_records) != 1:
+        problems.append(
+            f"{relative}: expected one title element, "
+            f"found {len(parsed.title_records)}"
+        )
+    elif not parsed.title:
+        problems.append(f"{relative}: missing title")
     return problems
 
 
@@ -1315,11 +1342,9 @@ def check_html_and_css():
 
     for page, parsed in parsed_pages.items():
         relative = page.relative_to(PROJECT_ROOT)
-        if parsed.html_lang != "en":
-            problems.append(f"{relative}: expected html lang=en")
-        if not parsed.title:
-            problems.append(f"{relative}: missing title")
-        else:
+        identity_problems = page_identity_problems(parsed, relative)
+        problems.extend(identity_problems)
+        if not identity_problems:
             titles.setdefault(parsed.title, []).append(relative)
         problems.extend(page_landmark_problems(parsed, relative))
         problems.extend(page_viewport_problems(parsed, relative))
@@ -1409,7 +1434,8 @@ def check_html_and_css():
     return Result(
         "Static HTML/CSS site",
         not problems,
-        f"{len(html_pages)} HTML page(s) with one banner, main, and "
+        f"{len(html_pages)} HTML page(s) with one English language declaration, "
+        "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{navigation_landmarks} named navigation landmark(s) with distinct "
         "labels for different link sets, "

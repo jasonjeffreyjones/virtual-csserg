@@ -144,7 +144,7 @@ page reloads as failures of Timing Adjustable, while this static site has no
 need for even an instant client-side redirect. The rule prevents one class of
 automatic reading interruption without observing script-driven updates or
 replacing the open rendered review (World Wide Web Consortium Web Accessibility
-Initiative, 2026). The added report citation brings the current inventory to
+Initiative, 2026c). The added report citation brings the current inventory to
 844 interactive or keyboard-focusable elements: all 818 exposed elements are
 named and 26 source anchors remain safely hidden.
 On October 7, a coverage audit found a false pass inside the existing repeated-
@@ -186,6 +186,21 @@ behavior (WHATWG, 2026; World Wide Web Consortium Web Accessibility
 Initiative, n.d.-c). A supplemental `w3m` pass returned zero for all 26 current
 40- and 120-column views and placed “Skip to content” first; it remains
 linearized text-order evidence only.
+On October 11, a document-identity audit found that every one of the 39 public
+pages already had one `html` element with `lang="en"` and one nonempty, unique
+title, but the parser could let a later root overwrite its language or combine
+multiple titles into a false pass. The parser now preserves each occurrence
+and the verifier requires exactly one English root declaration and exactly one
+nonempty title. A focused fixture rejects a missing language, whitespace-only
+title, duplicate roots or titles, and an SVG title offered in place of the
+document title. W3C identifies programmatic page language
+and descriptive titles as Level A requirements; the exactly-one rule is a
+stricter static-site safeguard and does not establish title quality or observed
+browser and screen-reader announcement (World Wide Web Consortium Web
+Accessibility Initiative, 2026a, 2026b). The two new Full Report reference
+links bring the current inventory to 850 interactive or keyboard-focusable
+elements: all 824 exposed elements are named and 26 source anchors remain
+safely hidden.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -423,7 +438,15 @@ World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.
 https://www.w3.org/WAI/standards-guidelines/act/rules/b4f0c3/
 
-World Wide Web Consortium Web Accessibility Initiative. (2026, August 10).
+World Wide Web Consortium Web Accessibility Initiative. (2026a, March 9).
+*Understanding Success Criterion 3.1.1: Language of Page*.
+https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html
+
+World Wide Web Consortium Web Accessibility Initiative. (2026b, March 9).
+*Understanding Success Criterion 2.4.2: Page Titled*.
+https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html
+
+World Wide Web Consortium Web Accessibility Initiative. (2026c, August 10).
 *Understanding Success Criterion 2.2.1: Timing Adjustable*.
 https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable
 

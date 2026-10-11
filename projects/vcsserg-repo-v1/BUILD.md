@@ -56,7 +56,12 @@ annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
 The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
-non-passing result. The whole-site check also requires exactly one page-level
+non-passing result. The whole-site check requires exactly one `html` element
+with `lang="en"` and exactly one nonempty `title` element per page. A focused
+fixture rejects a missing language, an empty title, and duplicate roots or
+titles; the source rule does not establish whether a title is sufficiently
+descriptive or how either value is announced. The whole-site check also
+requires exactly one page-level
 banner, main, and content-information landmark. It recognizes native
 header/footer context so nested section and article structures are not
 misclassified as page landmarks. It requires every data table to have an

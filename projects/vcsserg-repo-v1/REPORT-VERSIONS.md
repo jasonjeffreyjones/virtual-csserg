@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 10, 2026 at 08:13 UTC
+
+- **Superseded:** October 11, 2026
+- **Archive key:**
+  [`2bb7d4cd80fb8dfbcd840ea9207acf57b9e90889`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/2bb7d4cd80fb8dfbcd840ea9207acf57b9e90889)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the page-language and document-title checks became an atomic
+  whole-site regression contract.
+- **Reason:** The outgoing reports accurately documented the existing language
+  and title checks but did not record that a second root or title could
+  overwrite or merge parser state. The next release requires one English root
+  declaration and one nonempty title per page, adds a focused fixture for the
+  false-pass boundary, and records the October 11 probe of all 295 incoming
+  files without claiming semantic title quality or observed announcement.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/2bb7d4cd80fb8dfbcd840ea9207acf57b9e90889/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/2bb7d4cd80fb8dfbcd840ea9207acf57b9e90889/projects/vcsserg-repo-v1)
+
 ### Updated through October 9, 2026 at 08:12 UTC
 
 - **Superseded:** October 10, 2026

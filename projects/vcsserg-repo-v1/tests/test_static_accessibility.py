@@ -32,6 +32,50 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_document_language_and_title_are_atomic(self):
+        valid = parse(
+            '<html lang="en"><head><title>Evidence brief</title></head>'
+            '<body></body></html>'
+        )
+        self.assertEqual(VERIFY.page_identity_problems(valid, "page.html"), [])
+
+        missing_language = parse(
+            "<html><head><title>Evidence brief</title></head><body></body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_identity_problems(missing_language, "language.html"),
+            ["language.html: expected html lang=en"],
+        )
+
+        empty_title = parse(
+            '<html lang="en"><head><title> </title></head><body></body></html>'
+        )
+        self.assertEqual(
+            VERIFY.page_identity_problems(empty_title, "title.html"),
+            ["title.html: missing title"],
+        )
+
+        svg_title_only = parse(
+            '<html lang="en"><body><svg><title>Chart title</title></svg>'
+            "</body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_identity_problems(svg_title_only, "svg.html"),
+            ["svg.html: expected one title element, found 0"],
+        )
+
+        duplicated = parse(
+            '<html lang="en"><head><title>First title</title></head>'
+            '<body></body></html><html lang="en"><title>Second title</title></html>'
+        )
+        self.assertEqual(
+            VERIFY.page_identity_problems(duplicated, "duplicated.html"),
+            [
+                "duplicated.html: expected one html element, found 2",
+                "duplicated.html: expected one title element, found 2",
+            ],
+        )
+
     def test_media_autoplay_is_rejected(self):
         valid = parse(
             '<a class="skip" href="#main">Skip</a><main id="main">'
