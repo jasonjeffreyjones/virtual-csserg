@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-11T09:05:24Z
+updated: 2026-10-12T09:05:52Z
 ---
 
 # Predict the Self — Current State
@@ -86,14 +86,15 @@ authoritative Project source before it mutates the public report tree; a stale
 Quarto resource or missing Project source leaves the existing publication
 untouched.
 The verifier now additionally resolves source, result-pointer, and format
-annotations on 33 Executive Summary values against inventoried machine-
+annotations on 52 Executive Summary values against inventoried machine-
 readable results or the frozen submission's CSV row count. This covers the 20
-headline figure/table values plus all 13 numeric occurrences in the status and
-plain-language finding cards, so a missing annotation, unlisted source, or
-stale displayed number fails publication validation. It also binds the same
-resolved claims to all five figure-bar widths and to the accessible label's
-ordered numeric values, so the figure's visual and nonvisual encodings cannot
-drift from its printed results.
+headline figure/table values, all 19 estimates and interval bounds in the
+stable-projection cross-validation table, and all 13 numeric occurrences in
+the status and plain-language finding cards, so a missing annotation, unlisted
+source, stale displayed number, or incorrect explicit effect sign fails
+publication validation. It also binds the same resolved claims to all five
+figure-bar widths and to the accessible label's ordered numeric values, so the
+figure's visual and nonvisual encodings cannot drift from its printed results.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -440,6 +441,10 @@ raw.
   submission's CSV row count. The source formatter now admits explicit decimal
   and percentage displays; four focused regressions cover matching and stale
   percentage values and CSV row counts.
+- Bound all nineteen estimates and interval bounds in the Executive Summary's
+  stable-projection cross-validation table to its inventoried training result.
+  The source formatter now admits an explicit sign convention; two focused
+  regressions cover a matching signed value and a missing positive sign.
 
 ## Publication and build structure
 
@@ -466,15 +471,16 @@ raw.
 - The guarded publisher checks built canonical artifacts against Project
   sources before any public-tree mutation; the verifier independently repeats
   the source-to-canonical and source-to-alias checks afterward.
-- The verifier resolves all 33 annotated values in the Executive Summary
+- The verifier resolves all 52 annotated values in the Executive Summary
   against their authoritative inventoried JSON results or the frozen
-  submission's CSV row count at the declared precision. The set comprises 20
-  headline figure/table values and all 13 numeric occurrences in the status
-  and nine plain-language finding cards. It additionally requires all five CSS
-  bar widths to equal their source values on the stated 0–1 scale and requires
-  the accessible label to contain the five displayed values in bar order. This
-  does not bind every quantitative statement in the figure's secondary tables
-  or in the other two reports.
+  submission's CSV row count at the declared precision and sign convention.
+  The set comprises 20 headline figure/table values, all 19 estimates and
+  interval bounds in the stable-projection cross-validation table, and all 13
+  numeric occurrences in the status and nine plain-language finding cards. It
+  additionally requires all five CSS bar widths to equal their source values
+  on the stated 0–1 scale and requires the accessible label to contain the five
+  displayed values in bar order. This does not bind the remaining secondary
+  tables or every quantitative statement in the other two reports.
 - `BUILD.md` gives the complete build and check sequence. Project tests, the
   publication verifier, and the Version 1 promise groups are the required
   validation gates.
@@ -585,11 +591,11 @@ raw.
   authoritative Project source.
 - Result annotations in the Executive Summary must retain an inventoried JSON
   or CSV source, a resolvable result pointer, and the declared numeric format;
-  the publication verifier requires exactly 33 such values. CSV claims are
+  the publication verifier requires exactly 52 such values. CSV claims are
   limited to data-row count, and display formats are limited to explicit fixed
-  decimals or percentages. Each of the five dense-figure bars must reference
-  one uniquely identified claim, and the figure's accessible label must
-  reference the five claims in display order.
+  decimals or percentages with an optional required sign. Each of the five
+  dense-figure bars must reference one uniquely identified claim, and the
+  figure's accessible label must reference the five claims in display order.
 - `PROJECT.md` remains the PI-owned charter. `DIALOG.md` is the bounded dialog
   index; future iterations create one immutable record under
   `dialog/iterations/` and update the yearly index. The pre-migration dialog is

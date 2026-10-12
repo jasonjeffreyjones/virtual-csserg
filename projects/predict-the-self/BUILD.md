@@ -25,11 +25,13 @@ It leaves the existing public tree untouched when a source is missing, a
 Quarto resource is stale, or a resource path escapes either tree. The verifier
 repeats the source-to-public identity check after publication. The Executive
 Summary's five headline continuity/novelty values, fifteen development
-agreement values, and thirteen numeric occurrences in the status and plain-
+agreement values, nineteen stable-projection cross-validation estimates and
+interval bounds, and thirteen numeric occurrences in the status and plain-
 language finding cards carry source, result-pointer, and display-format
-annotations. The verifier resolves all 33 against inventoried machine-readable
+annotations. The verifier resolves all 52 against inventoried machine-readable
 results or the frozen submission's CSV row count and rejects a missing
-annotation, an unlisted source, or a displayed-value mismatch.
+annotation, an unlisted source, or a displayed-value mismatch. Explicit signed
+formats preserve the direction shown for effects and interval bounds.
 It also binds the dense figure's five CSS bar widths and ordered accessible
 numeric label to those same resolved claims, so its visual and nonvisual
 encodings cannot drift while the printed values remain current.

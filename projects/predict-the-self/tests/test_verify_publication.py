@@ -173,6 +173,39 @@ class DisplayedResultClaimTests(unittest.TestCase):
                 expected_count=1,
             )
 
+    def test_explicit_sign_value_matches_inventoried_json_result(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/score.json"
+            result.parent.mkdir()
+            result.write_text('{"effect":0.125}', encoding="utf-8")
+
+            verify_publication.validate_result_claims(
+                self.make_claim_page(
+                    "+0.125000", pointer="/effect", format_spec="+.6f"
+                ),
+                project,
+                {"results/score.json": "artifacts/score.json"},
+                expected_count=1,
+            )
+
+    def test_missing_explicit_sign_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/score.json"
+            result.parent.mkdir()
+            result.write_text('{"effect":0.125}', encoding="utf-8")
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "0.125000", pointer="/effect", format_spec="+.6f"
+                    ),
+                    project,
+                    {"results/score.json": "artifacts/score.json"},
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)
