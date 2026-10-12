@@ -198,9 +198,19 @@ and descriptive titles as Level A requirements; the exactly-one rule is a
 stricter static-site safeguard and does not establish title quality or observed
 browser and screen-reader announcement (World Wide Web Consortium Web
 Accessibility Initiative, 2026a, 2026b). The two new Full Report reference
-links bring the current inventory to 850 interactive or keyboard-focusable
-elements: all 824 exposed elements are named and 26 source anchors remain
+links bring the current inventory to 851 interactive or keyboard-focusable
+elements: all 825 exposed elements are named and 26 source anchors remain
 safely hidden.
+On October 12, an embedded-context audit found no iframe in the 39-page public
+tree, but the verifier did not preserve a naming requirement for future
+embeds. It now requires every iframe to have a nonempty `title`, `aria-label`,
+or resolvable nonempty `aria-labelledby` reference. A focused fixture accepts
+all three naming paths while rejecting no name, the legacy `name` attribute,
+and missing or empty referenced labels. W3C's proposed ACT rule maps nonempty
+iframe names to Name, Role, Value and still requires further testing after a
+pass; this strict source contract does not establish browser announcement,
+focus behavior, or access to embedded content (World Wide Web Consortium,
+n.d.).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -433,6 +443,10 @@ https://www.w3.org/WAI/WCAG22/Techniques/html/H39
 
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
+
+World Wide Web Consortium. (n.d.). *Iframe element has non-empty accessible
+name [Proposed ACT rule]*. Retrieved October 12, 2026, from
+https://www.w3.org/WAI/standards-guidelines/act/rules/cae760/proposed/
 
 World Wide Web Consortium Web Accessibility Initiative. (2022, October 25).
 *Meta viewport allows for zoom*. W3C Accessibility Conformance Testing Rules.

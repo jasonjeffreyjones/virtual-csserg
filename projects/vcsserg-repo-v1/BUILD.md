@@ -94,6 +94,11 @@ not declare the boolean `autoplay` attribute, including `autoplay="false"`;
 media playback must begin from an intentional user action. This source rule
 does not detect script-triggered playback or establish observed browser
 behavior.
+Every `iframe` must also have a nonempty accessible name supplied by
+`aria-labelledby`, `aria-label`, or `title`; referenced label IDs must resolve
+to text. This deliberately strict source rule applies even when an embed is
+intended to be hidden and does not establish how a browser and screen reader
+announce or operate the embedded context.
 
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:

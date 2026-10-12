@@ -2,17 +2,17 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-11T08:13:37Z
+updated: 2026-10-12T08:37:35Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 11, 2026, all seven automated promise groups pass across
-39 HTML pages, 160 named navigation landmarks, 97 native images, four exposed ARIA images, 38 named data tables,
-204 exposed headings, 850 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 824
+Active. On October 12, 2026, all seven automated promise groups pass across
+39 HTML pages, 160 named navigation landmarks, 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
+204 exposed headings, 851 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 825
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires exactly one `html` element with `lang="en"`, one
@@ -23,7 +23,7 @@ automatically through `meta http-equiv="refresh"`; no audio or video element
 to request automatic playback through the boolean `autoplay` attribute; the
 first anchor itself to be a bypass link targeting `main`; an explicit `alt`
 decision for every native image; an accessible name for every exposed
-non-native ARIA image; and an accessible name for every navigation landmark
+non-native ARIA image, every iframe; and an accessible name for every navigation landmark
 on pages containing more than one. A referenced navigation name must resolve
 to nonempty text rather than merely an existing ID, and repeated names are
 allowed only when the landmarks contain identical link sets. It requires every exposed heading to
@@ -42,7 +42,10 @@ author-set positive tab priority. A tested focus-entry rule also rejects every
 entry and first-link bypass path. A tested automatic-media rule rejects even
 `autoplay="false"` and muted autoplay so playback remains user-initiated. A tested
 document-identity rule preserves every root and title occurrence so a later
-element cannot overwrite or merge invalid earlier state. A tested
+element cannot overwrite or merge invalid earlier state. A tested iframe-name
+rule accepts a nonempty `title`, `aria-label`, or resolvable and nonempty
+`aria-labelledby` reference and rejects absent, legacy-`name`, missing-target,
+and empty-target cases. A tested
 post-render normalizer makes the
 bypass link first, names Quarto's repeated navigation regions, and adds column
 scope inside generated table heads on all five report pages without runtime
@@ -269,6 +272,15 @@ without performing the unavailable human review.
   identifies programmatic page language and descriptive titles as Level A
   requirements. This stricter exactly-one source rule does not judge title
   meaning or establish what a browser and screen reader announce.
+- An October 12 embedded-context audit found no iframe in the public tree, but
+  the verifier did not preserve a naming requirement for future embeds. It
+  now accepts a nonempty `title`, `aria-label`, or resolvable nonempty
+  `aria-labelledby` reference and rejects an absent name, the legacy `name`
+  attribute, and missing or empty referenced labels. One focused fixture
+  covers every path. W3C's proposed ACT rule maps a nonempty iframe name to
+  Name, Role, Value while noting that a pass still needs further testing. This
+  strict source rule does not establish actual announcement, focus behavior,
+  or access to embedded content.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -276,7 +288,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 11 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 12 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -292,7 +304,7 @@ without performing the unavailable human review.
   supersession, correction, and retraction. Canonical URLs remain current while
   a full commit key preserves the outgoing three-form report, dependencies,
   sources, and Project record. `REPORT-VERSIONS.md` records material outgoing
-  releases from September 15 through the clean October 1 report set; the
+  releases from September 15 through the clean October 11 report set; the
   verifier confirms all three forms exist at each recorded commit.
 - NFL Team Fandom Identities records the PI-directed Paused lifecycle state in
   its state, dialog, public summary, Projects listing, and homepage. Its
@@ -340,6 +352,8 @@ without performing the unavailable human review.
   byte-identical.
   The October 11 pre-change probe again found all 295 incoming files
   byte-identical.
+  The October 12 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -366,11 +380,11 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 52 routine tests pass across 39 HTML pages, 160 named
+All seven groups and all 53 routine tests pass across 39 HTML pages, 160 named
 navigation landmarks, 97 native
-images, four exposed ARIA images, 38 named data tables, 204 exposed headings,
-850 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 11. Every page has exactly one English root-language
+images, four exposed ARIA images, no iframes, 38 named data tables, 204 exposed headings,
+851 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 12. Every page has exactly one English root-language
 declaration, one nonempty title, and one page-level banner, main, and
 content-information landmark. The verifier's success detail now
 reports the navigation-landmark count, responsive zoom-permitting viewport contract, plus exposed and
@@ -381,7 +395,7 @@ lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, atomic English page-language and nonempty-title
 declarations, first-anchor bypass mechanisms, explicit image
-alternatives, exposed ARIA image names, exact top-level landmark frames,
+alternatives, exposed ARIA image names, iframe accessible names, exact top-level landmark frames,
 nonempty unskipped heading ranks, repeated navigation names,
 resolved nonempty landmark-label references, distinct navigation names for
 different link sets,
@@ -397,7 +411,8 @@ duplicate top-level landmarks with native context, five tests cover the build-ti
 Quarto normalizer, three cover the generic navigation-name rule (including
 textless referenced labels and repeated names on different link sets), one covers the
 generic table-header rule, one covers heading text and rank, one covers
-missing, broken, and empty ARIA image names, three cover
+missing, broken, and empty ARIA image names, one covers valid and invalid
+iframe naming sources, three cover
 interactive names and ARIA relationships
 across links, buttons, forms, disclosures, roles, media, and custom focus
 targets, one rejects positive `tabindex` values while accepting zero and
@@ -465,7 +480,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 11 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
+October 12 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -490,8 +505,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 10 report set superseded by
-  the current document-identity revision.
+  v1 release ledger, including the clean October 11 report set superseded by
+  the current iframe-name revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

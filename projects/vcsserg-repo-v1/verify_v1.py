@@ -137,6 +137,7 @@ class PageParser(HTMLParser):
         self.id_text_parts = {}
         self.id_text_stack = []
         self.images = []
+        self.iframe_records = []
         self.ids = []
         self.title_stack = []
         self.interactive_elements = []
@@ -302,6 +303,14 @@ class PageParser(HTMLParser):
                         heading["text_parts"].append(alternative)
                     for labelled_id in self.id_text_stack:
                         self.id_text_parts[labelled_id].append(alternative)
+        elif tag == "iframe":
+            self.iframe_records.append(
+                {
+                    "aria_label": attributes.get("aria-label", ""),
+                    "labelled_by": attributes.get("aria-labelledby", "").split(),
+                    "title": attributes.get("title", ""),
+                }
+            )
         elif tag == "th":
             self.table_header_scopes.append(
                 attributes.get("scope", "").strip().lower()
@@ -519,6 +528,31 @@ def page_accessibility_problems(parsed, relative):
         if "alt" not in image:
             source = image.get("src", f"image {number}")
             problems.append(f"{relative}: image has no alt attribute: {source}")
+    for number, iframe in enumerate(parsed.iframe_records, start=1):
+        labelled_by = iframe["labelled_by"]
+        missing_labels = sorted(set(labelled_by) - set(parsed.ids))
+        if missing_labels:
+            problems.append(
+                f"{relative}: iframe {number} references missing label ids: "
+                + ", ".join(missing_labels)
+            )
+        referenced_label = " ".join(
+            parsed.text_for_id(element_id)
+            for element_id in labelled_by
+            if element_id in parsed.ids
+        ).strip()
+        if labelled_by and not missing_labels and not referenced_label:
+            problems.append(
+                f"{relative}: iframe {number} references labels without text"
+            )
+        if labelled_by:
+            has_accessible_name = bool(referenced_label and not missing_labels)
+        else:
+            has_accessible_name = bool(
+                iframe["aria_label"].strip() or iframe["title"].strip()
+            )
+        if not has_accessible_name:
+            problems.append(f"{relative}: iframe {number} has no accessible name")
     exposed_role_images = [image for image in parsed.role_images if not image["hidden"]]
     for number, role_image in enumerate(exposed_role_images, start=1):
         labelled_by = role_image["labelled_by"]
@@ -1314,6 +1348,9 @@ def check_html_and_css():
         for parsed in parsed_pages.values()
         for image in parsed.role_images
     )
+    embedded_frames = sum(
+        len(parsed.iframe_records) for parsed in parsed_pages.values()
+    )
     navigation_landmarks = sum(
         len(parsed.navigation_landmarks) for parsed in parsed_pages.values()
     )
@@ -1442,6 +1479,7 @@ def check_html_and_css():
         f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "
         f"image(s) with explicit alternatives, {exposed_role_images} exposed "
         "ARIA image(s) with accessible names, "
+        f"{embedded_frames} iframe(s) with accessible names, "
         f"{sum(len(parsed.table_records) for parsed in parsed_pages.values())} "
         f"named data table(s), {exposed_headings} exposed heading(s), "
         f"{exposed_interactive} exposed interactive or "

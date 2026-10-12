@@ -321,6 +321,38 @@ class StaticAccessibilityTests(unittest.TestCase):
             VERIFY.page_accessibility_problems(valid, "graphics.html"), []
         )
 
+    def test_iframes_need_resolvable_accessible_names(self):
+        valid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<iframe title="Replication dashboard" src="dashboard"></iframe>'
+            '<iframe aria-label="Methods appendix" src="methods"></iframe>'
+            '<h2 id="frame-name">Interactive results</h2>'
+            '<iframe aria-labelledby="frame-name" src="results"></iframe></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(valid, "frames.html"), []
+        )
+
+        invalid = parse(
+            '<a class="skip" href="#main">Skip</a><main id="main">'
+            '<iframe src="unnamed"></iframe>'
+            '<iframe name="Legacy name" src="legacy"></iframe>'
+            '<iframe aria-labelledby="missing" title="Ignored" src="missing"></iframe>'
+            '<span id="empty"></span>'
+            '<iframe aria-labelledby="empty" src="empty"></iframe></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_accessibility_problems(invalid, "frames.html"),
+            [
+                "frames.html: iframe 1 has no accessible name",
+                "frames.html: iframe 2 has no accessible name",
+                "frames.html: iframe 3 references missing label ids: missing",
+                "frames.html: iframe 3 has no accessible name",
+                "frames.html: iframe 4 references labels without text",
+                "frames.html: iframe 4 has no accessible name",
+            ],
+        )
+
     def test_repeated_navigation_landmarks_need_resolvable_names(self):
         unnamed = parse(
             '<a class="skip" href="#main">Skip</a>'

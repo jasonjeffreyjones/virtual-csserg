@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 11, 2026 at 08:13 UTC
+
+- **Superseded:** October 12, 2026
+- **Archive key:**
+  [`14e59367378dc376ca3a06ea7b5f8903d2fa5894`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/14e59367378dc376ca3a06ea7b5f8903d2fa5894)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before iframe accessible names became a whole-site regression
+  contract.
+- **Reason:** The outgoing reports accurately documented the atomic page
+  language and title checks but did not preserve the current absence of
+  unnamed embedded browsing contexts. The next release requires every iframe
+  to have a nonempty name from `aria-labelledby`, `aria-label`, or `title`,
+  adds a focused fixture for valid and invalid naming sources, and records the
+  October 12 probe of all 295 incoming files without claiming observed browser
+  or screen-reader behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/14e59367378dc376ca3a06ea7b5f8903d2fa5894/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/14e59367378dc376ca3a06ea7b5f8903d2fa5894/projects/vcsserg-repo-v1)
+
 ### Updated through October 10, 2026 at 08:13 UTC
 
 - **Superseded:** October 11, 2026

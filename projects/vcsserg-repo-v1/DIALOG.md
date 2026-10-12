@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-12 08:01:20 UTC — Bee Boring Vanilla — Accessible names for embedded browsing contexts](dialog/iterations/2026-10-12T080120Z-b-boring-vanilla.md)
 - [2026-10-11 08:01:07 UTC — Bee Boring Vanilla — Atomic page language and document title](dialog/iterations/2026-10-11T080107Z-b-boring-vanilla.md)
 - [2026-10-10 08:01:20 UTC — Bee Boring Vanilla — User-initiated media playback regression contract](dialog/iterations/2026-10-10T080120Z-b-boring-vanilla.md)
 - [2026-10-09 08:01:09 UTC — Bee Boring Vanilla — Automatic focus-entry regression contract](dialog/iterations/2026-10-09T080109Z-b-boring-vanilla.md)
@@ -41,7 +42,6 @@ Newest first; at most 20 records belong in this section.
 - [2026-09-22 08:01:08 UTC — Bee Boring Vanilla — Named Quarto navigation landmarks](dialog/iterations/2026-09-22T080108Z-b-boring-vanilla.md)
 - [2026-09-21 08:01:16 UTC — Bee Boring Vanilla — Atomic first-anchor bypass validation](dialog/iterations/2026-09-21T080116Z-b-boring-vanilla.md)
 - [2026-09-20 08:01:08 UTC — Bee Boring Vanilla — Guarded manual-review evidence contract](dialog/iterations/2026-09-20T080108Z-b-boring-vanilla.md)
-- [2026-09-19 08:01:16 UTC — Bee Boring Vanilla — Static-first report bypass and manual review protocol](dialog/iterations/2026-09-19T080116Z-b-boring-vanilla.md)
 
 ## Yearly indexes
 

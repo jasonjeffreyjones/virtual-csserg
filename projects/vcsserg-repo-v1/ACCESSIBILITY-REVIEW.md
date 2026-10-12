@@ -9,7 +9,8 @@ October 3, 2026; responsive, zoom-permitting viewport contract added October 4,
 navigation-label reference contract added October 7, 2026; distinct
 navigation-name contract added October 8, 2026; automatic-focus prohibition
 added October 9, 2026; automatic-media-playback prohibition added October 10,
-2026; atomic page-language and document-title contract added October 11, 2026.
+2026; atomic page-language and document-title contract added October 11, 2026;
+iframe accessible-name contract added October 12, 2026.
 
 ## Decision boundary
 
@@ -64,6 +65,15 @@ accessibility evaluation.
   requirement for the `img` role; the screen-reader check below still observes
   whether each figure is announced usefully in the recorded pairing (World
   Wide Web Consortium, 2023).
+- No current public page contains an `iframe`. The October 12 coverage audit
+  made that absence safe for later growth: every future iframe must have a
+  nonempty name from a resolvable, nonempty `aria-labelledby`, `aria-label`, or
+  `title`. A focused fixture accepts all three sources and rejects an absent
+  name, the legacy `name` attribute, and missing or empty referenced labels.
+  W3C's proposed ACT rule maps a nonempty iframe name to Name, Role, Value but
+  says a pass still needs further testing. The Project applies the source rule
+  to every iframe while leaving actual announcement and embedded-content
+  operation in this rendered protocol (World Wide Web Consortium, n.d.).
 - The parser records every exposed `h1` through `h6`, rejects a heading without
   text, and rejects a forward rank skip such as `h2` to `h4`. All 204 exposed
   headings on the 39 current public pages pass. The rule permits multiple
@@ -103,8 +113,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 850 interactive or keyboard-focusable
-  elements. Each of the 824 elements exposed to assistive technology has an
+- The whole-site parser now audits all 851 interactive or keyboard-focusable
+  elements. Each of the 825 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -207,6 +217,9 @@ accessibility evaluation.
 - On October 11, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 12, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -235,6 +248,8 @@ accessibility evaluation.
   byte-identical before the automatic-media-playback revision.
   The October 11 pre-change probe again found all 295 incoming files
   byte-identical before the document-identity revision.
+  The October 12 pre-change probe again found all 295 incoming files
+  byte-identical before the iframe-name revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -384,6 +399,10 @@ Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/
 
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/
+
+World Wide Web Consortium. (n.d.). *Iframe element has non-empty accessible
+name [Proposed ACT rule]*. Retrieved October 12, 2026, from
+https://www.w3.org/WAI/standards-guidelines/act/rules/cae760/proposed/
 
 World Wide Web Consortium. (2026, January 12). *H63: Using the scope attribute
 to associate header cells with data cells in data tables*.
