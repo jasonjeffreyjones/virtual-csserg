@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-12T09:05:52Z
+updated: 2026-10-13T09:05:02Z
 ---
 
 # Predict the Self — Current State
@@ -86,15 +86,17 @@ authoritative Project source before it mutates the public report tree; a stale
 Quarto resource or missing Project source leaves the existing publication
 untouched.
 The verifier now additionally resolves source, result-pointer, and format
-annotations on 52 Executive Summary values against inventoried machine-
+annotations on 61 Executive Summary values against inventoried machine-
 readable results or the frozen submission's CSV row count. This covers the 20
 headline figure/table values, all 19 estimates and interval bounds in the
-stable-projection cross-validation table, and all 13 numeric occurrences in
-the status and plain-language finding cards, so a missing annotation, unlisted
-source, stale displayed number, or incorrect explicit effect sign fails
-publication validation. It also binds the same resolved claims to all five
-figure-bar widths and to the accessible label's ordered numeric values, so the
-figure's visual and nonvisual encodings cannot drift from its printed results.
+stable-projection cross-validation table, all nine precision, recall, and F1
+values in the volume-matched novel-token recovery table, and all 13 numeric
+occurrences in the status and plain-language finding cards, so a missing
+annotation, unlisted source, stale displayed number, or incorrect explicit
+effect sign fails publication validation. It also binds the same resolved
+claims to all five figure-bar widths and to the accessible label's ordered
+numeric values, so the figure's visual and nonvisual encodings cannot drift
+from its printed results.
 The private test scorecard and challenge pull request remain open.
 
 ## Current finding
@@ -445,6 +447,10 @@ raw.
   stable-projection cross-validation table to its inventoried training result.
   The source formatter now admits an explicit sign convention; two focused
   regressions cover a matching signed value and a missing positive sign.
+- Bound all nine marginal-prior means, trajectory-retrieval means, and paired
+  differences in the Executive Summary's volume-matched novel-token recovery
+  table to the inventoried diagnostic result. A focused regression rejects a
+  stale explicitly signed recovery effect.
 
 ## Publication and build structure
 
@@ -471,12 +477,13 @@ raw.
 - The guarded publisher checks built canonical artifacts against Project
   sources before any public-tree mutation; the verifier independently repeats
   the source-to-canonical and source-to-alias checks afterward.
-- The verifier resolves all 52 annotated values in the Executive Summary
+- The verifier resolves all 61 annotated values in the Executive Summary
   against their authoritative inventoried JSON results or the frozen
   submission's CSV row count at the declared precision and sign convention.
   The set comprises 20 headline figure/table values, all 19 estimates and
-  interval bounds in the stable-projection cross-validation table, and all 13
-  numeric occurrences in the status and nine plain-language finding cards. It
+  interval bounds in the stable-projection cross-validation table, all nine
+  values in the volume-matched novel-token recovery table, and all 13 numeric
+  occurrences in the status and nine plain-language finding cards. It
   additionally requires all five CSS bar widths to equal their source values
   on the stated 0–1 scale and requires the accessible label to contain the five
   displayed values in bar order. This does not bind the remaining secondary
@@ -591,7 +598,7 @@ raw.
   authoritative Project source.
 - Result annotations in the Executive Summary must retain an inventoried JSON
   or CSV source, a resolvable result pointer, and the declared numeric format;
-  the publication verifier requires exactly 52 such values. CSV claims are
+  the publication verifier requires exactly 61 such values. CSV claims are
   limited to data-row count, and display formats are limited to explicit fixed
   decimals or percentages with an optional required sign. Each of the five
   dense-figure bars must reference one uniquely identified claim, and the

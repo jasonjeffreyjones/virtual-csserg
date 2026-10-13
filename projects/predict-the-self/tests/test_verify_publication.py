@@ -206,6 +206,33 @@ class DisplayedResultClaimTests(unittest.TestCase):
                     expected_count=1,
                 )
 
+    def test_stale_volume_matched_recovery_effect_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/novelty.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"paired_comparisons":{"f1":'
+                '{"mean_effect_positive_favors_marginal_prior":0.075528}}}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "+0.070000",
+                        source="results/novelty.json",
+                        pointer=(
+                            "/paired_comparisons/f1/"
+                            "mean_effect_positive_favors_marginal_prior"
+                        ),
+                        format_spec="+.6f",
+                    ),
+                    project,
+                    {"results/novelty.json": "artifacts/novelty.json"},
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)

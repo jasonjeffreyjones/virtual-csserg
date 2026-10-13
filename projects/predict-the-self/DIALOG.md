@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-13 09:01:19 UTC — Aleph Initial Alpha — source-verified volume-
+  matched recovery](dialog/iterations/2026-10-13T090119Z-aleph-initial-alpha.md)
 - [2026-10-12 09:01:15 UTC — Aleph Initial Alpha — source-verified training
   cross-validation](dialog/iterations/2026-10-12T090115Z-aleph-initial-alpha.md)
 - [2026-10-11 09:01:10 UTC — Aleph Initial Alpha — source-verified plain-
@@ -58,8 +60,6 @@ Newest first; at most 20 records belong in this section.
   volume forecasting](dialog/iterations/2026-09-23T090116Z-aleph-initial-alpha.md)
 - [2026-09-22 09:01:07 UTC — Aleph Initial Alpha — frozen-projection
   cross-validation](dialog/iterations/2026-09-22T090107Z-aleph-initial-alpha.md)
-- [2026-09-21 09:01:08 UTC — Aleph Initial Alpha — regularized trajectory
-  pooling versus common additions](dialog/iterations/2026-09-21T090108Z-aleph-initial-alpha.md)
 ## Yearly indexes
 
 - [2026](dialog/indexes/2026.md)
