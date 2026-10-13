@@ -45,6 +45,7 @@ ACCESSIBILITY_RESULT_FIELDS = (
 )
 ACCESSIBILITY_RESULT_STATUSES = {"Pass", "Fail", "Not tested"}
 VALID_TABLE_HEADER_SCOPES = {"col", "colgroup", "row", "rowgroup"}
+ASCII_WHITESPACE = "\t\n\f\r "
 NATIVE_INTERACTIVE_ELEMENTS = {
     "a",
     "area",
@@ -134,6 +135,7 @@ class PageParser(HTMLParser):
         self.heading_records = []
         self.heading_stack = []
         self.html_langs = []
+        self.id_values = []
         self.id_text_parts = {}
         self.id_text_stack = []
         self.images = []
@@ -179,6 +181,8 @@ class PageParser(HTMLParser):
         if tag in {"audio", "video"} and "autoplay" in attributes:
             self.autoplay_media.append(tag)
         element_id = attributes.get("id")
+        if "id" in attributes:
+            self.id_values.append(element_id or "")
         aria_hidden = attributes.get("aria-hidden", "").strip().lower() == "true"
         role = attributes.get("role", "").strip().lower()
         implicit_landmark_context = any(
@@ -752,6 +756,40 @@ def page_landmark_problems(parsed, relative):
         problems.append(
             f"{relative}: expected one contentinfo landmark, "
             f"found {parsed.contentinfo_count}"
+        )
+    return problems
+
+
+def page_identifier_problems(parsed, relative):
+    """Return HTML authoring-conformance problems for document identifiers."""
+    problems = []
+    empty_ids = sum(not value for value in parsed.id_values)
+    if empty_ids:
+        problems.append(
+            f"{relative}: contains {empty_ids} empty id attribute(s)"
+        )
+
+    whitespace_ids = sorted(
+        {
+            value
+            for value in parsed.id_values
+            if any(character in ASCII_WHITESPACE for character in value)
+        }
+    )
+    if whitespace_ids:
+        problems.append(
+            f"{relative}: id values contain ASCII whitespace: "
+            + ", ".join(repr(value) for value in whitespace_ids)
+        )
+
+    duplicate_ids = sorted(
+        value
+        for value, count in Counter(parsed.id_values).items()
+        if value and count > 1
+    )
+    if duplicate_ids:
+        problems.append(
+            f"{relative}: duplicate id values: {', '.join(duplicate_ids)}"
         )
     return problems
 
@@ -1354,6 +1392,7 @@ def check_html_and_css():
     navigation_landmarks = sum(
         len(parsed.navigation_landmarks) for parsed in parsed_pages.values()
     )
+    document_ids = sum(len(parsed.id_values) for parsed in parsed_pages.values())
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1391,9 +1430,7 @@ def check_html_and_css():
         ):
             problems.append(f"{relative}: expected at least one h1")
         problems.extend(page_accessibility_problems(parsed, relative))
-        duplicate_ids = sorted({item for item in parsed.ids if parsed.ids.count(item) > 1})
-        if duplicate_ids:
-            problems.append(f"{relative}: duplicate ids {', '.join(duplicate_ids)}")
+        problems.extend(page_identifier_problems(parsed, relative))
         if not any(reference.startswith(bootstrap_prefix) for reference in parsed.references):
             problems.append(f"{relative}: missing Bootstrap from the official CDN")
 
@@ -1474,6 +1511,7 @@ def check_html_and_css():
         f"{len(html_pages)} HTML page(s) with one English language declaration, "
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
+        f"{document_ids} conforming document identifier(s), "
         f"{navigation_landmarks} named navigation landmark(s) with distinct "
         "labels for different link sets, "
         f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "

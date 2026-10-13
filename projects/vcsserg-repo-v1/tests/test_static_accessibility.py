@@ -32,6 +32,28 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_document_identifiers_are_nonempty_whitespace_free_and_unique(self):
+        valid = parse(
+            '<a id="overview" href="#results">Overview</a>'
+            '<main id="results"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_identifier_problems(valid, "identifiers.html"), []
+        )
+
+        invalid = parse(
+            '<div id=""></div><div id="two words"></div>'
+            '<div id="duplicate"></div><span id="duplicate"></span>'
+        )
+        self.assertEqual(
+            VERIFY.page_identifier_problems(invalid, "identifiers.html"),
+            [
+                "identifiers.html: contains 1 empty id attribute(s)",
+                "identifiers.html: id values contain ASCII whitespace: 'two words'",
+                "identifiers.html: duplicate id values: duplicate",
+            ],
+        )
+
     def test_document_language_and_title_are_atomic(self):
         valid = parse(
             '<html lang="en"><head><title>Evidence brief</title></head>'

@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 12, 2026 at 08:37 UTC
+
+- **Superseded:** October 13, 2026
+- **Archive key:**
+  [`87eafc61160ae3684d8fc37b99e807ff40d6258a`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/87eafc61160ae3684d8fc37b99e807ff40d6258a)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before the document-ID check covered every HTML authoring constraint.
+- **Reason:** The outgoing reports accurately documented duplicate-ID
+  rejection but the parser discarded empty `id` attributes and did not reject
+  ASCII whitespace inside an ID value. The next release moves identifier
+  validation into a focused page-level contract, preserves duplicate
+  rejection, covers all three HTML constraints with one fixture, and records
+  the October 13 probe of all 295 incoming files without claiming rendered
+  behavior or WCAG conformance.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/87eafc61160ae3684d8fc37b99e807ff40d6258a/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/87eafc61160ae3684d8fc37b99e807ff40d6258a/projects/vcsserg-repo-v1)
+
 ### Updated through October 11, 2026 at 08:13 UTC
 
 - **Superseded:** October 12, 2026

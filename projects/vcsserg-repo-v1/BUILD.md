@@ -60,7 +60,12 @@ non-passing result. The whole-site check requires exactly one `html` element
 with `lang="en"` and exactly one nonempty `title` element per page. A focused
 fixture rejects a missing language, an empty title, and duplicate roots or
 titles; the source rule does not establish whether a title is sufficiently
-descriptive or how either value is announced. The whole-site check also
+descriptive or how either value is announced. Every `id` attribute must also
+be nonempty, contain no ASCII whitespace, and be unique within its document.
+The parser retains even invalid empty values, and one focused fixture covers
+all three failures. This authoring-conformance check protects fragment and
+ARIA reference targets but does not establish rendered behavior. The
+whole-site check also
 requires exactly one page-level
 banner, main, and content-information landmark. It recognizes native
 header/footer context so nested section and article structures are not

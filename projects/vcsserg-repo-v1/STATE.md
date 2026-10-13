@@ -2,17 +2,17 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-12T08:37:35Z
+updated: 2026-10-13T08:12:36Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 12, 2026, all seven automated promise groups pass across
-39 HTML pages, 160 named navigation landmarks, 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
-204 exposed headings, 851 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 825
+Active. On October 13, 2026, all seven automated promise groups pass across
+39 HTML pages, 328 conforming document IDs, 160 named navigation landmarks, 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
+204 exposed headings, 852 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 826
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires exactly one `html` element with `lang="en"`, one
@@ -42,7 +42,9 @@ author-set positive tab priority. A tested focus-entry rule also rejects every
 entry and first-link bypass path. A tested automatic-media rule rejects even
 `autoplay="false"` and muted autoplay so playback remains user-initiated. A tested
 document-identity rule preserves every root and title occurrence so a later
-element cannot overwrite or merge invalid earlier state. A tested iframe-name
+element cannot overwrite or merge invalid earlier state. A tested
+document-identifier rule requires every `id` attribute to be nonempty, contain
+no ASCII whitespace, and remain unique within its page. A tested iframe-name
 rule accepts a nonempty `title`, `aria-label`, or resolvable and nonempty
 `aria-labelledby` reference and rejects absent, legacy-`name`, missing-target,
 and empty-target cases. A tested
@@ -281,6 +283,13 @@ without performing the unavailable human review.
   Name, Role, Value while noting that a pass still needs further testing. This
   strict source rule does not establish actual announcement, focus behavior,
   or access to embedded content.
+- An October 13 document-identifier audit found all 328 `id` attributes across
+  the 39 public pages nonempty, ASCII-whitespace-free, and unique within their
+  pages. The whole-site verifier already rejected duplicates, but its parser
+  discarded empty IDs and did not reject whitespace. One focused fixture now
+  covers all three HTML authoring constraints. This protects fragment and ARIA
+  reference checks from invalid or ambiguous targets without claiming rendered
+  behavior or WCAG conformance.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -288,7 +297,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 12 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 13 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -354,6 +363,8 @@ without performing the unavailable human review.
   byte-identical.
   The October 12 pre-change probe again found all 295 incoming files
   byte-identical.
+  The October 13 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -380,11 +391,11 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 53 routine tests pass across 39 HTML pages, 160 named
+All seven groups and all 54 routine tests pass across 39 HTML pages, 328 conforming document IDs, 160 named
 navigation landmarks, 97 native
 images, four exposed ARIA images, no iframes, 38 named data tables, 204 exposed headings,
-851 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 12. Every page has exactly one English root-language
+852 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 13. Every page has exactly one English root-language
 declaration, one nonempty title, and one page-level banner, main, and
 content-information landmark. The verifier's success detail now
 reports the navigation-landmark count, responsive zoom-permitting viewport contract, plus exposed and
@@ -394,7 +405,8 @@ The checks now include validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, atomic English page-language and nonempty-title
-declarations, first-anchor bypass mechanisms, explicit image
+declarations, nonempty and ASCII-whitespace-free IDs unique within each page,
+first-anchor bypass mechanisms, explicit image
 alternatives, exposed ARIA image names, iframe accessible names, exact top-level landmark frames,
 nonempty unskipped heading ranks, repeated navigation names,
 resolved nonempty landmark-label references, distinct navigation names for
@@ -420,7 +432,8 @@ negative patterns, one rejects autofocus, one rejects media autoplay while
 accepting controlled media, one covers responsive and zoom-permitting viewport
 metadata, one rejects automatic meta refreshes and redirects, one rejects
 missing or duplicate roots and titles plus empty language/title values, and three cover
-the manual-review record.
+the manual-review record. One identifier fixture rejects empty,
+whitespace-containing, and duplicate document IDs.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -480,7 +493,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 12 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
+October 13 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -505,8 +518,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 11 report set superseded by
-  the current iframe-name revision.
+  v1 release ledger, including the clean October 12 report set superseded by
+  the current document-ID revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

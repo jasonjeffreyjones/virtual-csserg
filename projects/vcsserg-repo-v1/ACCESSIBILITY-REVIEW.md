@@ -10,7 +10,8 @@ navigation-label reference contract added October 7, 2026; distinct
 navigation-name contract added October 8, 2026; automatic-focus prohibition
 added October 9, 2026; automatic-media-playback prohibition added October 10,
 2026; atomic page-language and document-title contract added October 11, 2026;
-iframe accessible-name contract added October 12, 2026.
+iframe accessible-name contract added October 12, 2026; complete document-ID
+contract added October 13, 2026.
 
 ## Decision boundary
 
@@ -54,7 +55,14 @@ accessibility evaluation.
   descriptive or establish the values announced by a browser and screen reader
   (World Wide Web Consortium Web Accessibility Initiative, 2026a, 2026b). The
   verifier also checks explicit image alternatives, local references, and
-  duplicate IDs.
+  document identifiers. All 328 current `id` attributes are nonempty, contain
+  no ASCII whitespace, and are unique within their page. The October 13
+  fixture covers all three HTML authoring constraints; the earlier whole-site
+  check covered only duplicates because empty IDs were discarded by the
+  parser. The HTML Standard defines IDs as document identifiers used by
+  fragments, scripts, and styles. This source rule also protects the verifier's
+  fragment and ARIA-reference resolution from ambiguous targets without
+  establishing browser behavior or WCAG conformance (WHATWG, 2026).
 - All 97 native HTML images have an explicit `alt` decision, and all four
   exposed composite figures with `role="img"` have accessible names. The
   October 2 coverage audit added the latter contract after finding that the
@@ -113,8 +121,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 851 interactive or keyboard-focusable
-  elements. Each of the 825 elements exposed to assistive technology has an
+- The whole-site parser now audits all 852 interactive or keyboard-focusable
+  elements. Each of the 826 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -220,6 +228,9 @@ accessibility evaluation.
 - On October 12, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 13, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -250,6 +261,8 @@ accessibility evaluation.
   byte-identical before the document-identity revision.
   The October 12 pre-change probe again found all 295 incoming files
   byte-identical before the iframe-name revision.
+  The October 13 pre-change probe again found all 295 incoming files
+  byte-identical before the document-ID revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -393,6 +406,9 @@ https://html.spec.whatwg.org/multipage/media.html
 
 WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
 https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
+
+WHATWG. (2026, October 12). *HTML Standard: Global attributes*.
+https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

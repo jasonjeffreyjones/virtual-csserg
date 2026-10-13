@@ -211,6 +211,18 @@ iframe names to Name, Role, Value and still requires further testing after a
 pass; this strict source contract does not establish browser announcement,
 focus behavior, or access to embedded content (World Wide Web Consortium,
 n.d.).
+On October 13, a document-identifier audit found 328 `id` attributes across
+the 39 public pages, all nonempty, free of ASCII whitespace, and unique within
+their documents. The whole-site verifier already rejected duplicate values,
+but its parser discarded empty IDs and did not reject whitespace. Identifier
+validation is now one page-level function, and a focused fixture covers all
+three constraints. The HTML Standard requires those properties because IDs
+are document identifiers used by fragments, scripting, and styling. This
+source rule also removes ambiguity from the Project's fragment and ARIA
+reference checks, but it does not establish rendered behavior or WCAG
+conformance (WHATWG, 2026). A supplemental `w3m` pass returned zero for all 26
+current 40- and 120-column views and placed “Skip to content” first; it remains
+linearized text-order evidence only.
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -436,6 +448,9 @@ https://html.spec.whatwg.org/multipage/media.html
 
 WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
 https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
+
+WHATWG. (2026, October 12). *HTML Standard: Global attributes*.
+https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
