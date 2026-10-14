@@ -19,7 +19,7 @@ derivative PDF source.
 Quarto uses a writable temporary cache. The host has no TeX PDF engine, so the
 short-report renderer uses the optional build-only packages in
 `requirements-publication.txt`. These packages do not become website or
-production dependencies. The current short report occupies three pages; the
+production dependencies. The current short report occupies four pages; the
 requirement is two columns and no more than ten pages, not an exact page count.
 
 ```bash
@@ -56,7 +56,12 @@ annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
 The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
-non-passing result. The whole-site check requires exactly one `html` element
+non-passing result. Every HTML file must decode as UTF-8 and contain exactly
+one short-form `<meta charset="utf-8">` declaration serialized completely
+within its first 1024 bytes. A focused fixture rejects invalid bytes, a missing,
+non-UTF-8, duplicate, or late declaration, and the legacy `http-equiv` form.
+This source check does not inspect a production HTTP `Content-Type` header or
+establish browser decoding. The whole-site check requires exactly one `html` element
 with `lang="en"` and exactly one nonempty `title` element per page. A focused
 fixture rejects a missing language, an empty title, and duplicate roots or
 titles; the source rule does not establish whether a title is sufficiently

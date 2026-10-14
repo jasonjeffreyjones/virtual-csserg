@@ -1,5 +1,6 @@
 import importlib.util
 from pathlib import Path
+import tempfile
 import unittest
 
 
@@ -32,6 +33,78 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_character_encoding_is_early_atomic_and_utf8(self):
+        valid = parse(
+            '<!doctype html><html lang="en"><head><meta charset="UTF-8">'
+            "<title>Evidence brief</title></head><body></body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(valid, "valid.html"), []
+        )
+
+        missing = parse(
+            '<!doctype html><html lang="en"><head><title>Evidence brief</title>'
+            "</head><body></body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(missing, "missing.html"),
+            [
+                "missing.html: expected one character encoding declaration, found 0"
+            ],
+        )
+
+        invalid = parse('<meta charset="iso-8859-1"><title>Invalid</title>')
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(invalid, "invalid.html"),
+            [
+                "invalid.html: character encoding declaration must use "
+                "meta charset=utf-8"
+            ],
+        )
+
+        legacy = parse(
+            '<meta http-equiv="content-type" '
+            'content="text/html; charset=utf-8"><title>Legacy</title>'
+        )
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(legacy, "legacy.html"),
+            [
+                "legacy.html: character encoding declaration must use "
+                "meta charset=utf-8"
+            ],
+        )
+
+        duplicated = parse(
+            '<meta charset="utf-8"><meta http-equiv="content-type" '
+            'content="text/html; charset=utf-8"><title>Duplicate</title>'
+        )
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(duplicated, "duplicate.html"),
+            [
+                "duplicate.html: expected one character encoding declaration, found 2"
+            ],
+        )
+
+        late = parse("<!--" + "x" * 1024 + '--><meta charset="utf-8">')
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(late, "late.html"),
+            [
+                "late.html: character encoding declaration ends after the first "
+                "1024 bytes"
+            ],
+        )
+
+        with tempfile.TemporaryDirectory() as temporary:
+            invalid_path = Path(temporary) / "invalid.html"
+            invalid_path.write_bytes(b'<meta charset="utf-8">\xff')
+            undecodable = VERIFY.parse_page(invalid_path)
+        self.assertEqual(
+            VERIFY.page_character_encoding_problems(
+                undecodable, "not-utf8.html"
+            ),
+            ["not-utf8.html: source is not valid UTF-8"],
+        )
+
     def test_document_identifiers_are_nonempty_whitespace_free_and_unique(self):
         valid = parse(
             '<a id="overview" href="#results">Overview</a>'

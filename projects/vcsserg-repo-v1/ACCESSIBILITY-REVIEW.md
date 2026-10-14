@@ -11,7 +11,8 @@ navigation-name contract added October 8, 2026; automatic-focus prohibition
 added October 9, 2026; automatic-media-playback prohibition added October 10,
 2026; atomic page-language and document-title contract added October 11, 2026;
 iframe accessible-name contract added October 12, 2026; complete document-ID
-contract added October 13, 2026.
+contract added October 13, 2026; atomic early UTF-8 declaration contract added
+October 14, 2026.
 
 ## Decision boundary
 
@@ -63,6 +64,13 @@ accessibility evaluation.
   fragments, scripts, and styles. This source rule also protects the verifier's
   fragment and ARIA-reference resolution from ambiguous targets without
   establishing browser behavior or WCAG conformance (WHATWG, 2026).
+  All 39 files also decode as UTF-8 and contain exactly one short-form
+  `<meta charset="utf-8">` declaration completed within their first 1024
+  bytes. The October 14 fixture rejects undecodable source plus missing,
+  non-UTF-8, duplicate, legacy `http-equiv`, and late declarations. The HTML
+  Standard requires UTF-8 and early declaration; this source rule does not
+  inspect a production response header or establish browser decoding (WHATWG,
+  2026).
 - All 97 native HTML images have an explicit `alt` decision, and all four
   exposed composite figures with `role="img"` have accessible names. The
   October 2 coverage audit added the latter contract after finding that the
@@ -121,8 +129,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 852 interactive or keyboard-focusable
-  elements. Each of the 826 elements exposed to assistive technology has an
+- The whole-site parser now audits all 853 interactive or keyboard-focusable
+  elements. Each of the 827 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -231,6 +239,9 @@ accessibility evaluation.
 - On October 13, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 14, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -263,6 +274,8 @@ accessibility evaluation.
   byte-identical before the iframe-name revision.
   The October 13 pre-change probe again found all 295 incoming files
   byte-identical before the document-ID revision.
+  The October 14 pre-change probe again found all 295 incoming files
+  byte-identical before the character-encoding revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -409,6 +422,9 @@ https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
 
 WHATWG. (2026, October 12). *HTML Standard: Global attributes*.
 https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
+
+WHATWG. (2026, October 14). *HTML Standard: Specifying the document's character
+encoding*. https://html.spec.whatwg.org/multipage/semantics.html#charset
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

@@ -118,6 +118,9 @@ class Result:
 class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
+        self.character_encoding_declarations = []
+        self.decode_error = None
+        self.source = ""
         self.autofocus_elements = []
         self.autoplay_media = []
         self.description = ""
@@ -168,6 +171,10 @@ class PageParser(HTMLParser):
         self.title_records = []
         self.viewport_contents = []
 
+    def feed(self, data):
+        self.source += data
+        super().feed(data)
+
     @property
     def title(self):
         if not self.title_records:
@@ -176,6 +183,37 @@ class PageParser(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        if tag == "meta" and (
+            "charset" in attributes
+            or attributes.get("http-equiv", "").strip().lower() == "content-type"
+        ):
+            metadata_attributes = {
+                name
+                for name in ("name", "http-equiv", "charset", "itemprop")
+                if name in attributes
+            }
+            line, column = self.getpos()
+            lines = self.source.splitlines(keepends=True)
+            character_start = sum(len(item) for item in lines[: line - 1]) + column
+            start_tag = self.get_starttag_text()
+            declaration_end = len(
+                (self.source[:character_start] + start_tag).encode("utf-8")
+            )
+            self.character_encoding_declarations.append(
+                {
+                    "kind": (
+                        "charset"
+                        if metadata_attributes == {"charset"}
+                        else "http-equiv"
+                    ),
+                    "value": (
+                        attributes.get("charset")
+                        if "charset" in attributes
+                        else attributes.get("content")
+                    ),
+                    "end_byte": declaration_end,
+                }
+            )
         if "autofocus" in attributes:
             self.autofocus_elements.append(tag)
         if tag in {"audio", "video"} and "autoplay" in attributes:
@@ -476,8 +514,16 @@ class PageParser(HTMLParser):
 
 
 def parse_page(path):
+    raw_source = path.read_bytes()
+    decode_error = None
+    try:
+        source = raw_source.decode("utf-8")
+    except UnicodeDecodeError as error:
+        decode_error = str(error)
+        source = raw_source.decode("utf-8", errors="replace")
     parser = PageParser()
-    parser.feed(path.read_text(encoding="utf-8"))
+    parser.decode_error = decode_error
+    parser.feed(source)
     return parser
 
 
@@ -811,6 +857,38 @@ def page_identity_problems(parsed, relative):
         )
     elif not parsed.title:
         problems.append(f"{relative}: missing title")
+    return problems
+
+
+def page_character_encoding_problems(parsed, relative):
+    """Return source-level UTF-8 declaration and byte-encoding problems."""
+    problems = []
+    if parsed.decode_error:
+        problems.append(f"{relative}: source is not valid UTF-8")
+
+    declarations = parsed.character_encoding_declarations
+    if len(declarations) != 1:
+        problems.append(
+            f"{relative}: expected one character encoding declaration, "
+            f"found {len(declarations)}"
+        )
+        return problems
+
+    declaration = declarations[0]
+    if (
+        declaration["kind"] != "charset"
+        or declaration["value"] is None
+        or declaration["value"].lower() != "utf-8"
+    ):
+        problems.append(
+            f"{relative}: character encoding declaration must use "
+            "meta charset=utf-8"
+        )
+    if declaration["end_byte"] > 1024:
+        problems.append(
+            f"{relative}: character encoding declaration ends after "
+            "the first 1024 bytes"
+        )
     return problems
 
 
@@ -1389,6 +1467,10 @@ def check_html_and_css():
     embedded_frames = sum(
         len(parsed.iframe_records) for parsed in parsed_pages.values()
     )
+    character_encoding_declarations = sum(
+        len(parsed.character_encoding_declarations)
+        for parsed in parsed_pages.values()
+    )
     navigation_landmarks = sum(
         len(parsed.navigation_landmarks) for parsed in parsed_pages.values()
     )
@@ -1418,6 +1500,7 @@ def check_html_and_css():
 
     for page, parsed in parsed_pages.items():
         relative = page.relative_to(PROJECT_ROOT)
+        problems.extend(page_character_encoding_problems(parsed, relative))
         identity_problems = page_identity_problems(parsed, relative)
         problems.extend(identity_problems)
         if not identity_problems:
@@ -1508,7 +1591,8 @@ def check_html_and_css():
     return Result(
         "Static HTML/CSS site",
         not problems,
-        f"{len(html_pages)} HTML page(s) with one English language declaration, "
+        f"{len(html_pages)} HTML page(s) with {character_encoding_declarations} "
+        "early UTF-8 character encoding declaration(s), one English language declaration, "
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{document_ids} conforming document identifier(s), "

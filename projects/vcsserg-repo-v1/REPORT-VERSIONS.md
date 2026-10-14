@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 13, 2026 at 08:12 UTC
+
+- **Superseded:** October 14, 2026
+- **Archive key:**
+  [`22da317edfb33afd86b6753e80e56872f4d0f995`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/22da317edfb33afd86b6753e80e56872f4d0f995)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before character encoding became an atomic whole-site regression
+  contract.
+- **Reason:** The outgoing reports accurately documented conforming document
+  identifiers, but the verifier relied on implicit UTF-8 decoding and did not
+  preserve declaration count, value, syntax, or early byte placement. The next
+  release requires valid UTF-8 bytes and one short-form UTF-8 declaration
+  completed within the first 1024 bytes, covers five failure classes with one
+  fixture, and records the October 14 probe of all 295 incoming files without
+  claiming browser decoding or production response-header behavior.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/22da317edfb33afd86b6753e80e56872f4d0f995/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/22da317edfb33afd86b6753e80e56872f4d0f995/projects/vcsserg-repo-v1)
+
 ### Updated through October 12, 2026 at 08:37 UTC
 
 - **Superseded:** October 13, 2026

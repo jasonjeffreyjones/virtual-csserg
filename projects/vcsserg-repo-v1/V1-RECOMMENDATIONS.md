@@ -223,6 +223,15 @@ reference checks, but it does not establish rendered behavior or WCAG
 conformance (WHATWG, 2026). A supplemental `w3m` pass returned zero for all 26
 current 40- and 120-column views and placed “Skip to content” first; it remains
 linearized text-order evidence only.
+On October 14, a character-encoding audit found that all 39 public HTML files
+decode as UTF-8 and contain one short-form `<meta charset="utf-8">`
+declaration completed within the first 1024 bytes. The parser now converts
+invalid bytes into a clean verifier failure and preserves declaration count,
+value, syntax, and byte position. One focused fixture rejects undecodable
+source plus missing, non-UTF-8, duplicate, legacy `http-equiv`, and late
+declarations. The HTML Standard requires UTF-8 and early declaration, but this
+source rule does not inspect production response headers or establish browser
+decoding (WHATWG, 2026).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -451,6 +460,9 @@ https://html.spec.whatwg.org/multipage/interaction.html#the-autofocus-attribute
 
 WHATWG. (2026, October 12). *HTML Standard: Global attributes*.
 https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
+
+WHATWG. (2026, October 14). *HTML Standard: Specifying the document's character
+encoding*. https://html.spec.whatwg.org/multipage/semantics.html#charset
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

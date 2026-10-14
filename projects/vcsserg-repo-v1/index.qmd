@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 13, 2026. The validated
+All seven automated promise groups pass on October 14, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -40,7 +40,9 @@ source-owned caption, and the whole-site parser rejects an unnamed table. It als
 accessible names and valid ARIA targets and expanded states on exposed
 interactive and keyboard-focusable elements. Every page now also must expose
 exactly one `html` element with `lang="en"`, one nonempty title, one banner,
-one main region, and one content-information landmark;
+one main region, and one content-information landmark. Each file must also
+decode as UTF-8 and carry exactly one short-form UTF-8 character encoding
+declaration completed within its first 1024 bytes;
 the context-aware parser does not misclassify headers or footers nested in a
 main, article, aside, navigation, or section region. Positive `tabindex`
 values are now rejected so source order is not overridden by an author-set tab
@@ -54,10 +56,10 @@ intentional user action. Every iframe must now also have a nonempty name from
 `aria-labelledby`, `aria-label`, or `title`; the current public tree contains
 no iframes. Every document ID must be nonempty, free of ASCII whitespace, and
 unique within its page. The source
-contracts now pass across 39 HTML pages, 328 conforming document IDs, 160 named navigation landmarks, 97 native images,
-4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 852
+contracts now pass across 39 HTML pages, 39 early UTF-8 declarations, 328 conforming document IDs, 160 named navigation landmarks, 97 native images,
+4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 853
 interactive or keyboard-focusable elements: all four exposed ARIA images and
-all 826 exposed interactive elements are named, while 26 Quarto source-line
+all 827 exposed interactive elements are named, while 26 Quarto source-line
 anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
 public element uses a positive value or declares `autofocus` or media
 `autoplay`.
@@ -297,6 +299,17 @@ source rule also protects fragment and ARIA-reference resolution from invalid
 or ambiguous targets, but it does not establish rendered behavior or WCAG
 conformance (WHATWG, 2026).
 
+On October 14, a character-encoding audit found that all 39 public HTML files
+decode as UTF-8 and contain exactly one `<meta charset="utf-8">` declaration
+completed within the first 1024 bytes. The verifier previously decoded source
+as UTF-8 but would terminate on invalid bytes and did not preserve declaration
+count, value, syntax, or position as reported failures. One focused fixture now
+rejects undecodable bytes plus missing, non-UTF-8, duplicate, legacy
+`http-equiv`, and late declarations. The HTML Standard requires UTF-8 and an
+encoding declaration serialized completely within the first 1024 bytes. This
+source contract does not inspect a production HTTP `Content-Type` header or
+establish how a browser decodes a response (WHATWG, 2026).
+
 The result should be read as a regression report. Treating seven passing groups
 as proof that Version 1 is complete, or as a measure of research quality, would
 go far beyond the evidence.
@@ -376,7 +389,7 @@ documented runtime contingency, not a coequal long-term format.
 
 This report happens to be a one-chapter Quarto book. The Executive Summary
 derives its narrow findings from this account, and the short report currently
-fits the same evidence into a three-page two-column PDF. Neither is an exact-count
+fits the same evidence into a four-page two-column PDF. Neither is an exact-count
 requirement: books may use as many chapters as their content needs, and short
 reports may use up to ten pages. The three forms link to one another.
 
@@ -441,7 +454,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 13 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 14 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -459,7 +472,7 @@ September 30 revision, and all 267 files before the October 1 revision.
 The October 7 comparison established all 293 incoming files as byte-identical:
 291 unchanged worktree files matched directly, while the production digests for
 the two already-edited public pages matched their clean incoming `HEAD`
-versions. The October 8, October 9, October 10, October 11, October 12, and October 13 pre-change probes each found all 295
+versions. The October 8, October 9, October 10, October 11, October 12, October 13, and October 14 pre-change probes each found all 295
 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
@@ -541,6 +554,10 @@ WHATWG. (2026, October 7). *HTML Standard: The autofocus attribute*.
 
 WHATWG. (2026, October 12). *HTML Standard: Global attributes*.
 <https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute>
+
+WHATWG. (2026, October 14). *HTML Standard: Specifying the document's character
+encoding*.
+<https://html.spec.whatwg.org/multipage/semantics.html#charset>
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
