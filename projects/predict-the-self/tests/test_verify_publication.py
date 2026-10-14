@@ -233,6 +233,33 @@ class DisplayedResultClaimTests(unittest.TestCase):
                     expected_count=1,
                 )
 
+    def test_stale_training_ranking_interval_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/ranking.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"paired_comparison":'
+                '{"paired_case_bootstrap_95_ci_low":-0.020829}}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "-0.010000",
+                        source="results/ranking.json",
+                        pointer=(
+                            "/paired_comparison/"
+                            "paired_case_bootstrap_95_ci_low"
+                        ),
+                        format_spec="+.6f",
+                    ),
+                    project,
+                    {"results/ranking.json": "artifacts/ranking.json"},
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)

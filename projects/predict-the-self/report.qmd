@@ -1399,8 +1399,9 @@ publication. The verifier additionally resolves source and result-pointer
 annotations on the Executive Summary's 20 headline continuity, novelty, and
 development-agreement values, all 19 estimates and interval bounds in its
 stable-projection cross-validation table, all nine values in its volume-matched
-novel-token recovery table, and all 13 numeric occurrences in its status and
-plain-language finding cards. Every displayed value must equal
+novel-token recovery table, all 15 estimates and interval bounds in its
+training-only novel-token ranking table, and all 13 numeric occurrences in its
+status and plain-language finding cards. Every displayed value must equal
 its inventoried machine-readable result—or, for the frozen test-artifact count,
 the submission CSV's data-row count—at the declared precision and explicit
 sign convention. The same resolved claims

@@ -27,9 +27,10 @@ repeats the source-to-public identity check after publication. The Executive
 Summary's five headline continuity/novelty values, fifteen development
 agreement values, nineteen stable-projection cross-validation estimates and
 interval bounds, all nine values in the volume-matched novel-token recovery
-table, and thirteen numeric occurrences in the status and plain-language
-finding cards carry source, result-pointer, and display-format annotations.
-The verifier resolves all 61 against inventoried machine-readable
+table, all fifteen estimates and interval bounds in the training-only novel-
+token ranking table, and thirteen numeric occurrences in the status and plain-
+language finding cards carry source, result-pointer, and display-format
+annotations. The verifier resolves all 76 against inventoried machine-readable
 results or the frozen submission's CSV row count and rejects a missing
 annotation, an unlisted source, or a displayed-value mismatch. Explicit signed
 formats preserve the direction shown for effects and interval bounds.
