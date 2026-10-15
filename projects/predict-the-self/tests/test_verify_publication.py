@@ -260,6 +260,37 @@ class DisplayedResultClaimTests(unittest.TestCase):
                     expected_count=1,
                 )
 
+    def test_stale_response_length_interval_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/response_length.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"primary_comparison":'
+                '{"paired_case_bootstrap_95_ci_low":-1.23522}}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "-1.000000",
+                        source="results/response_length.json",
+                        pointer=(
+                            "/primary_comparison/"
+                            "paired_case_bootstrap_95_ci_low"
+                        ),
+                        format_spec="+.6f",
+                    ),
+                    project,
+                    {
+                        "results/response_length.json": (
+                            "artifacts/response_length.json"
+                        )
+                    },
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)
