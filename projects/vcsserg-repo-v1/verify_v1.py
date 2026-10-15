@@ -119,6 +119,7 @@ class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.character_encoding_declarations = []
+        self.doctype_declarations = []
         self.decode_error = None
         self.source = ""
         self.autofocus_elements = []
@@ -180,6 +181,24 @@ class PageParser(HTMLParser):
         if not self.title_records:
             return ""
         return "".join(self.title_records[0]).strip()
+
+    def handle_decl(self, decl):
+        if not decl.strip().lower().startswith("doctype"):
+            return
+        line, column = self.getpos()
+        lines = self.source.splitlines(keepends=True)
+        character_start = sum(len(item) for item in lines[: line - 1]) + column
+        prefix = self.source[:character_start]
+        leading_preamble = bool(
+            re.fullmatch(
+                r"\ufeff?(?:(?:[\t\n\f\r ])|(?:<!--.*?-->))*",
+                prefix,
+                flags=re.DOTALL,
+            )
+        )
+        self.doctype_declarations.append(
+            {"value": decl, "leading_preamble": leading_preamble}
+        )
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -840,6 +859,27 @@ def page_identifier_problems(parsed, relative):
     return problems
 
 
+def page_doctype_problems(parsed, relative):
+    """Return the Project's leading modern-HTML-doctype invariant."""
+    declarations = parsed.doctype_declarations
+    if len(declarations) != 1:
+        return [
+            f"{relative}: expected one doctype declaration, "
+            f"found {len(declarations)}"
+        ]
+
+    declaration = declarations[0]
+    if not re.fullmatch(
+        r"doctype[\t\n\f\r ]+html[\t\n\f\r ]*",
+        declaration["value"],
+        flags=re.IGNORECASE,
+    ):
+        return [f"{relative}: doctype must use <!doctype html>"]
+    if not declaration["leading_preamble"]:
+        return [f"{relative}: doctype is not the first non-comment document token"]
+    return []
+
+
 def page_identity_problems(parsed, relative):
     """Return project-level language and document-title checks."""
     problems = []
@@ -1471,6 +1511,9 @@ def check_html_and_css():
         len(parsed.character_encoding_declarations)
         for parsed in parsed_pages.values()
     )
+    doctype_declarations = sum(
+        len(parsed.doctype_declarations) for parsed in parsed_pages.values()
+    )
     navigation_landmarks = sum(
         len(parsed.navigation_landmarks) for parsed in parsed_pages.values()
     )
@@ -1500,6 +1543,7 @@ def check_html_and_css():
 
     for page, parsed in parsed_pages.items():
         relative = page.relative_to(PROJECT_ROOT)
+        problems.extend(page_doctype_problems(parsed, relative))
         problems.extend(page_character_encoding_problems(parsed, relative))
         identity_problems = page_identity_problems(parsed, relative)
         problems.extend(identity_problems)
@@ -1591,8 +1635,9 @@ def check_html_and_css():
     return Result(
         "Static HTML/CSS site",
         not problems,
-        f"{len(html_pages)} HTML page(s) with {character_encoding_declarations} "
-        "early UTF-8 character encoding declaration(s), one English language declaration, "
+        f"{len(html_pages)} HTML page(s) with {doctype_declarations} leading modern "
+        f"doctype(s), {character_encoding_declarations} early UTF-8 character "
+        "encoding declaration(s), one English language declaration, "
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{document_ids} conforming document identifier(s), "

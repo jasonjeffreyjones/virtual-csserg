@@ -232,6 +232,15 @@ source plus missing, non-UTF-8, duplicate, legacy `http-equiv`, and late
 declarations. The HTML Standard requires UTF-8 and early declaration, but this
 source rule does not inspect production response headers or establish browser
 decoding (WHATWG, 2026).
+On October 15, a document-preamble audit found one leading modern
+`<!doctype html>` declaration on every public page. The verifier previously
+did not preserve doctype count, form, or position. One focused fixture now
+accepts the case-insensitive short form after only an optional byte-order mark,
+comments, and ASCII whitespace and rejects missing, legacy, wrong, duplicate,
+and late declarations. The HTML Standard makes the doctype a required preamble
+because omission tends to trigger an incompatible rendering mode. This Project
+uses the short form because its generators can emit it; a source pass does not
+establish the browser's actual document mode (WHATWG, 2026).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -463,6 +472,9 @@ https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
 
 WHATWG. (2026, October 14). *HTML Standard: Specifying the document's character
 encoding*. https://html.spec.whatwg.org/multipage/semantics.html#charset
+
+WHATWG. (2026, October 14). *HTML Standard: The DOCTYPE*.
+https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

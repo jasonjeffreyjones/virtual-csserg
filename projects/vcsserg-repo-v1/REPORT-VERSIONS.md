@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 14, 2026 at 08:11 UTC
+
+- **Superseded:** October 15, 2026
+- **Archive key:**
+  [`860f2ce1b10e596ff71e8a6e462d32f74bf2c643`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/860f2ce1b10e596ff71e8a6e462d32f74bf2c643)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before a leading modern doctype became a whole-site regression
+  contract.
+- **Reason:** The outgoing reports accurately documented atomic UTF-8 source
+  and declarations but did not preserve the standards-mode preamble. The next
+  release requires exactly one leading short-form HTML doctype, covers missing,
+  legacy, wrong, duplicate, and late declarations with one fixture, and records
+  the October 15 probe of all 295 incoming files without claiming an observed
+  browser document mode.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/860f2ce1b10e596ff71e8a6e462d32f74bf2c643/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/860f2ce1b10e596ff71e8a6e462d32f74bf2c643/projects/vcsserg-repo-v1)
+
 ### Updated through October 13, 2026 at 08:12 UTC
 
 - **Superseded:** October 14, 2026

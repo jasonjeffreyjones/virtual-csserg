@@ -12,7 +12,7 @@ added October 9, 2026; automatic-media-playback prohibition added October 10,
 2026; atomic page-language and document-title contract added October 11, 2026;
 iframe accessible-name contract added October 12, 2026; complete document-ID
 contract added October 13, 2026; atomic early UTF-8 declaration contract added
-October 14, 2026.
+October 14, 2026; leading modern-doctype contract added October 15, 2026.
 
 ## Decision boundary
 
@@ -64,6 +64,13 @@ accessibility evaluation.
   fragments, scripts, and styles. This source rule also protects the verifier's
   fragment and ARIA-reference resolution from ambiguous targets without
   establishing browser behavior or WCAG conformance (WHATWG, 2026).
+  Each page also contains exactly one leading modern `<!doctype html>`
+  declaration, preceded only by permitted preamble content. The October 15
+  fixture rejects a missing, legacy, wrong, duplicate, or late doctype. The
+  HTML Standard calls the doctype a required preamble and explains that its
+  omission tends to select an incompatible rendering mode. This Project uses
+  the short form because all current generators can emit it; source inspection
+  does not establish the document mode selected by a browser (WHATWG, 2026).
   All 39 files also decode as UTF-8 and contain exactly one short-form
   `<meta charset="utf-8">` declaration completed within their first 1024
   bytes. The October 14 fixture rejects undecodable source plus missing,
@@ -129,8 +136,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 853 interactive or keyboard-focusable
-  elements. Each of the 827 elements exposed to assistive technology has an
+- The whole-site parser now audits all 854 interactive or keyboard-focusable
+  elements. Each of the 828 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -242,6 +249,9 @@ accessibility evaluation.
 - On October 14, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 15, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -276,6 +286,8 @@ accessibility evaluation.
   byte-identical before the document-ID revision.
   The October 14 pre-change probe again found all 295 incoming files
   byte-identical before the character-encoding revision.
+  The October 15 pre-change probe again found all 295 incoming files
+  byte-identical before the doctype revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -425,6 +437,9 @@ https://html.spec.whatwg.org/multipage/dom.html#the-id-attribute
 
 WHATWG. (2026, October 14). *HTML Standard: Specifying the document's character
 encoding*. https://html.spec.whatwg.org/multipage/semantics.html#charset
+
+WHATWG. (2026, October 14). *HTML Standard: The DOCTYPE*.
+https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

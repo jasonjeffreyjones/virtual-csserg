@@ -56,7 +56,13 @@ annotations, both PDF body columns, nonempty pages, and the ten-page ceiling.
 The Version 1 verifier also validates the open manual-accessibility worksheet:
 it derives the required sample from current Published summaries and Full Report
 pages and refuses a `Closed` record with missing environment evidence or any
-non-passing result. Every HTML file must decode as UTF-8 and contain exactly
+non-passing result. Every HTML file must begin, apart from an optional byte-order
+mark, comments, and ASCII whitespace, with exactly one modern
+`<!doctype html>` declaration. A focused fixture rejects a missing, legacy,
+wrong, duplicate, or late declaration. This deliberately excludes the optional
+legacy compatibility string because every current generator can emit the short
+form; the source rule does not observe a browser's document mode. Every HTML
+file must also decode as UTF-8 and contain exactly
 one short-form `<meta charset="utf-8">` declaration serialized completely
 within its first 1024 bytes. A focused fixture rejects invalid bytes, a missing,
 non-UTF-8, duplicate, or late declaration, and the legacy `http-equiv` form.

@@ -2,21 +2,22 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-14T08:11:20Z
+updated: 2026-10-15T08:13:38Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 14, 2026, all seven automated promise groups pass across
-39 HTML pages with 39 early UTF-8 declarations, 328 conforming document IDs, 160 named navigation landmarks, 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
-204 exposed headings, 853 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 827
+Active. On October 15, 2026, all seven automated promise groups pass across
+39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 328 conforming document IDs, 160 named navigation landmarks, 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
+204 exposed headings, 854 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 828
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
-static-site group requires every file to decode as UTF-8 and contain exactly
-one short-form UTF-8 encoding declaration completed within its first 1024
+static-site group requires every file to contain exactly one leading modern
+HTML doctype, decode as UTF-8, and contain exactly one short-form UTF-8
+encoding declaration completed within its first 1024
 bytes; exactly one `html` element with `lang="en"`, one
 nonempty document title, one page-level banner, main, and content-information landmark; the
 page to declare one `width=device-width` viewport without disabling scaling or
@@ -301,6 +302,15 @@ without performing the unavailable human review.
   duplicate, legacy `http-equiv`, and late declarations. The HTML Standard
   requires UTF-8 and early declaration. This source contract does not inspect
   a production HTTP `Content-Type` header or establish browser decoding.
+- An October 15 document-preamble audit found one leading modern
+  `<!doctype html>` declaration on each of the 39 public pages. The verifier
+  previously did not preserve declaration count, form, or position. One
+  focused fixture accepts the case-insensitive short form after only an
+  optional byte-order mark, comments, and ASCII whitespace and rejects missing,
+  legacy, wrong, duplicate, and late declarations. The HTML Standard calls the
+  doctype a required preamble because omission tends to trigger an incompatible
+  rendering mode. This stricter Project contract does not establish the
+  document mode selected by a browser.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -308,7 +318,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 14 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 15 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -378,6 +388,8 @@ without performing the unavailable human review.
   byte-identical.
   The October 14 pre-change probe again found all 295 incoming files
   byte-identical.
+  The October 15 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -404,19 +416,20 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 55 routine tests pass across 39 HTML pages with 39 early UTF-8 declarations, 328 conforming document IDs, 160 named
+All seven groups and all 56 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 328 conforming document IDs, 160 named
 navigation landmarks, 97 native
 images, four exposed ARIA images, no iframes, 38 named data tables, 204 exposed headings,
-853 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 14. Every page decodes as UTF-8 and has exactly one
+854 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 15. Every page has exactly one leading modern doctype,
+decodes as UTF-8, and has exactly one
 short-form encoding declaration completed within the first 1024 bytes, one
 English root-language declaration, one nonempty title, and one page-level banner, main, and
 content-information landmark. The verifier's success detail now
 reports the navigation-landmark count, responsive zoom-permitting viewport contract, plus exposed and
 safely hidden control counts directly, rather than leaving that coverage
 implicit.
-The checks now include valid UTF-8 source bytes and atomic early character
-encoding declarations, validated identity/biography data, independent Project
+The checks now include leading modern doctypes, valid UTF-8 source bytes and
+atomic early character encoding declarations, validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, atomic English page-language and nonempty-title
@@ -447,7 +460,8 @@ negative patterns, one rejects autofocus, one rejects media autoplay while
 accepting controlled media, one covers responsive and zoom-permitting viewport
 metadata, one rejects automatic meta refreshes and redirects, one rejects invalid
 UTF-8 source plus missing, non-UTF-8, duplicate, legacy, and late character
-encoding declarations, one rejects
+encoding declarations, one rejects a missing, legacy, wrong, duplicate, or late
+doctype, one rejects
 missing or duplicate roots and titles plus empty language/title values, and three cover
 the manual-review record. One identifier fixture rejects empty,
 whitespace-containing, and duplicate document IDs.
@@ -510,7 +524,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 14 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
+October 15 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 61 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -535,8 +549,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 13 report set superseded by
-  the current character-encoding revision.
+  v1 release ledger, including the clean October 14 report set superseded by
+  the current doctype revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

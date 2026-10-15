@@ -33,6 +33,47 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_doctype_is_single_modern_and_leading(self):
+        valid = parse(
+            '\ufeff<!-- generated report -->\n<!DOCTYPE HTML>\n<html lang="en"></html>'
+        )
+        self.assertEqual(VERIFY.page_doctype_problems(valid, "valid.html"), [])
+
+        missing = parse('<html lang="en"></html>')
+        self.assertEqual(
+            VERIFY.page_doctype_problems(missing, "missing.html"),
+            ["missing.html: expected one doctype declaration, found 0"],
+        )
+
+        legacy = parse(
+            '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">'
+            '<html lang="en"></html>'
+        )
+        self.assertEqual(
+            VERIFY.page_doctype_problems(legacy, "legacy.html"),
+            ["legacy.html: doctype must use <!doctype html>"],
+        )
+
+        wrong = parse('<!doctype svg><html lang="en"></html>')
+        self.assertEqual(
+            VERIFY.page_doctype_problems(wrong, "wrong.html"),
+            ["wrong.html: doctype must use <!doctype html>"],
+        )
+
+        duplicated = parse(
+            '<!doctype html><!doctype html><html lang="en"></html>'
+        )
+        self.assertEqual(
+            VERIFY.page_doctype_problems(duplicated, "duplicate.html"),
+            ["duplicate.html: expected one doctype declaration, found 2"],
+        )
+
+        late = parse('<meta charset="utf-8"><!doctype html><html lang="en"></html>')
+        self.assertEqual(
+            VERIFY.page_doctype_problems(late, "late.html"),
+            ["late.html: doctype is not the first non-comment document token"],
+        )
+
     def test_character_encoding_is_early_atomic_and_utf8(self):
         valid = parse(
             '<!doctype html><html lang="en"><head><meta charset="UTF-8">'
