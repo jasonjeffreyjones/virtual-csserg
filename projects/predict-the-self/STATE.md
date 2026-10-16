@@ -2,7 +2,7 @@
 title: "Predict the Self"
 status: Active
 publication: Published
-updated: 2026-10-15T09:06:27Z
+updated: 2026-10-16T09:05:53Z
 ---
 
 # Predict the Self — Current State
@@ -86,14 +86,15 @@ authoritative Project source before it mutates the public report tree; a stale
 Quarto resource or missing Project source leaves the existing publication
 untouched.
 The verifier now additionally resolves source, result-pointer, and format
-annotations on 92 Executive Summary values against inventoried machine-
+annotations on 115 Executive Summary values against inventoried machine-
 readable results or the frozen submission's CSV row count. This covers the 20
 headline figure/table values, all 19 estimates and interval bounds in the
 stable-projection cross-validation table, all nine precision, recall, and F1
 values in the volume-matched novel-token recovery table, all 15 estimates and
 interval bounds in the training-only novel-token ranking table, all 16 values
-in the response-length baseline decomposition table, and all 13 numeric
-occurrences in the status and plain-language finding cards, so a
+in the response-length baseline decomposition table, all 23 values in the no-
+oracle change-volume table, and all 13 numeric occurrences in the status and
+plain-language finding cards, so a
 missing annotation, unlisted source, stale displayed number, or incorrect
 explicit effect sign fails publication validation. It also binds the same resolved
 claims to all five figure-bar widths and to the accessible label's ordered
@@ -461,6 +462,10 @@ raw.
   Executive Summary's response-length baseline decomposition table to the two
   inventoried training results. A focused regression rejects a stale response-
   length interval bound.
+- Bound all twenty-three MAEs, paired effects, and displayed interval bounds in
+  the Executive Summary's no-oracle change-volume table to its inventoried
+  training result. A focused regression rejects a stale change-volume interval
+  bound.
 
 ## Publication and build structure
 
@@ -487,15 +492,16 @@ raw.
 - The guarded publisher checks built canonical artifacts against Project
   sources before any public-tree mutation; the verifier independently repeats
   the source-to-canonical and source-to-alias checks afterward.
-- The verifier resolves all 92 annotated values in the Executive Summary
+- The verifier resolves all 115 annotated values in the Executive Summary
   against their authoritative inventoried JSON results or the frozen
   submission's CSV row count at the declared precision and sign convention.
   The set comprises 20 headline figure/table values, all 19 estimates and
   interval bounds in the stable-projection cross-validation table, all nine
   values in the volume-matched novel-token recovery table, all 15 estimates and
   interval bounds in the training-only novel-token ranking table, all 16 values
-  in the response-length baseline decomposition table, and all 13 numeric
-  occurrences in the status and nine plain-language finding cards. It
+  in the response-length baseline decomposition table, all 23 values in the
+  no-oracle change-volume table, and all 13 numeric occurrences in the status
+  and nine plain-language finding cards. It
   additionally requires all five CSS bar widths to equal their source values
   on the stated 0–1 scale and requires the accessible label to contain the five
   displayed values in bar order. This does not bind the remaining secondary
@@ -610,7 +616,7 @@ raw.
   authoritative Project source.
 - Result annotations in the Executive Summary must retain an inventoried JSON
   or CSV source, a resolvable result pointer, and the declared numeric format;
-  the publication verifier requires exactly 92 such values. CSV claims are
+  the publication verifier requires exactly 115 such values. CSV claims are
   limited to data-row count, and display formats are limited to explicit fixed
   decimals or percentages with an optional required sign. Each of the five
   dense-figure bars must reference one uniquely identified claim, and the

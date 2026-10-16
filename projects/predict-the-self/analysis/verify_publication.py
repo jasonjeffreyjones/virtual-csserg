@@ -438,7 +438,7 @@ def main() -> int:
 
     artifacts = load_artifact_manifest()
     resolved_claims = validate_result_claims(
-        summary, PROJECT, artifacts, expected_count=92
+        summary, PROJECT, artifacts, expected_count=115
     )
     validate_figure_result_encodings(
         summary,
@@ -484,7 +484,7 @@ def main() -> int:
     validate_pdf_report_links(pdf)
 
     print(
-        "Predict the Self publication: one summary figure with 92 source-verified "
+        "Predict the Self publication: one summary figure with 115 source-verified "
         "displayed values, five source-verified bars and accessible values, "
         "two-chapter linked "
         f"Full Report, {len(artifacts)} artifacts, required phrase, and {len(pdf.pages)}-page "
