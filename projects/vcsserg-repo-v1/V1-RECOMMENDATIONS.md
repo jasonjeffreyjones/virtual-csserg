@@ -241,6 +241,16 @@ and late declarations. The HTML Standard makes the doctype a required preamble
 because omission tends to trigger an incompatible rendering mode. This Project
 uses the short form because its generators can emit it; a source pass does not
 establish the browser's actual document mode (WHATWG, 2026).
+On October 16, a start-tag audit found 6,263 attributes across 6,474 start tags
+in the 39 public pages, with no duplicate attribute name on any tag. The parser
+previously collapsed raw attribute lists into dictionaries before validation,
+so a later duplicate could overwrite the value seen by downstream rules. It
+now records names first, and one focused fixture rejects mixed-case duplicate
+`id`, `alt`, and `aria-label` declarations. The HTML Standard prohibits
+ASCII-case-insensitive duplicate attribute names on a start tag. This narrow
+source safeguard prevents ambiguous input from hiding inside later checks; it
+does not establish general HTML conformance or the DOM observed in a browser
+(WHATWG, 2026).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -475,6 +485,9 @@ encoding*. https://html.spec.whatwg.org/multipage/semantics.html#charset
 
 WHATWG. (2026, October 14). *HTML Standard: The DOCTYPE*.
 https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
+
+WHATWG. (2026, October 16). *HTML Standard: Attributes*.
+https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

@@ -120,6 +120,8 @@ class PageParser(HTMLParser):
         super().__init__()
         self.character_encoding_declarations = []
         self.doctype_declarations = []
+        self.attribute_count = 0
+        self.duplicate_attribute_records = []
         self.decode_error = None
         self.source = ""
         self.autofocus_elements = []
@@ -171,6 +173,7 @@ class PageParser(HTMLParser):
         self.text_parts = []
         self.title_records = []
         self.viewport_contents = []
+        self.start_tag_count = 0
 
     def feed(self, data):
         self.source += data
@@ -201,6 +204,16 @@ class PageParser(HTMLParser):
         )
 
     def handle_starttag(self, tag, attrs):
+        self.start_tag_count += 1
+        self.attribute_count += len(attrs)
+        attribute_name_counts = Counter(name.casefold() for name, _ in attrs)
+        duplicate_names = sorted(
+            name for name, count in attribute_name_counts.items() if count > 1
+        )
+        if duplicate_names:
+            self.duplicate_attribute_records.append(
+                (self.start_tag_count, tag, duplicate_names)
+            )
         attributes = dict(attrs)
         if tag == "meta" and (
             "charset" in attributes
@@ -855,6 +868,17 @@ def page_identifier_problems(parsed, relative):
     if duplicate_ids:
         problems.append(
             f"{relative}: duplicate id values: {', '.join(duplicate_ids)}"
+        )
+    return problems
+
+
+def page_attribute_problems(parsed, relative):
+    """Return HTML authoring-conformance problems for duplicate attributes."""
+    problems = []
+    for number, tag, names in parsed.duplicate_attribute_records:
+        problems.append(
+            f"{relative}: start tag {number} ({tag}) repeats attribute name(s): "
+            + ", ".join(names)
         )
     return problems
 
@@ -1518,6 +1542,8 @@ def check_html_and_css():
         len(parsed.navigation_landmarks) for parsed in parsed_pages.values()
     )
     document_ids = sum(len(parsed.id_values) for parsed in parsed_pages.values())
+    start_tags = sum(parsed.start_tag_count for parsed in parsed_pages.values())
+    attributes = sum(parsed.attribute_count for parsed in parsed_pages.values())
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1545,6 +1571,7 @@ def check_html_and_css():
         relative = page.relative_to(PROJECT_ROOT)
         problems.extend(page_doctype_problems(parsed, relative))
         problems.extend(page_character_encoding_problems(parsed, relative))
+        problems.extend(page_attribute_problems(parsed, relative))
         identity_problems = page_identity_problems(parsed, relative)
         problems.extend(identity_problems)
         if not identity_problems:
@@ -1637,7 +1664,8 @@ def check_html_and_css():
         not problems,
         f"{len(html_pages)} HTML page(s) with {doctype_declarations} leading modern "
         f"doctype(s), {character_encoding_declarations} early UTF-8 character "
-        "encoding declaration(s), one English language declaration, "
+        f"encoding declaration(s), {attributes} attributes across {start_tags} "
+        "start tags without duplicate names, one English language declaration, "
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{document_ids} conforming document identifier(s), "

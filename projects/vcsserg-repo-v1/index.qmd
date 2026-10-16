@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 15, 2026. The validated
+All seven automated promise groups pass on October 16, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -40,7 +40,10 @@ source-owned caption, and the whole-site parser rejects an unnamed table. It als
 accessible names and valid ARIA targets and expanded states on exposed
 interactive and keyboard-focusable elements. Every page now also must expose
 exactly one leading modern HTML doctype, one `html` element with `lang="en"`, one nonempty title, one banner,
-one main region, and one content-information landmark. Each file must also
+one main region, and one content-information landmark. Each start tag must use
+each attribute name only once under an ASCII case-insensitive comparison, so
+duplicate `id`, `alt`, ARIA, or metadata declarations cannot be collapsed
+before their values reach downstream checks. Each file must also
 decode as UTF-8 and carry exactly one short-form UTF-8 character encoding
 declaration completed within its first 1024 bytes;
 the context-aware parser does not misclassify headers or footers nested in a
@@ -56,10 +59,10 @@ intentional user action. Every iframe must now also have a nonempty name from
 `aria-labelledby`, `aria-label`, or `title`; the current public tree contains
 no iframes. Every document ID must be nonempty, free of ASCII whitespace, and
 unique within its page. The source
-contracts now pass across 39 HTML pages, 39 leading modern doctypes, 39 early UTF-8 declarations, 328 conforming document IDs, 160 named navigation landmarks, 97 native images,
-4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 854
+contracts now pass across 39 HTML pages, 39 leading modern doctypes, 39 early UTF-8 declarations, 6,263 attributes across 6,474 start tags without duplicate names, 328 conforming document IDs, 160 named navigation landmarks, 97 native images,
+4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 855
 interactive or keyboard-focusable elements: all four exposed ARIA images and
-all 828 exposed interactive elements are named, while 26 Quarto source-line
+all 829 exposed interactive elements are named, while 26 Quarto source-line
 anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
 public element uses a positive value or declares `autofocus` or media
 `autoplay`.
@@ -131,7 +134,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one leading modern doctype, English root declaration, nonempty title, banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive elements; scoped table headers; explicit native-image alternatives; valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one leading modern doctype, no duplicate attribute names, an English root declaration, nonempty title, banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive elements; scoped table headers; explicit native-image alternatives; valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -321,6 +324,17 @@ incompatible with current specifications. This stricter Project contract uses
 the short form because all current generators can emit it; source inspection
 does not observe the browser's actual document mode (WHATWG, 2026).
 
+On October 16, a start-tag audit found 6,263 attributes across 6,474 start tags
+in the 39 public pages, with no repeated attribute name on any one tag. The
+parser previously converted each raw attribute list directly to a dictionary,
+so a later duplicate could overwrite the value inspected by the verifier. It
+now records duplicate names first and compares them case-insensitively. One
+focused fixture rejects mixed-case duplicate `id`, `alt`, and `aria-label`
+attributes. The HTML Standard prohibits ASCII-case-insensitive duplicate names
+on one start tag. This narrow source rule protects downstream checks from
+ambiguous input; it is not a general conformance check and does not establish
+the DOM produced by a browser (WHATWG, 2026).
+
 The result should be read as a regression report. Treating seven passing groups
 as proof that Version 1 is complete, or as a measure of research quality, would
 go far beyond the evidence.
@@ -465,7 +479,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 15 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 16 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -483,7 +497,7 @@ September 30 revision, and all 267 files before the October 1 revision.
 The October 7 comparison established all 293 incoming files as byte-identical:
 291 unchanged worktree files matched directly, while the production digests for
 the two already-edited public pages matched their clean incoming `HEAD`
-versions. The October 8 through October 15 pre-change probes each found all 295
+versions. The October 8 through October 16 pre-change probes each found all 295
 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
@@ -572,6 +586,9 @@ encoding*.
 
 WHATWG. (2026, October 14). *HTML Standard: The DOCTYPE*.
 <https://html.spec.whatwg.org/multipage/syntax.html#the-doctype>
+
+WHATWG. (2026, October 16). *HTML Standard: Attributes*.
+<https://html.spec.whatwg.org/multipage/syntax.html#attributes-2>
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

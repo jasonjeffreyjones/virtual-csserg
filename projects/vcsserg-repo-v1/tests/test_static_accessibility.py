@@ -33,6 +33,28 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_start_tags_reject_duplicate_attribute_names(self):
+        valid = parse(
+            '<main id="results"><img src="figure.png" alt="Trend figure"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_attribute_problems(valid, "attributes.html"), []
+        )
+
+        duplicated = parse(
+            '<main id="first" ID="second">'
+            '<img src="figure.png" alt="" ALT="Trend figure" '
+            'aria-label="Figure" aria-label="Ignored"></main>'
+        )
+        self.assertEqual(
+            VERIFY.page_attribute_problems(duplicated, "attributes.html"),
+            [
+                "attributes.html: start tag 1 (main) repeats attribute name(s): id",
+                "attributes.html: start tag 2 (img) repeats attribute name(s): "
+                "alt, aria-label",
+            ],
+        )
+
     def test_doctype_is_single_modern_and_leading(self):
         valid = parse(
             '\ufeff<!-- generated report -->\n<!DOCTYPE HTML>\n<html lang="en"></html>'

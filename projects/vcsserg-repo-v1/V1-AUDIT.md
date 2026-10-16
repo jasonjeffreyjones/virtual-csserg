@@ -16,19 +16,19 @@ does not establish rendered reflow, keyboard, or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on October 15, 2026 |
+| Documented promise | Evidence or test | Status on October 16, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one leading modern HTML doctype; valid UTF-8 bytes and exactly one short-form encoding declaration completed within the first 1024 bytes; exactly one English root declaration, nonempty title, page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty unskipped heading ranks; repeated navigation landmarks with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive or keyboard-focusable elements; scoped table headers; explicit native-image alternatives; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 328 conforming document IDs, 160 named navigation landmarks, 97 native images, 4 exposed ARIA images, 0 iframes, 38 named data tables, 204 exposed headings, 854 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has one leading `<!doctype html>`, decodes as UTF-8, and has one `<meta charset="utf-8">`, one `html lang="en"`, one nonempty title, the complete three-landmark frame, and a responsive viewport without a sub-200% zoom ceiling, none uses `autofocus`, media `autoplay`, or meta refresh, all 828 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one leading modern HTML doctype; no ASCII-case-insensitive duplicate attribute names on a start tag; valid UTF-8 bytes and exactly one short-form encoding declaration completed within the first 1024 bytes; exactly one English root declaration, nonempty title, page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty unskipped heading ranks; repeated navigation landmarks with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive or keyboard-focusable elements; scoped table headers; explicit native-image alternatives; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 6,263 attributes across 6,474 start tags without duplicate names, 328 conforming document IDs, 160 named navigation landmarks, 97 native images, 4 exposed ARIA images, 0 iframes, 38 named data tables, 204 exposed headings, 855 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has one leading `<!doctype html>`, decodes as UTF-8, and has one `<meta charset="utf-8">`, one `html lang="en"`, one nonempty title, the complete three-landmark frame, and a responsive viewport without a sub-200% zoom ceiling, none uses `autofocus`, media `autoplay`, or meta refresh, all 829 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, 293 before the October 4, October 6, and October 7 revisions, and 295 before the October 8 through October 15 revisions |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, 293 before the October 4, October 6, and October 7 revisions, and 295 before the October 8 through October 16 revisions |
 
 ## Current automated result
 
-On October 15, 2026, **all seven groups pass**. The final report-format gap
+On October 16, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -313,6 +313,17 @@ publication structure:
   an incompatible rendering mode. This Project requires the short form because
   every current generator can emit it; the source contract does not observe a
   browser's actual document mode (WHATWG, 2026).
+- On October 16, a start-tag audit found 6,263 attributes across 6,474 start
+  tags in the 39 public pages, with no duplicate name on any one tag. The
+  parser previously collapsed each raw attribute list into a dictionary before
+  validation, which could let a later duplicate overwrite the value inspected
+  by downstream rules. It now retains names first and compares them
+  case-insensitively. One focused fixture rejects mixed-case duplicate `id`,
+  `alt`, and `aria-label` declarations. The HTML Standard prohibits two
+  attributes on one start tag whose names are an ASCII case-insensitive match.
+  This narrow authoring-conformance rule prevents ambiguous input from hiding
+  inside later checks; it does not establish general HTML conformance or the
+  DOM produced by a browser (WHATWG, 2026).
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -330,7 +341,8 @@ The current verifier:
 
 - adds a dedicated three-format report group;
 - requires every HTML file to contain exactly one leading short-form HTML
-  doctype, decode as UTF-8, and contain exactly one
+  doctype, every start tag to use each attribute name at most once under an
+  ASCII case-insensitive comparison, every file to decode as UTF-8, and contain exactly one
   short-form UTF-8 encoding declaration within its first 1024 bytes, exactly
   one `html` element with `lang="en"`, one nonempty title,
   one page-level banner, main, and content-information
@@ -357,7 +369,8 @@ The current verifier:
   repeated navigation names on different link sets, missing
   or empty control label targets, missing controlled targets, invalid expanded state, unsafe
   hidden controls, positive `tabindex`, `autofocus`, media `autoplay`, invalid
-  bytes, a missing, legacy, wrong, duplicate, or late doctype, a missing,
+  bytes, a missing, legacy, wrong, duplicate, or late doctype, duplicate
+  attribute names on one start tag, a missing,
   non-UTF-8, duplicate, legacy, or late encoding declaration, an
   unnamed iframe, an empty, whitespace-containing, or duplicate document ID,
   a missing, duplicate, fixed-width, or
@@ -428,7 +441,7 @@ October 6 revisions, all 293 incoming files were byte-identical. On October 7,
 291 unchanged worktree files matched production directly; the production
 digests for the two already-edited public pages matched their clean incoming
   `HEAD` versions, establishing all 293 incoming files as byte-identical. Before
-the October 8 through October 15 revisions, all 295 incoming files were
+the October 8 through October 16 revisions, all 295 incoming files were
 byte-identical. Normal
 automation must still deploy and inventory this revised release.
 
@@ -473,6 +486,9 @@ encoding*. https://html.spec.whatwg.org/multipage/semantics.html#charset
 
 WHATWG. (2026, October 14). *HTML Standard: The DOCTYPE*.
 https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
+
+WHATWG. (2026, October 16). *HTML Standard: Attributes*.
+https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/

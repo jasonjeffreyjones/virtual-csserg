@@ -6,6 +6,26 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 15, 2026 at 08:13 UTC
+
+- **Superseded:** October 16, 2026
+- **Archive key:**
+  [`b92fce6fc7d29255afb200ff703d8c35fdd27c0c`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/b92fce6fc7d29255afb200ff703d8c35fdd27c0c)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before unique attribute names became a whole-site regression
+  contract.
+- **Reason:** The outgoing reports accurately documented the leading modern
+  doctype contract, but the parser collapsed each start tag's attributes into
+  a dictionary before validation and could hide duplicate names. The next
+  release preserves the raw names, rejects ASCII-case-insensitive duplicates
+  with one focused fixture, and records the October 16 probe of all 295
+  incoming files without claiming general HTML conformance or an observed DOM.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/b92fce6fc7d29255afb200ff703d8c35fdd27c0c/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/b92fce6fc7d29255afb200ff703d8c35fdd27c0c/projects/vcsserg-repo-v1)
+
 ### Updated through October 14, 2026 at 08:11 UTC
 
 - **Superseded:** October 15, 2026

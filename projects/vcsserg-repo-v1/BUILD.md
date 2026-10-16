@@ -62,7 +62,13 @@ mark, comments, and ASCII whitespace, with exactly one modern
 wrong, duplicate, or late declaration. This deliberately excludes the optional
 legacy compatibility string because every current generator can emit the short
 form; the source rule does not observe a browser's document mode. Every HTML
-file must also decode as UTF-8 and contain exactly
+start tag must also use each attribute name at most once under an ASCII
+case-insensitive comparison. The parser retains duplicate names before
+collapsing attributes for downstream checks, and a focused fixture rejects
+mixed-case duplicate `id`, `alt`, and ARIA attributes. This prevents ambiguous
+source from silently changing the values inspected by later rules; it is not a
+general HTML-conformance or rendered-DOM check. Every HTML file must also decode
+as UTF-8 and contain exactly
 one short-form `<meta charset="utf-8">` declaration serialized completely
 within its first 1024 bytes. A focused fixture rejects invalid bytes, a missing,
 non-UTF-8, duplicate, or late declaration, and the legacy `http-equiv` form.
