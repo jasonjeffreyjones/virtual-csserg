@@ -67,8 +67,13 @@ case-insensitive comparison. The parser retains duplicate names before
 collapsing attributes for downstream checks, and a focused fixture rejects
 mixed-case duplicate `id`, `alt`, and ARIA attributes. This prevents ambiguous
 source from silently changing the values inspected by later rules; it is not a
-general HTML-conformance or rendered-DOM check. Every HTML file must also decode
-as UTF-8 and contain exactly
+general HTML-conformance or rendered-DOM check. No HTML file may contain a
+`base` element. A focused fixture rejects both `href` and `target` overrides,
+because the former changes how browsers resolve document URLs while the latter
+changes the default navigable used by hyperlinks and forms. This project-level
+rule keeps filesystem-based local-path, fragment, and bypass checks faithful to
+the browser's navigation inputs; it does not observe navigation in a browser.
+Every HTML file must also decode as UTF-8 and contain exactly
 one short-form `<meta charset="utf-8">` declaration serialized completely
 within its first 1024 bytes. A focused fixture rejects invalid bytes, a missing,
 non-UTF-8, duplicate, or late declaration, and the legacy `http-equiv` form.

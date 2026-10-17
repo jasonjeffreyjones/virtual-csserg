@@ -33,6 +33,25 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_document_base_overrides_are_rejected(self):
+        valid = parse(
+            '<head><link rel="stylesheet" href="styles.css"></head>'
+            '<body><a href="#results">Results</a></body>'
+        )
+        self.assertEqual(
+            VERIFY.page_base_element_problems(valid, "valid.html"), []
+        )
+
+        overridden = parse(
+            '<head><base href="https://example.com/elsewhere/">'
+            '<base target="_blank"></head>'
+            '<body><a href="#results">Results</a></body>'
+        )
+        self.assertEqual(
+            VERIFY.page_base_element_problems(overridden, "base.html"),
+            ["base.html: expected no base elements, found 2"],
+        )
+
     def test_start_tags_reject_duplicate_attribute_names(self):
         valid = parse(
             '<main id="results"><img src="figure.png" alt="Trend figure"></main>'

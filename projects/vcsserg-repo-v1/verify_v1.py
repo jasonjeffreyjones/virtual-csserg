@@ -126,6 +126,7 @@ class PageParser(HTMLParser):
         self.source = ""
         self.autofocus_elements = []
         self.autoplay_media = []
+        self.base_elements = []
         self.description = ""
         self.assignment = None
         self.assignments = []
@@ -250,6 +251,8 @@ class PageParser(HTMLParser):
             self.autofocus_elements.append(tag)
         if tag in {"audio", "video"} and "autoplay" in attributes:
             self.autoplay_media.append(tag)
+        if tag == "base":
+            self.base_elements.append(attributes)
         element_id = attributes.get("id")
         if "id" in attributes:
             self.id_values.append(element_id or "")
@@ -881,6 +884,16 @@ def page_attribute_problems(parsed, relative):
             + ", ".join(names)
         )
     return problems
+
+
+def page_base_element_problems(parsed, relative):
+    """Keep local-reference checks faithful by rejecting document base overrides."""
+    if parsed.base_elements:
+        return [
+            f"{relative}: expected no base elements, "
+            f"found {len(parsed.base_elements)}"
+        ]
+    return []
 
 
 def page_doctype_problems(parsed, relative):
@@ -1544,6 +1557,7 @@ def check_html_and_css():
     document_ids = sum(len(parsed.id_values) for parsed in parsed_pages.values())
     start_tags = sum(parsed.start_tag_count for parsed in parsed_pages.values())
     attributes = sum(parsed.attribute_count for parsed in parsed_pages.values())
+    base_elements = sum(len(parsed.base_elements) for parsed in parsed_pages.values())
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1572,6 +1586,7 @@ def check_html_and_css():
         problems.extend(page_doctype_problems(parsed, relative))
         problems.extend(page_character_encoding_problems(parsed, relative))
         problems.extend(page_attribute_problems(parsed, relative))
+        problems.extend(page_base_element_problems(parsed, relative))
         identity_problems = page_identity_problems(parsed, relative)
         problems.extend(identity_problems)
         if not identity_problems:
@@ -1665,7 +1680,8 @@ def check_html_and_css():
         f"{len(html_pages)} HTML page(s) with {doctype_declarations} leading modern "
         f"doctype(s), {character_encoding_declarations} early UTF-8 character "
         f"encoding declaration(s), {attributes} attributes across {start_tags} "
-        "start tags without duplicate names, one English language declaration, "
+        "start tags without duplicate names, "
+        f"{base_elements} document base element(s), one English language declaration, "
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{document_ids} conforming document identifier(s), "

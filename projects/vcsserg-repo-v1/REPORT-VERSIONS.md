@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 16, 2026 at 08:11 UTC
+
+- **Superseded:** October 17, 2026
+- **Archive key:**
+  [`a974381f37316ef4ea9219a7386889ab3a537702`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/a974381f37316ef4ea9219a7386889ab3a537702)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before document base overrides became a whole-site regression
+  failure.
+- **Reason:** The outgoing reports accurately documented unique start-tag
+  attributes, but the verifier resolved local paths and fragments against each
+  file without guarding against a browser-visible `base` element that could
+  change the document base URL or default navigation target. The next release
+  rejects every `base` element with one focused fixture and records the
+  October 17 probe of all 295 incoming files without claiming observed browser
+  navigation.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/a974381f37316ef4ea9219a7386889ab3a537702/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/a974381f37316ef4ea9219a7386889ab3a537702/projects/vcsserg-repo-v1)
+
 ### Updated through October 15, 2026 at 08:13 UTC
 
 - **Superseded:** October 16, 2026

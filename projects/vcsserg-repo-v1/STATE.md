@@ -2,25 +2,29 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-16T08:11:28Z
+updated: 2026-10-17T08:08:20Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 16, 2026, all seven automated promise groups pass across
+Active. On October 17, 2026, all seven automated promise groups pass across
 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations,
-6,263 attributes across 6,474 start tags without duplicate names, 328 conforming document IDs, 160 named navigation landmarks, 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
-204 exposed headings, 855 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 829
+6,334 attributes across 6,497 start tags without duplicate names, no document
+base elements, 328 conforming document IDs, 160 named navigation landmarks,
+97 native images, four exposed ARIA images, no iframes, 38 named data tables,
+204 exposed headings, 856 interactive or keyboard-focusable elements, and
+seven first-party stylesheets. All four exposed ARIA images and all 830
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires every file to contain exactly one leading modern
 HTML doctype, decode as UTF-8, and contain exactly one short-form UTF-8
 encoding declaration completed within its first 1024
 bytes; every start tag to use each attribute name no more than once under an
-ASCII case-insensitive comparison; exactly one `html` element with `lang="en"`, one
+ASCII case-insensitive comparison; no document to contain a `base` element that
+can override URL resolution or the default navigation target; exactly one
+`html` element with `lang="en"`, one
 nonempty document title, one page-level banner, main, and content-information landmark; the
 page to declare one `width=device-width` viewport without disabling scaling or
 setting a nonnegative maximum scale below 2; no page to reload or redirect
@@ -323,6 +327,15 @@ without performing the unavailable human review.
   attribute names on one start tag. This narrow source contract prevents
   ambiguous input from hiding inside later rules; it is not a general HTML
   conformance check and does not establish the browser-produced DOM.
+- An October 17 document-base audit found no `base` element in the 39-page
+  public tree, but the verifier did not preserve that condition. Its local
+  paths, fragments, and first-anchor bypass check were resolved against each
+  source file even though HTML lets `base href` change the browser's document
+  base URL and `base target` change the default navigable for links and forms.
+  The parser now rejects every `base` element, and one focused fixture covers
+  both override forms. This strict static-site rule keeps the browser's
+  source-controlled navigation inputs aligned with the verifier's filesystem
+  model; it does not establish observed browser navigation or focus.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -404,6 +417,8 @@ without performing the unavailable human review.
   byte-identical.
   The October 16 pre-change probe again found all 295 incoming files
   byte-identical.
+  The October 17 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -430,11 +445,11 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 57 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 6,263 attributes across 6,474 start tags without duplicate names, 328 conforming document IDs, 160 named
+All seven groups and all 58 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 6,334 attributes across 6,497 start tags without duplicate names, no document base elements, 328 conforming document IDs, 160 named
 navigation landmarks, 97 native
 images, four exposed ARIA images, no iframes, 38 named data tables, 204 exposed headings,
-855 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 16. Every page has exactly one leading modern doctype,
+856 interactive or keyboard-focusable elements, and seven first-party
+stylesheets on October 17. Every page has exactly one leading modern doctype,
 decodes as UTF-8, and has exactly one
 short-form encoding declaration completed within the first 1024 bytes, one
 English root-language declaration, one nonempty title, and one page-level banner, main, and
@@ -443,7 +458,8 @@ reports the navigation-landmark count, responsive zoom-permitting viewport contr
 safely hidden control counts directly, rather than leaving that coverage
 implicit.
 The checks now include leading modern doctypes, unique case-insensitive
-attribute names within every start tag, valid UTF-8 source bytes and
+attribute names within every start tag, no document base URL or target
+overrides, valid UTF-8 source bytes and
 atomic early character encoding declarations, validated identity/biography data, independent Project
 lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
@@ -477,7 +493,8 @@ metadata, one rejects automatic meta refreshes and redirects, one rejects invali
 UTF-8 source plus missing, non-UTF-8, duplicate, legacy, and late character
 encoding declarations, one rejects a missing, legacy, wrong, duplicate, or late
 doctype, one rejects duplicate attribute names on a start tag, one rejects
-missing or duplicate roots and titles plus empty language/title values, and three cover
+document base URL and target overrides, one rejects missing or duplicate roots
+and titles plus empty language/title values, and three cover
 the manual-review record. One identifier fixture rejects empty,
 whitespace-containing, and duplicate document IDs.
 The generic check does not validate PDF page layout, research quality, public
@@ -539,7 +556,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 16 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 60 GiB
+October 17 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 60 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -564,8 +581,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 15 report set superseded by
-  the current duplicate-attribute revision.
+  v1 release ledger, including the clean October 16 report set superseded by
+  the current document-base revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

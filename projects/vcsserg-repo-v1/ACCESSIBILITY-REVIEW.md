@@ -13,7 +13,8 @@ added October 9, 2026; automatic-media-playback prohibition added October 10,
 iframe accessible-name contract added October 12, 2026; complete document-ID
 contract added October 13, 2026; atomic early UTF-8 declaration contract added
 October 14, 2026; leading modern-doctype contract added October 15, 2026;
-unique start-tag attribute-name contract added October 16, 2026.
+unique start-tag attribute-name contract added October 16, 2026; document-base
+override prohibition added October 17, 2026.
 
 ## Decision boundary
 
@@ -80,14 +81,22 @@ accessibility evaluation.
   inspect a production response header or establish browser decoding (WHATWG,
   2026).
 - The parser now preserves raw start-tag attribute names before converting
-  them to the mapping used by its other checks. All 6,263 attributes across
-  6,474 start tags in the current 39-page tree have names unique within their
+  them to the mapping used by its other checks. All 6,334 attributes across
+  6,497 start tags in the current 39-page tree have names unique within their
   tag. The October 16 fixture rejects mixed-case duplicate `id`, `alt`, and
   `aria-label` declarations. The HTML Standard prohibits two attributes on one
   start tag whose names are an ASCII case-insensitive match. This narrow
   authoring rule prevents ambiguous input from being silently collapsed before
   accessibility checks; it is not a general conformance check and does not
   establish the DOM produced by a browser (WHATWG, 2026).
+- No current public page contains a `base` element. The October 17 coverage
+  audit found that the verifier resolved paths and fragments against a page's
+  filesystem location without guarding against a source declaration that
+  changes the browser's document base URL or default navigation target. One
+  focused fixture now rejects both `href` and `target` forms. This strict
+  static-site rule protects the first-anchor bypass path and local-reference
+  checks from that mismatch; it does not establish navigation or focus in a
+  browser (WHATWG, 2026).
 - All 97 native HTML images have an explicit `alt` decision, and all four
   exposed composite figures with `role="img"` have accessible names. The
   October 2 coverage audit added the latter contract after finding that the
@@ -146,8 +155,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 855 interactive or keyboard-focusable
-  elements. Each of the 829 elements exposed to assistive technology has an
+- The whole-site parser now audits all 856 interactive or keyboard-focusable
+  elements. Each of the 830 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -265,6 +274,9 @@ accessibility evaluation.
 - On October 16, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 17, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -303,6 +315,8 @@ accessibility evaluation.
   byte-identical before the doctype revision.
   The October 16 pre-change probe again found all 295 incoming files
   byte-identical before the duplicate-attribute revision.
+  The October 17 pre-change probe again found all 295 incoming files
+  byte-identical before the document-base revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -458,6 +472,9 @@ https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
 
 WHATWG. (2026, October 16). *HTML Standard: Attributes*.
 https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+
+WHATWG. (2026, October 16). *HTML Standard: The base element*.
+https://html.spec.whatwg.org/multipage/semantics.html#the-base-element
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

@@ -251,6 +251,15 @@ ASCII-case-insensitive duplicate attribute names on a start tag. This narrow
 source safeguard prevents ambiguous input from hiding inside later checks; it
 does not establish general HTML conformance or the DOM observed in a browser
 (WHATWG, 2026).
+On October 17, a document-base audit found no `base` element in the 39-page
+public tree, but the verifier did not preserve that condition. Its local-path,
+fragment, and bypass checks resolved references against each file even though
+HTML lets a `base href` change the browser's document base URL and a `base
+target` change the default navigable for hyperlinks and forms. The parser now
+rejects every `base` element, and one focused fixture covers both override
+forms. This deliberately strict static-site rule keeps the verifier's
+filesystem model aligned with source-controlled browser navigation inputs; it
+does not observe actual navigation or focus (WHATWG, 2026).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -488,6 +497,9 @@ https://html.spec.whatwg.org/multipage/syntax.html#the-doctype
 
 WHATWG. (2026, October 16). *HTML Standard: Attributes*.
 https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+
+WHATWG. (2026, October 16). *HTML Standard: The base element*.
+https://html.spec.whatwg.org/multipage/semantics.html#the-base-element
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
