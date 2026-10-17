@@ -322,6 +322,37 @@ class DisplayedResultClaimTests(unittest.TestCase):
                     expected_count=1,
                 )
 
+    def test_stale_change_distribution_interval_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/change_distributions.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"outcomes":{"word_count":{"paired_crps_comparison":'
+                '{"paired_case_bootstrap_95_ci_low":1.008212}}}}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "+1.000000",
+                        source="results/change_distributions.json",
+                        pointer=(
+                            "/outcomes/word_count/paired_crps_comparison/"
+                            "paired_case_bootstrap_95_ci_low"
+                        ),
+                        format_spec="+.6f",
+                    ),
+                    project,
+                    {
+                        "results/change_distributions.json": (
+                            "artifacts/change_distributions.json"
+                        )
+                    },
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)

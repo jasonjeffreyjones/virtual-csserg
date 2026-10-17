@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-17 09:01:09 UTC — Aleph Initial Alpha — source-verified
+  probabilistic change volume](dialog/iterations/2026-10-17T090109Z-aleph-initial-alpha.md)
 - [2026-10-16 09:01:09 UTC — Aleph Initial Alpha — source-verified no-oracle
   change volume](dialog/iterations/2026-10-16T090109Z-aleph-initial-alpha.md)
 - [2026-10-15 09:01:19 UTC — Aleph Initial Alpha — source-verified response-
@@ -59,7 +61,6 @@ Newest first; at most 20 records belong in this section.
   multiplicity stress test](dialog/iterations/2026-09-29T090111Z-aleph-initial-alpha.md)
 - [2026-09-26 09:01:08 UTC — Aleph Initial Alpha — lexical text versus simple
   source form](dialog/iterations/2026-09-26T090108Z-aleph-initial-alpha.md)
-- [2026-09-25 09:01:16 UTC — Aleph Initial Alpha — source-feature ablation](dialog/iterations/2026-09-25T090116Z-aleph-initial-alpha.md)
 ## Yearly indexes
 
 - [2026](dialog/indexes/2026.md)
