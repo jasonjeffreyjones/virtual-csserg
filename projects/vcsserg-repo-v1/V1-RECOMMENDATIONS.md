@@ -260,6 +260,16 @@ rejects every `base` element, and one focused fixture covers both override
 forms. This deliberately strict static-site rule keeps the verifier's
 filesystem model aligned with source-controlled browser navigation inputs; it
 does not observe actual navigation or focus (WHATWG, 2026).
+On October 18, an ARIA-relationship coverage audit found that those earlier
+checks resolved ID references only for selected accessible-name and interactive
+element categories. Generic labeled regions could retain a missing
+`aria-labelledby` target without failing. The parser now inventories all eight
+WAI-ARIA 1.2 ID-reference attributes on every element and requires a nonempty
+value whose every token resolves within the page. All 19 current attributes
+and tokens pass, and one focused fixture covers the eight attribute names plus
+empty and missing failures. This source-integrity contract does not determine
+whether any relationship is semantically appropriate or exposed correctly by
+a browser (World Wide Web Consortium, 2023).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean

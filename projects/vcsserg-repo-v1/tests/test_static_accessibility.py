@@ -33,6 +33,31 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_aria_id_references_are_nonempty_and_resolve(self):
+        valid = parse(
+            '<div id="target">Current evidence</div>'
+            '<div aria-activedescendant="target" aria-controls="target" '
+            'aria-describedby="target" aria-details="target" '
+            'aria-errormessage="target" aria-flowto="target" '
+            'aria-labelledby="target" aria-owns="target"></div>'
+        )
+        self.assertEqual(
+            VERIFY.page_aria_reference_problems(valid, "references.html"), []
+        )
+
+        invalid = parse(
+            '<main aria-labelledby=""></main>'
+            '<button aria-controls="missing-panel missing-summary">Open</button>'
+        )
+        self.assertEqual(
+            VERIFY.page_aria_reference_problems(invalid, "references.html"),
+            [
+                "references.html: start tag 1 (main) has empty aria-labelledby",
+                "references.html: start tag 2 (button) aria-controls references "
+                "missing ids: missing-panel, missing-summary",
+            ],
+        )
+
     def test_document_base_overrides_are_rejected(self):
         valid = parse(
             '<head><link rel="stylesheet" href="styles.css"></head>'

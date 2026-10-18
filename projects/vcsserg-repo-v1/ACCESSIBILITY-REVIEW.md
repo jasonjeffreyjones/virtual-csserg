@@ -14,7 +14,8 @@ iframe accessible-name contract added October 12, 2026; complete document-ID
 contract added October 13, 2026; atomic early UTF-8 declaration contract added
 October 14, 2026; leading modern-doctype contract added October 15, 2026;
 unique start-tag attribute-name contract added October 16, 2026; document-base
-override prohibition added October 17, 2026.
+override prohibition added October 17, 2026; all-ARIA ID-reference integrity
+contract added October 18, 2026.
 
 ## Decision boundary
 
@@ -81,8 +82,8 @@ accessibility evaluation.
   inspect a production response header or establish browser decoding (WHATWG,
   2026).
 - The parser now preserves raw start-tag attribute names before converting
-  them to the mapping used by its other checks. All 6,334 attributes across
-  6,497 start tags in the current 39-page tree have names unique within their
+  them to the mapping used by its other checks. All 6,409 attributes across
+  6,523 start tags in the current 39-page tree have names unique within their
   tag. The October 16 fixture rejects mixed-case duplicate `id`, `alt`, and
   `aria-label` declarations. The HTML Standard prohibits two attributes on one
   start tag whose names are an ASCII case-insensitive match. This narrow
@@ -97,6 +98,19 @@ accessibility evaluation.
   static-site rule protects the first-anchor bypass path and local-reference
   checks from that mismatch; it does not establish navigation or focus in a
   browser (WHATWG, 2026).
+- All 19 current WAI-ARIA ID-reference attributes resolve all 19 source tokens
+  to unique IDs within their pages. The October 18 coverage audit found that
+  selected accessible-name and interactive-element checks resolved
+  `aria-labelledby` and `aria-controls`, while generic labeled regions were
+  outside those element-specific paths. The parser now inventories
+  `aria-activedescendant`, `aria-controls`, `aria-describedby`, `aria-details`,
+  `aria-errormessage`, `aria-flowto`, `aria-labelledby`, and `aria-owns` on
+  every element. One fixture exercises all eight and rejects empty or missing
+  references. WAI-ARIA 1.2 defines those values as same-document ID references
+  or ID-reference lists and specifies that unmatched references are ignored;
+  this stricter source rule prevents silent relationship loss but does not
+  establish semantic correctness or accessibility-tree exposure (World Wide
+  Web Consortium, 2023).
 - All 97 native HTML images have an explicit `alt` decision, and all four
   exposed composite figures with `role="img"` have accessible names. The
   October 2 coverage audit added the latter contract after finding that the
@@ -277,6 +291,9 @@ accessibility evaluation.
 - On October 17, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 18, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -317,6 +334,8 @@ accessibility evaluation.
   byte-identical before the duplicate-attribute revision.
   The October 17 pre-change probe again found all 295 incoming files
   byte-identical before the document-base revision.
+  The October 18 pre-change probe again found all 295 incoming files
+  byte-identical before the all-ARIA ID-reference revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.

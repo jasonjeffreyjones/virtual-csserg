@@ -6,6 +6,27 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 17, 2026 at 08:08 UTC
+
+- **Superseded:** October 18, 2026
+- **Archive key:**
+  [`e0a17209c6dafda70cf3c0a47caa79787a1d4deb`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/e0a17209c6dafda70cf3c0a47caa79787a1d4deb)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before all WAI-ARIA ID references became a whole-site regression
+  contract.
+- **Reason:** The outgoing reports accurately documented the document-base
+  prohibition, but ARIA target resolution still occurred only inside selected
+  element-specific checks. The next release inventories all eight WAI-ARIA 1.2
+  ID-reference attributes, rejects empty or missing references with one focused
+  fixture, and records the October 18 probe of all 295 incoming files without
+  claiming semantic relationship correctness or observed accessibility-tree
+  exposure.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/e0a17209c6dafda70cf3c0a47caa79787a1d4deb/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/e0a17209c6dafda70cf3c0a47caa79787a1d4deb/projects/vcsserg-repo-v1)
+
 ### Updated through October 16, 2026 at 08:11 UTC
 
 - **Superseded:** October 17, 2026

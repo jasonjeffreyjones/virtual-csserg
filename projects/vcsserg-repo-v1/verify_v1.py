@@ -46,6 +46,16 @@ ACCESSIBILITY_RESULT_FIELDS = (
 ACCESSIBILITY_RESULT_STATUSES = {"Pass", "Fail", "Not tested"}
 VALID_TABLE_HEADER_SCOPES = {"col", "colgroup", "row", "rowgroup"}
 ASCII_WHITESPACE = "\t\n\f\r "
+ARIA_ID_REFERENCE_ATTRIBUTES = (
+    "aria-activedescendant",
+    "aria-controls",
+    "aria-describedby",
+    "aria-details",
+    "aria-errormessage",
+    "aria-flowto",
+    "aria-labelledby",
+    "aria-owns",
+)
 NATIVE_INTERACTIVE_ELEMENTS = {
     "a",
     "area",
@@ -121,6 +131,7 @@ class PageParser(HTMLParser):
         self.character_encoding_declarations = []
         self.doctype_declarations = []
         self.attribute_count = 0
+        self.aria_reference_records = []
         self.duplicate_attribute_records = []
         self.decode_error = None
         self.source = ""
@@ -216,6 +227,16 @@ class PageParser(HTMLParser):
                 (self.start_tag_count, tag, duplicate_names)
             )
         attributes = dict(attrs)
+        for attribute in ARIA_ID_REFERENCE_ATTRIBUTES:
+            if attribute in attributes:
+                self.aria_reference_records.append(
+                    {
+                        "attribute": attribute,
+                        "ids": attributes[attribute].split(),
+                        "start_tag": self.start_tag_count,
+                        "tag": tag,
+                    }
+                )
         if tag == "meta" and (
             "charset" in attributes
             or attributes.get("http-equiv", "").strip().lower() == "content-type"
@@ -883,6 +904,26 @@ def page_attribute_problems(parsed, relative):
             f"{relative}: start tag {number} ({tag}) repeats attribute name(s): "
             + ", ".join(names)
         )
+    return problems
+
+
+def page_aria_reference_problems(parsed, relative):
+    """Require every source ARIA ID reference to resolve within its page."""
+    problems = []
+    document_ids = set(parsed.ids)
+    for record in parsed.aria_reference_records:
+        description = f"start tag {record['start_tag']} ({record['tag']})"
+        if not record["ids"]:
+            problems.append(
+                f"{relative}: {description} has empty {record['attribute']}"
+            )
+            continue
+        missing_ids = sorted(set(record["ids"]) - document_ids)
+        if missing_ids:
+            problems.append(
+                f"{relative}: {description} {record['attribute']} references "
+                f"missing ids: {', '.join(missing_ids)}"
+            )
     return problems
 
 
@@ -1558,6 +1599,14 @@ def check_html_and_css():
     start_tags = sum(parsed.start_tag_count for parsed in parsed_pages.values())
     attributes = sum(parsed.attribute_count for parsed in parsed_pages.values())
     base_elements = sum(len(parsed.base_elements) for parsed in parsed_pages.values())
+    aria_reference_attributes = sum(
+        len(parsed.aria_reference_records) for parsed in parsed_pages.values()
+    )
+    aria_reference_ids = sum(
+        len(record["ids"])
+        for parsed in parsed_pages.values()
+        for record in parsed.aria_reference_records
+    )
     problems = []
     titles = {}
     logo_path = (WEBSITE_ROOT / "images" / "csserg-transparent-logo.png").resolve()
@@ -1586,6 +1635,7 @@ def check_html_and_css():
         problems.extend(page_doctype_problems(parsed, relative))
         problems.extend(page_character_encoding_problems(parsed, relative))
         problems.extend(page_attribute_problems(parsed, relative))
+        problems.extend(page_aria_reference_problems(parsed, relative))
         problems.extend(page_base_element_problems(parsed, relative))
         identity_problems = page_identity_problems(parsed, relative)
         problems.extend(identity_problems)
@@ -1685,6 +1735,8 @@ def check_html_and_css():
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{document_ids} conforming document identifier(s), "
+        f"{aria_reference_attributes} ARIA ID-reference attribute(s) with "
+        f"{aria_reference_ids} resolved token(s), "
         f"{navigation_landmarks} named navigation landmark(s) with distinct "
         "labels for different link sets, "
         f"{sum(len(parsed.images) for parsed in parsed_pages.values())} native "

@@ -2,17 +2,18 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-17T08:08:20Z
+updated: 2026-10-18T08:12:38Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 17, 2026, all seven automated promise groups pass across
+Active. On October 18, 2026, all seven automated promise groups pass across
 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations,
-6,334 attributes across 6,497 start tags without duplicate names, no document
-base elements, 328 conforming document IDs, 160 named navigation landmarks,
+6,409 attributes across 6,523 start tags without duplicate names, no document
+base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes
+with 19 resolved tokens, 160 named navigation landmarks,
 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
 204 exposed headings, 856 interactive or keyboard-focusable elements, and
 seven first-party stylesheets. All four exposed ARIA images and all 830
@@ -53,8 +54,10 @@ entry and first-link bypass path. A tested automatic-media rule rejects even
 document-identity rule preserves every root and title occurrence so a later
 element cannot overwrite or merge invalid earlier state. A tested
 document-identifier rule requires every `id` attribute to be nonempty, contain
-no ASCII whitespace, and remain unique within its page. A tested iframe-name
-rule accepts a nonempty `title`, `aria-label`, or resolvable and nonempty
+no ASCII whitespace, and remain unique within its page. A tested ARIA-reference
+rule inventories all eight WAI-ARIA ID-reference attributes on every element,
+rejects empty values, and requires every token to match an in-document ID. A
+tested iframe-name rule accepts a nonempty `title`, `aria-label`, or resolvable and nonempty
 `aria-labelledby` reference and rejects absent, legacy-`name`, missing-target,
 and empty-target cases. A tested
 post-render normalizer makes the
@@ -336,6 +339,18 @@ without performing the unavailable human review.
   both override forms. This strict static-site rule keeps the browser's
   source-controlled navigation inputs aligned with the verifier's filesystem
   model; it does not establish observed browser navigation or focus.
+- An October 18 ARIA-relationship coverage audit found that target resolution
+  was confined to selected accessible-name and interactive-element checks, so
+  a generic labeled region could retain a missing `aria-labelledby` target.
+  The parser now inventories `aria-activedescendant`, `aria-controls`,
+  `aria-describedby`, `aria-details`, `aria-errormessage`, `aria-flowto`,
+  `aria-labelledby`, and `aria-owns` on every element and rejects an empty
+  value or any token without a matching ID. All 19 current attributes resolve
+  their 19 tokens. One focused fixture covers all eight attributes plus empty
+  and missing failures. WAI-ARIA 1.2 defines these as same-document ID
+  references or lists and directs user agents to ignore unmatched references;
+  this source contract does not establish semantic correctness or observed
+  accessibility-tree exposure.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -343,7 +358,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 16 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 18 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -419,6 +434,8 @@ without performing the unavailable human review.
   byte-identical.
   The October 17 pre-change probe again found all 295 incoming files
   byte-identical.
+  The October 18 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -445,11 +462,11 @@ It checks repository guidance, project memory/metadata, static HTML/CSS and
 local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 58 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 6,334 attributes across 6,497 start tags without duplicate names, no document base elements, 328 conforming document IDs, 160 named
+All seven groups and all 59 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 6,409 attributes across 6,523 start tags without duplicate names, no document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named
 navigation landmarks, 97 native
 images, four exposed ARIA images, no iframes, 38 named data tables, 204 exposed headings,
 856 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 17. Every page has exactly one leading modern doctype,
+stylesheets on October 18. Every page has exactly one leading modern doctype,
 decodes as UTF-8, and has exactly one
 short-form encoding declaration completed within the first 1024 bytes, one
 English root-language declaration, one nonempty title, and one page-level banner, main, and
@@ -465,6 +482,7 @@ lifecycle/publication state, footer-link group placement,
 iteration filename/metadata agreement, bounded recent links, complete yearly
 indexes, legacy-dialog digests, atomic English page-language and nonempty-title
 declarations, nonempty and ASCII-whitespace-free IDs unique within each page,
+nonempty and fully resolved ARIA ID-reference attributes,
 first-anchor bypass mechanisms, explicit image
 alternatives, exposed ARIA image names, iframe accessible names, exact top-level landmark frames,
 nonempty unskipped heading ranks, repeated navigation names,
@@ -493,7 +511,8 @@ metadata, one rejects automatic meta refreshes and redirects, one rejects invali
 UTF-8 source plus missing, non-UTF-8, duplicate, legacy, and late character
 encoding declarations, one rejects a missing, legacy, wrong, duplicate, or late
 doctype, one rejects duplicate attribute names on a start tag, one rejects
-document base URL and target overrides, one rejects missing or duplicate roots
+document base URL and target overrides, one rejects empty or missing ARIA
+ID-reference targets, one rejects missing or duplicate roots
 and titles plus empty language/title values, and three cover
 the manual-review record. One identifier fixture rejects empty,
 whitespace-containing, and duplicate document IDs.
@@ -556,7 +575,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 17 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 60 GiB
+October 18 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 60 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -581,8 +600,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 16 report set superseded by
-  the current document-base revision.
+  v1 release ledger, including the clean October 17 report set superseded by
+  the current all-ARIA ID-reference revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

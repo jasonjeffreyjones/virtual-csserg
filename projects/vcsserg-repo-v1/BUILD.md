@@ -87,8 +87,14 @@ be nonempty, contain no ASCII whitespace, and be unique within its document.
 The parser retains even invalid empty values, and one focused fixture covers
 all three failures. This authoring-conformance check protects fragment and
 ARIA reference targets but does not establish rendered behavior. The
-whole-site check also
-requires exactly one page-level
+whole-site check also requires every source `aria-activedescendant`,
+`aria-controls`, `aria-describedby`, `aria-details`, `aria-errormessage`,
+`aria-flowto`, `aria-labelledby`, and `aria-owns` value to contain at least one
+ID token and resolve every token within its page. One focused fixture exercises
+all eight WAI-ARIA ID-reference attributes and rejects empty or missing
+references. This source-level integrity check does not establish that a
+relationship is semantically appropriate or exposed as intended in a browser
+accessibility tree. The whole-site check also requires exactly one page-level
 banner, main, and content-information landmark. It recognizes native
 header/footer context so nested section and article structures are not
 misclassified as page landmarks. It requires every data table to have an
