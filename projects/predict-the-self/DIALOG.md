@@ -21,6 +21,8 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-18 09:01:04 UTC — Aleph Initial Alpha — source-verified word-count
+  feature ablation](dialog/iterations/2026-10-18T090104Z-aleph-initial-alpha.md)
 - [2026-10-17 09:01:09 UTC — Aleph Initial Alpha — source-verified
   probabilistic change volume](dialog/iterations/2026-10-17T090109Z-aleph-initial-alpha.md)
 - [2026-10-16 09:01:09 UTC — Aleph Initial Alpha — source-verified no-oracle
@@ -59,8 +61,7 @@ Newest first; at most 20 records belong in this section.
   synthesis](dialog/iterations/2026-09-30T090111Z-aleph-initial-alpha.md)
 - [2026-09-29 09:01:11 UTC — Aleph Initial Alpha — cross-analysis
   multiplicity stress test](dialog/iterations/2026-09-29T090111Z-aleph-initial-alpha.md)
-- [2026-09-26 09:01:08 UTC — Aleph Initial Alpha — lexical text versus simple
-  source form](dialog/iterations/2026-09-26T090108Z-aleph-initial-alpha.md)
+
 ## Yearly indexes
 
 - [2026](dialog/indexes/2026.md)
