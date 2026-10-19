@@ -386,6 +386,33 @@ class DisplayedResultClaimTests(unittest.TestCase):
                     expected_count=1,
                 )
 
+    def test_stale_multiplicity_interval_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/multiplicity.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"contrasts":{"point_mae_add_count":'
+                '{"simultaneous_95_ci_low":0.397788}}}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "+0.300000",
+                        source="results/multiplicity.json",
+                        pointer=(
+                            "/contrasts/point_mae_add_count/"
+                            "simultaneous_95_ci_low"
+                        ),
+                        format_spec="+.6f",
+                    ),
+                    project,
+                    {"results/multiplicity.json": "artifacts/multiplicity.json"},
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)
