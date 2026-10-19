@@ -15,7 +15,7 @@ component, and an automated Scholar runner whose documented wiring passes
 inspection. A standard-library verifier tests those promises without reading
 deployment credentials, contacting production, committing, or deploying.
 
-All seven automated promise groups pass on October 18, 2026. The validated
+All seven automated promise groups pass on October 19, 2026. The validated
 `scholars.json` record governs identity data, while canonical files under
 `scholars/` preserve PI-authored biographies. Scholar–Project pairing lasts for
 one invocation rather than becoming durable roster state. Every static and generated footer now separates About links from
@@ -45,7 +45,11 @@ each attribute name only once under an ASCII case-insensitive comparison, so
 duplicate `id`, `alt`, ARIA, or metadata declarations cannot be collapsed
 before their values reach downstream checks. No page may declare a `base`
 element that changes its document URL or default navigation target, preserving
-the reference model used by local-path, fragment, and bypass checks. Each file must also
+the reference model used by local-path, fragment, and bypass checks. Each page
+must serialize one explicit `head` before one explicit `body`, keep its title,
+encoding declaration, and viewport metadata in that head, and place every
+other source element and non-whitespace text inside one of those containers.
+Each file must also
 decode as UTF-8 and carry exactly one short-form UTF-8 character encoding
 declaration completed within its first 1024 bytes;
 the context-aware parser does not misclassify headers or footers nested in a
@@ -63,10 +67,10 @@ no iframes. Every document ID must be nonempty, free of ASCII whitespace, and
 unique within its page. Every WAI-ARIA ID-reference attribute must also be
 nonempty and resolve every token within its page, including relationships on
 generic regions outside the element-specific name checks. The source
-contracts now pass across 39 HTML pages, 39 leading modern doctypes, 39 early UTF-8 declarations, 6,409 attributes across 6,523 start tags without duplicate names, no document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named navigation landmarks, 97 native images,
-4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 856
+contracts now pass across 39 HTML pages, 39 leading modern doctypes, 39 early UTF-8 declarations, 39 explicit head/body pairs with head-owned document metadata, 6,462 attributes across 6,545 start tags without duplicate names, no document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named navigation landmarks, 97 native images,
+4 exposed ARIA images, 38 named data tables, 204 exposed headings, and 857
 interactive or keyboard-focusable elements: all four exposed ARIA images and
-all 830 exposed interactive elements are named, while 26 Quarto source-line
+all 831 exposed interactive elements are named, while 26 Quarto source-line
 anchors are safely hidden. Ten custom scroll regions use `tabindex="0"`; no
 public element uses a positive value or declares `autofocus` or media
 `autoplay`.
@@ -138,7 +142,7 @@ linked findings. The unselected alternatives remain labeled review artifacts.
 |---|---:|---|
 | Repository guidance | Pass | Required guidance, growth and report-archive procedures, and tested Project/Scholar creation commands exist. |
 | Project memory | Pass | Every Project and `_template` has bounded dialog navigation, immutable iteration/year indexes, verified legacy hashes where applicable, and valid state metadata. |
-| Static HTML/CSS | Pass | Public pages have exactly one leading modern doctype, no duplicate attribute names, an English root declaration, nonempty title, banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; nonempty, resolved ARIA ID-reference attributes; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive elements; scoped table headers; explicit native-image alternatives; valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
+| Static HTML/CSS | Pass | Public pages have exactly one leading modern doctype, no duplicate attribute names, one ordered explicit head/body pair with title, encoding, and viewport metadata in head, an English root declaration, nonempty title, banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; nonempty, resolved ARIA ID-reference attributes; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty headings without forward rank skips; repeated navigation with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive elements; scoped table headers; explicit native-image alternatives; valid ARIA relationships; no positive `tabindex` overrides; branding; complete footer links; Bootstrap; and resolvable local references. |
 | Public catalogs | Pass | Every Published Project and rostered Scholar is linked; biographies and metadata-derived update order agree with their sources. |
 | Three report forms | Pass | Every Published Project has a linked one-figure Executive Summary, Quarto Full Report, and short PDF. |
 | Scholar runner | Pass | Clean-tree, identity, Active-Project, runner-integrity, independent-validation, failure, commit, push, logging, and deployment gates pass. |
@@ -363,6 +367,20 @@ agents ignore unmatched references. This stricter source rule prevents silent
 relationship loss; it does not establish semantic appropriateness or observed
 accessibility-tree exposure (World Wide Web Consortium, 2023).
 
+On October 19, a document-container audit found one explicit `head` followed
+by one explicit `body` in all 39 public pages, with the title, character
+encoding declaration, and viewport metadata in the head and no source element
+or non-whitespace text outside those containers. The earlier atomic checks
+could each pass a declaration serialized in the wrong container because they
+validated occurrence and value independently of placement. One focused
+fixture now accepts the current skeleton and rejects misplaced metadata,
+duplicate containers, reversed or nested containers, and content outside both.
+The HTML Standard describes the head as document metadata, the body as document
+contents, and the conforming document order as head followed by body. This
+Project deliberately requires explicit start tags even where HTML permits
+omission; the source contract does not establish the browser-produced DOM
+(WHATWG, 2026).
+
 The result should be read as a regression report. Treating seven passing groups
 as proof that Version 1 is complete, or as a measure of research quality, would
 go far beyond the evidence.
@@ -507,7 +525,7 @@ gate remains:
   [`ACCESSIBILITY-REVIEW.md`](https://github.com/jasonjeffreyjones/virtual-csserg/blob/main/projects/vcsserg-repo-v1/ACCESSIBILITY-REVIEW.md).
   No Chromium, Chrome, or Firefox executable was available on this host.
 
-An October 18 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
+An October 19 supplemental `w3m` 0.5.3 pass returned zero for the 13 current
 sample pages at both 40 and 120 columns, and all 26 linearized views began with
 “Skip to content.” This is no-style text-order evidence, not graphical focus,
 responsive layout, or screen-reader evidence.
@@ -525,7 +543,7 @@ September 30 revision, and all 267 files before the October 1 revision.
 The October 7 comparison established all 293 incoming files as byte-identical:
 291 unchanged worktree files matched directly, while the production digests for
 the two already-edited public pages matched their clean incoming `HEAD`
-versions. The October 8 through October 18 pre-change probes each found all 295
+versions. The October 8 through October 19 pre-change probes each found all 295
 incoming files byte-identical.
 Public HTTP cannot
 enumerate remote-only files. That gap is covered by the deployment component's
@@ -620,6 +638,9 @@ WHATWG. (2026, October 16). *HTML Standard: Attributes*.
 
 WHATWG. (2026, October 16). *HTML Standard: The base element*.
 <https://html.spec.whatwg.org/multipage/semantics.html#the-base-element>
+
+WHATWG. (2026, October 16). *HTML Standard: The head element*.
+<https://html.spec.whatwg.org/multipage/semantics.html#the-head-element>
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 18, 2026 at 08:12 UTC
+
+- **Superseded:** October 19, 2026
+- **Archive key:**
+  [`5de83d4185d0aa1a429e439733856877b177a8e6`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/5de83d4185d0aa1a429e439733856877b177a8e6)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before explicit document containers and metadata placement became a
+  whole-site regression contract.
+- **Reason:** The outgoing reports accurately documented referential integrity
+  for all WAI-ARIA ID-reference attributes, but the title, character encoding,
+  and viewport checks validated occurrence and value without preserving their
+  document-container placement. The next release requires one explicit head
+  before one explicit body, head-owned document metadata, and no source content
+  outside both; adds a focused fixture; and records the October 19 probe of all
+  295 incoming files without claiming a browser-produced DOM or general HTML
+  conformance.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/5de83d4185d0aa1a429e439733856877b177a8e6/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/5de83d4185d0aa1a429e439733856877b177a8e6/projects/vcsserg-repo-v1)
+
 ### Updated through October 17, 2026 at 08:08 UTC
 
 - **Superseded:** October 18, 2026

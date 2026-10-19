@@ -73,6 +73,15 @@ because the former changes how browsers resolve document URLs while the latter
 changes the default navigable used by hyperlinks and forms. This project-level
 rule keeps filesystem-based local-path, fragment, and bypass checks faithful to
 the browser's navigation inputs; it does not observe navigation in a browser.
+Every HTML file must serialize exactly one explicit `head` before exactly one
+explicit `body`. The title, character encoding declaration, and viewport
+metadata must occur inside that head, and no other source element or
+non-whitespace text may occur outside the two containers. A focused fixture
+accepts the current skeleton and rejects duplicate, reversed, or nested
+containers, misplaced metadata, and outside content. HTML permits some
+container tags to be omitted, but this Project requires the explicit source
+form so independent occurrence checks cannot pass metadata in the wrong
+container. This source contract does not inspect the browser-produced DOM.
 Every HTML file must also decode as UTF-8 and contain exactly
 one short-form `<meta charset="utf-8">` declaration serialized completely
 within its first 1024 bytes. A focused fixture rejects invalid bytes, a missing,

@@ -33,6 +33,71 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_document_containers_are_explicit_ordered_and_own_metadata(self):
+        valid = parse(
+            '<html lang="en"><head><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width">'
+            '<title>Evidence brief</title></head><body><main></main></body></html>'
+        )
+        self.assertEqual(
+            VERIFY.page_document_structure_problems(valid, "valid.html"), []
+        )
+
+        misplaced_metadata = parse(
+            '<html lang="en"><head></head><body><meta charset="utf-8">'
+            '<meta name="viewport" content="width=device-width">'
+            '<title>Evidence brief</title></body></html>'
+        )
+        self.assertEqual(
+            VERIFY.page_document_structure_problems(
+                misplaced_metadata, "metadata.html"
+            ),
+            [
+                "metadata.html: 1 title element(s) outside the head element",
+                "metadata.html: 1 character encoding declaration(s) outside "
+                "the head element",
+                "metadata.html: 1 viewport declaration(s) outside the head "
+                "element",
+            ],
+        )
+
+        invalid_containers = parse(
+            '<html><body><head></head></body><div>Outside</div>Trailing</html>'
+        )
+        self.assertEqual(
+            VERIFY.page_document_structure_problems(
+                invalid_containers, "containers.html"
+            ),
+            [
+                "containers.html: head element must precede body element",
+                "containers.html: head element must not be inside body",
+                "containers.html: start tags outside head or body: 4 (div)",
+                "containers.html: contains non-whitespace text outside head or body",
+            ],
+        )
+
+        duplicate_head = parse(
+            "<html><head></head><head></head><body></body></html>"
+        )
+        self.assertEqual(
+            VERIFY.page_document_structure_problems(
+                duplicate_head, "duplicate.html"
+            ),
+            ["duplicate.html: expected one explicit head element, found 2"],
+        )
+
+        missing_containers = parse("<html><main></main></html>")
+        self.assertEqual(
+            VERIFY.page_document_structure_problems(
+                missing_containers, "missing.html"
+            ),
+            [
+                "missing.html: expected one explicit head element, found 0",
+                "missing.html: expected one explicit body element, found 0",
+                "missing.html: start tags outside head or body: 2 (main)",
+            ],
+        )
+
     def test_aria_id_references_are_nonempty_and_resolve(self):
         valid = parse(
             '<div id="target">Current evidence</div>'

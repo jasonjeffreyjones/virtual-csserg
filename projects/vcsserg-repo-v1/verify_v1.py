@@ -129,6 +129,8 @@ class PageParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.character_encoding_declarations = []
+        self.document_container_records = []
+        self.document_text_outside_containers = []
         self.doctype_declarations = []
         self.attribute_count = 0
         self.aria_reference_records = []
@@ -160,6 +162,7 @@ class PageParser(HTMLParser):
         self.iframe_records = []
         self.ids = []
         self.title_stack = []
+        self.title_in_head = []
         self.interactive_elements = []
         self.interactive_stack = []
         self.label_records = []
@@ -185,6 +188,7 @@ class PageParser(HTMLParser):
         self.text_parts = []
         self.title_records = []
         self.viewport_contents = []
+        self.viewport_in_head = []
         self.start_tag_count = 0
 
     def feed(self, data):
@@ -227,6 +231,31 @@ class PageParser(HTMLParser):
                 (self.start_tag_count, tag, duplicate_names)
             )
         attributes = dict(attrs)
+        within_head = any(
+            ancestor_tag == "head"
+            for ancestor_tag, _, _, _ in self.open_elements
+        )
+        within_body = any(
+            ancestor_tag == "body"
+            for ancestor_tag, _, _, _ in self.open_elements
+        )
+        if tag in {"head", "body"}:
+            self.document_container_records.append(
+                {
+                    "tag": tag,
+                    "start_tag": self.start_tag_count,
+                    "within_head": within_head,
+                    "within_body": within_body,
+                }
+            )
+        elif tag != "html" and not within_head and not within_body:
+            self.document_container_records.append(
+                {
+                    "tag": tag,
+                    "start_tag": self.start_tag_count,
+                    "outside": True,
+                }
+            )
         for attribute in ARIA_ID_REFERENCE_ATTRIBUTES:
             if attribute in attributes:
                 self.aria_reference_records.append(
@@ -266,6 +295,7 @@ class PageParser(HTMLParser):
                         else attributes.get("content")
                     ),
                     "end_byte": declaration_end,
+                    "in_head": within_head,
                 }
             )
         if "autofocus" in attributes:
@@ -429,6 +459,7 @@ class PageParser(HTMLParser):
         ):
             title_record = []
             self.title_records.append(title_record)
+            self.title_in_head.append(within_head)
             self.title_stack.append(title_record)
         elif tag == "meta" and attributes.get("name", "").lower() == "description":
             self.description = attributes.get("content", "").strip()
@@ -443,6 +474,7 @@ class PageParser(HTMLParser):
         )
         if is_viewport:
             self.viewport_contents.append(attributes.get("content", ""))
+            self.viewport_in_head.append(within_head)
         if tag in HEADING_ELEMENTS:
             heading = {
                 "level": int(tag[1]),
@@ -538,6 +570,11 @@ class PageParser(HTMLParser):
 
     def handle_data(self, data):
         self.text_parts.append(data)
+        if data.strip() and not any(
+            ancestor_tag in {"head", "body"}
+            for ancestor_tag, _, _, _ in self.open_elements
+        ):
+            self.document_text_outside_containers.append(data.strip())
         if self.hidden_depth == 0:
             if self.caption_table is not None:
                 self.caption_table["caption_parts"].append(data)
@@ -935,6 +972,72 @@ def page_base_element_problems(parsed, relative):
             f"found {len(parsed.base_elements)}"
         ]
     return []
+
+
+def page_document_structure_problems(parsed, relative):
+    """Require explicit, ordered document containers and head-owned metadata."""
+    problems = []
+    heads = [
+        record
+        for record in parsed.document_container_records
+        if record["tag"] == "head"
+    ]
+    bodies = [
+        record
+        for record in parsed.document_container_records
+        if record["tag"] == "body"
+    ]
+    outside_elements = [
+        record
+        for record in parsed.document_container_records
+        if record.get("outside")
+    ]
+
+    if len(heads) != 1:
+        problems.append(
+            f"{relative}: expected one explicit head element, found {len(heads)}"
+        )
+    if len(bodies) != 1:
+        problems.append(
+            f"{relative}: expected one explicit body element, found {len(bodies)}"
+        )
+    if len(heads) == 1 and len(bodies) == 1:
+        if heads[0]["start_tag"] > bodies[0]["start_tag"]:
+            problems.append(f"{relative}: head element must precede body element")
+        if heads[0]["within_body"]:
+            problems.append(f"{relative}: head element must not be inside body")
+        if bodies[0]["within_head"]:
+            problems.append(f"{relative}: body element must not be inside head")
+
+    if outside_elements:
+        descriptions = ", ".join(
+            f"{record['start_tag']} ({record['tag']})"
+            for record in outside_elements
+        )
+        problems.append(
+            f"{relative}: start tags outside head or body: {descriptions}"
+        )
+    if parsed.document_text_outside_containers:
+        problems.append(
+            f"{relative}: contains non-whitespace text outside head or body"
+        )
+
+    misplaced_titles = sum(not in_head for in_head in parsed.title_in_head)
+    misplaced_encodings = sum(
+        not declaration["in_head"]
+        for declaration in parsed.character_encoding_declarations
+    )
+    misplaced_viewports = sum(not in_head for in_head in parsed.viewport_in_head)
+    for count, label in (
+        (misplaced_titles, "title element"),
+        (misplaced_encodings, "character encoding declaration"),
+        (misplaced_viewports, "viewport declaration"),
+    ):
+        if count:
+            problems.append(
+                f"{relative}: {count} {label}(s) outside the head element"
+            )
+    return problems
 
 
 def page_doctype_problems(parsed, relative):
@@ -1599,6 +1702,16 @@ def check_html_and_css():
     start_tags = sum(parsed.start_tag_count for parsed in parsed_pages.values())
     attributes = sum(parsed.attribute_count for parsed in parsed_pages.values())
     base_elements = sum(len(parsed.base_elements) for parsed in parsed_pages.values())
+    document_container_pairs = sum(
+        sum(record["tag"] == "head" for record in parsed.document_container_records)
+        == 1
+        and sum(
+            record["tag"] == "body"
+            for record in parsed.document_container_records
+        )
+        == 1
+        for parsed in parsed_pages.values()
+    )
     aria_reference_attributes = sum(
         len(parsed.aria_reference_records) for parsed in parsed_pages.values()
     )
@@ -1637,6 +1750,7 @@ def check_html_and_css():
         problems.extend(page_attribute_problems(parsed, relative))
         problems.extend(page_aria_reference_problems(parsed, relative))
         problems.extend(page_base_element_problems(parsed, relative))
+        problems.extend(page_document_structure_problems(parsed, relative))
         identity_problems = page_identity_problems(parsed, relative)
         problems.extend(identity_problems)
         if not identity_problems:
@@ -1731,7 +1845,9 @@ def check_html_and_css():
         f"doctype(s), {character_encoding_declarations} early UTF-8 character "
         f"encoding declaration(s), {attributes} attributes across {start_tags} "
         "start tags without duplicate names, "
-        f"{base_elements} document base element(s), one English language declaration, "
+        f"{base_elements} document base element(s), {document_container_pairs} "
+        "explicit head/body pair(s) with document metadata in head, one English "
+        "language declaration, "
         "one nonempty title, one banner, main, and "
         "contentinfo landmark and one zoom-permitting responsive viewport each, "
         f"{document_ids} conforming document identifier(s), "

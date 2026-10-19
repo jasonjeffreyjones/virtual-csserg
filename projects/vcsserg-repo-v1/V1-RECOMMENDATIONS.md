@@ -270,6 +270,16 @@ and tokens pass, and one focused fixture covers the eight attribute names plus
 empty and missing failures. This source-integrity contract does not determine
 whether any relationship is semantically appropriate or exposed correctly by
 a browser (World Wide Web Consortium, 2023).
+On October 19, a document-container audit found that every public page already
+serialized one explicit `head` before one explicit `body`, with title,
+character encoding, and viewport metadata in head and no source element or
+non-whitespace text outside the two containers. The earlier atomic checks
+validated those declarations without preserving their placement. The parser
+now rejects missing, duplicate, reversed, or nested containers, misplaced
+metadata, and outside content; one focused fixture covers the valid skeleton
+and failure paths. The explicit serialization rule is stricter than HTML's
+permitted tag omission and does not claim the browser-produced DOM (WHATWG,
+2026).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -510,6 +520,9 @@ https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 
 WHATWG. (2026, October 16). *HTML Standard: The base element*.
 https://html.spec.whatwg.org/multipage/semantics.html#the-base-element
+
+WHATWG. (2026, October 16). *HTML Standard: The head element*.
+https://html.spec.whatwg.org/multipage/semantics.html#the-head-element
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.
