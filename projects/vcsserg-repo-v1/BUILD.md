@@ -142,6 +142,19 @@ to text. This deliberately strict source rule applies even when an embed is
 intended to be hidden and does not establish how a browser and screen reader
 announce or operate the embedded context.
 
+Every public stylesheet is also scanned for semantic CSS `url()` functions.
+The standard-library scanner ignores comments and string literals, accepts
+quoted and unquoted forms plus CSS escapes, and distinguishes external and
+embedded resources from relative or root-relative local dependencies. Every
+nonempty local dependency must resolve from the stylesheet itself, remain
+inside `website/`, and name an existing file. Empty resource URLs fail because
+CSS defines them as invalid resources. One temporary-tree fixture accepts an
+existing font, `data:` and external resources, a fragment-only reference, and
+URL-like text in a comment or string while rejecting an empty URL, a path that
+escapes the public tree, and a missing file. This narrow graph check does not
+claim complete CSS conformance, fetch external resources, or evaluate
+document-scoped fragment semantics in a browser.
+
 After the normal commit, push, and deployment, compare every expected public
 file byte with its production URL:
 

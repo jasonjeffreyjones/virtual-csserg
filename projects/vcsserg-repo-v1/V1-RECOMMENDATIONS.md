@@ -280,6 +280,19 @@ metadata, and outside content; one focused fixture covers the valid skeleton
 and failure paths. The explicit serialization rule is stricter than HTML's
 permitted tag omission and does not claim the browser-produced DOM (WHATWG,
 2026).
+On October 20, a local-resource coverage audit found that the verifier followed
+HTML `href` and `src` values but did not inspect resources loaded through CSS
+`url()`. The standard-library scanner now ignores comments and string literals,
+parses quoted and unquoted URL functions and CSS escapes, and requires every
+nonempty relative or root-relative dependency to remain within and exist in the
+public tree. All four current local CSS dependencies across 23 stylesheets
+pass. One temporary-tree fixture rejects an empty URL, an escaping path, and a
+missing file while accepting existing, external, embedded, and fragment-only
+references. CSS resolves a stylesheet's relative resource URLs against the
+stylesheet itself and defines empty URLs as invalid resources; this narrow
+source-graph rule does not establish full CSS conformance, external
+availability, fragment semantics, or observed browser loading (World Wide Web
+Consortium, 2024).
 The superseded-report archive policy is now
 specified and exercised by the v1 release ledger, including the clean
 September 17 outgoing report preserved before substantive review and the clean
@@ -523,6 +536,9 @@ https://html.spec.whatwg.org/multipage/semantics.html#the-base-element
 
 WHATWG. (2026, October 16). *HTML Standard: The head element*.
 https://html.spec.whatwg.org/multipage/semantics.html#the-head-element
+
+World Wide Web Consortium. (2024, March 12). *CSS Values and Units Module Level
+4*. https://www.w3.org/TR/css-values-4/#urls
 
 World Wide Web Consortium. (2026, May 11). *H39: Using caption elements to
 associate data table captions with data tables*.

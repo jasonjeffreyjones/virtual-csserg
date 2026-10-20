@@ -2,22 +2,23 @@
 title: "Virtual CSSERG Version 1.0"
 status: Active
 publication: Published
-updated: 2026-10-19T08:16:39Z
+updated: 2026-10-20T08:15:33Z
 ---
 
 # VCSSERG v1 — Current State
 
 ## Status
 
-Active. On October 19, 2026, all seven automated promise groups pass across
+Active. On October 20, 2026, all seven automated promise groups pass across
 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations,
-39 explicit head/body pairs with document metadata in head, 6,462 attributes
-across 6,545 start tags without duplicate names, no document base elements,
+39 explicit head/body pairs with document metadata in head, 6,518 attributes
+across 6,569 start tags without duplicate names, no document base elements,
 328 conforming document IDs, 19 ARIA ID-reference attributes
 with 19 resolved tokens, 160 named navigation landmarks,
 97 native images, four exposed ARIA images, no iframes, 38 named data tables,
-204 exposed headings, 857 interactive or keyboard-focusable elements, and
-seven first-party stylesheets. All four exposed ARIA images and all 831
+204 exposed headings, 858 interactive or keyboard-focusable elements, seven
+first-party stylesheets, and four local CSS dependencies across all 23 public
+stylesheets. All four exposed ARIA images and all 832
 exposed interactive elements are named and the other 26 are safely hidden
 Quarto source-line anchors. The
 static-site group requires every file to contain exactly one leading modern
@@ -63,7 +64,10 @@ rule inventories all eight WAI-ARIA ID-reference attributes on every element,
 rejects empty values, and requires every token to match an in-document ID. A
 tested iframe-name rule accepts a nonempty `title`, `aria-label`, or resolvable and nonempty
 `aria-labelledby` reference and rejects absent, legacy-`name`, missing-target,
-and empty-target cases. A tested
+and empty-target cases. A tested local-CSS-resource rule parses semantic
+`url()` functions, ignores comments and string literals, supports quoted and
+unquoted values plus CSS escapes, and requires every nonempty local dependency
+to remain inside and exist in the public tree. A tested
 post-render normalizer makes the
 bypass link first, names Quarto's repeated navigation regions, and adds column
 scope inside generated table heads on all five report pages without runtime
@@ -367,6 +371,18 @@ without performing the unavailable human review.
   this Project deliberately requires explicit start tags even where HTML
   permits omission. The source contract does not establish the
   browser-produced DOM.
+- An October 20 local-resource coverage audit found that the verifier followed
+  HTML `href` and `src` targets but did not inspect resources loaded through
+  CSS `url()`. A standard-library scanner now ignores comments and URL-like
+  string literals, parses quoted and unquoted URL functions and CSS escapes,
+  and requires each nonempty local dependency to resolve from its stylesheet
+  to an existing file inside the public tree. All four current local CSS
+  dependencies across 23 stylesheets pass. One temporary-tree fixture rejects
+  empty, escaping, and missing values while accepting existing, external,
+  embedded, and fragment-only references. CSS defines relative resource URLs
+  against the stylesheet itself and empty URLs as invalid resources. This
+  narrow graph contract does not establish complete CSS conformance, external
+  availability, document-fragment semantics, or observed browser loading.
 - `ACCESSIBILITY-REVIEW.md` defines the last manual gate's 13 production pages,
   desktop and 320-CSS-pixel conditions, keyboard/focus, reflow, screen-reader
   checks, structured environment record, 52 result cells, and passing rule.
@@ -374,7 +390,7 @@ without performing the unavailable human review.
   Reports, rejects missing/duplicate rows and unknown result words, and refuses
   closed records with placeholders or non-passing cells. Three tests cover
   current coverage, malformed rows, and incomplete versus complete closure. A
-  supplemental `w3m` 0.5.3 pass on October 19 returned zero at 40 and 120
+  supplemental `w3m` 0.5.3 pass on October 20 returned zero at 40 and 120
   columns for all 13 current pages; each of the 26 linearized views began with
   “Skip to content.” It is text-order evidence, not a graphical-browser or
   screen-reader pass.
@@ -454,6 +470,8 @@ without performing the unavailable human review.
   byte-identical.
   The October 19 pre-change probe again found all 295 incoming files
   byte-identical.
+  The October 20 pre-change probe again found all 295 incoming files
+  byte-identical.
   HTTP cannot discover remote-only files by itself, and the latest result does
   not substitute for deploying and inventorying this revised release.
 - The Scholar runner now takes stable Scholar and Project slugs, refuses a dirty
@@ -477,14 +495,15 @@ without performing the unavailable human review.
 
 `verify_v1.py` is a promise regression suite, not a Version 1 certification.
 It checks repository guidance, project memory/metadata, static HTML/CSS and
-local references, public catalogs/biographies/update order, three report forms,
+HTML/CSS local references, public catalogs/biographies/update order, three report forms,
 runner wiring, and guarded deployment behavior.
 
-All seven groups and all 60 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 39 explicit head/body pairs with document metadata in head, 6,462 attributes across 6,545 start tags without duplicate names, no document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named
+All seven groups and all 61 routine tests pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 39 explicit head/body pairs with document metadata in head, 6,518 attributes across 6,569 start tags without duplicate names, no document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named
 navigation landmarks, 97 native
 images, four exposed ARIA images, no iframes, 38 named data tables, 204 exposed headings,
-857 interactive or keyboard-focusable elements, and seven first-party
-stylesheets on October 19. Every page has exactly one leading modern doctype,
+858 interactive or keyboard-focusable elements, seven first-party stylesheets,
+and four local CSS dependencies across all 23 stylesheets on October 20. Every
+page has exactly one leading modern doctype,
 decodes as UTF-8, and has exactly one
 explicit head before one explicit body, with its short-form encoding
 declaration completed within the first 1024 bytes, title, and viewport in head,
@@ -513,7 +532,9 @@ accessible data-table names, valid table-header scopes, interactive and keyboard
 ARIA relationships, no positive `tabindex` overrides, one responsive viewport
 without a sub-200% zoom ceiling, no autofocus, no media autoplay, no automatic meta refresh or
 redirect, and the
-manual-review worksheet's sample and closure boundary. One focused table-name
+manual-review worksheet's sample and closure boundary. It also resolves every
+nonempty local CSS `url()` dependency from its own stylesheet and requires the
+target to remain inside and exist in the public tree. One focused table-name
 test covers captions and valid explicit labels while rejecting absent, broken,
 or empty names. One focused negative
 test guards the first-anchor/target conjunction, one covers missing and
@@ -538,7 +559,9 @@ outside those containers, one rejects empty or missing ARIA
 ID-reference targets, one rejects missing or duplicate roots
 and titles plus empty language/title values, and three cover
 the manual-review record. One identifier fixture rejects empty,
-whitespace-containing, and duplicate document IDs.
+whitespace-containing, and duplicate document IDs. One CSS-resource fixture
+rejects empty, escaping, and missing local targets while accepting existing,
+external, embedded, and fragment-only references.
 The generic check does not validate PDF page layout, research quality, public
 network state, rendered usability, or an observed automation run. The separate
 network probe checks expected bytes but not unexpected remote files. For the
@@ -598,7 +621,7 @@ September 18 review found and corrected one such timestamp decision.
 
 ## Resources and limitations
 
-October 19 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 60 GiB
+October 20 preflight: 2 logical CPUs, 3.7 GiB RAM, 4.0 GiB swap, and 60 GiB
 free disk. Installed Python 3.12.3, R 4.3.3, Quarto 1.10.18, Pandoc, and
 rsync 3.2.7 are available. `w3m` 0.5.3 is available; no Chromium, Chrome, or
 Firefox executable or supported screen-reader/browser pairing was found.
@@ -623,8 +646,8 @@ installed.
   command; fixture tests cover preservation and preflight failure.
 - `CREATING-PROJECTS-AND-SCHOLARS.md`: growth and image-policy procedure.
 - `REPORT-ARCHIVING.md` and `REPORT-VERSIONS.md`: supersession policy and the
-  v1 release ledger, including the clean October 18 report set superseded by
-  the current document-container and metadata-placement revision.
+  v1 release ledger, including the clean October 19 report set superseded by
+  the current local CSS resource-integrity revision.
 - `verify_v1.py`: non-destructive promise regression suite.
 - `python/promote_report_skip_links.py`: tested, preflight-first Quarto
   post-render normalizer that makes bypass links first and names repeated

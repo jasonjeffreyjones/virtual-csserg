@@ -6,6 +6,28 @@ rules in `REPORT-ARCHIVING.md`.
 
 ## Superseded releases
 
+### Updated through October 19, 2026 at 08:16 UTC
+
+- **Superseded:** October 20, 2026
+- **Archive key:**
+  [`4cca15dc3dc306140e17050e464ad9c1e267c394`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/4cca15dc3dc306140e17050e464ad9c1e267c394)
+- **Classification:** Update
+- **Scope:** Executive Summary, Full Report, short report, and their source
+  record before local stylesheet dependencies became a whole-site regression
+  contract.
+- **Reason:** The outgoing reports accurately documented explicit document
+  containers and metadata placement, but the local-resource graph followed
+  HTML `href` and `src` references without inspecting resources loaded through
+  CSS `url()`. The next release parses semantic URL functions across all public
+  stylesheets, requires nonempty local targets to remain within and exist in
+  the public tree, adds a focused fixture, and records the October 20 probe of
+  all 295 incoming files without claiming full CSS conformance, external
+  resource availability, or observed browser loading.
+- **Artifact tree:**
+  [`website/projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/4cca15dc3dc306140e17050e464ad9c1e267c394/website/projects/vcsserg-repo-v1)
+- **Source and record tree:**
+  [`projects/vcsserg-repo-v1`](https://github.com/jasonjeffreyjones/virtual-csserg/tree/4cca15dc3dc306140e17050e464ad9c1e267c394/projects/vcsserg-repo-v1)
+
 ### Updated through October 18, 2026 at 08:12 UTC
 
 - **Superseded:** October 19, 2026

@@ -16,7 +16,8 @@ October 14, 2026; leading modern-doctype contract added October 15, 2026;
 unique start-tag attribute-name contract added October 16, 2026; document-base
 override prohibition added October 17, 2026; all-ARIA ID-reference integrity
 contract added October 18, 2026; explicit document-container and metadata
-placement contract added October 19, 2026.
+placement contract added October 19, 2026; local CSS resource-integrity
+contract added October 20, 2026.
 
 ## Decision boundary
 
@@ -95,8 +96,8 @@ accessibility evaluation.
   omission; the source contract does not establish the browser-produced DOM
   (WHATWG, 2026).
 - The parser now preserves raw start-tag attribute names before converting
-  them to the mapping used by its other checks. All 6,462 attributes across
-  6,545 start tags in the current 39-page tree have names unique within their
+  them to the mapping used by its other checks. All 6,518 attributes across
+  6,569 start tags in the current 39-page tree have names unique within their
   tag. The October 16 fixture rejects mixed-case duplicate `id`, `alt`, and
   `aria-label` declarations. The HTML Standard prohibits two attributes on one
   start tag whose names are an ASCII case-insensitive match. This narrow
@@ -111,6 +112,18 @@ accessibility evaluation.
   static-site rule protects the first-anchor bypass path and local-reference
   checks from that mismatch; it does not establish navigation or focus in a
   browser (WHATWG, 2026).
+- All four relative resources named through CSS `url()` across the 23 public
+  stylesheets resolve from their stylesheet to files inside the public tree.
+  The October 20 coverage audit found that the earlier local-resource walk
+  inspected HTML `href` and `src` values but not stylesheet-loaded resources.
+  A standard-library scanner now ignores comments and string literals, accepts
+  quoted and unquoted functions and CSS escapes, and rejects an empty local
+  URL, an escaping path, or a missing target. Embedded `data:` values,
+  external URLs, and fragment-only references are not filesystem dependencies.
+  CSS defines relative resource URLs against the stylesheet's own base URL and
+  empty URLs as invalid resources. This source-graph rule does not establish
+  full CSS conformance, external availability, document-fragment semantics, or
+  observed browser loading (World Wide Web Consortium, 2024).
 - All 19 current WAI-ARIA ID-reference attributes resolve all 19 source tokens
   to unique IDs within their pages. The October 18 coverage audit found that
   selected accessible-name and interactive-element checks resolved
@@ -182,8 +195,8 @@ accessibility evaluation.
   caption as a programmatically associated table identifier; the rendered
   screen-reader check below still determines whether the names and header
   relationships work in the recorded pairing.
-- The whole-site parser now audits all 857 interactive or keyboard-focusable
-  elements. Each of the 831 elements exposed to assistive technology has an
+- The whole-site parser now audits all 858 interactive or keyboard-focusable
+  elements. Each of the 832 elements exposed to assistive technology has an
   accessible name from text, image alternatives, explicit or implicit form
   labels, input values where applicable, ARIA labels, referenced label text, or
   title fallback; the other 26 are Quarto source-line anchors explicitly hidden
@@ -310,6 +323,9 @@ accessibility evaluation.
 - On October 19, the supplemental pass again returned successfully for all 13
   selected pages at both widths. All 26 linearized views began with “Skip to
   content.” The evidence boundary remains unchanged.
+- On October 20, the supplemental pass again returned successfully for all 13
+  selected pages at both widths. All 26 linearized views began with “Skip to
+  content.” The evidence boundary remains unchanged.
 - Before the September 19 protocol revision, the credential-free production
   probe found all 128 expected files byte-identical. Before the September 21
   verifier revision, the same probe found all 142 expected files
@@ -354,6 +370,8 @@ accessibility evaluation.
   byte-identical before the all-ARIA ID-reference revision.
   The October 19 pre-change probe again found all 295 incoming files
   byte-identical before the document-container revision.
+  The October 20 pre-change probe again found all 295 incoming files
+  byte-identical before the local CSS resource revision.
   It cannot discover extra remote-only paths, and
   the latest result does not describe the not-yet-deployed changes in this
   iteration.
@@ -515,6 +533,9 @@ https://html.spec.whatwg.org/multipage/semantics.html#the-base-element
 
 WHATWG. (2026, October 16). *HTML Standard: The head element*.
 https://html.spec.whatwg.org/multipage/semantics.html#the-head-element
+
+World Wide Web Consortium. (2024, March 12). *CSS Values and Units Module Level
+4*. https://www.w3.org/TR/css-values-4/#urls
 
 World Wide Web Consortium. (2024, December 12). *Web Content Accessibility
 Guidelines (WCAG) 2.2*. https://www.w3.org/TR/WCAG22/

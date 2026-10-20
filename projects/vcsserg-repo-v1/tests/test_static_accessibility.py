@@ -33,6 +33,59 @@ def review_source(status, rows, field_value="Not recorded"):
 
 
 class StaticAccessibilityTests(unittest.TestCase):
+    def test_css_url_dependencies_stay_in_tree_and_exist(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            website_root = Path(temporary) / "website"
+            css_file = website_root / "assets" / "site.css"
+            font = website_root / "fonts" / "site.woff2"
+            css_file.parent.mkdir(parents=True)
+            font.parent.mkdir(parents=True)
+            font.write_bytes(b"font")
+            (font.parent / "site font.woff2").write_bytes(b"font")
+
+            valid = (
+                '/* url("commented-missing.woff2") */\n'
+                '.example::before { content: "url(literal-missing.svg)"; }\n'
+                '@font-face { src: url("../fonts/site.woff2?v=1#regular"); }\n'
+                '@font-face { src: url(../fonts/site\\20 font.woff2); }\n'
+                '.embedded { background: url(data:image/svg+xml,%3Csvg%3E); }\n'
+                '.external { background: URL(https://example.com/image.png); }\n'
+                '.fragment { filter: url(#shadow); }\n'
+            )
+            self.assertEqual(
+                VERIFY.css_url_references(valid),
+                [
+                    "../fonts/site.woff2?v=1#regular",
+                    "../fonts/site font.woff2",
+                    "data:image/svg+xml,%3Csvg%3E",
+                    "https://example.com/image.png",
+                    "#shadow",
+                ],
+            )
+            self.assertEqual(
+                VERIFY.css_local_reference_problems(
+                    css_file, valid, website_root
+                ),
+                [],
+            )
+
+            invalid = (
+                '.empty { background: url(""); }\n'
+                '.escape { background: url("../../outside.png"); }\n'
+                '.missing { background: url("missing.png"); }\n'
+            )
+            self.assertEqual(
+                VERIFY.css_local_reference_problems(
+                    css_file, invalid, website_root
+                ),
+                [
+                    "assets/site.css: empty CSS url() reference",
+                    "assets/site.css: CSS url() leaves website tree: "
+                    "../../outside.png",
+                    "assets/site.css: missing local CSS url() target missing.png",
+                ],
+            )
+
     def test_document_containers_are_explicit_ordered_and_own_metadata(self):
         valid = parse(
             '<html lang="en"><head><meta charset="utf-8">'

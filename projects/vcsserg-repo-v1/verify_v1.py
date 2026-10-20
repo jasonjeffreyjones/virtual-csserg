@@ -1468,6 +1468,140 @@ def resolve_local_reference(page, reference):
     return target, parsed.fragment
 
 
+def _consume_css_escape(source, index):
+    """Return one decoded CSS escape and the index after it."""
+    index += 1
+    if index >= len(source):
+        return "", index
+    if source[index] in "\n\r\f":
+        if source[index : index + 2] == "\r\n":
+            return "", index + 2
+        return "", index + 1
+    match = re.match(r"[0-9a-fA-F]{1,6}", source[index:])
+    if match:
+        value = int(match.group(), 16)
+        decoded = "\ufffd" if value == 0 or value > 0x10FFFF else chr(value)
+        index += len(match.group())
+        if index < len(source) and source[index] in ASCII_WHITESPACE:
+            index += 1
+        return decoded, index
+    return source[index], index + 1
+
+
+def _consume_css_string(source, index, quote):
+    """Return a decoded CSS string and the index after its closing quote."""
+    parts = []
+    index += 1
+    while index < len(source):
+        character = source[index]
+        if character == quote:
+            return "".join(parts), index + 1, True
+        if character == "\\":
+            decoded, index = _consume_css_escape(source, index)
+            parts.append(decoded)
+            continue
+        if character in "\n\r\f":
+            return "", index, False
+        parts.append(character)
+        index += 1
+    return "", index, False
+
+
+def css_url_references(source):
+    """Extract semantic CSS url() values without matching comments or strings."""
+    references = []
+    index = 0
+    while index < len(source):
+        if source.startswith("/*", index):
+            closing = source.find("*/", index + 2)
+            index = len(source) if closing < 0 else closing + 2
+            continue
+        if source[index] in {'"', "'"}:
+            _, index, _ = _consume_css_string(source, index, source[index])
+            continue
+        if (
+            source[index : index + 4].lower() == "url("
+            and (
+                index == 0
+                or not (source[index - 1].isalnum() or source[index - 1] in "_-")
+            )
+        ):
+            index += 4
+            while index < len(source) and source[index] in ASCII_WHITESPACE:
+                index += 1
+            if index < len(source) and source[index] in {'"', "'"}:
+                value, index, valid = _consume_css_string(
+                    source, index, source[index]
+                )
+                while index < len(source) and source[index] in ASCII_WHITESPACE:
+                    index += 1
+                if valid and index < len(source) and source[index] == ")":
+                    references.append(value)
+                    index += 1
+                continue
+
+            parts = []
+            valid = True
+            while index < len(source) and source[index] != ")":
+                character = source[index]
+                if character == "\\":
+                    decoded, index = _consume_css_escape(source, index)
+                    parts.append(decoded)
+                    continue
+                if character in ASCII_WHITESPACE:
+                    while (
+                        index < len(source)
+                        and source[index] in ASCII_WHITESPACE
+                    ):
+                        index += 1
+                    if index >= len(source) or source[index] != ")":
+                        valid = False
+                    continue
+                if character in {'"', "'", "("} or ord(character) < 0x20:
+                    valid = False
+                parts.append(character)
+                index += 1
+            if index < len(source) and source[index] == ")":
+                value = "".join(parts).strip()
+                if valid:
+                    references.append(value)
+                index += 1
+            continue
+        index += 1
+    return references
+
+
+def css_local_reference_problems(css_file, source, website_root=WEBSITE_ROOT):
+    """Require local CSS url() dependencies to stay in and exist in the site."""
+    website_root = Path(website_root).resolve()
+    css_file = Path(css_file).resolve()
+    relative = css_file.relative_to(website_root)
+    problems = []
+    for reference in css_url_references(source):
+        if not reference:
+            problems.append(f"{relative}: empty CSS url() reference")
+            continue
+        parsed = urlsplit(reference)
+        if parsed.scheme or parsed.netloc:
+            continue
+        path = unquote(parsed.path)
+        if not path:
+            continue
+        if path.startswith("/"):
+            target = website_root / path.lstrip("/")
+        else:
+            target = css_file.parent / path
+        target = target.resolve()
+        try:
+            target.relative_to(website_root)
+        except ValueError:
+            problems.append(f"{relative}: CSS url() leaves website tree: {reference}")
+            continue
+        if not target.is_file():
+            problems.append(f"{relative}: missing local CSS url() target {reference}")
+    return problems
+
+
 def check_repository_documents():
     required = {
         "AGENTS.md",
@@ -1826,6 +1960,17 @@ def check_html_and_css():
             if color not in css.lower():
                 problems.append(f"{relative}: missing {name} brand color {color}")
 
+    local_css_dependencies = 0
+    for css_file in css_files:
+        css = css_file.read_text(encoding="utf-8")
+        problems.extend(css_local_reference_problems(css_file, css))
+        local_css_dependencies += sum(
+            bool(urlsplit(reference).path)
+            and not urlsplit(reference).scheme
+            and not urlsplit(reference).netloc
+            for reference in css_url_references(css)
+        )
+
     interface_styles = [
         path for path in first_party_css
         if path.name in {"styles.css", "previews.css", "review.css"}
@@ -1865,8 +2010,9 @@ def check_html_and_css():
         f"keyboard-focusable element(s), {hidden_interactive} safely hidden "
         f"control(s), no positive tabindex overrides, no autofocus attributes, "
         "no autoplay media, and no automatic meta refreshes, and "
-        f"{len(first_party_css)} first-party "
-        "stylesheet(s) passed structural and local-link checks"
+        f"{len(first_party_css)} first-party stylesheet(s) passed structural "
+        f"checks, and {local_css_dependencies} local CSS url() dependency(ies) "
+        f"across {len(css_files)} stylesheet(s) resolved inside the public tree"
         if not problems else "; ".join(problems),
     )
 

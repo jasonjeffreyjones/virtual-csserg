@@ -16,19 +16,19 @@ does not establish rendered reflow, keyboard, or assistive-technology usability.
 
 ## Evidence matrix
 
-| Documented promise | Evidence or test | Status on October 19, 2026 |
+| Documented promise | Evidence or test | Status on October 20, 2026 |
 |---|---|---|
 | Repository guidance and growth procedure exist | Required top-level files, creation guide, tested Project and Scholar creation, validated identity roster and biographies, and a guarded manual-review record | Automated pass |
 | Every Project uses current memory and metadata | `PROJECT.md`, `STATE.md`, bounded `DIALOG.md`, immutable iteration/year indexes, legacy hashes where applicable, plus `title`, `status`, `publication`, `updated`, including `_template` | Automated pass; Active Unpublished work is valid and all five pre-migration dialogs are byte-preserved |
-| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one leading modern HTML doctype; no ASCII-case-insensitive duplicate attribute names on a start tag and no document-wide `base` URL or target override; one explicit `head` followed by one explicit `body`, with title, encoding, and viewport metadata in head and no source content outside both; valid UTF-8 bytes and exactly one short-form encoding declaration completed within the first 1024 bytes; exactly one English root declaration, nonempty title, page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; every ARIA ID-reference attribute nonempty with all tokens resolved; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty unskipped heading ranks; repeated navigation landmarks with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive or keyboard-focusable elements; scoped table headers; explicit native-image alternatives; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; local paths/fragments; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 39 ordered explicit head/body pairs with head-owned metadata, 6,462 attributes across 6,545 start tags without duplicate names, 0 document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named navigation landmarks, 97 native images, 4 exposed ARIA images, 0 iframes, 38 named data tables, 204 exposed headings, 857 interactive or keyboard-focusable elements, and 7 first-party stylesheets; every page has one leading `<!doctype html>`, decodes as UTF-8, keeps its encoding, title, and viewport declarations inside head, has one `html lang="en"`, one nonempty title, the complete three-landmark frame, and a responsive viewport without a sub-200% zoom ceiling, none uses `base`, `autofocus`, media `autoplay`, or meta refresh, all 831 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
+| Public static site is branded, accessible by deterministic checks, and locally connected | Exactly one leading modern HTML doctype; no ASCII-case-insensitive duplicate attribute names on a start tag and no document-wide `base` URL or target override; one explicit `head` followed by one explicit `body`, with title, encoding, and viewport metadata in head and no source content outside both; valid UTF-8 bytes and exactly one short-form encoding declaration completed within the first 1024 bytes; exactly one English root declaration, nonempty title, page-level banner, main, content-information landmark, and responsive zoom-permitting viewport; nonempty, whitespace-free, page-unique document IDs; every ARIA ID-reference attribute nonempty with all tokens resolved; no automatic focus, media playback, meta refresh, or redirect; first-anchor bypass links; nonempty unskipped heading ranks; repeated navigation landmarks with nonempty direct or referenced names and distinct names for different link sets; named iframes, data tables, exposed ARIA images, and interactive or keyboard-focusable elements; scoped table headers; explicit native-image alternatives; valid checked ARIA relationships; no positive `tabindex` overrides; safely hidden source-line anchors; HTML local paths/fragments and CSS `url()` dependencies; Bootstrap CDN; logo; grouped required footer | Automated pass across 39 HTML pages with 39 leading modern doctypes, 39 early UTF-8 declarations, 39 ordered explicit head/body pairs with head-owned metadata, 6,518 attributes across 6,569 start tags without duplicate names, 0 document base elements, 328 conforming document IDs, 19 ARIA ID-reference attributes with 19 resolved tokens, 160 named navigation landmarks, 97 native images, 4 exposed ARIA images, 0 iframes, 38 named data tables, 204 exposed headings, 858 interactive or keyboard-focusable elements, 7 first-party stylesheets, and 4 local CSS dependencies across all 23 stylesheets; every page has one leading `<!doctype html>`, decodes as UTF-8, keeps its encoding, title, and viewport declarations inside head, has one `html lang="en"`, one nonempty title, the complete three-landmark frame, and a responsive viewport without a sub-200% zoom ceiling, none uses `base`, `autofocus`, media `autoplay`, or meta refresh, all 832 exposed interactive elements are named, and 26 source-line anchors are safely hidden; ten custom scroll regions use `tabindex="0"` and no public element uses a positive value; generated-report bypass order, navigation names, and table-head scope no longer depend on runtime JavaScript or hand-editing; rendered reflow, keyboard, and assistive-technology QA remains manual |
 | Published Projects and Scholars are findable and sourced | `publication` metadata, `scholars.json`, canonical biographies, home, Projects index, Scholar index, and profiles | Automated pass; lifecycle and publication are independent |
 | Every Published Project has all three linked report formats | Executive Summary with exactly one figure, Quarto source/book, Full Report, short PDF, cross-links and required phrase | Automated pass |
 | Scholar runner fails closed | Inspectable clean tree, known Scholar, Active Project, unchanged PI-owned runner, independent checks, abort behavior, and commit/push/deploy ordering | Automated pass; the separately invoked integration suite witnesses each controlled failure without external effects and is excluded from nested routine validation |
-| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, 293 before the October 4, October 6, and October 7 revisions, and 295 before the October 8 through October 19 revisions |
+| Deployment safely mirrors `website/` | Mocked guarded transfer plus checksum/inventory dry run; completed normal workflow; public expected-file probe | Pass; the September 15 run reached completion only after exact-inventory verification, all 110 expected files matched production on September 16, 114 matched before the September 18 revision, 128 before the September 19 revision, 134 before the September 20 revision, 142 before the September 21 revision, 150 before the September 22 revision, 158 before the September 23 revision, 166 before the September 24 revision, 174 before the September 25 revision, 182 before the September 26 revision, 249 before the September 29 revision, 257 before the September 30 revision, 267 before the October 1 revision, 275 before the October 2 revision, 285 before the October 3 revision, 293 before the October 4, October 6, and October 7 revisions, and 295 before the October 8 through October 20 revisions |
 
 ## Current automated result
 
-On October 19, 2026, **all seven groups pass**. The final report-format gap
+On October 20, 2026, **all seven groups pass**. The final report-format gap
 had closed the previous day when Predict the Self adopted the current
 publication structure:
 
@@ -351,6 +351,19 @@ publication structure:
   metadata, and outside content. This intentionally explicit serialization
   contract follows the HTML head/metadata and body/content model without
   claiming the browser-produced DOM (WHATWG, 2026).
+- On October 20, a local-resource coverage audit found that HTML `href` and
+  `src` targets were checked while stylesheet-loaded resources were omitted.
+  The verifier now extracts semantic CSS `url()` functions across all 23
+  public stylesheets, ignores comments and URL-like string literals, supports
+  quoted and unquoted forms plus CSS escapes, and requires each nonempty local
+  target to remain inside and exist in `website/`. All four current local CSS
+  dependencies pass. One focused temporary-tree fixture rejects empty,
+  escaping, and missing references while accepting existing, external,
+  embedded, and fragment-only values. CSS resolves relative resource URLs
+  against the stylesheet and treats empty URLs as invalid resources; this
+  source-graph contract does not establish general CSS conformance, external
+  availability, document-fragment behavior, or observed loading (World Wide
+  Web Consortium, 2024).
 
 This is a count of automated promise groups, not a Version 1 completion
 declaration or a measure of research quality. Rendered keyboard and
@@ -410,7 +423,8 @@ The current verifier:
   a missing, duplicate, fixed-width, or
   zoom-restricting viewport, an automatic meta refresh or redirect, an unnamed data table, broken or empty
   table labels, and
-  missing table-header scope;
+  missing table-header scope, and an empty, escaping, or missing local CSS
+  `url()` dependency;
 - checks the Executive Summary figure count, report cross-links, Quarto source,
   PDF signature, and the required “far beyond” phrase;
 - checks the Projects index and exact normalized charter biographies;
@@ -418,7 +432,8 @@ The current verifier:
   Project scaffold, and the two selected production patterns;
 - limits style assertions to first-party CSS and accepts one or more H1s;
 - continues to verify local resources and required shared footer links on every
-  HTML page, including generated reports.
+  HTML page, including generated reports, and local `url()` dependencies
+  across every public stylesheet.
 
 These changes make the automated claims narrower and more valid. The script is
 still a **promise regression report**, not a Version 1 completion oracle. See
@@ -475,7 +490,7 @@ October 6 revisions, all 293 incoming files were byte-identical. On October 7,
 291 unchanged worktree files matched production directly; the production
 digests for the two already-edited public pages matched their clean incoming
   `HEAD` versions, establishing all 293 incoming files as byte-identical. Before
-the October 8 through October 19 revisions, all 295 incoming files were
+the October 8 through October 20 revisions, all 295 incoming files were
 byte-identical. Normal
 automation must still deploy and inventory this revised release.
 
@@ -529,6 +544,9 @@ https://html.spec.whatwg.org/multipage/semantics.html#the-base-element
 
 WHATWG. (2026, October 16). *HTML Standard: The head element*.
 https://html.spec.whatwg.org/multipage/semantics.html#the-head-element
+
+World Wide Web Consortium. (2024, March 12). *CSS Values and Units Module Level
+4*. https://www.w3.org/TR/css-values-4/#urls
 
 World Wide Web Consortium. (2023, June 6). *Accessible Rich Internet
 Applications (WAI-ARIA) 1.2*. https://www.w3.org/TR/wai-aria-1.2/

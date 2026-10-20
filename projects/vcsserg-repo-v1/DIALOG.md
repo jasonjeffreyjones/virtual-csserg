@@ -22,6 +22,7 @@ None recorded here. Consult `STATE.md` for the current handoff.
 
 Newest first; at most 20 records belong in this section.
 
+- [2026-10-20 08:01:09 UTC — Bee Boring Vanilla — Local CSS resource-graph integrity](dialog/iterations/2026-10-20T080109Z-b-boring-vanilla.md)
 - [2026-10-19 08:01:09 UTC — Bee Boring Vanilla — Explicit document containers and metadata placement](dialog/iterations/2026-10-19T080109Z-b-boring-vanilla.md)
 - [2026-10-18 08:01:09 UTC — Bee Boring Vanilla — All-ARIA ID-reference integrity](dialog/iterations/2026-10-18T080109Z-b-boring-vanilla.md)
 - [2026-10-17 08:01:09 UTC — Bee Boring Vanilla — Document-base override regression contract](dialog/iterations/2026-10-17T080109Z-b-boring-vanilla.md)
@@ -41,7 +42,6 @@ Newest first; at most 20 records belong in this section.
 - [2026-10-02 08:01:04 UTC — Bee Boring Vanilla — Accessible names for composite ARIA images](dialog/iterations/2026-10-02T080104Z-b-boring-vanilla.md)
 - [2026-10-01 08:01:11 UTC — Bee Boring Vanilla — Top-level page landmark regression contract](dialog/iterations/2026-10-01T080111Z-b-boring-vanilla.md)
 - [2026-09-30 08:01:11 UTC — Bee Boring Vanilla — Heading structure regression contract](dialog/iterations/2026-09-30T080111Z-b-boring-vanilla.md)
-- [2026-09-29 08:01:07 UTC — Bee Boring Vanilla — Four-Project evidence synchronization](dialog/iterations/2026-09-29T080107Z-b-boring-vanilla.md)
 
 ## Yearly indexes
 
