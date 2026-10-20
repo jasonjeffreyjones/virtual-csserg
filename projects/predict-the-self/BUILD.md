@@ -33,9 +33,10 @@ decomposition table, all twenty-three displayed values in the no-oracle
 change-volume table, all twenty-five values in the probabilistic change-volume
 table, all seventeen values in the word-count feature-ablation table, all
 eighteen means and interval bounds in the selected multiplicity stress-test
-table, and thirteen numeric occurrences in the status and plain-language
-finding cards carry source, result-pointer, and display-format annotations. The
-verifier resolves all 175 against inventoried machine-readable results or the
+table, all fifteen values in the calibrated-synthesis advancement-gate table,
+and thirteen numeric occurrences in the status and plain-language finding
+cards carry source, result-pointer, and display-format annotations. The
+verifier resolves all 190 against inventoried machine-readable results or the
 frozen submission's CSV row count and rejects a missing annotation, an unlisted
 source, or a displayed-value mismatch. Explicit signed formats preserve the
 direction shown for effects and interval bounds.

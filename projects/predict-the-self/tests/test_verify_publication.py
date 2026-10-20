@@ -413,6 +413,38 @@ class DisplayedResultClaimTests(unittest.TestCase):
                     expected_count=1,
                 )
 
+    def test_stale_calibrated_synthesis_gate_interval_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            project = Path(temporary)
+            result = project / "results/calibrated_synthesis.json"
+            result.parent.mkdir()
+            result.write_text(
+                '{"advancement_gate":{"normalized_edit_similarity_vs_repeat_2024":'
+                '{"paired_case_bootstrap_95_ci_low":-0.013404}}}',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(AssertionError, "displayed result differs"):
+                verify_publication.validate_result_claims(
+                    self.make_claim_page(
+                        "-0.010000",
+                        source="results/calibrated_synthesis.json",
+                        pointer=(
+                            "/advancement_gate/"
+                            "normalized_edit_similarity_vs_repeat_2024/"
+                            "paired_case_bootstrap_95_ci_low"
+                        ),
+                        format_spec="+.6f",
+                    ),
+                    project,
+                    {
+                        "results/calibrated_synthesis.json": (
+                            "artifacts/calibrated_synthesis.json"
+                        )
+                    },
+                    expected_count=1,
+                )
+
     def test_stale_percentage_value_fails(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             project = Path(temporary)

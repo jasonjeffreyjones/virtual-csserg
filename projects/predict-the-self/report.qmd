@@ -1406,8 +1406,9 @@ effects, and interval bounds in its no-oracle change-volume table, all 25 CRPS,
 effects, and interval bounds in its probabilistic change-volume table, all 17
 CRPS, paired-effect, and interval values in its word-count feature-ablation
 table, all 18 means and simultaneous interval bounds in its selected
-multiplicity stress-test table, and all 13 numeric occurrences in its status
-and plain-language finding cards. Every displayed value must equal its
+multiplicity stress-test table, all 15 values in its calibrated-synthesis
+advancement-gate table, and all 13 numeric occurrences in its status and plain-
+language finding cards. Every displayed value must equal its
 inventoried machine-readable result—or, for the frozen test-artifact count, the
 submission CSV's data-row count—at the declared precision and explicit sign
 convention. The same resolved claims govern the dense figure's five CSS bar
